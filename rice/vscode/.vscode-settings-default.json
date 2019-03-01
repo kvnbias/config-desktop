@@ -1,0 +1,10 @@
+{
+    "location": "~/.config/Code - OSS/User/settings.json",
+    "themesURI": "https://marketplace.visualstudio.com/search?target=VSCode",
+    "editor.renderWhitespace": "all",
+    "materialTheme.accent": "Remove accents",
+    "workbench.colorCustomizations": {},
+    "materialTheme.autoApplyIcons": false,
+    "telemetry.enableTelemetry": false,
+    "telemetry.enableCrashReporter": false
+}

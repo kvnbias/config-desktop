@@ -1,0 +1,23 @@
+
+module kfedora-base 1.0;
+
+require {
+    type session_dbusd_tmp_t;
+    type sysfs_t;adwd
+    type xdm_t;
+    type init_t;
+    type efivarfs_t;
+    type unlabeled_t;
+    class file { rename write };
+    class dir read;
+    class filesystem associate;
+}
+
+#============= efivarfs_t ==============
+allow efivarfs_t sysfs_t:filesystem associate;
+
+#============= init_t ==============
+allow init_t session_dbusd_tmp_t:dir read;
+
+#============= xdm_t ==============
+allow xdm_t unlabeled_t:file { rename write };

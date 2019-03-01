@@ -1,0 +1,446 @@
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/jaagr/polybar
+;
+;   The README contains alot of information
+;
+;==========================================================
+
+[colors]
+; references
+background = ${xrdb:background}
+foreground = ${xrdb:foreground}
+
+[bar/kev]
+; multi monitor support. $MONITOR required.
+monitor = ${env:MONITOR:}
+
+; generall settings
+width = 100%
+height = 25
+; radius = 5.0
+
+bottom = false
+
+; bar background
+background = ${xrdb:polybar.backgroundTrn}
+; text color
+foreground = ${xrdb:polybar.foreground}
+
+; line selector height
+line-size = 2
+; line selector default color
+line-color = ${xrdb:polybar.foregroundAlt}
+
+; border for transparency
+; border-right-size = 5
+; border-left-size = 5
+; border-top-size = 5
+border-bottom-size = 0
+border-color = ${xrdb:polybar.borderTrn}
+
+; bar content padding
+padding-left = 1
+padding-right = 1
+
+; module margin
+module-margin-left = 1
+module-margin-right = 1
+
+font-0 = RobotoMono Nerd Font Mono:pixelsize=10;3
+
+modules-left = i3
+modules-center = mpd
+modules-right = xbacklight filesystem cpu ram battery wlan eth date
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+; temprarily disabled
+tray-offset-x = 0
+tray-offset-y = 0
+tray-position = right
+tray-detached = false
+tray-maxsize = 13
+tray-background = ${xrdb:polybar.backgroundAlt}
+tray-padding = 2
+tray-scale = 1.0
+
+[bar/sub]
+; multi monitor support. $MONITOR required.
+monitor = ${env:MONITOR:}
+
+; generall settings
+width = ${bar/kev.width}
+height = ${bar/kev.height}
+; radius = ${bar/kev.radius}
+
+bottom = ${bar/kev.bottom}
+
+; bar background
+background = ${bar/kev.background}
+; text color
+foreground = ${bar/kev.foreground}
+
+; line selector height
+line-size = ${bar/kev.line-size}
+; line selector default color
+line-color = ${bar/kev.line-color}
+
+; border for transparency
+; border-top-size = ${bar/kev.border-top-size}
+; border-right-size = ${bar/kev.border-right-size}
+; border-left-size = ${bar/kev.border-left-size}
+border-bottom-size = ${bar/kev.border-bottom-size}
+border-color = ${bar/kev.border-color}
+
+; bar content padding
+padding-left = ${bar/kev.padding-left}
+; no tray icons
+padding-right = 2
+
+; module margin
+module-margin-left = ${bar/kev.module-margin-left}
+module-margin-right = ${bar/kev.module-margin-right}
+
+; font:size:padding-top
+font-0 = ${bar/kev.font-0}
+
+modules-left = ${bar/kev.modules-left}
+modules-center = ${bar/kev.modules-center}
+modules-right = ${bar/kev.modules-right}
+
+cursor-click = ${bar/kev.cursor-click}
+cursor-scroll = ${bar/kev.cursor-scroll}
+
+[module/mpd]
+type = internal/mpd
+format-online = <icon-repeat> <icon-random> <icon-single> <label-song> <icon-prev> <toggle> <icon-next>
+
+icon-prev = 
+icon-stop = 
+icon-play = 
+icon-pause = 
+icon-next = 
+icon-random = 
+icon-repeat = 凌
+icon-single = 綾
+
+toggle-on-foreground = ${xrdb:polybar.foreground}
+toggle-off-foreground = ${xrdb:polybar.background}
+
+label-song-maxlen = 25
+label-song-ellipsis = true
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+
+mount-0 = /home
+
+format-mounted = <label-mounted>
+label-mounted =  %free%
+label-mounted-foreground = ${xrdb:polybar.foreground}
+
+format-unmounted = <label-unmounted>
+label-unmounted =
+label-unmounted-foreground = ${xrdb:polybar.foreground}
+
+[module/i3]
+
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+
+; Only show workspaces on the same output as the bar
+; pin-workspaces = true
+
+label-mode-padding = 2
+label-mode-foreground = ${xrdb:polybar.background}
+label-mode-background = ${xrdb:polybar.foreground}
+
+; focused = Active workspace on focused monitor
+label-focused = %index%
+label-focused-foreground = ${xrdb:polybar.foregroundFcs}
+label-focused-background = ${xrdb:polybar.backgroundAlt}
+label-focused-underline =
+label-focused-padding = 1
+
+; unfocused = Inactive workspace on any monitor
+label-unfocused = %index%
+label-unfocused-padding = 1
+
+; visible = Active workspace on unfocused monitor
+label-visible = %index%
+label-visible-background = ${self.label-focused-background}
+label-visible-foreground = ${self.label-focused-foreground}
+label-visible-underline = ${self.label-focused-underline}
+label-visible-padding = ${self.label-focused-padding}
+
+; urgent = Workspace with urgency hint set
+label-urgent = %index%
+label-urgent-background = ${xrdb:polybar.color1}
+label-urgent-padding = 1
+
+; Separator in between workspaces
+; label-separator = |
+
+; external programs have poor external monitor support
+[module/xbacklight]
+type = internal/xbacklight
+
+format = <ramp> <label> <bar>
+label = %percentage%%
+
+bar-width = 10
+; bar-indicator = 
+bar-indicator = 絛
+bar-indicator-foreground = ${xrdb:polybar.foreground}
+bar-indicator-font = 2
+bar-fill = 絛
+bar-fill-font = 2
+bar-fill-foreground = ${xrdb:polybar.foreground}
+bar-empty = 絛
+bar-empty-font = 2
+bar-empty-foreground = ${xrdb:polybar.background}
+
+; ramp-0 = 
+ramp-0 = 
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = "閭 "
+format-prefix-foreground = ${xrdb:polybar.foreground}
+format-underline =
+label = %percentage%%
+
+[module/ram]
+type = internal/memory
+interval = 2
+format-prefix = " "
+format-prefix-foreground = ${xrdb:polybar.foreground}
+format-underline =
+label = %percentage_used%%
+
+[module/wlan]
+type = internal/network
+interface = WIFI 
+interval = 3.0
+
+format-connected = <label-connected>
+format-connected-underline =
+format-connected-prefix = "﬉ "
+format-connected-prefix-foreground = ${xrdb:polybar.foregroundAlt}
+label-connected = %signal%% %essid% %downspeed:1%
+label-connected-foreground = ${xrdb:polybar.foreground}
+
+format-packetloss = <label-packetloss>
+format-packetloss-underline =
+; format-packetloss-prefix = " "
+format-packetloss-prefix = "﬉ "
+format-packetloss-prefix-foreground = ${xrdb:polybar.background}
+label-packetloss = Packet Loss
+label-packetloss-foreground = ${xrdb:polybar.background}
+
+; format-disconnected = <label-disconnected>
+; format-disconnected-underline =
+; format-disconnected-prefix = " "
+; format-disconnected-prefix-foreground = ${xrdb:polybar.background}
+; label-disconnected = Disconnected
+; label-disconnected-foreground = ${xrdb:polybar.background}
+
+[module/eth]
+type = internal/network
+interface = ETHERNET
+interval = 3.0
+
+format-connected = <label-connected>
+format-connected-underline =
+format-connected-prefix = " "
+format-connected-prefix-foreground = ${xrdb:polybar.foregroundAlt}
+label-connected = %downspeed:1%
+label-connected-foreground = ${xrdb:polybar.foreground}
+
+format-packetloss = <label-packetloss>
+format-packetloss-underline =
+format-packetloss-prefix = " "
+format-packetloss-prefix-foreground = ${xrdb:polybar.background}
+label-packetloss = Packet Loss
+label-packetloss-foreground = ${xrdb:polybar.background}
+
+; format-disconnected = <label-disconnected>
+; format-disconnected-underline =
+; format-disconnected-prefix = " "
+; format-disconnected-prefix-foreground = ${xrdb:polybar.background}
+; label-disconnected = Disconnected
+; label-disconnected-foreground = ${xrdb:polybar.background}
+
+[module/date]
+
+; type = custom/script
+; exec = ~/.config/polybar/popup-calendar.sh
+; interval = 1
+; click-left=~/.config/polybar/popup-calendar.sh --popup
+
+type = internal/date
+interval = 1
+
+date =
+date-alt = " %a %b %d %Y"
+
+time = %H:%M
+time-alt = %H:%M:%S
+
+format-prefix = 
+format-prefix-foreground = ${xrdb:polybar.foregroundAlt}
+format-underline =
+
+label = %date% %time%
+
+[module/pulse]
+type = internal/pulseaudio
+
+format-volume = <ramp-volume> <label-volume> <bar-volume>
+label-volume = %percentage%%
+label-volume-foreground = ${xrdb:polybar.foreground}
+
+label-muted =  Muted
+label-muted-foreground = ${xrdb:polybar.foreground}
+
+bar-volume-width = 10
+bar-volume-gradient = false
+; bar-volume-indicator = 
+bar-volume-indicator = ─
+bar-volume-indicator-font = 2
+bar-volume-indicator-foreground = ${xrdb:polybar.foreground}
+bar-volume-fill = ─
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${xrdb:polybar.background}
+
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-3 = 
+ramp-volume-4 = 
+ramp-volume-5 = 
+ramp-volume-6 = 
+ramp-volume-7 = 
+ramp-volume-8 = 
+ramp-volume-9 = 
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = ADP1
+full-at = 98
+
+# format-charging = <animation-charging> <label-charging>
+format-charging-prefix = " "
+format-charging-underline = 
+
+# format-discharging = <animation-discharging> <label-discharging>
+format-discharging = <ramp-capacity> <label-discharging>
+format-discharging-underline = 
+
+format-full-prefix = " "
+format-full-prefix-foreground = ${xrdb:polybar.foregroundAlt}
+format-full-underline = 
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-5 = 
+animation-charging-6 = 
+animation-charging-7 = 
+animation-charging-8 = 
+animation-charging-9 = 
+animation-charging-10 = 
+animation-charging-foreground = ${xrdb:polybar.foregroundAlt}
+animation-charging-framerate = 750
+
+ramp-capacity-10 = 
+ramp-capacity-9 = 
+ramp-capacity-8 = 
+ramp-capacity-7 = 
+ramp-capacity-6 = 
+ramp-capacity-5 = 
+ramp-capacity-4 = 
+ramp-capacity-3 = 
+ramp-capacity-2 = 
+ramp-capacity-1 = 
+ramp-capacity-0 = 
+
+animation-discharging-10 = 
+animation-discharging-9 = 
+animation-discharging-8 = 
+animation-discharging-7 = 
+animation-discharging-6 = 
+animation-discharging-5 = 
+animation-discharging-4 = 
+animation-discharging-3 = 
+animation-discharging-2 = 
+animation-discharging-1 = 
+animation-discharging-0 = 
+animation-discharging-foreground = ${xrdb:polybar.foregroundAlt}
+animation-discharging-framerate = 750
+
+[module/powermenu]
+type = custom/menu
+expand-right = true
+format-spacing = 1
+
+label-open = 
+label-open-foreground = ${xrdb:polybar.foreground}
+label-close = 
+label-close-foreground = ${xrdb:polybar.foreground}
+label-separator = |
+label-separator-foreground = ${xrdb:polybar.foregroundAlt}
+
+menu-0-0 = 
+menu-0-0-exec = menu-open-1
+menu-0-1 = 
+menu-0-1-exec = menu-open-2
+
+menu-1-0 = cancel
+menu-1-0-exec = menu-open-0
+menu-1-1 = reboot
+menu-1-1-exec = systemctl reboot
+
+menu-2-0 = shutdown
+menu-2-0-exec = systemctl poweroff
+menu-2-1 = cancel
+menu-2-1-exec = menu-open-0
+
+[module/updates]
+type = custom/script
+exec = ~/.config/polybar/update-checker.sh
+interval = 600
+
+[settings]
+screenchange-reload = true
+pseudo-transparency = true
+; compositing-background = xor
+; compositing-background = screen
+; compositing-foreground = source
+; compositing-border = over
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+

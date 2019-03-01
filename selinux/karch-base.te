@@ -1,0 +1,3327 @@
+
+module karch-base 1.0;
+
+require {
+    type accountsd_var_lib_t;
+    type acpi_bios_t;
+    type acpid_exec_t;
+    type acpid_t;
+    type acpid_var_run_t;
+    type adjtime_t;
+    type alsa_etc_t;
+    type alsa_exec_t;
+    type alsa_t;
+    type alsa_unit_t;
+    type alsa_var_lib_t;
+    type alsa_var_lock_t;
+    type amanda_port_t;
+    type amavisd_recv_port_t;
+    type aol_port_t;
+    type apcupsd_port_t;
+    type asterisk_port_t;
+    type auditctl_t;
+    type auditd_etc_t;
+    type auditd_log_t;
+    type auditd_unit_t;
+    type auditd_t;
+    type auditd_var_run_t;
+    type autofs_device_t;
+    type avahi_t;
+    type avahi_exec_t;
+    type avahi_unit_t;
+    type avahi_var_run_t;
+    type bgp_port_t;
+    type bin_t;
+    type binfmt_misc_fs_t;
+    type blueman_var_lib_t;
+    type bluetooth_conf_t;
+    type bluetooth_exec_t;
+    type bluetooth_unit_t;
+    type bluetooth_var_lib_t;
+    type boinc_client_port_t;
+    type bootloader_tmp_t;
+    type boot_t;
+    type cert_t;
+    type certmaster_port_t;
+    type cgroup_t;
+    type chkpwd_t;
+#c     type chromium_exec_t;
+#c     type chromium_naclhelper_exec_t;
+#c     type chromium_naclhelper_t;
+#c     type chromium_sandbox_exec_t;
+#c     type chromium_sandbox_t;
+#c     type chromium_t;
+#c     type chromium_tmp_t;
+#c     type chromium_tmpfs_t;
+#c     type chromium_xdg_cache_t;
+#c     type chromium_xdg_config_t;
+    type clamd_port_t;
+    type clock_device_t;
+    type cluster_port_t;
+    type cma_port_t;
+    type colord_var_lib_t;
+    type commplex_link_port_t;
+    type commplex_main_port_t;
+    type configfs_t;
+    type couchdb_port_t;
+    type cpu_device_t;
+    type crack_db_t;
+    type cron_log_t;
+    type cron_spool_t;
+    type crond_t;
+    type crond_var_run_t;
+    type crontab_t;
+    type cslistener_port_t;
+    type cups_pdf_exec_t;
+    type cupsd_config_exec_t;
+    type cupsd_etc_t;
+    type cupsd_exec_t;
+    type cupsd_log_t;
+    type cupsd_lpd_exec_t;
+    type cupsd_rw_etc_t;
+    type cupsd_t;
+    type cupsd_unit_t;
+    type cupsd_var_run_t;
+    type cyphesis_port_t;
+    type dbskkd_port_t;
+    type dbusd_etc_t;
+    type dbusd_exec_t;
+    type dbusd_unit_t;
+    type dccm_port_t;
+    type debugfs_t;
+    type default_context_t;
+    type default_t;
+    type device_t;
+    type devicekit_disk_exec_t;
+    type devicekit_disk_t;
+    type devicekit_var_lib_t;
+    type devicekit_var_run_t;
+    type devlog_t;
+    type devpts_t;
+    type dhcp_etc_t;
+    type dhcpc_port_t;
+    type dhcpc_state_t;
+    type dhcpd_unit_t;
+    type dirmngr_home_t;
+    type dirmngr_t;
+    type dirmngr_tmp_t;
+    type dmrc_home_t;
+    type dnsmasq_etc_t;
+    type dosfs_t;
+    type dri_device_t;
+    type dropbox_port_t;
+    type efivarfs_t;
+    type embrace_dp_c_port_t;
+    type etc_t;
+    type event_device_t;
+    type evolution_exec_t;
+    type evolution_t;
+    type evolution_tmpfs_t;
+    type evolution_xdg_config_t;
+    type exports_t;
+    type faillog_t;
+    type file_context_t;
+    type fixed_disk_device_t;
+    type fonts_cache_t;
+    type fonts_t;
+    type framebuf_device_t;
+    type fs_t;
+    type fsadm_exec_t;
+    type fsadm_run_t;
+    type fsadm_t;
+    type ftp_data_port_t;
+    type fuse_device_t;
+    type fusefs_t;
+    type games_data_t;
+    type gconf_etc_t;
+    type gconf_home_t;
+    type gconf_tmp_t;
+    type geoclue_etc_t;
+    type geoclue_var_lib_t;
+    type getty_runtime_t;
+    type getty_t;
+    type giftd_port_t;
+    type gitd_exec_t;
+    type glusterd_conf_t;
+    type glusterd_exec_t;
+    type glusterd_log_t;
+    type glusterd_var_lib_t;
+    type gkeyringd_exec_t;
+    type gnome_keyring_tmp_t;
+    type gnome_xdg_config_t;
+    type gnome_xdg_data_t;
+    type gpg_agent_t;
+    type gpg_agent_tmp_t;
+    type gpg_runtime_t;
+    type gpg_secret_t;
+    type gpg_t;
+    type gpsd_port_t;
+    type groupadd_t;
+    type gstreamer_orcexec_t;
+    type hddtemp_port_t;
+    type hi_reserved_port_t;
+    type home_root_t;
+    type hplip_etc_t;
+    type hplip_exec_t;
+    type hplip_port_t;
+    type httpd_git_content_t;
+    type httpd_git_script_exec_t;
+    type httpd_modules_t;
+    type hotplug_etc_t;
+    type http_port_t;
+    type hugetlbfs_t;
+    type i18n_input_port_t;
+    type ifconfig_exec_t;
+    type ifconfig_t;
+    type ifplugd_etc_t;
+    type imaze_port_t;
+    type init_exec_t;
+    type init_t;
+    type init_var_lib_t;
+    type init_var_run_t;
+    type initctl_t;
+    type initrc_t;
+    type initrc_tmp_t;
+    type initrc_var_run_t;
+    type inetd_child_port_t;
+    type iptables_runtime_t;
+    type iptables_unit_t;
+    type ircd_port_t;
+    type iso9660_t;
+    type java_exec_t;
+    type java_home_t;
+    type java_t;
+    type java_tmpfs_t;
+    type java_tmp_t;
+    type kdump_exec_t;
+    type kerberos_master_port_t;
+    type kernel_t;
+    type kmod_t;
+    type kmod_tmpfiles_conf_t;
+    type kmsg_device_t;
+    type kvm_device_t;
+    type lastlog_t;
+    type ld_so_cache_t;
+    type ld_so_t;
+    type ldconfig_cache_t;
+    type lib_t;
+    type llmnr_port_t;
+    type loadkeys_t;
+    type local_login_t;
+    type locale_t;
+    type logrotate_t;
+    type logrotate_unit_t;
+    type logrotate_var_lib_t;
+    type loop_control_device_t;
+    type lost_found_t;
+    type lpr_exec_t;
+    type lvm_control_t;
+    type lvm_etc_t;
+    type lvm_exec_t;
+    type lvm_lock_t;
+    type lvm_metadata_t;
+    type lvm_t;
+    type lvm_unit_t;
+    type lvm_var_run_t;
+    type mail_spool_t;
+    type mandb_exec_t;
+    type mandb_unit_t;
+    type man_cache_t;
+    type man_t;
+    type mdadm_unit_t;
+    type memcache_port_t;
+    type memory_device_t;
+    type mesa_shader_cache_t;
+    type modemmanager_t;
+    type modules_conf_t;
+    type modules_dep_t;
+    type modules_object_t;
+    type monit_port_t;
+    type monopd_port_t;
+    type mount_exec_t;
+    type mount_runtime_t;
+    type mount_t;
+    type mountd_port_t;
+    type mouse_device_t;
+    type mozilla_home_t;
+    type mozilla_exec_t;
+    type mozilla_t;
+    type mozilla_tmp_t;
+    type mozilla_xdg_cache_t;
+    type mnt_t;
+    type mpd_data_t;
+    type mpd_etc_t;
+    type mpd_exec_t;
+    type mpd_port_t;
+    type mpd_var_lib_t;
+    type mplayer_exec_t;
+    type mplayer_t;
+    type ms_streaming_port_t;
+    type msnp_port_t;
+    type mssql_port_t;
+    type mtrr_device_t;
+    type munin_port_t;
+    type mysqld_port_t;
+    type net_conf_t;
+    type netcontrol_device_t;
+    type NetworkManager_etc_rw_t;
+    type NetworkManager_etc_t;
+    type NetworkManager_exec_t;
+    type NetworkManager_t;
+    type NetworkManager_unit_t;
+    type NetworkManager_var_lib_t;
+    type NetworkManager_var_run_t;
+    type nmbd_exec_t;
+    type node_t;
+    type nessus_port_t;
+    type netport_port_t;
+    type nfs_port_t;
+    type nfsrdma_port_t;
+    type nscd_t;
+    type nscd_var_run_t;
+    type nsfs_t;
+    type ntp_conf_t;
+    type ntpd_t;
+    type ntop_port_t;
+    type ocsp_port_t;
+    type openvpn_port_t;
+    type oracledb_port_t;
+    type pam_var_run_t;
+    type pdps_port_t;
+    type pgpkeyserver_port_t;
+    type ping_t;
+    type policy_config_t;
+    type policykit_t;
+    type policykit_unit_t;
+    type pop_port_t;
+    type postgrey_port_t;
+    type power_unit_t;
+    type ppp_device_t;
+    type pptp_port_t;
+    type presence_port_t;
+    type print_spool_t;
+    type proc_kcore_t;
+    type proc_kmsg_t;
+    type proc_net_t;
+    type proc_t;
+    type pstore_t;
+    type ptmx_t;
+    type public_content_t;
+    type pulseaudio_exec_t;
+    type pulseaudio_t;
+    type pulseaudio_home_t;
+    type pulseaudio_tmp_t;
+    type pulseaudio_tmpfs_t;
+    type pulseaudio_xdg_config_t;
+    type radsec_port_t;
+    type redis_port_t;
+    type random_device_t;
+    type removable_device_t;
+    type reserved_port_t;
+    type restorecond_run_t;
+    type restorecond_t;
+    type restorecond_unit_t;
+    type ricci_port_t;
+    type root_t;
+    type rpcbind_var_lib_t;
+    type rsync_etc_t;
+    type rsync_exec_t;
+    type rtkit_daemon_unit_t;
+    type samba_etc_t;
+    type samba_log_t;
+    type samba_net_exec_t;
+    type samba_unit_t;
+    type samba_var_run_t;
+    type samba_var_t;
+    type scsi_generic_device_t;
+    type screen_exec_t;
+    type security_t;
+    type selinux_config_t;
+    type semanage_read_lock_t;
+    type semanage_store_t;
+    type semanage_trans_lock_t;
+    type sensord_exec_t;
+    type servistaitsm_port_t;
+    type session_dbusd_runtime_t;
+    type setrans_var_run_t;
+    type setfiles_t;
+    type setrans_unit_t;
+    type shadow_t;
+    type shell_exec_t;
+    type sixxsconfig_port_t;
+    type smbcontrol_exec_t;
+    type smbd_exec_t;
+    type smbd_t;
+    type snmp_port_t;
+    type snmpd_exec_t;
+    type sound_device_t;
+    type src_t;
+    type ssdp_port_t;
+    type ssh_agent_exec_t;
+    type ssh_exec_t;
+    type ssh_keygen_exec_t;
+    type ssh_keysign_exec_t;
+    type sshd_exec_t;
+    type sshd_keygen_unit_t;
+    type sshd_unit_t;
+    type sulogin_t;
+    type svnserve_exec_t;
+    type svnserve_var_run_t;
+    type sysadm_dbusd_t;
+    type sysadm_sudo_t;
+    type sysadm_t;
+    type sysctl_fs_t;
+    type sysctl_irq_t;
+    type sysctl_kernel_t;
+    type sysctl_modprobe_t;
+    type sysctl_net_t;
+    type sysctl_t;
+    type sysctl_vm_overcommit_t;
+    type sysctl_vm_t;
+    type sysfs_t;
+    type syslog_conf_t;
+    type syslogd_exec_t;
+    type syslogd_t;
+    type syslogd_unit_t;
+    type syslogd_var_lib_t;
+    type syslogd_var_run_t;
+    type system_cronjob_t;
+    type system_cron_spool_t;
+    type system_cronjob_tmp_t;
+    type system_dbusd_t;
+    type system_dbusd_tmp_t;
+    type system_dbusd_var_lib_t;
+    type system_dbusd_var_run_t;
+    type systemd_backlight_t;
+    type systemd_backlight_unit_t;
+    type systemd_backlight_var_lib_t;
+    type systemd_binfmt_unit_t;
+    type systemd_coredump_t;
+    type systemd_coredump_var_lib_t;
+    type systemd_gpt_generator_t;
+    type systemd_hostnamed_t;
+    type systemd_journal_t;
+    type systemd_logind_inhibit_var_run_t;
+    type systemd_logind_t;
+    type systemd_logind_var_run_t;
+    type systemd_machined_var_run_t;
+    type systemd_networkd_var_run_t;
+    type systemd_networkd_unit_t;
+    type systemd_passwd_var_run_t;
+    type systemd_rfkill_t;
+    type systemd_rfkill_unit_t;
+    type systemd_rfkill_var_lib_t;
+    type systemd_sessions_t;
+    type systemd_sessions_var_run_t;
+    type systemd_tmpfiles_conf_t;
+    type systemd_tmpfiles_t;
+    type systemd_unit_t;
+    type systemd_update_done_t;
+    type textrel_shlib_t;
+    type tftpd_conf_t;
+    type thunderbird_exec_t;
+    type thunderbird_home_t;
+    type tcs_port_t;
+    type tor_port_t;
+    type tmp_t;
+    type tmpfs_t;
+    type tracefs_t;
+    type trivnet1_port_t;
+    type tty_device_t;
+    type tun_tap_device_t;
+    type unconfined_execmem_exec_t;
+    type udev_helper_exec_t;
+    type udev_rules_t;
+    type udev_tbl_t;
+    type udev_t;
+    type udev_var_run_t;
+    type unlabeled_t;
+    type unreserved_port_t;
+    type usbmuxd_exec_t;
+    type useradd_t;
+    type user_cert_t;
+    type user_dbusd_t;
+    type user_devpts_t;
+    type user_home_dir_t;
+    type user_home_t;
+    type user_fonts_cache_t;
+    type user_gkeyringd_t;
+    type user_runtime_root_t;
+    type user_runtime_t;
+    type user_screen_t;
+    type user_su_t;
+    type user_sudo_t;
+    type user_t;
+    type user_tmp_t;
+    type user_tmpfs_t;
+    type user_tty_device_t;
+    type usr_t;
+    type utempter_exec_t;
+    type v4l_device_t;
+    type var_lib_t;
+    type var_lock_t;
+    type var_log_t;
+    type var_run_t;
+    type var_spool_t;
+    type var_t;
+    type varnishd_port_t;
+    type vfio_device_t;
+    type vhost_device_t;
+    type virsh_exec_t;
+    type virt_cache_t;
+    type virt_content_t;
+    type virt_etc_rw_t;
+    type virt_etc_t;
+    type virt_image_t;
+    type virt_leaseshelper_exec_t;
+    type virt_log_t;
+    type virt_migration_port_t;
+    type virt_port_t;
+    type virt_var_lib_t;
+    type virtd_exec_t;
+    type virtd_lxc_exec_t;
+    type virtlockd_exec_t;
+    type virtlockd_var_lib_t;
+    type virtlogd_exec_t;
+    type virtual_places_port_t;
+    type websm_port_t;
+    type winbind_exec_t;
+    type winbind_helper_exec_t;
+    type wine_exec_t;
+    type wine_home_t;
+    type wireless_device_t;
+    type wsicopy_port_t;
+    type wtmp_t;
+    type xauth_exec_t;
+    type xauth_home_t;
+    type xauth_t;
+    type xauth_tmp_t;
+    type xdg_cache_t;
+    type xdg_config_t;
+    type xdg_data_t;
+    type xdg_documents_t;
+    type xdg_downloads_t;
+    type xdg_music_t;
+    type xdg_pictures_t;
+    type xdg_videos_t;
+    type xdm_runtime_t;
+    type xdm_exec_t;
+    type xdm_t;
+    type xdm_tmp_t;
+    type xdm_var_lib_t;
+    type xdm_var_run_t;
+    type xkb_var_lib_t;
+    type xfs_port_t;
+    type xfs_tmp_t;
+    type xserver_exec_t;
+    type xserver_log_t;
+    type xserver_misc_device_t;
+    type xserver_port_t;
+    type xserver_t;
+    type xserver_tmp_t;
+    type xsession_exec_t;
+    type xsession_log_t;
+    type zabbix_agent_port_t;
+    type zabbix_port_t;
+    type zebra_port_t;
+    type zented_port_t;
+    type zookeeper_client_port_t;
+    type zookeeper_leader_port_t;
+    class blk_file { append getattr ioctl lock open read write };
+    class bluetooth_socket { create getattr ioctl };
+    class bpf { map_create map_read map_write prog_load prog_run };
+    class cap_userns { net_admin setpcap setuid sys_admin };
+    class capability { audit_write dac_override dac_read_search kill linux_immutable mknod net_admin net_bind_service net_raw setfcap setgid setpcap setuid sys_admin sys_module sys_ptrace sys_rawio sys_resource };
+    class capability2 block_suspend;
+    class chr_file { append create getattr ioctl map open read relabelfrom relabelto setattr write unlink };
+    class dbus send_msg;
+    class dir { add_name create getattr map mounton open read relabelfrom relabelto remove_name rename reparent rmdir search setattr write };
+    class fd use;
+    class fifo_file { create getattr open read relabelfrom relabelto write };
+    class file { append create entrypoint execmod execute execute_no_trans getattr ioctl link lock map mounton open read relabelfrom relabelto rename setattr unlink write };
+    class filesystem { associate getattr mount quotaget remount unmount };
+    class icmp_socket create;
+    class key link;
+    class lnk_file { create getattr link read relabelfrom relabelto setattr unlink };
+    class memprotect mmap_zero;
+    class netlink_audit_socket getattr;
+    class netlink_generic_socket { bind create getattr read setopt write };
+    class netlink_kobject_uevent_socket { bind create getattr read setopt };
+    class netlink_route_socket { getattr nlmsg_write };
+    class netlink_selinux_socket { bind create getattr };
+    class netlink_tcpdiag_socket { bind create getattr nlmsg_read read setopt write };
+    class packet_socket { bind create getattr read setopt write };
+    class passwd rootok;
+    class process { execmem execstack getattr getcap getpgid ptrace setcap setfscreate setsched sigkill signal signull transition };
+    class rawip_socket { create getattr getopt read setopt write };
+    class security { compute_av compute_user load_policy read_policy setenforce };
+    class service { reload start status stop };
+    class shm { create destroy read unix_read unix_write write };
+    class sock_file { create execute getattr link read relabelfrom relabelto setattr unlink write };
+    class system { ipc_info module_load module_request reload };
+    class tcp_socket { accept getattr listen name_bind name_connect node_bind read write };
+    class udp_socket { getattr name_bind node_bind };
+    class unix_dgram_socket { connect create getattr getopt sendto setopt };
+    class unix_stream_socket { bind create connectto getattr ioctl listen read setopt write };
+}
+
+#============= neverallow ==============
+
+neverallow { user_sudo_t user_t system_cronjob_t sysadm_sudo_t } fixed_disk_device_t:blk_file { append read write };
+neverallow { user_sudo_t } security_t:security load_policy;
+neverallow { user_sudo_t } policy_config_t:file relabelto;
+neverallow { user_t } memory_device_t:chr_file read;
+neverallow { user_t } security_t:security { load_policy setenforce };
+neverallow { user_t } scsi_generic_device_t:chr_file { append write read };
+neverallow { user_t } self:capability sys_module;
+neverallow { user_t } self:memprotect mmap_zero;
+neverallow { user_t } shadow_t:file { create write relabelto };
+
+dontaudit sysadm_sudo_t fixed_disk_device_t:blk_file { append read write };
+dontaudit system_cronjob_t fixed_disk_device_t:blk_file { append read write };
+dontaudit user_sudo_t fixed_disk_device_t:blk_file { append read write };
+dontaudit user_sudo_t policy_config_t:file relabelto;
+dontaudit user_sudo_t security_t:security load_policy;
+dontaudit user_t fixed_disk_device_t:blk_file { append read write };
+dontaudit user_t memory_device_t:chr_file read;
+dontaudit user_t security_t:security { load_policy setenforce };
+dontaudit user_t scsi_generic_device_t:chr_file { append write read };
+dontaudit user_t self:capability sys_module;
+dontaudit user_t self:memprotect mmap_zero;
+dontaudit user_t shadow_t:file { create write relabelto };
+
+#============= alsa_t ==============
+allow alsa_t etc_t:file map;
+
+#============= auditctl_t ==============
+allow auditctl_t etc_t:file map;
+
+#============= avahi_t ==============
+allow avahi_t etc_t:file map;
+allow avahi_t init_t:dbus send_msg;
+allow avahi_t smbd_t:dbus send_msg;
+allow avahi_t user_dbusd_t:dbus send_msg;
+allow avahi_t user_t:dbus send_msg;
+
+#============= chkpwd_t ==============
+allow chkpwd_t etc_t:file map;
+
+#============= chromium_naclhelper_t ==============
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'chromium_read_system_info'
+#c allow chromium_naclhelper_t proc_t:dir read;
+
+#c allow chromium_naclhelper_t etc_t:file { getattr map open read };
+
+#============= chromium_sandbox_t ==============
+#c allow chromium_sandbox_t etc_t:file { getattr map open read };
+
+#============= chromium_t ==============
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     chromium_read_all_user_content, chromium_manage_all_user_content
+#c allow chromium_t gconf_home_t:dir search;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     chromium_read_all_user_content, chromium_manage_all_user_content
+#c allow chromium_t gpg_secret_t:dir { read search write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'chromium_manage_all_user_content'
+#c allow chromium_t mesa_shader_cache_t:dir { add_name create remove_name write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     chromium_read_all_user_content, chromium_manage_all_user_content
+#c allow chromium_t mesa_shader_cache_t:dir search;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'chromium_manage_all_user_content'
+#c allow chromium_t mesa_shader_cache_t:file { create getattr lock open read rename unlink write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     chromium_read_all_user_content, chromium_manage_all_user_content
+#c allow chromium_t mozilla_home_t:dir { read search write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     chromium_read_all_user_content, chromium_manage_all_user_content
+#c allow chromium_t mozilla_home_t:file { open read };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'chromium_bind_tcp_unreserved_ports'
+#c allow chromium_t node_t:tcp_socket node_bind;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     chromium_read_all_user_content, chromium_manage_all_user_content
+#c allow chromium_t pulseaudio_home_t:file { getattr open read };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'chromium_manage_all_user_content'
+#c allow chromium_t pulseaudio_home_t:file write;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     chromium_read_all_user_content, chromium_manage_all_user_content
+#c allow chromium_t pulseaudio_home_t:file lock;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     chromium_read_all_user_content, chromium_manage_all_user_content
+#c allow chromium_t pulseaudio_xdg_config_t:file { lock open read };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'chromium_bind_tcp_unreserved_ports'
+#c allow chromium_t self:tcp_socket listen;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'chromium_read_system_info'
+#c allow chromium_t sysctl_kernel_t:dir search;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     chromium_manage_generic_user_content, chromium_manage_all_user_content
+#c allow chromium_t user_home_t:dir { add_name write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     chromium_manage_generic_user_content, chromium_manage_all_user_content
+#c allow chromium_t user_home_t:dir setattr;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     chromium_manage_generic_user_content, chromium_manage_all_user_content
+#c allow chromium_t user_home_t:dir { create remove_name rename reparent };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     chromium_manage_generic_user_content, chromium_manage_all_user_content
+#c allow chromium_t user_home_t:file { create write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     chromium_manage_generic_user_content, chromium_manage_all_user_content
+#c allow chromium_t user_home_t:file unlink;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     chromium_manage_generic_user_content, chromium_manage_all_user_content
+#c allow chromium_t user_home_t:file { rename setattr };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     chromium_manage_generic_user_content, chromium_manage_all_user_content
+#c allow chromium_t user_tmp_t:file write;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'chromium_manage_all_user_content'
+#c allow chromium_t xauth_home_t:file write;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     chromium_read_all_user_content, chromium_manage_all_user_content
+#c allow chromium_t xdg_cache_t:file { create getattr open read rename unlink write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     chromium_read_all_user_content, chromium_manage_all_user_content
+#c allow chromium_t xdg_cache_t:file lock;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'chromium_manage_all_user_content'
+#c allow chromium_t xdg_cache_t:file setattr;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'chromium_manage_all_user_content'
+#c allow chromium_t xdg_config_t:dir { rename reparent rmdir };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'chromium_manage_all_user_content'
+#c allow chromium_t xdg_config_t:file { append create rename unlink write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'chromium_manage_all_user_content'
+#c allow chromium_t xdg_config_t:file setattr;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'chromium_manage_all_user_content'
+#c allow chromium_t xdg_config_t:lnk_file { create unlink };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     chromium_read_all_user_content, chromium_manage_all_user_content
+#c allow chromium_t xdg_documents_t:dir { open read search write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     chromium_read_all_user_content, chromium_manage_all_user_content
+#c allow chromium_t xdg_music_t:dir { open read search write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     chromium_read_all_user_content, chromium_manage_all_user_content
+#c allow chromium_t xdg_pictures_t:dir { open read search write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     chromium_read_all_user_content, chromium_manage_all_user_content
+#c allow chromium_t xdg_videos_t:dir { open read search write };
+
+
+#c allow chromium_t chromium_sandbox_t:file { getattr open read };
+#c allow chromium_t chromium_tmp_t:file mounton;
+#c allow chromium_t chromium_tmpfs_t:file { execute mounton };
+#c allow chromium_t devpts_t:filesystem mount;
+#c allow chromium_t dri_device_t:chr_file { getattr ioctl read write };
+#c allow chromium_t etc_t:file map;
+#c allow chromium_t fs_t:filesystem { quotaget remount unmount };
+#c allow chromium_t hi_reserved_port_t:tcp_socket name_connect;
+#c allow chromium_t inetd_child_port_t:tcp_socket name_connect;
+#c allow chromium_t init_t:dbus send_msg;
+#c allow chromium_t init_t:unix_stream_socket connectto;
+#c allow chromium_t initrc_t:dbus send_msg;
+#c allow chromium_t lib_t:file execute_no_trans;
+#c allow chromium_t man_cache_t:dir search;
+#c allow chromium_t man_t:dir { open read };
+#c allow chromium_t man_t:file { getattr ioctl open read };
+#c allow chromium_t man_t:lnk_file { getattr read };
+#c allow chromium_t mesa_shader_cache_t:file map;
+#c allow chromium_t mount_runtime_t:file { getattr open read };
+#c allow chromium_t mozilla_exec_t:file { execute execute_no_trans getattr map open read };
+#c allow chromium_t mozilla_tmp_t:dir { add_name remove_name write };
+#c allow chromium_t mozilla_tmp_t:file { getattr lock open write };
+#c allow chromium_t mozilla_tmp_t:lnk_file { create unlink };
+#c allow chromium_t NetworkManager_t:dbus send_msg;
+#c allow chromium_t nsfs_t:file getattr;
+#c allow chromium_t proc_net_t:file { getattr open read };
+#c allow chromium_t proc_t:filesystem { associate mount };
+#c allow chromium_t pulseaudio_t:fd use;
+#c allow chromium_t pulseaudio_t:unix_stream_socket connectto;
+#c allow chromium_t pulseaudio_tmpfs_t:file { getattr map read write };
+#c allow chromium_t reserved_port_t:tcp_socket name_connect;
+#c allow chromium_t root_t:dir mounton;
+#c allow chromium_t self:cap_userns { net_admin setpcap setuid };
+#c allow chromium_t self:capability { setgid setpcap setuid };
+#c allow chromium_t self:dir { add_name write };
+#c allow chromium_t self:file create;
+#c allow chromium_t self:netlink_route_socket nlmsg_write;
+#c allow chromium_t selinux_config_t:lnk_file read;
+#c allow chromium_t sysctl_t:file { getattr open read };
+#c allow chromium_t sysctl_vm_overcommit_t:file { open read };
+#c allow chromium_t sysctl_vm_t:dir search;
+#c allow chromium_t system_dbusd_var_lib_t:lnk_file read;
+#c allow chromium_t systemd_hostnamed_t:dbus send_msg;
+#c allow chromium_t tmpfs_t:dir { create mounton };
+#c allow chromium_t tmpfs_t:filesystem { mount unmount };
+#c allow chromium_t tmpfs_t:lnk_file create;
+#c allow chromium_t unlabeled_t:dir { add_name create open read remove_name rmdir search setattr write };
+#c allow chromium_t unlabeled_t:file { append create execute getattr ioctl lock map open read rename setattr unlink write };
+#c allow chromium_t unlabeled_t:lnk_file create;
+#c allow chromium_t user_home_dir_t:dir { create setattr };
+#c allow chromium_t user_home_dir_t:file { append create getattr ioctl map open read rename setattr unlink write };
+#c allow chromium_t user_home_t:file execute;
+#c allow chromium_t user_runtime_t:dir { add_name create mounton remove_name write };
+#c allow chromium_t user_runtime_t:file { create execute map open read unlink write };
+#c allow chromium_t user_runtime_t:sock_file write;
+#c allow chromium_t user_tmp_t:dir mounton;
+#c allow chromium_t user_tmp_t:file map;
+#c allow chromium_t v4l_device_t:chr_file { getattr ioctl open read };
+#c allow chromium_t xdg_cache_t:file map;
+#c allow chromium_t xdg_config_t:file execute;
+#c allow chromium_t xserver_tmp_t:file { map write };
+
+#============= crond_t ==============
+allow crond_t etc_t:file map;
+allow crond_t init_t:dbus send_msg;
+
+#============= crontab_t ==============
+allow crontab_t etc_t:file map;
+allow crontab_t self:capability dac_read_search;
+
+#============= cupsd_t ==============
+allow cupsd_t etc_t:dir { add_name write };
+allow cupsd_t etc_t:file { create map };
+
+#============= devicekit_disk_t ==============
+allow devicekit_disk_t etc_t:dir { add_name create write };
+allow devicekit_disk_t etc_t:file map;
+allow devicekit_disk_t fuse_device_t:chr_file { open read write };
+allow devicekit_disk_t init_t:dbus send_msg;
+allow devicekit_disk_t mount_runtime_t:dir { add_name remove_name write };
+allow devicekit_disk_t mount_runtime_t:file { create lock open read rename setattr unlink write };
+allow devicekit_disk_t sysfs_t:dir { add_name write };
+allow devicekit_disk_t sysfs_t:file create;
+allow devicekit_disk_t system_cronjob_t:dbus send_msg;
+allow devicekit_disk_t systemd_logind_inhibit_var_run_t:fifo_file write;
+allow devicekit_disk_t systemd_logind_t:fd use;
+allow devicekit_disk_t systemd_sessions_var_run_t:file { open read };
+allow devicekit_disk_t user_dbusd_t:dbus send_msg;
+
+#============= devpts_t ==============
+allow devpts_t device_t:filesystem associate;
+
+#============= fsadm_t ==============
+allow fsadm_t etc_t:file map;
+allow fsadm_t initrc_var_run_t:file write;
+allow fsadm_t var_run_t:file write;
+
+#============= evolution_t ==============
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     evolution_read_all_user_content, evolution_manage_all_user_content
+allow evolution_t pulseaudio_xdg_config_t:file { lock open read };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     evolution_manage_generic_user_content, evolution_manage_all_user_content
+allow evolution_t user_home_t:file unlink;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     evolution_manage_generic_user_content, evolution_manage_all_user_content
+allow evolution_t user_tmp_t:file write;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'evolution_manage_all_user_content'
+allow evolution_t xdg_cache_t:file { getattr lock open read write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     evolution_read_all_user_content, evolution_manage_all_user_content
+allow evolution_t xdg_config_t:file { getattr open read };
+
+allow evolution_t evolution_xdg_config_t:file map;
+allow evolution_t http_port_t:tcp_socket name_connect;
+allow evolution_t init_t:dbus send_msg;
+allow evolution_t init_t:unix_stream_socket connectto;
+allow evolution_t lib_t:file execute_no_trans;
+allow evolution_t NetworkManager_t:dbus send_msg;
+allow evolution_t pulseaudio_t:fd use;
+allow evolution_t pulseaudio_t:unix_stream_socket connectto;
+allow evolution_t pulseaudio_tmpfs_t:file { getattr map read write };
+allow evolution_t selinux_config_t:lnk_file read;
+allow evolution_t sysctl_vm_overcommit_t:file { open read };
+allow evolution_t sysctl_vm_t:dir search;
+allow evolution_t system_dbusd_var_lib_t:lnk_file read;
+allow evolution_t systemd_hostnamed_t:dbus send_msg;
+allow evolution_t user_home_dir_t:dir create;
+allow evolution_t user_home_dir_t:file { create getattr lock open read rename setattr unlink write };
+allow evolution_t user_runtime_t:dir { add_name write };
+allow evolution_t user_runtime_t:file { create map open read write };
+allow evolution_t user_runtime_t:sock_file write;
+allow evolution_t user_tmp_t:file map;
+allow evolution_t v4l_device_t:chr_file getattr;
+allow evolution_t xdg_cache_t:file map;
+allow evolution_t xdg_config_t:file map;
+
+#============= getty_t ==============
+allow getty_t etc_t:file map;
+
+#============= gpg_agent_t ==============
+allow gpg_agent_t etc_t:dir { add_name remove_name setattr write };
+allow gpg_agent_t etc_t:sock_file { create getattr setattr unlink write };
+
+#============= gpg_t ==============
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     gpg_read_all_user_content, gpg_manage_all_user_content
+allow gpg_t xdg_cache_t:file { open read };
+
+allow gpg_t etc_t:dir { add_name remove_name write };
+allow gpg_t etc_t:file { create map rename setattr unlink write };
+allow gpg_t etc_t:sock_file { getattr write };
+allow gpg_t user_t:tcp_socket { read write };
+allow gpg_t user_t:unix_stream_socket { ioctl read write };
+
+#============= groupadd_t ==============
+allow groupadd_t init_t:dbus send_msg;
+
+#============= hugetlbfs_t ==============
+allow hugetlbfs_t device_t:filesystem associate;
+
+#============= ifconfig_t ==============
+allow ifconfig_t etc_t:file map;
+allow ifconfig_t initrc_var_run_t:file write;
+allow ifconfig_t var_run_t:file write;
+
+#============= init_t ==============
+allow init_t smbd_t:dbus send_msg;
+allow init_t sysadm_t:process transition;
+
+#============= java_t ==============
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     java_read_all_user_content, java_manage_all_user_content
+allow java_t gconf_home_t:dir getattr;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     java_read_all_user_content, java_manage_all_user_content
+allow java_t gnome_xdg_config_t:dir search;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     java_read_all_user_content, java_manage_all_user_content
+allow java_t gnome_xdg_config_t:file { getattr open read };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     java_read_all_user_content, java_manage_all_user_content
+allow java_t mozilla_home_t:dir { getattr open read };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     java_read_all_user_content, java_manage_all_user_content
+allow java_t mozilla_home_t:dir { add_name remove_name search write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     java_read_all_user_content, java_manage_all_user_content
+allow java_t mozilla_home_t:file { getattr open read };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'java_manage_all_user_content'
+allow java_t mozilla_home_t:file { append create lock rename unlink write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'java_manage_all_user_content'
+allow java_t mozilla_home_t:lnk_file { create unlink };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     java_read_all_user_content, java_manage_all_user_content
+allow java_t mozilla_xdg_cache_t:dir { add_name create getattr open read remove_name rename rmdir search write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'java_manage_all_user_content'
+allow java_t mozilla_xdg_cache_t:file { create getattr lock open read rename unlink write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'allow_ypbind'
+allow java_t node_t:tcp_socket node_bind;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     java_read_all_user_content, java_manage_all_user_content
+allow java_t pulseaudio_home_t:file { lock open read };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     java_read_all_user_content, java_manage_all_user_content
+allow java_t pulseaudio_xdg_config_t:file { lock open read };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'allow_java_execstack'
+allow java_t self:process execmem;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'allow_ypbind'
+allow java_t self:tcp_socket { accept listen };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     java_manage_generic_user_content, java_manage_all_user_content
+allow java_t user_home_t:dir { add_name create remove_name rmdir write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     java_manage_generic_user_content, java_manage_all_user_content
+allow java_t user_home_t:dir setattr;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     java_manage_generic_user_content, java_manage_all_user_content
+allow java_t user_home_t:file { append create rename setattr unlink write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     java_manage_generic_user_content, java_manage_all_user_content
+allow java_t user_tmp_t:dir { add_name remove_name write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     java_manage_generic_user_content, java_manage_all_user_content
+allow java_t user_tmp_t:file { create unlink write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     java_read_all_user_content, java_manage_all_user_content
+allow java_t xdg_cache_t:dir getattr;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'java_manage_all_user_content'
+allow java_t xdg_cache_t:dir { add_name write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     java_read_all_user_content, java_manage_all_user_content
+allow java_t xdg_cache_t:file { getattr lock open read write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'java_manage_all_user_content'
+allow java_t xdg_cache_t:file create;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     java_read_all_user_content, java_manage_all_user_content
+allow java_t xdg_config_t:dir read;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     java_read_all_user_content, java_manage_all_user_content
+allow java_t xdg_config_t:dir { getattr search };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     java_read_all_user_content, java_manage_all_user_content
+allow java_t xdg_config_t:file { getattr open read };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     java_read_all_user_content, java_manage_all_user_content
+allow java_t xdg_config_t:file ioctl;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     java_read_all_user_content, java_manage_all_user_content
+allow java_t xdg_data_t:dir { getattr open read };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     java_read_all_user_content, java_manage_all_user_content
+allow java_t xdg_data_t:file { getattr open read };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'java_manage_all_user_content'
+allow java_t xdg_downloads_t:dir create;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     java_read_all_user_content, java_manage_all_user_content
+allow java_t xdg_downloads_t:dir { add_name getattr remove_name write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     java_read_all_user_content, java_manage_all_user_content
+allow java_t xdg_downloads_t:dir { open read };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     This avc can be allowed using the boolean 'java_manage_all_user_content'
+allow java_t xdg_downloads_t:file { create getattr open read rename setattr unlink write };
+
+allow java_t bin_t:file { execute execute_no_trans getattr ioctl map open read };
+allow java_t cgroup_t:dir search;
+allow java_t cgroup_t:file { getattr open read };
+allow java_t devpts_t:filesystem mount;
+allow java_t dri_device_t:chr_file { getattr ioctl read write };
+allow java_t efivarfs_t:dir getattr;
+allow java_t etc_t:file map;
+allow java_t evolution_exec_t:file { execute getattr };
+allow java_t fs_t:filesystem { remount unmount };
+allow java_t gnome_xdg_config_t:file map;
+allow java_t home_root_t:dir read;
+allow java_t hplip_exec_t:file { execute getattr };
+allow java_t init_t:unix_stream_socket connectto;
+allow java_t java_tmp_t:file mounton;
+allow java_t java_tmp_t:lnk_file { create unlink };
+allow java_t java_tmpfs_t:file mounton;
+allow java_t mozilla_exec_t:file { execute getattr };
+allow java_t mount_runtime_t:file { getattr open read };
+allow java_t mozilla_exec_t:file { execute_no_trans map open read };
+allow java_t mozilla_home_t:file map;
+allow java_t mozilla_xdg_cache_t:file map;
+allow java_t mplayer_exec_t:file { execute execute_no_trans getattr map open read };
+allow java_t nsfs_t:file getattr;
+allow java_t proc_t:filesystem mount;
+allow java_t pulseaudio_t:fd use;
+allow java_t pulseaudio_t:unix_stream_socket connectto;
+allow java_t pulseaudio_tmpfs_t:file { getattr map read write };
+allow java_t root_t:dir mounton;
+allow java_t self:cap_userns { net_admin setpcap setuid sys_admin };
+allow java_t self:capability { setgid setpcap setuid };
+allow java_t self:netlink_route_socket nlmsg_write;
+allow java_t self:process setcap;
+allow java_t selinux_config_t:lnk_file read;
+allow java_t shell_exec_t:file { execute map open read };
+allow java_t system_dbusd_t:dbus send_msg;
+allow java_t system_dbusd_t:unix_stream_socket connectto;
+allow java_t system_dbusd_var_lib_t:dir search;
+allow java_t system_dbusd_var_lib_t:lnk_file read;
+allow java_t system_dbusd_var_run_t:sock_file write;
+allow java_t systemd_hostnamed_t:dbus send_msg;
+allow java_t tmp_t:sock_file { create unlink };
+allow java_t tmpfs_t:dir { create mounton };
+allow java_t tmpfs_t:filesystem { mount unmount };
+allow java_t unlabeled_t:dir { add_name getattr open read remove_name search setattr write };
+allow java_t unlabeled_t:file { append create getattr ioctl link lock map open read rename setattr unlink write };
+allow java_t unreserved_port_t:tcp_socket name_bind;
+allow java_t user_home_dir_t:dir create;
+allow java_t user_home_dir_t:file { append create execute getattr ioctl lock map open read rename setattr unlink write };
+allow java_t user_runtime_t:dir { add_name mounton write };
+allow java_t user_runtime_t:file { create map open read write };
+allow java_t user_runtime_t:sock_file write;
+allow java_t user_tmp_t:file map;
+allow java_t usr_t:file { execute map };
+allow java_t var_t:file { getattr map open read };
+allow java_t wine_exec_t:file { execute getattr };
+allow java_t xdg_cache_t:file map;
+allow java_t xdg_config_t:file map;
+allow java_t xdg_data_t:file map;
+allow java_t xserver_tmp_t:file { map write };
+
+#============= kernel_t ==============
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     allow_execmem, allow_execstack
+allow kernel_t self:process execmem;
+
+allow kernel_t auditd_unit_t:service { start status };
+allow kernel_t power_unit_t:service { start status };
+allow kernel_t restorecond_unit_t:service { start status };
+allow kernel_t self:bpf { map_create map_read map_write prog_load prog_run };
+allow kernel_t self:capability2 block_suspend;
+allow kernel_t systemd_unit_t:service { start status stop };
+allow kernel_t unlabeled_t:service { start status };
+
+#============= kmod_t ==============
+allow kmod_t boot_t:dir search;
+allow kmod_t boot_t:file getattr;
+allow kmod_t initrc_tmp_t:dir { add_name getattr open read remove_name write };
+allow kmod_t initrc_tmp_t:file { create getattr open rename write };
+allow kmod_t initrc_var_run_t:file write;
+allow kmod_t tracefs_t:dir search;
+allow kmod_t tty_device_t:chr_file { read write };
+allow kmod_t user_tmp_t:file { getattr open read };
+allow kmod_t var_run_t:file write;
+
+#============= loadkeys_t ==============
+allow loadkeys_t etc_t:file map;
+allow loadkeys_t user_devpts_t:chr_file { read write };
+allow loadkeys_t user_t:tcp_socket { read write };
+allow loadkeys_t user_tmp_t:file getattr;
+
+#============= local_login_t ==============
+allow local_login_t etc_t:file map;
+allow local_login_t self:process signal;
+allow local_login_t xdm_t:key link;
+
+#============= logrotate_t ==============
+allow logrotate_t selinux_config_t:lnk_file read;
+
+#============= modemmanager_t ==============
+allow modemmanager_t etc_t:file map;
+allow modemmanager_t init_t:dbus send_msg;
+allow modemmanager_t selinux_config_t:lnk_file read;
+allow modemmanager_t user_t:dbus send_msg;
+
+#============= mount_t ==============
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'allow_mount_anyfile'
+allow mount_t devicekit_var_run_t:dir { mounton read };
+
+allow mount_t devicekit_disk_t:file read;
+allow mount_t etc_t:file map;
+allow mount_t self:fifo_file { read write };
+allow mount_t self:capability dac_read_search;
+allow mount_t self:process signal;
+
+#============= mozilla_t ==============
+
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     mozilla_read_all_user_content, mozilla_manage_all_user_content
+allow mozilla_t gnome_xdg_config_t:dir { getattr read search };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     mozilla_read_all_user_content, mozilla_manage_all_user_content
+allow mozilla_t gnome_xdg_config_t:file { getattr open read };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     mozilla_read_all_user_content, mozilla_manage_all_user_content
+allow mozilla_t gnome_xdg_config_t:file { getattr open read };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     mozilla_read_all_user_content, mozilla_manage_all_user_content
+allow mozilla_t gpg_secret_t:dir getattr;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     mozilla_read_all_user_content, mozilla_manage_all_user_content
+allow mozilla_t mesa_shader_cache_t:dir { add_name getattr write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'mozilla_manage_all_user_content'
+allow mozilla_t mesa_shader_cache_t:file { create getattr open read write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'allow_ypbind'
+allow mozilla_t node_t:tcp_socket node_bind;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'allow_ypbind'
+allow mozilla_t node_t:udp_socket node_bind;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'allow_kerberos'
+allow mozilla_t ocsp_port_t:tcp_socket name_connect;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'allow_ypbind'
+allow mozilla_t reserved_port_t:tcp_socket name_connect;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     allow_execmem, mozilla_execstack
+allow mozilla_t self:process execmem;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'allow_ypbind'
+allow mozilla_t self:tcp_socket listen;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     mozilla_read_all_user_content, mozilla_manage_all_user_content
+allow mozilla_t user_cert_t:dir getattr;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     mozilla_manage_generic_user_content, mozilla_manage_all_user_content
+allow mozilla_t user_home_t:dir write;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     mozilla_manage_generic_user_content, mozilla_manage_all_user_content
+allow mozilla_t user_home_t:file { create rename setattr unlink write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     mozilla_read_all_user_content, mozilla_manage_all_user_content
+allow mozilla_t xdg_cache_t:file { create getattr link lock open read rename unlink write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'mozilla_manage_all_user_content'
+allow mozilla_t xdg_config_t:file { create rename unlink write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     mozilla_manage_all_user_content'
+allow mozilla_t xdg_data_t:dir { add_name remove_name write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'mozilla_manage_all_user_content'
+allow mozilla_t xdg_data_t:file { create rename setattr unlink write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     mozilla_read_all_user_content, mozilla_manage_all_user_content
+allow mozilla_t xdg_documents_t:dir getattr;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     mozilla_read_all_user_content, mozilla_manage_all_user_content
+allow mozilla_t xdg_music_t:dir getattr;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'mozilla_manage_all_user_content'
+allow mozilla_t xdg_pictures_t:dir add_name;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     mozilla_read_all_user_content, mozilla_manage_all_user_content
+allow mozilla_t xdg_pictures_t:dir { getattr open read write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'mozilla_manage_all_user_content'
+allow mozilla_t xdg_pictures_t:file { create setattr write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     mozilla_read_all_user_content, mozilla_manage_all_user_content
+allow mozilla_t xdg_pictures_t:file { getattr open read };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     mozilla_read_all_user_content, mozilla_manage_all_user_content
+allow mozilla_t xdg_videos_t:dir getattr;
+
+allow mozilla_t amanda_port_t:tcp_socket name_connect;
+allow mozilla_t amavisd_recv_port_t:tcp_socket name_connect;
+allow mozilla_t aol_port_t:tcp_socket name_connect;
+allow mozilla_t apcupsd_port_t:tcp_socket name_connect;
+allow mozilla_t asterisk_port_t:tcp_socket name_connect;
+allow mozilla_t bgp_port_t:tcp_socket name_connect;
+allow mozilla_t boinc_client_port_t:tcp_socket name_connect;
+allow mozilla_t certmaster_port_t:tcp_socket name_connect;
+allow mozilla_t clamd_port_t:tcp_socket name_connect;
+allow mozilla_t cluster_port_t:tcp_socket name_connect;
+allow mozilla_t cma_port_t:tcp_socket name_connect;
+allow mozilla_t commplex_link_port_t:tcp_socket name_connect;
+allow mozilla_t commplex_main_port_t:tcp_socket name_connect;
+allow mozilla_t couchdb_port_t:tcp_socket name_connect;
+allow mozilla_t crack_db_t:dir getattr;
+allow mozilla_t cslistener_port_t:tcp_socket name_connect;
+allow mozilla_t cyphesis_port_t:tcp_socket name_connect;
+allow mozilla_t dbskkd_port_t:tcp_socket name_connect;
+allow mozilla_t dccm_port_t:tcp_socket name_connect;
+allow mozilla_t dhcpc_port_t:tcp_socket name_connect;
+allow mozilla_t dropbox_port_t:tcp_socket name_connect;
+allow mozilla_t embrace_dp_c_port_t:tcp_socket name_connect;
+allow mozilla_t etc_t:file map;
+allow mozilla_t fs_t:filesystem quotaget;
+allow mozilla_t ftp_data_port_t:tcp_socket name_connect;
+allow mozilla_t gconf_tmp_t:dir { add_name write };
+allow mozilla_t gconf_tmp_t:file { create map open read write };
+allow mozilla_t giftd_port_t:tcp_socket name_connect;
+allow mozilla_t gnome_xdg_config_t:file map;
+allow mozilla_t gpsd_port_t:tcp_socket name_connect;
+allow mozilla_t hddtemp_port_t:tcp_socket name_connect;
+allow mozilla_t imaze_port_t:tcp_socket name_connect;
+allow mozilla_t hi_reserved_port_t:tcp_socket name_connect;
+allow mozilla_t hplip_port_t:tcp_socket name_connect;
+allow mozilla_t i18n_input_port_t:tcp_socket name_connect;
+allow mozilla_t ircd_port_t:tcp_socket name_connect;
+allow mozilla_t inetd_child_port_t:tcp_socket name_connect;
+allow mozilla_t init_t:dbus send_msg;
+allow mozilla_t init_t:unix_stream_socket connectto;
+allow mozilla_t kerberos_master_port_t:tcp_socket name_connect;
+allow mozilla_t lib_t:file execute_no_trans;
+allow mozilla_t llmnr_port_t:tcp_socket name_connect;
+allow mozilla_t local_login_t:fd use;
+allow mozilla_t lost_found_t:dir getattr;
+allow mozilla_t man_t:dir getattr;
+allow mozilla_t memcache_port_t:tcp_socket name_connect;
+allow mozilla_t mesa_shader_cache_t:file map;
+allow mozilla_t monit_port_t:tcp_socket name_connect;
+allow mozilla_t monopd_port_t:tcp_socket name_connect;
+allow mozilla_t mountd_port_t:tcp_socket name_connect;
+allow mozilla_t munin_port_t:tcp_socket name_connect;
+allow mozilla_t mozilla_xdg_cache_t:file map;
+allow mozilla_t mnt_t:dir getattr;
+allow mozilla_t ms_streaming_port_t:tcp_socket name_connect;
+allow mozilla_t msnp_port_t:tcp_socket name_connect;
+allow mozilla_t mssql_port_t:tcp_socket name_connect;
+allow mozilla_t mysqld_port_t:tcp_socket name_connect;
+allow mozilla_t nessus_port_t:tcp_socket name_connect;
+allow mozilla_t netport_port_t:tcp_socket name_connect;
+allow mozilla_t nfs_port_t:tcp_socket name_connect;
+allow mozilla_t nfsrdma_port_t:tcp_socket name_connect;
+allow mozilla_t ntop_port_t:tcp_socket name_connect;
+allow mozilla_t openvpn_port_t:tcp_socket name_connect;
+allow mozilla_t oracledb_port_t:tcp_socket name_connect;
+allow mozilla_t pdps_port_t:tcp_socket name_connect;
+allow mozilla_t pgpkeyserver_port_t:tcp_socket name_connect;
+allow mozilla_t pop_port_t:tcp_socket name_connect;
+allow mozilla_t postgrey_port_t:tcp_socket name_connect;
+allow mozilla_t pptp_port_t:tcp_socket name_connect;
+allow mozilla_t presence_port_t:tcp_socket name_connect;
+allow mozilla_t pulseaudio_tmp_t:file map;
+allow mozilla_t radsec_port_t:tcp_socket name_connect;
+allow mozilla_t redis_port_t:tcp_socket name_connect;
+allow mozilla_t ricci_port_t:tcp_socket name_connect;
+allow mozilla_t self:process ptrace;
+allow mozilla_t selinux_config_t:lnk_file read;
+allow mozilla_t servistaitsm_port_t:tcp_socket name_connect;
+allow mozilla_t session_dbusd_runtime_t:dir { add_name getattr write };
+allow mozilla_t session_dbusd_runtime_t:file { create map open read write };
+allow mozilla_t session_dbusd_runtime_t:sock_file write;
+allow mozilla_t sixxsconfig_port_t:tcp_socket name_connect;
+allow mozilla_t snmp_port_t:tcp_socket name_connect;
+allow mozilla_t src_t:dir getattr;
+allow mozilla_t trivnet1_port_t:tcp_socket name_connect;
+allow mozilla_t unlabeled_t:file { lock open read };
+allow mozilla_t ssdp_port_t:tcp_socket name_connect;
+allow mozilla_t sysctl_vm_overcommit_t:file { open read };
+allow mozilla_t sysctl_vm_t:dir search;
+allow mozilla_t system_dbusd_var_lib_t:lnk_file read;
+allow mozilla_t systemd_hostnamed_t:dbus send_msg;
+allow mozilla_t tcs_port_t:tcp_socket name_connect;
+allow mozilla_t tor_port_t:tcp_socket name_connect;
+allow mozilla_t unlabeled_t:dir { add_name create getattr open read remove_name rename rmdir write };
+allow mozilla_t unlabeled_t:file { create getattr link map rename unlink write };
+allow mozilla_t unreserved_port_t:tcp_socket name_connect;
+allow mozilla_t user_home_dir_t:file { getattr map open read };
+allow mozilla_t user_home_t:file map;
+allow mozilla_t user_runtime_t:file { create map open read write };
+allow mozilla_t user_runtime_t:sock_file write;
+allow mozilla_t user_tmp_t:file map;
+allow mozilla_t user_tty_device_t:chr_file { append ioctl read };
+allow mozilla_t v4l_device_t:chr_file { ioctl open read };
+allow mozilla_t var_t:file map;
+allow mozilla_t varnishd_port_t:tcp_socket name_connect;
+allow mozilla_t virt_migration_port_t:tcp_socket name_connect;
+allow mozilla_t virt_port_t:tcp_socket name_connect;
+allow mozilla_t virtual_places_port_t:tcp_socket name_connect;
+allow mozilla_t websm_port_t:tcp_socket name_connect;
+allow mozilla_t wsicopy_port_t:tcp_socket name_connect;
+allow mozilla_t xdg_cache_t:file map;
+allow mozilla_t xfs_port_t:tcp_socket name_connect;
+allow mozilla_t xserver_port_t:tcp_socket name_connect;
+allow mozilla_t zabbix_agent_port_t:tcp_socket name_connect;
+allow mozilla_t zabbix_port_t:tcp_socket name_connect;
+allow mozilla_t zebra_port_t:tcp_socket name_connect;
+allow mozilla_t zented_port_t:tcp_socket name_connect;
+allow mozilla_t zookeeper_client_port_t:tcp_socket name_connect;
+allow mozilla_t zookeeper_leader_port_t:tcp_socket name_connect;
+
+#============= mplayer_t ==============
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'mplayer_manage_all_user_content'
+allow mplayer_t mesa_shader_cache_t:dir create;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'mplayer_manage_all_user_content'
+allow mplayer_t mesa_shader_cache_t:file { create rename };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     allow_execmem, allow_mplayer_execstack
+allow mplayer_t self:process execmem;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     mplayer_manage_generic_user_content, mplayer_manage_all_user_content
+allow mplayer_t user_home_t:dir write;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     mplayer_manage_generic_user_content, mplayer_manage_all_user_content
+allow mplayer_t user_home_t:file write;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'mplayer_manage_all_user_content'
+allow mplayer_t xdg_cache_t:dir { add_name write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'mplayer_manage_all_user_content'
+allow mplayer_t xdg_cache_t:dir { create remove_name };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'mplayer_manage_all_user_content'
+allow mplayer_t xdg_cache_t:file { link write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'mplayer_manage_all_user_content'
+allow mplayer_t xdg_cache_t:file { create rename };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'mplayer_manage_all_user_content'
+allow mplayer_t xdg_config_t:file { create link rename setattr unlink write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'mplayer_manage_all_user_content'
+allow mplayer_t xdg_data_t:dir { add_name remove_name write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'mplayer_manage_all_user_content'
+allow mplayer_t xdg_data_t:file { create rename unlink write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'mplayer_manage_all_user_content'
+allow mplayer_t xdg_documents_t:dir write;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'mplayer_manage_all_user_content'
+allow mplayer_t xdg_downloads_t:dir write;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'mplayer_manage_all_user_content'
+allow mplayer_t xdg_downloads_t:file write;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'mplayer_manage_all_user_content'
+allow mplayer_t xdg_music_t:dir write;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'mplayer_manage_all_user_content'
+allow mplayer_t xdg_pictures_t:dir write;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'mplayer_manage_all_user_content'
+allow mplayer_t xdg_videos_t:dir write;
+
+allow mplayer_t dri_device_t:chr_file { getattr ioctl open read write };
+allow mplayer_t etc_t:file map;
+allow mplayer_t self:process setsched;
+allow mplayer_t sysctl_vm_overcommit_t:file { open read };
+allow mplayer_t sysctl_vm_t:dir search;
+allow mplayer_t system_dbusd_t:unix_stream_socket connectto;
+allow mplayer_t unlabeled_t:dir { add_name remove_name write };
+allow mplayer_t unlabeled_t:file { create link map rename setattr unlink write };
+allow mplayer_t user_home_dir_t:dir create;
+allow mplayer_t user_home_dir_t:file { create rename unlink write };
+allow mplayer_t user_home_t:file execute;
+allow mplayer_t user_runtime_t:sock_file write;
+allow mplayer_t usr_t:file map;
+allow mplayer_t xdg_cache_t:file map;
+allow mplayer_t xdg_data_t:file map;
+allow mplayer_t xserver_tmp_t:file { map write };
+
+#============= NetworkManager_t ==============
+#c allow NetworkManager_t chromium_t:dbus send_msg;
+allow NetworkManager_t evolution_t:dbus send_msg;
+allow NetworkManager_t etc_t:file map;
+allow NetworkManager_t event_device_t:chr_file { open read write };
+allow NetworkManager_t self:rawip_socket { create getattr read setopt write };
+allow NetworkManager_t sysfs_t:dir write;
+allow NetworkManager_t systemd_logind_var_run_t:dir read;
+allow NetworkManager_t systemd_logind_var_run_t:file { getattr open read };
+
+#============= nscd_t ==============
+allow nscd_t etc_t:file map;
+
+#============= ntpd_t ==============
+allow ntpd_t etc_t:file map;
+allow ntpd_t init_t:file { getattr open read };
+allow ntpd_t selinux_config_t:lnk_file read;
+allow ntpd_t systemd_unit_t:service status;
+allow ntpd_t unlabeled_t:lnk_file read;
+allow ntpd_t user_t:dbus send_msg;
+
+#============= ping_t ==============
+allow ping_t etc_t:file map;
+allow ping_t self:icmp_socket create;
+allow ping_t system_dbusd_t:dbus send_msg;
+allow ping_t system_dbusd_t:unix_stream_socket connectto;
+allow ping_t system_dbusd_var_run_t:sock_file write;
+
+#============= policykit_t ==============
+allow policykit_t etc_t:file map;
+allow policykit_t init_t:dbus send_msg;
+allow policykit_t selinux_config_t:lnk_file read;
+
+#============= pulseaudio_t ==============
+#c allow pulseaudio_t chromium_t:fd use;
+allow pulseaudio_t etc_t:file map;
+allow pulseaudio_t evolution_t:fd use;
+allow pulseaudio_t evolution_tmpfs_t:file { getattr map read write };
+allow pulseaudio_t gconf_etc_t:dir search;
+allow pulseaudio_t gconf_etc_t:file { getattr open read };
+allow pulseaudio_t gnome_xdg_config_t:dir search;
+allow pulseaudio_t gnome_xdg_config_t:file { getattr map open read };
+allow pulseaudio_t init_t:dbus send_msg;
+allow pulseaudio_t initrc_t:dbus send_msg;
+allow pulseaudio_t java_t:fd use;
+allow pulseaudio_t java_tmpfs_t:file { getattr map read write };
+allow pulseaudio_t lib_t:file execute_no_trans;
+allow pulseaudio_t pulseaudio_tmp_t:file map;
+allow pulseaudio_t pulseaudio_xdg_config_t:file map;
+allow pulseaudio_t session_dbusd_runtime_t:dir getattr;
+allow pulseaudio_t session_dbusd_runtime_t:file { map open read write };
+allow pulseaudio_t systemd_logind_var_run_t:dir search;
+allow pulseaudio_t systemd_logind_var_run_t:file { getattr open read };
+allow pulseaudio_t systemd_sessions_var_run_t:dir read;
+allow pulseaudio_t tmpfs_t:file { getattr map read write };
+allow pulseaudio_t unlabeled_t:dir { getattr search };
+allow pulseaudio_t unlabeled_t:file { getattr map open read };
+allow pulseaudio_t user_home_t:file { getattr open read };
+allow pulseaudio_t user_runtime_t:file { map open read write };
+allow pulseaudio_t user_runtime_t:sock_file { create setattr unlink write };
+allow pulseaudio_t user_tmpfs_t:file { append write };
+allow pulseaudio_t usr_t:file map;
+allow pulseaudio_t xdg_config_t:file { getattr map open read };
+allow pulseaudio_t xdg_data_t:file { create getattr open read rename unlink write };
+
+#============= sysadm_t ==============
+allow sysadm_t kernel_t:unix_dgram_socket sendto;
+
+#============= smbd_t ==============
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'samba_export_all_rw'
+allow smbd_t system_dbusd_var_run_t:sock_file write;
+
+allow smbd_t avahi_t:dbus send_msg;
+allow smbd_t init_t:dbus send_msg;
+allow smbd_t samba_var_t:file map;
+allow smbd_t system_dbusd_t:dbus send_msg;
+allow smbd_t system_dbusd_t:unix_stream_socket connectto;
+
+#============= restorecond_t ==============
+allow restorecond_t cgroup_t:filesystem getattr;
+allow restorecond_t etc_t:file map;
+
+#============= setfiles_t ==============
+allow setfiles_t cgroup_t:filesystem getattr;
+allow setfiles_t initrc_t:tcp_socket { read write };
+allow setfiles_t initrc_t:unix_stream_socket { read write };
+
+#============= sulogin_t ==============
+allow sulogin_t security_t:file write;
+allow sulogin_t security_t:security compute_user;
+
+#============= sysadm_sudo_t ==============
+allow sysadm_sudo_t acpi_bios_t:chr_file getattr;
+allow sysadm_sudo_t autofs_device_t:chr_file getattr;
+allow sysadm_sudo_t boot_t:dir { add_name getattr open read write };
+allow sysadm_sudo_t boot_t:file { create getattr ioctl open write };
+allow sysadm_sudo_t clock_device_t:chr_file getattr;
+allow sysadm_sudo_t device_t:chr_file getattr;
+allow sysadm_sudo_t etc_t:file { execute execute_no_trans };
+allow sysadm_sudo_t event_device_t:chr_file getattr;
+allow sysadm_sudo_t fixed_disk_device_t:blk_file { getattr ioctl open };
+allow sysadm_sudo_t framebuf_device_t:chr_file getattr;
+allow sysadm_sudo_t fuse_device_t:chr_file getattr;
+allow sysadm_sudo_t initctl_t:fifo_file getattr;
+allow sysadm_sudo_t loop_control_device_t:chr_file getattr;
+allow sysadm_sudo_t lvm_control_t:chr_file { getattr ioctl open read write };
+allow sysadm_sudo_t kvm_device_t:chr_file getattr;
+allow sysadm_sudo_t mouse_device_t:chr_file getattr;
+allow sysadm_sudo_t netcontrol_device_t:chr_file getattr;
+allow sysadm_sudo_t ppp_device_t:chr_file getattr;
+allow sysadm_sudo_t proc_kcore_t:file getattr;
+allow sysadm_sudo_t ptmx_t:chr_file getattr;
+allow sysadm_sudo_t removable_device_t:blk_file getattr;
+allow sysadm_sudo_t self:capability { dac_read_search sys_rawio };
+allow sysadm_sudo_t semanage_read_lock_t:file { getattr lock open read };
+allow sysadm_sudo_t semanage_store_t:dir { getattr open read };
+allow sysadm_sudo_t semanage_store_t:file { getattr open read };
+allow sysadm_sudo_t tmp_t:dir { add_name remove_name write };
+allow sysadm_sudo_t tmp_t:file { create getattr open read setattr unlink write };
+allow sysadm_sudo_t tmpfs_t:filesystem getattr;
+allow sysadm_sudo_t usr_t:file { open read };
+allow sysadm_sudo_t v4l_device_t:chr_file getattr;
+allow sysadm_sudo_t vhost_device_t:chr_file getattr;
+allow sysadm_sudo_t wireless_device_t:chr_file getattr;
+allow sysadm_sudo_t xserver_misc_device_t:chr_file getattr;
+
+#============= sysadm_t ==============
+allow sysadm_t dirmngr_t:unix_stream_socket { bind create listen setopt };
+allow sysadm_t gpg_agent_t:unix_stream_socket { bind create listen setopt };
+allow sysadm_t init_exec_t:file entrypoint;
+allow sysadm_t init_t:unix_stream_socket { ioctl read write };
+allow sysadm_t self:bpf { map_create map_read map_write prog_load prog_run };
+allow sysadm_t self:capability audit_write;
+allow sysadm_t self:system reload;
+allow sysadm_t sysadm_dbusd_t:unix_stream_socket { bind create listen setopt };
+
+#============= syslogd_t ==============
+allow syslogd_t acpid_t:process getattr;
+allow syslogd_t auditd_t:process signull;
+allow syslogd_t avahi_t:process signull;
+allow syslogd_t crond_t:process signull;
+allow syslogd_t devicekit_disk_t:process signull;
+allow syslogd_t init_t:process getattr;
+allow syslogd_t init_var_run_t:lnk_file read;
+allow syslogd_t initrc_t:process { getattr signull };
+allow syslogd_t local_login_t:process signull;
+allow syslogd_t NetworkManager_t:process { getattr signull };
+allow syslogd_t pulseaudio_t:process getattr;
+allow syslogd_t restorecond_t:process signull;
+allow syslogd_t smbd_t:process signull;
+allow syslogd_t sysadm_t:process signull;
+allow syslogd_t system_cronjob_t:process signull;
+allow syslogd_t system_dbusd_t:process { getattr signull };
+allow syslogd_t systemd_logind_t:process signull;
+allow syslogd_t udev_t:process signull;
+allow syslogd_t user_dbusd_t:process getattr;
+allow syslogd_t user_su_t:process signull;
+allow syslogd_t user_sudo_t:process signull;
+allow syslogd_t user_t:process signull;
+allow syslogd_t xdm_t:process signull;
+
+#============= system_dbusd_t ==============
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'authlogin_nsswitch_use_ldap'
+allow system_dbusd_t random_device_t:chr_file read;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'authlogin_nsswitch_use_ldap'
+allow system_dbusd_t random_device_t:chr_file getattr;
+
+allow system_dbusd_t bin_t:file { execute execute_no_trans getattr ioctl map open read };
+allow system_dbusd_t blueman_var_lib_t:dir { getattr search };
+allow system_dbusd_t blueman_var_lib_t:file { getattr ioctl open read write };
+#c allow system_dbusd_t chromium_t:fd use;
+allow system_dbusd_t devicekit_var_run_t:dir getattr;
+allow system_dbusd_t devpts_t:filesystem mount;
+allow system_dbusd_t etc_t:file map;
+allow system_dbusd_t fonts_cache_t:dir search;
+allow system_dbusd_t fonts_cache_t:file { getattr map open read };
+allow system_dbusd_t fonts_t:dir { getattr open read search };
+allow system_dbusd_t fonts_t:file { getattr map open read };
+allow system_dbusd_t fs_t:filesystem { remount unmount };
+allow system_dbusd_t fusefs_t:dir { getattr read search };
+allow system_dbusd_t fusefs_t:file { getattr open read };
+allow system_dbusd_t gconf_etc_t:dir { getattr open read search };
+allow system_dbusd_t gconf_etc_t:file { getattr open read };
+allow system_dbusd_t gconf_home_t:dir getattr;
+allow system_dbusd_t gconf_tmp_t:dir { remove_name write };
+allow system_dbusd_t gconf_tmp_t:file { map open read unlink write };
+allow system_dbusd_t gkeyringd_exec_t:file { execute execute_no_trans map open read };
+allow system_dbusd_t gnome_xdg_config_t:dir { add_name read remove_name search write };
+allow system_dbusd_t gnome_xdg_config_t:file { create getattr map open read rename unlink write };
+allow system_dbusd_t init_t:unix_stream_socket connectto;
+allow system_dbusd_t mesa_shader_cache_t:dir { add_name create getattr remove_name search write };
+allow system_dbusd_t mesa_shader_cache_t:file { create getattr lock map open read rename write };
+allow system_dbusd_t mount_runtime_t:file { getattr open read };
+allow system_dbusd_t mplayer_exec_t:file { execute execute_no_trans getattr map open read };
+allow system_dbusd_t nsfs_t:file getattr;
+allow system_dbusd_t proc_net_t:file read;
+allow system_dbusd_t proc_t:filesystem mount;
+allow system_dbusd_t pulseaudio_home_t:file { lock open read };
+allow system_dbusd_t pulseaudio_t:fd use;
+allow system_dbusd_t pulseaudio_t:unix_stream_socket connectto;
+allow system_dbusd_t pulseaudio_tmp_t:dir { add_name getattr remove_name write };
+allow system_dbusd_t pulseaudio_tmp_t:file { create map open read unlink write };
+allow system_dbusd_t pulseaudio_tmpfs_t:file { getattr map read write };
+allow system_dbusd_t pulseaudio_xdg_config_t:file { lock open read };
+allow system_dbusd_t root_t:dir mounton;
+allow system_dbusd_t self:cap_userns { net_admin setpcap setuid sys_admin };
+allow system_dbusd_t self:netlink_route_socket nlmsg_write;
+allow system_dbusd_t self:process { execmem setsched };
+allow system_dbusd_t self:shm { create destroy read unix_read unix_write write };
+allow system_dbusd_t session_dbusd_runtime_t:dir { getattr open read };
+allow system_dbusd_t session_dbusd_runtime_t:sock_file write;
+allow system_dbusd_t setrans_var_run_t:dir search;
+allow system_dbusd_t sysctl_t:file { getattr open read };
+allow system_dbusd_t sysctl_vm_overcommit_t:file { open read };
+allow system_dbusd_t sysctl_vm_t:dir search;
+allow system_dbusd_t system_dbusd_tmp_t:file { execute map mounton };
+allow system_dbusd_t system_dbusd_var_lib_t:lnk_file { getattr read };
+allow system_dbusd_t tmpfs_t:dir { add_name create getattr mounton open read remove_name search write };
+allow system_dbusd_t tmpfs_t:file { create execute getattr map mounton open read rename unlink write };
+allow system_dbusd_t tmpfs_t:filesystem { mount remount unmount };
+allow system_dbusd_t tmpfs_t:lnk_file create;
+allow system_dbusd_t unlabeled_t:dir { add_name create getattr open read remove_name search setattr write };
+allow system_dbusd_t unlabeled_t:file { append create getattr link lock map open read rename setattr unlink write };
+allow system_dbusd_t user_devpts_t:chr_file { read write };
+allow system_dbusd_t user_fonts_cache_t:file { getattr open read };
+allow system_dbusd_t user_home_dir_t:dir { add_name create read remove_name setattr write };
+allow system_dbusd_t user_home_dir_t:file { append create execute getattr map open read rename setattr unlink write };
+allow system_dbusd_t user_home_t:dir { add_name read remove_name setattr write };
+allow system_dbusd_t user_home_t:file { create execute link rename setattr unlink write };
+allow system_dbusd_t user_home_t:lnk_file read;
+allow system_dbusd_t user_runtime_root_t:dir { getattr search };
+allow system_dbusd_t user_runtime_t:dir { add_name create getattr mounton open read remove_name rmdir search write };
+allow system_dbusd_t user_runtime_t:file { create execute map open read unlink write };
+allow system_dbusd_t user_runtime_t:sock_file { create write unlink };
+allow system_dbusd_t user_t:unix_stream_socket connectto;
+allow system_dbusd_t user_tmp_t:dir { getattr mounton };
+allow system_dbusd_t user_tmp_t:file { map open read unlink };
+allow system_dbusd_t user_tmp_t:sock_file { getattr write };
+allow system_dbusd_t usr_t:file map;
+allow system_dbusd_t v4l_device_t:chr_file getattr;
+allow system_dbusd_t var_lib_t:dir { add_name create write };
+allow system_dbusd_t var_lib_t:file { create getattr ioctl open read write };
+allow system_dbusd_t var_t:dir { add_name read remove_name write };
+allow system_dbusd_t var_t:file { create execute getattr ioctl map open read rename setattr unlink write };
+allow system_dbusd_t var_t:lnk_file read;
+allow system_dbusd_t wireless_device_t:chr_file { getattr ioctl open read write };
+allow system_dbusd_t xauth_home_t:file { getattr open read };
+allow system_dbusd_t xdg_cache_t:dir { add_name create getattr remove_name search write };
+allow system_dbusd_t xdg_cache_t:file { create getattr ioctl lock map open read rename setattr unlink write };
+allow system_dbusd_t xdg_config_t:dir { add_name create getattr open read remove_name search write };
+allow system_dbusd_t xdg_config_t:file { append create getattr link lock map open read rename setattr unlink write };
+allow system_dbusd_t xdg_data_t:dir { add_name getattr open read remove_name search setattr write };
+allow system_dbusd_t xdg_data_t:file { append create getattr link map open read rename setattr unlink write };
+allow system_dbusd_t xdg_documents_t:dir { getattr open read };
+allow system_dbusd_t xdg_documents_t:file getattr;
+allow system_dbusd_t xdg_downloads_t:dir { getattr open read remove_name search write };
+allow system_dbusd_t xdg_downloads_t:file { execute getattr open read rename unlink write };
+allow system_dbusd_t xdg_music_t:dir { add_name getattr open read write };
+allow system_dbusd_t xdg_music_t:file { create getattr ioctl open read setattr write };
+allow system_dbusd_t xdg_pictures_t:dir getattr;
+allow system_dbusd_t xdg_videos_t:dir { getattr open read search write };
+allow system_dbusd_t xdg_videos_t:file { getattr open read write };
+allow system_dbusd_t xdm_runtime_t:dir { remove_name write };
+allow system_dbusd_t xdm_runtime_t:file { map open read unlink write };
+allow system_dbusd_t xdm_var_lib_t:dir { add_name create getattr remove_name search write };
+allow system_dbusd_t xdm_var_lib_t:file { create rename unlink write };
+allow system_dbusd_t xserver_t:fd use;
+allow system_dbusd_t xserver_t:unix_stream_socket connectto;
+allow system_dbusd_t xserver_tmp_t:file { map read write };
+
+#============= systemd_backlight_t ==============
+allow systemd_backlight_t etc_t:file map;
+allow systemd_backlight_t selinux_config_t:lnk_file read;
+allow systemd_backlight_t unlabeled_t:lnk_file read;
+
+#============= systemd_coredump_t ==============
+#c allow systemd_coredump_t chromium_exec_t:file map;
+allow systemd_coredump_t etc_t:file map;
+allow systemd_coredump_t kernel_t:fifo_file getattr;
+allow systemd_coredump_t mount_exec_t:file map;
+allow systemd_coredump_t mozilla_exec_t:file map;
+allow systemd_coredump_t nscd_var_run_t:dir search;
+allow systemd_coredump_t self:capability sys_ptrace;
+allow systemd_coredump_t selinux_config_t:lnk_file read;
+allow systemd_coredump_t systemd_coredump_var_lib_t:file map;
+allow systemd_coredump_t unlabeled_t:lnk_file read;
+
+#============= system_cronjob_t ==============
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'authlogin_nsswitch_use_ldap'
+allow system_cronjob_t cert_t:lnk_file read;
+
+allow system_cronjob_t alsa_etc_t:lnk_file read;
+allow system_cronjob_t auditd_log_t:file { open read };
+allow system_cronjob_t blueman_var_lib_t:file { open read };
+allow system_cronjob_t boot_t:file { open read };
+allow system_cronjob_t bootloader_tmp_t:file { open read };
+allow system_cronjob_t crond_var_run_t:file { link open read unlink write };
+allow system_cronjob_t cupsd_etc_t:lnk_file read;
+allow system_cronjob_t cupsd_rw_etc_t:file { open read };
+allow system_cronjob_t device_t:chr_file getattr;
+allow system_cronjob_t devicekit_disk_t:dbus send_msg;
+allow system_cronjob_t devicekit_var_lib_t:file { open read };
+allow system_cronjob_t faillog_t:file { open read };
+allow system_cronjob_t fixed_disk_device_t:blk_file open;
+allow system_cronjob_t fonts_cache_t:file { open read };
+allow system_cronjob_t httpd_git_content_t:file { open read };
+allow system_cronjob_t init_var_lib_t:file { open read };
+allow system_cronjob_t lastlog_t:file { open read };
+allow system_cronjob_t ldconfig_cache_t:file { open read };
+allow system_cronjob_t logrotate_var_lib_t:file { open read };
+allow system_cronjob_t ifplugd_etc_t:file { open read };
+allow system_cronjob_t mail_spool_t:lnk_file read;
+allow system_cronjob_t man_cache_t:file { open read };
+allow system_cronjob_t man_t:file { open read };
+allow system_cronjob_t man_t:lnk_file read;
+allow system_cronjob_t mandb_unit_t:file { open read };
+allow system_cronjob_t modules_dep_t:file { open read };
+allow system_cronjob_t modules_object_t:file { open read };
+allow system_cronjob_t modules_object_t:lnk_file read;
+allow system_cronjob_t mount_runtime_t:file { open read };
+allow system_cronjob_t NetworkManager_etc_rw_t:file { open read };
+allow system_cronjob_t NetworkManager_unit_t:file { open read };
+allow system_cronjob_t NetworkManager_var_lib_t:file { open read };
+allow system_cronjob_t policy_config_t:file { open read };
+allow system_cronjob_t power_unit_t:file { open read };
+allow system_cronjob_t semanage_store_t:file { open read };
+allow system_cronjob_t src_t:lnk_file read;
+allow system_cronjob_t system_cronjob_tmp_t:file { execute execute_no_trans };
+allow system_cronjob_t system_dbusd_var_lib_t:lnk_file read;
+allow system_cronjob_t systemd_backlight_var_lib_t:file { open read };
+allow system_cronjob_t systemd_coredump_var_lib_t:file { open read };
+allow system_cronjob_t systemd_journal_t:file { open read };
+allow system_cronjob_t systemd_unit_t:file { open read };
+allow system_cronjob_t udev_var_run_t:file { open read };
+allow system_cronjob_t unlabeled_t:dir { add_name create remove_name rmdir setattr write };
+allow system_cronjob_t unlabeled_t:file { append create link open read rename setattr unlink write };
+allow system_cronjob_t unlabeled_t:lnk_file { create link read setattr unlink };
+allow system_cronjob_t unlabeled_t:sock_file { create link setattr unlink };
+allow system_cronjob_t user_tmp_t:dir { add_name create remove_name write };
+allow system_cronjob_t user_tmp_t:file { create execute execute_no_trans setattr unlink };
+allow system_cronjob_t var_lib_t:file { open read };
+allow system_cronjob_t var_lock_t:dir create;
+allow system_cronjob_t var_lock_t:file { open read };
+allow system_cronjob_t wtmp_t:file { open read };
+allow system_cronjob_t xdg_config_t:file { open read };
+allow system_cronjob_t xdm_var_lib_t:file { open read };
+allow system_cronjob_t xkb_var_lib_t:file { open read };
+allow system_cronjob_t xkb_var_lib_t:lnk_file read;
+allow system_cronjob_t xserver_log_t:file { open read };
+
+#============= systemd_gpt_generator_t ==============
+allow systemd_gpt_generator_t boot_t:dir { getattr open read };
+allow systemd_gpt_generator_t etc_t:file map;
+allow systemd_gpt_generator_t selinux_config_t:lnk_file read;
+allow systemd_gpt_generator_t unlabeled_t:lnk_file read;
+
+#============= systemd_hostnamed_t ==============
+#c allow systemd_hostnamed_t chromium_t:dbus send_msg;
+allow systemd_hostnamed_t etc_t:file map;
+allow systemd_hostnamed_t evolution_t:dbus send_msg;
+allow systemd_hostnamed_t initrc_t:dbus send_msg;
+allow systemd_hostnamed_t java_t:dbus send_msg;
+allow systemd_hostnamed_t mozilla_t:dbus send_msg;
+allow systemd_hostnamed_t selinux_config_t:lnk_file read;
+allow systemd_hostnamed_t user_t:dbus send_msg;
+allow systemd_hostnamed_t unlabeled_t:lnk_file read;
+
+#============= systemd_logind_t ==============
+allow systemd_logind_t etc_t:file map;
+allow systemd_logind_t initrc_var_run_t:file { getattr lock open read };
+allow systemd_logind_t vhost_device_t:chr_file { getattr setattr };
+allow systemd_logind_t unlabeled_t:lnk_file read;
+allow systemd_logind_t user_gkeyringd_t:dbus send_msg;
+
+#============= systemd_rfkill_t ==============
+allow systemd_rfkill_t etc_t:file map;
+allow systemd_rfkill_t self:netlink_kobject_uevent_socket { bind create getattr read setopt };
+allow systemd_rfkill_t selinux_config_t:lnk_file read;
+
+#============= systemd_sessions_t ==============
+allow systemd_sessions_t etc_t:file { getattr map open read };
+allow systemd_sessions_t unlabeled_t:lnk_file read;
+
+#============= systemd_tmpfiles_t ==============
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'systemd_tmpfiles_manage_all'
+allow systemd_tmpfiles_t colord_var_lib_t:dir { getattr search };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'systemd_tmpfiles_manage_all'
+allow systemd_tmpfiles_t fusefs_t:dir getattr;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'systemd_tmpfiles_manage_all'
+allow systemd_tmpfiles_t lastlog_t:file getattr;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'systemd_tmpfiles_manage_all'
+allow systemd_tmpfiles_t locale_t:dir { getattr search };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'systemd_tmpfiles_manage_all'
+allow systemd_tmpfiles_t locale_t:file getattr;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'systemd_tmpfiles_manage_all'
+allow systemd_tmpfiles_t mpd_data_t:dir getattr;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'systemd_tmpfiles_manage_all'
+allow systemd_tmpfiles_t mpd_var_lib_t:dir { getattr search };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'systemd_tmpfiles_manage_all'
+allow systemd_tmpfiles_t geoclue_var_lib_t:dir getattr;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'systemd_tmpfiles_manage_all'
+allow systemd_tmpfiles_t rpcbind_var_lib_t:dir getattr;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'systemd_tmpfiles_manage_all'
+allow systemd_tmpfiles_t samba_log_t:dir getattr;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'systemd_tmpfiles_manage_all'
+allow systemd_tmpfiles_t tmpfs_t:dir getattr;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'systemd_tmpfiles_manage_all'
+allow systemd_tmpfiles_t user_tmp_t:dir setattr;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'systemd_tmpfiles_manage_all'
+allow systemd_tmpfiles_t var_lib_t:file getattr;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'systemd_tmpfiles_manage_all'
+allow systemd_tmpfiles_t xdm_var_lib_t:dir getattr;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'systemd_tmpfiles_manage_all'
+allow systemd_tmpfiles_t xdm_var_run_t:file { getattr unlink };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'systemd_tmpfiles_manage_all'
+allow systemd_tmpfiles_t xserver_log_t:dir getattr;
+
+allow systemd_tmpfiles_t device_t:filesystem getattr;
+allow systemd_tmpfiles_t etc_t:file map;
+allow systemd_tmpfiles_t proc_t:filesystem getattr;
+allow systemd_tmpfiles_t self:capability dac_read_search;
+allow systemd_tmpfiles_t shadow_t:file getattr;
+allow systemd_tmpfiles_t tmpfs_t:filesystem getattr;
+allow systemd_tmpfiles_t unlabeled_t:lnk_file read;
+
+#============= systemd_update_done_t ==============
+allow systemd_update_done_t devlog_t:sock_file write;
+allow systemd_update_done_t etc_t:file { create getattr open read rename setattr unlink write };
+allow systemd_update_done_t file_context_t:dir search;
+allow systemd_update_done_t file_context_t:file { getattr map open read };
+allow systemd_update_done_t init_t:dir search;
+allow systemd_update_done_t init_t:file { getattr open read };
+allow systemd_update_done_t init_var_run_t:dir search;
+allow systemd_update_done_t self:process setfscreate;
+allow systemd_update_done_t self:unix_dgram_socket { connect create getopt setopt };
+allow systemd_update_done_t selinux_config_t:lnk_file read;
+allow systemd_update_done_t syslogd_t:unix_dgram_socket sendto;
+allow systemd_update_done_t syslogd_var_run_t:dir search;
+allow systemd_update_done_t unlabeled_t:lnk_file read;
+allow systemd_update_done_t var_t:file { create getattr open read rename setattr unlink write };
+
+#============= tmpfs_t ==============
+allow tmpfs_t device_t:filesystem associate;
+
+#============= udev_t ==============
+allow udev_t efivarfs_t:dir search;
+allow udev_t initrc_var_run_t:dir getattr;
+allow udev_t kernel_t:unix_stream_socket { read write ioctl };
+allow udev_t net_conf_t:dir { getattr open read };
+allow udev_t sysctl_fs_t:dir search;
+allow udev_t sysctl_kernel_t:file write;
+allow udev_t sysctl_vm_t:dir search;
+allow udev_t sysctl_vm_t:file { open write };
+allow udev_t sysfs_t:dir { add_name write };
+allow udev_t sysfs_t:file create;
+allow udev_t udev_tbl_t:dir { write add_name };
+allow udev_t unlabeled_t:lnk_file read;
+allow udev_t var_lib_t:dir { remove_name write };
+allow udev_t var_lib_t:file { getattr unlink };
+allow udev_t var_run_t:dir create;
+allow udev_t var_run_t:file { create getattr lock open read write };
+allow udev_t var_run_t:sock_file write;
+
+#============= user_dbusd_t ==============
+
+#!!!! This avc can be allowed using the boolean
+#     'authlogin_nsswitch_use_ldap'
+allow user_dbusd_t random_device_t:chr_file read;
+
+
+allow user_dbusd_t avahi_t:dbus send_msg;
+allow user_dbusd_t boot_t:dir search;
+allow user_dbusd_t cgroup_t:dir search;
+allow user_dbusd_t cgroup_t:filesystem getattr;
+allow user_dbusd_t dbusd_exec_t:file execute_no_trans;
+allow user_dbusd_t debugfs_t:dir search;
+allow user_dbusd_t devicekit_disk_t:dbus send_msg;
+allow user_dbusd_t devicekit_var_run_t:dir getattr;
+allow user_dbusd_t dosfs_t:dir read;
+allow user_dbusd_t etc_t:file map;
+allow user_dbusd_t fixed_disk_device_t:blk_file getattr;
+allow user_dbusd_t fuse_device_t:chr_file { open read write };
+allow user_dbusd_t fusefs_t:dir { getattr mounton open read write };
+allow user_dbusd_t fusefs_t:file { execute getattr open read write };
+allow user_dbusd_t fusefs_t:filesystem { mount unmount };
+allow user_dbusd_t gnome_xdg_config_t:dir search;
+allow user_dbusd_t gnome_xdg_config_t:file { getattr map open read };
+allow user_dbusd_t init_t:dbus send_msg;
+allow user_dbusd_t lib_t:file execute_no_trans;
+allow user_dbusd_t kernel_t:system module_request;
+allow user_dbusd_t mount_exec_t:file { execute execute_no_trans map open read };
+allow user_dbusd_t mount_runtime_t:file { getattr open read };
+allow user_dbusd_t self:capability dac_read_search;
+allow user_dbusd_t self:netlink_kobject_uevent_socket create;
+allow user_dbusd_t self:process { getcap setsched };
+allow user_dbusd_t self:unix_stream_socket connectto;
+allow user_dbusd_t session_dbusd_runtime_t:dir mounton;
+allow user_dbusd_t session_dbusd_runtime_t:file map;
+allow user_dbusd_t sysfs_t:file { getattr open read };
+allow user_dbusd_t sysfs_t:lnk_file { getattr read };
+allow user_dbusd_t system_dbusd_t:dbus send_msg;
+allow user_dbusd_t system_dbusd_t:unix_stream_socket connectto;
+allow user_dbusd_t system_dbusd_var_run_t:sock_file write;
+allow user_dbusd_t systemd_sessions_var_run_t:file { getattr open read };
+allow user_dbusd_t tmpfs_t:filesystem getattr;
+allow user_dbusd_t udev_var_run_t:file { getattr open read };
+allow user_dbusd_t user_home_dir_t:file { append create getattr map open read rename unlink write };
+allow user_dbusd_t user_home_t:dir { add_name getattr open read remove_name setattr write };
+allow user_dbusd_t user_home_t:file { getattr open read unlink };
+allow user_dbusd_t user_runtime_t:file { map open read write };
+allow user_dbusd_t usr_t:file map;
+allow user_dbusd_t xauth_home_t:file { getattr open read };
+allow user_dbusd_t xdg_cache_t:dir { add_name getattr search write };
+allow user_dbusd_t xdg_cache_t:file { create getattr lock map open read write };
+allow user_dbusd_t xdg_config_t:dir { add_name remove_name search write };
+allow user_dbusd_t xdg_config_t:file { create getattr map open read rename unlink write };
+allow user_dbusd_t xdg_downloads_t:dir { add_name getattr open read remove_name rename reparent rmdir setattr write };
+allow user_dbusd_t xdg_downloads_t:file { getattr read rename unlink write };
+allow user_dbusd_t xserver_t:unix_stream_socket connectto;
+
+#============= user_gkeyringd_t ==============
+allow user_gkeyringd_t systemd_logind_t:dbus send_msg;
+allow user_gkeyringd_t user_dbusd_t:unix_stream_socket { getattr read write };
+allow user_gkeyringd_t user_home_t:dir { getattr open read };
+allow user_gkeyringd_t user_home_t:file { getattr open read };
+
+#============= user_screen_t ==============
+allow user_screen_t self:capability dac_read_search;
+allow user_screen_t user_home_t:dir search;
+allow user_screen_t utempter_exec_t:file { map open read };
+allow user_screen_t wtmp_t:file { lock open write };
+
+#============= user_su_t ==============
+allow user_su_t etc_t:file map;
+allow user_su_t init_t:dbus send_msg;
+allow user_su_t self:process signal;
+allow user_su_t user_t:process { sigkill signal };
+
+#============= user_sudo_t ==============
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'allow_ypbind'
+allow user_sudo_t node_t:udp_socket node_bind;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'nscd_use_shm'
+allow user_sudo_t nscd_var_run_t:dir read;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'allow_ypbind'
+allow user_sudo_t self:capability net_bind_service;
+
+
+allow user_sudo_t accountsd_var_lib_t:dir { getattr open read };
+allow user_sudo_t accountsd_var_lib_t:file { getattr relabelfrom relabelto };
+allow user_sudo_t acpi_bios_t:chr_file getattr;
+allow user_sudo_t acpid_var_run_t:sock_file getattr;
+allow user_sudo_t adjtime_t:file getattr;
+allow user_sudo_t alsa_etc_t:dir { getattr open read };
+allow user_sudo_t alsa_etc_t:file getattr;
+allow user_sudo_t alsa_unit_t:file getattr;
+allow user_sudo_t alsa_var_lib_t:dir { getattr open read };
+allow user_sudo_t alsa_var_lock_t:file getattr;
+allow user_sudo_t auditd_etc_t:dir { getattr open read };
+allow user_sudo_t auditd_etc_t:file getattr;
+allow user_sudo_t auditd_log_t:dir { getattr open read };
+allow user_sudo_t auditd_log_t:file getattr;
+allow user_sudo_t auditd_unit_t:file getattr;
+allow user_sudo_t auditd_var_run_t:file getattr;
+allow user_sudo_t autofs_device_t:chr_file getattr;
+allow user_sudo_t avahi_unit_t:file getattr;
+allow user_sudo_t avahi_var_run_t:dir read;
+allow user_sudo_t avahi_var_run_t:file getattr;
+allow user_sudo_t bin_t:lnk_file { relabelfrom relabelto };
+allow user_sudo_t blueman_var_lib_t:dir { getattr open read relabelto };
+allow user_sudo_t blueman_var_lib_t:file { getattr relabelto };
+allow user_sudo_t bluetooth_conf_t:dir { getattr open read };
+allow user_sudo_t bluetooth_conf_t:file getattr;
+allow user_sudo_t bluetooth_unit_t:file getattr;
+allow user_sudo_t bluetooth_var_lib_t:dir { getattr open read relabelto };
+allow user_sudo_t bluetooth_var_lib_t:file { getattr relabelto };
+allow user_sudo_t boot_t:dir { add_name getattr open read remove_name write };
+allow user_sudo_t boot_t:file { create getattr ioctl open read relabelfrom relabelto unlink write };
+allow user_sudo_t bootloader_tmp_t:dir { getattr open read };
+allow user_sudo_t bootloader_tmp_t:file { getattr relabelfrom relabelto };
+allow user_sudo_t cgroup_t:dir { getattr open read search };
+allow user_sudo_t cgroup_t:file getattr;
+allow user_sudo_t cgroup_t:filesystem getattr;
+allow user_sudo_t cgroup_t:lnk_file getattr;
+#c allow user_sudo_t chromium_xdg_cache_t:dir { getattr open read relabelto };
+#c allow user_sudo_t chromium_xdg_cache_t:file relabelto;
+#c allow user_sudo_t chromium_xdg_config_t:dir { getattr open read relabelto };
+#c allow user_sudo_t chromium_xdg_config_t:file relabelto;
+allow user_sudo_t clock_device_t:chr_file getattr;
+allow user_sudo_t colord_var_lib_t:dir { getattr open read };
+allow user_sudo_t configfs_t:dir getattr;
+allow user_sudo_t cpu_device_t:chr_file getattr;
+allow user_sudo_t crack_db_t:dir { getattr open read };
+allow user_sudo_t crack_db_t:file getattr;
+allow user_sudo_t cron_spool_t:dir { getattr open read };
+allow user_sudo_t cron_log_t:file { getattr relabelfrom };
+allow user_sudo_t crond_var_run_t:file { getattr relabelto };
+allow user_sudo_t cupsd_etc_t:dir { getattr open read };
+allow user_sudo_t cupsd_etc_t:file getattr;
+allow user_sudo_t cupsd_etc_t:lnk_file getattr;
+allow user_sudo_t cupsd_log_t:dir { getattr open read };
+allow user_sudo_t cupsd_rw_etc_t:dir { getattr open read };
+allow user_sudo_t cupsd_rw_etc_t:file { getattr relabelto };
+allow user_sudo_t cupsd_unit_t:file getattr;
+allow user_sudo_t cupsd_var_run_t:dir { getattr open read };
+allow user_sudo_t cupsd_var_run_t:file getattr;
+allow user_sudo_t cupsd_var_run_t:sock_file getattr;
+allow user_sudo_t dbusd_unit_t:file getattr;
+allow user_sudo_t debugfs_t:dir { getattr open read search };
+allow user_sudo_t debugfs_t:file getattr;
+allow user_sudo_t debugfs_t:filesystem getattr;
+allow user_sudo_t default_context_t:dir read;
+allow user_sudo_t default_context_t:file getattr;
+allow user_sudo_t device_t:chr_file { getattr relabelfrom };
+allow user_sudo_t devicekit_var_lib_t:dir { getattr open read };
+allow user_sudo_t devicekit_var_lib_t:file getattr;
+allow user_sudo_t devicekit_var_run_t:dir { getattr open read };
+allow user_sudo_t devpts_t:chr_file { getattr ioctl open read relabelfrom write };
+allow user_sudo_t dhcp_etc_t:file { getattr open read };
+allow user_sudo_t dhcpc_port_t:udp_socket name_bind;
+allow user_sudo_t dhcpc_state_t:dir { add_name getattr open read write };
+allow user_sudo_t dhcpc_state_t:file { create getattr open read write };
+allow user_sudo_t dhcpd_unit_t:file getattr;
+allow user_sudo_t dirmngr_home_t:dir { getattr open read };
+allow user_sudo_t dirmngr_home_t:file getattr;
+allow user_sudo_t dirmngr_tmp_t:sock_file relabelto;
+allow user_sudo_t dosfs_t:dir { add_name getattr write };
+allow user_sudo_t dosfs_t:file { create open write };
+allow user_sudo_t dosfs_t:filesystem mount;
+allow user_sudo_t dri_device_t:chr_file getattr;
+allow user_sudo_t efivarfs_t:dir { add_name getattr open read remove_name search write };
+allow user_sudo_t efivarfs_t:file { create getattr open read setattr unlink write };
+allow user_sudo_t efivarfs_t:filesystem getattr;
+allow user_sudo_t etc_t:dir { add_name remove_name write };
+allow user_sudo_t etc_t:file { create execute execute_no_trans link map relabelfrom relabelto rename setattr unlink write };
+allow user_sudo_t etc_t:lnk_file { relabelfrom relabelto };
+allow user_sudo_t etc_t:sock_file getattr;
+allow user_sudo_t event_device_t:chr_file getattr;
+allow user_sudo_t evolution_xdg_config_t:dir { getattr open read relabelto };
+allow user_sudo_t evolution_xdg_config_t:file relabelto;
+allow user_sudo_t file_context_t:dir { add_name read remove_name write };
+allow user_sudo_t file_context_t:file { create relabelfrom relabelto rename unlink write };
+allow user_sudo_t fixed_disk_device_t:blk_file { getattr ioctl open };
+allow user_sudo_t fonts_cache_t:dir { getattr open read };
+allow user_sudo_t fonts_cache_t:file getattr;
+allow user_sudo_t fonts_t:dir { getattr open read };
+allow user_sudo_t fonts_t:file { getattr read };
+allow user_sudo_t fs_t:filesystem { mount unmount };
+allow user_sudo_t fsadm_run_t:dir { getattr open read };
+allow user_sudo_t fsadm_run_t:file getattr;
+allow user_sudo_t framebuf_device_t:chr_file getattr;
+allow user_sudo_t fuse_device_t:chr_file getattr;
+allow user_sudo_t fusefs_t:dir getattr;
+allow user_sudo_t fusefs_t:filesystem unmount;
+allow user_sudo_t games_data_t:dir { getattr open read };
+allow user_sudo_t gconf_etc_t:dir { getattr open read };
+allow user_sudo_t gconf_etc_t:file getattr;
+allow user_sudo_t gconf_home_t:dir { getattr search relabelfrom };
+allow user_sudo_t gconf_tmp_t:dir { getattr open read relabelto };
+allow user_sudo_t gconf_tmp_t:file relabelto;
+allow user_sudo_t geoclue_etc_t:dir { getattr open read };
+allow user_sudo_t geoclue_etc_t:file getattr;
+allow user_sudo_t geoclue_var_lib_t:dir { getattr open read };
+allow user_sudo_t getty_runtime_t:file getattr;
+allow user_sudo_t gnome_keyring_tmp_t:dir { getattr open read relabelto };
+allow user_sudo_t gnome_keyring_tmp_t:sock_file relabelto;
+allow user_sudo_t gnome_xdg_config_t:dir { getattr open read relabelto };
+allow user_sudo_t gnome_xdg_config_t:file { getattr relabelto };
+allow user_sudo_t gnome_xdg_data_t:dir { getattr open read relabelto };
+allow user_sudo_t gnome_xdg_data_t:file relabelto;
+allow user_sudo_t gpg_agent_tmp_t:sock_file relabelto;
+allow user_sudo_t gpg_runtime_t:dir { getattr open read relabelto };
+allow user_sudo_t gpg_secret_t:dir { getattr open read relabelfrom relabelto };
+allow user_sudo_t gpg_secret_t:file { getattr relabelfrom relabelto };
+allow user_sudo_t gstreamer_orcexec_t:file relabelfrom;
+allow user_sudo_t home_root_t:dir read;
+allow user_sudo_t httpd_git_content_t:dir { getattr open read };
+allow user_sudo_t httpd_git_content_t:file getattr;
+allow user_sudo_t hugetlbfs_t:dir { getattr open read };
+allow user_sudo_t hugetlbfs_t:filesystem getattr;
+allow user_sudo_t ifplugd_etc_t:dir { getattr open read };
+allow user_sudo_t ifplugd_etc_t:file getattr;
+allow user_sudo_t init_t:dbus send_msg;
+allow user_sudo_t init_t:dir { getattr open read search };
+allow user_sudo_t init_t:file { getattr open read };
+allow user_sudo_t init_t:lnk_file read;
+allow user_sudo_t init_t:process getpgid;
+allow user_sudo_t init_var_lib_t:dir { getattr open read };
+allow user_sudo_t init_var_lib_t:file getattr;
+allow user_sudo_t init_var_run_t:blk_file getattr;
+allow user_sudo_t init_var_run_t:chr_file getattr;
+allow user_sudo_t init_var_run_t:dir read;
+allow user_sudo_t init_var_run_t:fifo_file getattr;
+allow user_sudo_t init_var_run_t:file getattr;
+allow user_sudo_t init_var_run_t:lnk_file getattr;
+allow user_sudo_t init_var_run_t:sock_file getattr;
+allow user_sudo_t initctl_t:fifo_file getattr;
+allow user_sudo_t iptables_runtime_t:file getattr;
+allow user_sudo_t iptables_unit_t:file getattr;
+allow user_sudo_t iso9660_t:dir { getattr mounton };
+allow user_sudo_t iso9660_t:file { execute execute_no_trans getattr ioctl mounton open read };
+allow user_sudo_t iso9660_t:filesystem mount;
+allow user_sudo_t java_home_t:dir { getattr open read };
+allow user_sudo_t java_home_t:file getattr;
+allow user_sudo_t kernel_t:dir { getattr open read search };
+allow user_sudo_t kernel_t:file { getattr open read };
+allow user_sudo_t kernel_t:lnk_file read;
+allow user_sudo_t kernel_t:process setsched;
+allow user_sudo_t kernel_t:system { ipc_info module_request };
+allow user_sudo_t kmod_tmpfiles_conf_t:file getattr;
+allow user_sudo_t kmsg_device_t:chr_file getattr;
+allow user_sudo_t kvm_device_t:chr_file getattr;
+allow user_sudo_t ldconfig_cache_t:dir { getattr open read };
+allow user_sudo_t ldconfig_cache_t:file getattr;
+allow user_sudo_t logrotate_unit_t:file getattr;
+allow user_sudo_t logrotate_var_lib_t:file getattr;
+allow user_sudo_t loop_control_device_t:chr_file getattr;
+allow user_sudo_t lost_found_t:dir { getattr open read };
+allow user_sudo_t lvm_control_t:chr_file { getattr ioctl open read write };
+allow user_sudo_t lvm_etc_t:dir { getattr open read };
+allow user_sudo_t lvm_etc_t:file getattr;
+allow user_sudo_t lvm_lock_t:dir { getattr open read relabelto };
+allow user_sudo_t lvm_metadata_t:dir { getattr open read };
+allow user_sudo_t lvm_t:dir { getattr open read search };
+allow user_sudo_t lvm_t:file { getattr open read };
+allow user_sudo_t lvm_unit_t:file getattr;
+allow user_sudo_t lvm_var_run_t:dir { getattr open read };
+allow user_sudo_t lvm_var_run_t:fifo_file getattr;
+allow user_sudo_t lvm_var_run_t:file getattr;
+allow user_sudo_t lvm_var_run_t:sock_file getattr;
+allow user_sudo_t lvm_t:lnk_file read;
+allow user_sudo_t mail_spool_t:dir { getattr open read };
+allow user_sudo_t mail_spool_t:lnk_file getattr;
+allow user_sudo_t man_cache_t:dir { getattr open read };
+allow user_sudo_t man_cache_t:file getattr;
+allow user_sudo_t man_t:dir { getattr open read };
+allow user_sudo_t man_t:file getattr;
+allow user_sudo_t man_t:lnk_file getattr;
+allow user_sudo_t mandb_unit_t:file getattr;
+allow user_sudo_t mdadm_unit_t:file getattr;
+allow user_sudo_t memory_device_t:chr_file getattr;
+allow user_sudo_t mesa_shader_cache_t:dir { getattr open read relabelfrom relabelto };
+allow user_sudo_t mesa_shader_cache_t:file { getattr relabelfrom relabelto };
+allow user_sudo_t mnt_t:dir { open read };
+allow user_sudo_t modules_conf_t:dir { getattr open read };
+allow user_sudo_t modules_conf_t:file { getattr open read relabelfrom relabelto };
+allow user_sudo_t modules_dep_t:file { getattr map open read };
+allow user_sudo_t modules_object_t:dir { getattr open read };
+allow user_sudo_t modules_object_t:file getattr;
+allow user_sudo_t modules_object_t:lnk_file getattr;
+allow user_sudo_t mouse_device_t:chr_file getattr;
+allow user_sudo_t mnt_t:dir { getattr mounton };
+allow user_sudo_t mount_runtime_t:dir { getattr open read write };
+allow user_sudo_t mount_runtime_t:file { getattr lock open read setattr write };
+allow user_sudo_t mozilla_home_t:dir { getattr open read relabelfrom relabelto };
+allow user_sudo_t mozilla_home_t:file { getattr relabelfrom relabelto };
+allow user_sudo_t mozilla_xdg_cache_t:dir { getattr open read relabelto };
+allow user_sudo_t mozilla_xdg_cache_t:file { getattr relabelto };
+allow user_sudo_t mpd_data_t:dir { getattr open read };
+allow user_sudo_t mpd_etc_t:file getattr;
+allow user_sudo_t mpd_var_lib_t:dir { getattr open read };
+allow user_sudo_t net_conf_t:dir { getattr open read };
+allow user_sudo_t netcontrol_device_t:chr_file getattr;
+allow user_sudo_t NetworkManager_etc_rw_t:dir { getattr open read };
+allow user_sudo_t NetworkManager_etc_rw_t:file getattr;
+allow user_sudo_t NetworkManager_etc_t:dir { getattr open read };
+allow user_sudo_t NetworkManager_unit_t:file getattr;
+allow user_sudo_t NetworkManager_var_lib_t:dir { getattr open read };
+allow user_sudo_t NetworkManager_var_lib_t:file getattr;
+allow user_sudo_t NetworkManager_var_run_t:dir read;
+allow user_sudo_t policy_config_t:dir { add_name getattr open read remove_name write };
+allow user_sudo_t policy_config_t:file { create getattr map open read relabelfrom rename unlink write };
+allow user_sudo_t policykit_unit_t:file getattr;
+allow user_sudo_t power_unit_t:file getattr;
+allow user_sudo_t ppp_device_t:chr_file getattr;
+allow user_sudo_t print_spool_t:dir { getattr open read };
+allow user_sudo_t proc_kcore_t:file getattr;
+allow user_sudo_t proc_net_t:file { getattr open read };
+allow user_sudo_t pstore_t:dir { getattr open read };
+allow user_sudo_t pstore_t:filesystem getattr;
+allow user_sudo_t ptmx_t:chr_file { getattr ioctl open read relabelto write };
+allow user_sudo_t public_content_t:dir { getattr open read };
+allow user_sudo_t pulseaudio_home_t:dir { getattr relabelfrom };
+allow user_sudo_t pulseaudio_home_t:file { getattr relabelfrom relabelto };
+allow user_sudo_t pulseaudio_tmp_t:dir { getattr open read relabelfrom relabelto };
+allow user_sudo_t pulseaudio_tmp_t:file { getattr relabelfrom relabelto };
+allow user_sudo_t pulseaudio_tmp_t:sock_file { getattr relabelto };
+allow user_sudo_t pulseaudio_xdg_config_t:dir { getattr open read relabelto };
+allow user_sudo_t pulseaudio_xdg_config_t:file { getattr relabelfrom relabelto };
+allow user_sudo_t removable_device_t:blk_file { getattr ioctl open read write };
+allow user_sudo_t restorecond_run_t:file getattr;
+allow user_sudo_t restorecond_unit_t:file getattr;
+allow user_sudo_t root_t:dir mounton;
+allow user_sudo_t rsync_etc_t:file getattr;
+allow user_sudo_t rtkit_daemon_unit_t:file getattr;
+allow user_sudo_t samba_etc_t:dir { getattr open read };
+allow user_sudo_t samba_etc_t:file { getattr relabelfrom relabelto };
+allow user_sudo_t samba_log_t:dir { getattr open read };
+allow user_sudo_t samba_log_t:file getattr;
+allow user_sudo_t samba_unit_t:file getattr;
+allow user_sudo_t samba_var_run_t:dir read;
+allow user_sudo_t samba_var_run_t:file getattr;
+allow user_sudo_t samba_var_t:dir read;
+allow user_sudo_t samba_var_t:sock_file getattr;
+allow user_sudo_t scsi_generic_device_t:chr_file getattr;
+allow user_sudo_t security_t:security compute_av;
+allow user_sudo_t self:capability { dac_read_search linux_immutable net_admin net_raw sys_admin sys_rawio };
+allow user_sudo_t self:netlink_generic_socket { bind create read write };
+allow user_sudo_t self:netlink_kobject_uevent_socket { bind create getattr setopt };
+allow user_sudo_t self:netlink_route_socket nlmsg_write;
+allow user_sudo_t self:netlink_selinux_socket { bind create };
+allow user_sudo_t self:packet_socket { bind create read setopt write };
+allow user_sudo_t self:passwd rootok;
+allow user_sudo_t self:rawip_socket { create setopt write };
+allow user_sudo_t selinux_config_t:dir { add_name remove_name write };
+allow user_sudo_t selinux_config_t:file { create relabelfrom relabelto rename unlink write };
+allow user_sudo_t semanage_read_lock_t:file  { getattr lock open read };
+allow user_sudo_t semanage_store_t:dir { add_name create getattr open read relabelfrom relabelto remove_name rename rmdir search write };
+allow user_sudo_t semanage_store_t:file { create getattr lock open read relabelfrom relabelto rename unlink write };
+allow user_sudo_t semanage_trans_lock_t:file { getattr lock open read };
+allow user_sudo_t session_dbusd_runtime_t:dir { getattr open read relabelto };
+allow user_sudo_t session_dbusd_runtime_t:sock_file relabelto;
+allow user_sudo_t setrans_unit_t:file getattr;
+allow user_sudo_t setrans_var_run_t:dir { getattr open read };
+allow user_sudo_t sound_device_t:chr_file getattr;
+allow user_sudo_t src_t:dir { getattr open read };
+allow user_sudo_t src_t:file getattr;
+allow user_sudo_t src_t:lnk_file getattr;
+allow user_sudo_t sshd_keygen_unit_t:file getattr;
+allow user_sudo_t sshd_unit_t:file getattr;
+allow user_sudo_t sysctl_net_t:dir search;
+allow user_sudo_t sysctl_net_t:file { getattr open read write };
+allow user_sudo_t syslog_conf_t:file getattr;
+allow user_sudo_t syslogd_t:dir { getattr open read search };
+allow user_sudo_t syslogd_t:file { getattr open read };
+allow user_sudo_t syslogd_t:lnk_file read;
+allow user_sudo_t syslogd_unit_t:file getattr;
+allow user_sudo_t syslogd_var_run_t:dir read;
+allow user_sudo_t syslogd_var_run_t:file getattr;
+allow user_sudo_t system_cron_spool_t:dir { getattr open read };
+allow user_sudo_t system_cron_spool_t:file { relabelfrom relabelto };
+allow user_sudo_t system_dbusd_var_lib_t:dir read;
+allow user_sudo_t system_dbusd_var_lib_t:lnk_file getattr;
+allow user_sudo_t system_dbusd_var_run_t:dir read;
+allow user_sudo_t systemd_backlight_unit_t:file getattr;
+allow user_sudo_t systemd_backlight_var_lib_t:dir { getattr open read };
+allow user_sudo_t systemd_backlight_var_lib_t:file getattr;
+allow user_sudo_t systemd_binfmt_unit_t:file getattr;
+allow user_sudo_t systemd_coredump_var_lib_t:dir { getattr open read };
+allow user_sudo_t systemd_coredump_var_lib_t:file getattr;
+allow user_sudo_t systemd_journal_t:dir { getattr open read };
+allow user_sudo_t systemd_journal_t:file getattr;
+allow user_sudo_t systemd_logind_inhibit_var_run_t:dir { getattr open read };
+allow user_sudo_t systemd_logind_inhibit_var_run_t:fifo_file getattr;
+allow user_sudo_t systemd_logind_inhibit_var_run_t:file getattr;
+allow user_sudo_t systemd_logind_var_run_t:dir { getattr open read };
+allow user_sudo_t systemd_logind_var_run_t:file getattr;
+allow user_sudo_t systemd_networkd_unit_t:file getattr;
+allow user_sudo_t systemd_networkd_var_run_t:dir { getattr open read };
+allow user_sudo_t systemd_passwd_var_run_t:dir { getattr open read };
+allow user_sudo_t systemd_rfkill_unit_t:file getattr;
+allow user_sudo_t systemd_rfkill_var_lib_t:dir { getattr open read };
+allow user_sudo_t systemd_rfkill_var_lib_t:file getattr;
+allow user_sudo_t systemd_sessions_var_run_t:dir { getattr open read };
+allow user_sudo_t systemd_sessions_var_run_t:fifo_file getattr;
+allow user_sudo_t systemd_sessions_var_run_t:file getattr;
+allow user_sudo_t systemd_tmpfiles_conf_t:dir { getattr open read };
+allow user_sudo_t systemd_unit_t:dir { getattr open read };
+allow user_sudo_t systemd_unit_t:file getattr;
+allow user_sudo_t systemd_unit_t:lnk_file getattr;
+allow user_sudo_t tftpd_conf_t:file getattr;
+allow user_sudo_t tmp_t:dir { add_name create remove_name write };
+allow user_sudo_t tmp_t:file { create getattr lock open read setattr unlink write };
+allow user_sudo_t tmp_t:sock_file { create getattr setattr unlink write };
+allow user_sudo_t tmpfs_t:dir { getattr open read };
+allow user_sudo_t tmpfs_t:filesystem getattr;
+allow user_sudo_t tracefs_t:dir { getattr open read search };
+allow user_sudo_t tracefs_t:file getattr;
+allow user_sudo_t tun_tap_device_t:chr_file getattr;
+allow user_sudo_t udev_rules_t:dir { getattr open read };
+allow user_sudo_t udev_t:dir { getattr open read search };
+allow user_sudo_t udev_t:file { getattr open read };
+allow user_sudo_t udev_t:lnk_file read;
+allow user_sudo_t udev_var_run_t:dir { getattr open read };
+allow user_sudo_t udev_var_run_t:lnk_file getattr;
+allow user_sudo_t udev_var_run_t:sock_file getattr;
+allow user_sudo_t unlabeled_t:dir getattr;
+allow user_sudo_t udev_var_run_t:file { getattr open read };
+allow user_sudo_t unlabeled_t:dir { open read relabelfrom search };
+allow user_sudo_t unlabeled_t:file { getattr relabelfrom };
+allow user_sudo_t unlabeled_t:lnk_file { getattr read };
+allow user_sudo_t unlabeled_t:sock_file getattr;
+allow user_sudo_t user_cert_t:dir { getattr open read relabelto };
+allow user_sudo_t user_cert_t:file { getattr relabelto };
+allow user_sudo_t user_fonts_cache_t:dir { getattr open read relabelto };
+allow user_sudo_t user_fonts_cache_t:file { getattr relabelto };
+allow user_sudo_t user_home_dir_t:dir { read relabelfrom relabelto };
+allow user_sudo_t user_home_dir_t:file { getattr relabelfrom };
+allow user_sudo_t user_home_t:dir { relabelfrom relabelto };
+allow user_sudo_t user_home_t:file { map relabelfrom relabelto };
+allow user_sudo_t user_home_t:lnk_file { relabelfrom relabelto };
+allow user_sudo_t user_runtime_root_t:dir read;
+allow user_sudo_t user_runtime_t:dir { read relabelfrom };
+allow user_sudo_t user_runtime_t:file { getattr relabelfrom };
+allow user_sudo_t user_runtime_t:sock_file { getattr relabelfrom };
+allow user_sudo_t user_t:dir search;
+allow user_sudo_t user_t:file { getattr open read };
+allow user_sudo_t user_t:lnk_file read;
+allow user_sudo_t user_t:process signal;
+allow user_sudo_t user_tmpfs_t:file { append read write };
+allow user_sudo_t user_tmp_t:dir relabelfrom;
+allow user_sudo_t user_tmp_t:sock_file { getattr relabelfrom };
+allow user_sudo_t usr_t:dir { read relabelfrom relabelto };
+allow user_sudo_t usr_t:file { open read relabelfrom relabelto };
+allow user_sudo_t v4l_device_t:chr_file getattr;
+allow user_sudo_t var_lib_t:dir relabelfrom;
+allow user_sudo_t var_lib_t:file { getattr relabelfrom };
+allow user_sudo_t var_lib_t:lnk_file getattr;
+allow user_sudo_t var_lock_t:dir { getattr open read };
+allow user_sudo_t var_lock_t:lnk_file getattr;
+allow user_sudo_t var_log_t:dir { read relabelfrom relabelto };
+allow user_sudo_t var_log_t:file { getattr relabelfrom relabelto };
+allow user_sudo_t var_run_t:dir relabelfrom;
+allow user_sudo_t var_run_t:file { create getattr lock open unlink write };
+allow user_sudo_t var_run_t:sock_file { create setattr unlink write };
+allow user_sudo_t var_spool_t:dir { getattr open read };
+allow user_sudo_t var_t:dir read;
+allow user_sudo_t var_t:file write;
+allow user_sudo_t vfio_device_t:chr_file getattr;
+allow user_sudo_t vhost_device_t:chr_file getattr;
+allow user_sudo_t wireless_device_t:chr_file getattr;
+allow user_sudo_t wtmp_t:file write;
+allow user_sudo_t xauth_home_t:file { getattr relabelfrom relabelto };
+allow user_sudo_t xdg_cache_t:dir { getattr open read relabelfrom relabelto };
+allow user_sudo_t xdg_cache_t:file { getattr relabelfrom relabelto };
+allow user_sudo_t xdg_cache_t:lnk_file getattr;
+allow user_sudo_t xdg_config_t:dir { getattr open read relabelfrom relabelto search };
+allow user_sudo_t xdg_config_t:file { getattr relabelfrom relabelto };
+allow user_sudo_t xdg_data_t:dir { getattr open read relabelto search };
+allow user_sudo_t xdg_data_t:file { getattr relabelto };
+allow user_sudo_t xdg_documents_t:dir { getattr open read relabelto };
+allow user_sudo_t xdg_downloads_t:dir { getattr open read relabelfrom relabelto };
+allow user_sudo_t xdg_downloads_t:file { getattr relabelfrom relabelto };
+allow user_sudo_t xdg_music_t:dir { getattr open read relabelto };
+allow user_sudo_t xdg_music_t:file { getattr relabelfrom relabelto };
+allow user_sudo_t xdg_pictures_t:dir { getattr open read relabelto };
+allow user_sudo_t xdg_pictures_t:file { getattr relabelto };
+allow user_sudo_t xdg_videos_t:dir { getattr open read relabelto };
+allow user_sudo_t xdm_tmp_t:dir { getattr open read };
+allow user_sudo_t xdm_tmp_t:sock_file getattr;
+allow user_sudo_t xdm_var_lib_t:dir { getattr open read };
+allow user_sudo_t xdm_var_lib_t:file getattr;
+allow user_sudo_t xdm_var_run_t:dir { getattr open read };
+allow user_sudo_t xdm_var_run_t:file getattr;
+allow user_sudo_t xfs_tmp_t:dir { getattr open read };
+allow user_sudo_t xkb_var_lib_t:dir { getattr open read };
+allow user_sudo_t xkb_var_lib_t:file getattr;
+allow user_sudo_t xkb_var_lib_t:lnk_file getattr;
+allow user_sudo_t xserver_log_t:dir { getattr open read };
+allow user_sudo_t xserver_log_t:file getattr;
+allow user_sudo_t xserver_misc_device_t:chr_file { getattr relabelto };
+allow user_sudo_t xserver_tmp_t:file getattr;
+allow user_sudo_t xsession_log_t:file { getattr relabelfrom relabelto };
+
+#============= user_t ==============
+
+
+dontaudit user_t accountsd_var_lib_t:dir { create relabelfrom relabelto };
+dontaudit user_t accountsd_var_lib_t:file { create relabelfrom relabelto };
+dontaudit user_t acpid_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t alsa_etc_t:dir { create relabelfrom relabelto };
+dontaudit user_t alsa_etc_t:file { create relabelfrom relabelto };
+dontaudit user_t alsa_etc_t:lnk_file { create relabelfrom relabelto };
+dontaudit user_t alsa_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t alsa_unit_t:file { create relabelfrom relabelto };
+dontaudit user_t alsa_var_lib_t:dir { create relabelfrom relabelto };
+dontaudit user_t avahi_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t avahi_unit_t:file { create relabelfrom relabelto };
+dontaudit user_t bin_t:dir { create relabelfrom relabelto };
+dontaudit user_t bin_t:file { create relabelfrom relabelto };
+dontaudit user_t bin_t:lnk_file { create relabelfrom relabelto };
+dontaudit user_t bluetooth_conf_t:dir { create relabelfrom relabelto };
+dontaudit user_t bluetooth_conf_t:file { create relabelfrom relabelto };
+dontaudit user_t bluetooth_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t bluetooth_unit_t:file { create relabelfrom relabelto };
+dontaudit user_t boot_t:file { create relabelfrom relabelto };
+dontaudit user_t bootloader_tmp_t:dir { create relabelfrom relabelto };
+dontaudit user_t bootloader_tmp_t:file { create relabelfrom relabelto };
+#c dontaudit user_t chromium_exec_t:file { create relabelfrom relabelto };
+#c dontaudit user_t chromium_naclhelper_exec_t:file { create relabelfrom relabelto };
+#c dontaudit user_t chromium_sandbox_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t colord_var_lib_t:dir { create relabelfrom relabelto };
+dontaudit user_t cups_pdf_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t cupsd_config_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t cupsd_etc_t:dir { create relabelfrom relabelto };
+dontaudit user_t cupsd_etc_t:file { create relabelfrom relabelto };
+dontaudit user_t cupsd_etc_t:lnk_file { create relabelfrom relabelto };
+dontaudit user_t cupsd_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t cupsd_log_t:dir { create relabelfrom relabelto };
+dontaudit user_t cupsd_lpd_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t cupsd_rw_etc_t:dir { create relabelfrom relabelto };
+dontaudit user_t cupsd_rw_etc_t:file { create relabelfrom relabelto };
+dontaudit user_t cupsd_unit_t:file { create relabelfrom relabelto };
+dontaudit user_t dbusd_etc_t:file { create relabelfrom relabelto };
+dontaudit user_t default_context_t:file { create relabelfrom relabelto };
+dontaudit user_t device_t:dir { create relabelfrom relabelto };
+dontaudit user_t devicekit_disk_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t devicekit_var_lib_t:dir { create relabelfrom relabelto };
+dontaudit user_t etc_t:dir { create relabelfrom relabelto };
+dontaudit user_t etc_t:file { create relabelfrom relabelto };
+dontaudit user_t etc_t:lnk_file { create relabelfrom relabelto };
+dontaudit user_t etc_t:sock_file { create relabelfrom relabelto };
+dontaudit user_t evolution_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t faillog_t:file { create relabelfrom relabelto };
+dontaudit user_t file_context_t:file { create relabelfrom relabelto };
+dontaudit user_t fonts_cache_t:file { create relabelfrom relabelto };
+dontaudit user_t fonts_t:dir { create relabelfrom relabelto };
+dontaudit user_t fonts_t:file { create relabelfrom relabelto };
+dontaudit user_t fsadm_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t gconf_etc_t:dir { create relabelfrom relabelto };
+dontaudit user_t gconf_etc_t:file { create relabelfrom relabelto };
+dontaudit user_t geoclue_etc_t:dir { create relabelfrom relabelto };
+dontaudit user_t geoclue_etc_t:file { create relabelfrom relabelto };
+dontaudit user_t geoclue_var_lib_t:dir { create relabelfrom relabelto };
+dontaudit user_t gitd_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t gkeyringd_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t glusterd_conf_t:file { create relabelfrom relabelto };
+dontaudit user_t glusterd_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t glusterd_var_lib_t:file { create relabelfrom relabelto };
+dontaudit user_t glusterd_var_lib_t:lnk_file { create relabelfrom relabelto };
+dontaudit user_t gpg_runtime_t:dir { create relabelfrom relabelto };
+dontaudit user_t home_root_t:dir { create relabelfrom relabelto };
+dontaudit user_t home_root_t:file { create relabelfrom relabelto };
+dontaudit user_t hotplug_etc_t:dir { create relabelfrom relabelto };
+dontaudit user_t hotplug_etc_t:file { create relabelfrom relabelto };
+dontaudit user_t hplip_etc_t:file { create relabelfrom relabelto };
+dontaudit user_t hplip_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t httpd_git_content_t:file { create relabelfrom relabelto };
+dontaudit user_t httpd_git_script_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t httpd_modules_t:file { create relabelfrom relabelto };
+dontaudit user_t ifconfig_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t ifplugd_etc_t:file { create relabelfrom relabelto };
+dontaudit user_t init_var_lib_t:dir { create relabelfrom relabelto };
+dontaudit user_t init_var_run_t:dir { create relabelfrom relabelto };
+dontaudit user_t init_var_run_t:fifo_file { create relabelfrom relabelto };
+dontaudit user_t java_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t lastlog_t:file { create relabelfrom relabelto };
+dontaudit user_t ld_so_cache_t:file { create relabelfrom relabelto };
+dontaudit user_t ld_so_t:file { create relabelfrom relabelto };
+dontaudit user_t ldconfig_cache_t:file { create relabelfrom relabelto };
+dontaudit user_t lib_t:dir { create relabelfrom relabelto };
+dontaudit user_t lib_t:file { create relabelfrom relabelto };
+dontaudit user_t lib_t:lnk_file { create relabelfrom relabelto };
+dontaudit user_t locale_t:dir { create relabelfrom relabelto };
+dontaudit user_t locale_t:file { create relabelfrom relabelto };
+dontaudit user_t locale_t:lnk_file { create relabelfrom relabelto };
+dontaudit user_t lpr_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t lvm_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t man_cache_t:dir { create relabelfrom relabelto };
+dontaudit user_t mandb_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t mandb_unit_t:file { create relabelfrom relabelto };
+dontaudit user_t man_t:dir { create relabelfrom relabelto };
+dontaudit user_t man_t:file { create relabelfrom relabelto };
+dontaudit user_t man_t:lnk_file { create relabelfrom relabelto };
+dontaudit user_t modules_conf_t:file { create relabelfrom relabelto };
+dontaudit user_t modules_dep_t:file { create relabelfrom relabelto };
+dontaudit user_t modules_object_t:dir { create relabelfrom relabelto };
+dontaudit user_t modules_object_t:file { create relabelfrom relabelto };
+dontaudit user_t modules_object_t:lnk_file { create relabelfrom relabelto };
+dontaudit user_t mount_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t mozilla_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t mpd_data_t:dir { create relabelfrom relabelto };
+dontaudit user_t mpd_data_t:file { create relabelfrom relabelto };
+dontaudit user_t mpd_etc_t:file { create relabelfrom relabelto };
+dontaudit user_t mpd_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t mpd_var_lib_t:dir { create relabelfrom relabelto };
+dontaudit user_t mpd_var_lib_t:file { create relabelfrom relabelto };
+dontaudit user_t mplayer_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t NetworkManager_etc_rw_t:file { create relabelfrom relabelto };
+dontaudit user_t NetworkManager_etc_t:file { create relabelfrom relabelto };
+dontaudit user_t NetworkManager_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t NetworkManager_unit_t:file { create relabelfrom relabelto };
+dontaudit user_t net_conf_t:file { create relabelfrom relabelto };
+dontaudit user_t nmbd_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t nscd_var_run_t:dir { create relabelfrom relabelto };
+dontaudit user_t pam_var_run_t:dir { create relabelfrom relabelto };
+dontaudit user_t policy_config_t:file { create relabelfrom relabelto };
+dontaudit user_t power_unit_t:file { create relabelfrom relabelto };
+dontaudit user_t print_spool_t:dir { create relabelfrom relabelto };
+dontaudit user_t pulseaudio_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t root_t:dir { create relabelfrom relabelto };
+dontaudit user_t rpcbind_var_lib_t:dir { create relabelfrom relabelto };
+dontaudit user_t rsync_etc_t:file { create relabelfrom relabelto };
+dontaudit user_t rsync_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t rtkit_daemon_unit_t:file { create relabelfrom relabelto };
+dontaudit user_t samba_etc_t:dir { create relabelfrom relabelto };
+dontaudit user_t samba_etc_t:file { create relabelfrom relabelto };
+dontaudit user_t samba_log_t:dir { create relabelfrom relabelto };
+dontaudit user_t samba_net_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t samba_unit_t:file { create relabelfrom relabelto };
+dontaudit user_t samba_var_run_t:dir { create relabelfrom relabelto };
+dontaudit user_t samba_var_t:dir { create relabelfrom relabelto };
+dontaudit user_t screen_exec_t:dir { create relabelfrom relabelto };
+dontaudit user_t screen_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t session_dbusd_runtime_t:sock_file { create relabelfrom relabelto };
+dontaudit user_t setrans_var_run_t:dir { create relabelfrom relabelto };
+dontaudit user_t sensord_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t setrans_var_run_t:dir { create relabelfrom relabelto };
+dontaudit user_t shadow_t:file { create relabelfrom relabelto };
+dontaudit user_t shell_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t smbcontrol_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t smbd_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t snmpd_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t src_t:dir { create relabelfrom relabelto };
+dontaudit user_t src_t:file { create relabelfrom relabelto };
+dontaudit user_t src_t:lnk_file { create relabelfrom relabelto };
+dontaudit user_t ssh_agent_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t ssh_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t ssh_keygen_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t ssh_keysign_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t sshd_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t sshd_keygen_unit_t:file { create relabelfrom relabelto };
+dontaudit user_t sshd_unit_t:file { create relabelfrom relabelto };
+dontaudit user_t svnserve_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t svnserve_var_run_t:dir { create relabelfrom relabelto };
+dontaudit user_t sysfs_t:file { create relabelfrom relabelto };
+dontaudit user_t syslogd_exec_t:dir { create relabelfrom relabelto };
+dontaudit user_t system_dbusd_var_lib_t:dir { create relabelfrom relabelto };
+dontaudit user_t systemd_coredump_var_lib_t:dir { create relabelfrom relabelto };
+dontaudit user_t systemd_journal_t:dir { create relabelfrom relabelto };
+dontaudit user_t systemd_journal_t:file { create relabelfrom relabelto };
+dontaudit user_t systemd_logind_var_run_t:dir { create relabelfrom relabelto };
+dontaudit user_t systemd_machined_var_run_t:dir { create relabelfrom relabelto };
+dontaudit user_t systemd_networkd_var_run_t:dir { create relabelfrom relabelto };
+dontaudit user_t systemd_passwd_var_run_t:dir { create relabelfrom relabelto };
+dontaudit user_t systemd_sessions_var_run_t:dir { create relabelfrom relabelto };
+dontaudit user_t systemd_unit_t:dir { create relabelfrom relabelto };
+dontaudit user_t systemd_unit_t:file { create relabelfrom relabelto };
+dontaudit user_t systemd_unit_t:lnk_file { create relabelfrom relabelto };
+dontaudit user_t textrel_shlib_t:file { create relabelfrom relabelto };
+dontaudit user_t thunderbird_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t tmp_t:dir { create relabelfrom relabelto };
+dontaudit user_t udev_helper_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t udev_rules_t:file { create relabelfrom relabelto };
+dontaudit user_t udev_var_run_t:dir { create relabelfrom relabelto };
+dontaudit user_t udev_var_run_t:file { create relabelfrom relabelto };
+dontaudit user_t unconfined_execmem_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t usbmuxd_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t user_runtime_root_t:dir { create relabelfrom relabelto };
+dontaudit user_t user_runtime_t:dir { create relabelfrom relabelto };
+dontaudit user_t user_runtime_t:sock_file { create relabelfrom relabelto };
+dontaudit user_t usr_t:dir { create relabelfrom relabelto };
+dontaudit user_t usr_t:file { create relabelfrom relabelto };
+dontaudit user_t usr_t:lnk_file { create relabelfrom relabelto };
+dontaudit user_t utempter_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t var_lib_t:dir { create relabelfrom relabelto };
+dontaudit user_t var_lib_t:file { create relabelfrom relabelto };
+dontaudit user_t var_lib_t:lnk_file { create relabelfrom relabelto };
+dontaudit user_t var_lock_t:dir { create relabelfrom relabelto };
+dontaudit user_t var_lock_t:file { create relabelfrom relabelto };
+dontaudit user_t var_log_t:dir { create relabelfrom relabelto };
+dontaudit user_t var_log_t:file { create relabelfrom relabelto };
+dontaudit user_t var_run_t:dir { create relabelfrom relabelto };
+dontaudit user_t var_run_t:file { create relabelfrom relabelto };
+dontaudit user_t var_spool_t:dir { create relabelfrom relabelto };
+dontaudit user_t var_t:dir { create relabelfrom relabelto };
+dontaudit user_t var_t:file { create relabelfrom relabelto };
+dontaudit user_t var_t:lnk_file { create relabelfrom relabelto };
+dontaudit user_t virsh_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t virt_etc_rw_t:file { create relabelfrom relabelto };
+dontaudit user_t virt_etc_t:file { create relabelfrom relabelto };
+dontaudit user_t virt_leaseshelper_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t virtd_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t virtd_lxc_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t virtlockd_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t virtlogd_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t winbind_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t winbind_helper_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t wine_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t wine_home_t:file { create relabelfrom relabelto };
+dontaudit user_t wine_home_t:lnk_file { create relabelfrom relabelto };
+dontaudit user_t wtmp_t:file { create relabelfrom relabelto };
+dontaudit user_t xauth_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t xdm_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t xdm_var_lib_t:dir { create relabelfrom relabelto };
+dontaudit user_t xdm_var_run_t:dir { create relabelfrom relabelto };
+dontaudit user_t xkb_var_lib_t:dir { create relabelfrom relabelto };
+dontaudit user_t xkb_var_lib_t:file { create relabelfrom relabelto };
+dontaudit user_t xkb_var_lib_t:lnk_file { create relabelfrom relabelto };
+dontaudit user_t xserver_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t xserver_log_t:dir { create relabelfrom relabelto };
+dontaudit user_t xsession_exec_t:file { create relabelfrom relabelto };
+
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'user_rw_noexattrfile'
+allow user_t dosfs_t:dir { add_name create remove_name rename rmdir write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'user_rw_noexattrfile'
+allow user_t dosfs_t:dir setattr;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'user_rw_noexattrfile'
+allow user_t dosfs_t:file { create execute unlink write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#    'user_rw_noexattrfile'
+allow user_t dosfs_t:file { append map rename setattr };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#    'user_rw_noexattrfile'
+allow user_t efivarfs_t:dir { add_name remove_name write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#    'user_rw_noexattrfile'
+allow user_t efivarfs_t:file { create setattr unlink write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#    'user_rw_noexattrfile'
+allow user_t fusefs_t:dir { add_name create remove_name rename reparent rmdir setattr write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#    'user_rw_noexattrfile'
+allow user_t fusefs_t:file { create execute rename setattr unlink write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#    'user_exec_noexattrfile'
+allow user_t fusefs_t:file { execute_no_trans map };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#    'user_exec_noexattrfile'
+allow user_t iso9660_t:file execute;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     allow_ypbind, user_tcp_server
+allow user_t node_t:tcp_socket node_bind;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     allow_ypbind, user_tcp_server
+allow user_t proc_t:filesystem associate;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'user_write_removable'
+allow user_t removable_device_t:blk_file write;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'allow_execmem'
+allow user_t self:process execmem;
+
+allow user_t accountsd_var_lib_t:dir { add_name write };
+allow user_t accountsd_var_lib_t:file { open read setattr write };
+allow user_t acpid_exec_t:file { unlink write };
+allow user_t acpid_t:netlink_generic_socket getattr;
+allow user_t acpid_t:unix_stream_socket getattr;
+allow user_t adjtime_t:file { open read };
+allow user_t alsa_etc_t:dir { add_name remove_name rmdir setattr write };
+allow user_t alsa_etc_t:file { setattr unlink write };
+allow user_t alsa_etc_t:lnk_file unlink;
+allow user_t alsa_exec_t:file { unlink write };
+allow user_t alsa_unit_t:file { open read unlink write };
+allow user_t alsa_var_lib_t:dir write;
+allow user_t auditd_etc_t:dir { getattr open read };
+allow user_t auditd_etc_t:file { getattr open read };
+allow user_t auditd_log_t:dir { getattr open read search };
+allow user_t auditd_log_t:file { getattr open read write };
+allow user_t auditd_t:netlink_audit_socket getattr;
+allow user_t auditd_t:unix_dgram_socket getattr;
+allow user_t auditd_t:unix_stream_socket getattr;
+allow user_t auditd_unit_t:file { open read };
+allow user_t avahi_t:dbus send_msg;
+allow user_t avahi_t:netlink_route_socket getattr;
+allow user_t avahi_t:udp_socket getattr;
+allow user_t avahi_t:unix_dgram_socket getattr;
+allow user_t avahi_t:unix_stream_socket getattr;
+allow user_t avahi_unit_t:file { open read };
+allow user_t avahi_unit_t:service { reload start status stop };
+allow user_t bin_t:dir { add_name remove_name rmdir setattr write };
+allow user_t bin_t:file { append link rename setattr unlink write };
+allow user_t bin_t:lnk_file { setattr unlink };
+allow user_t binfmt_misc_fs_t:file { open write };
+allow user_t bluetooth_conf_t:file { open read };
+allow user_t bluetooth_unit_t:file { open read };
+allow user_t bluetooth_unit_t:service { reload start status stop };
+allow user_t boot_t:dir { add_name remove_name write };
+allow user_t boot_t:file { append ioctl open read rename setattr unlink write };
+allow user_t bootloader_tmp_t:dir { add_name mounton remove_name rmdir write };
+allow user_t bootloader_tmp_t:file { append open unlink };
+allow user_t cert_t:file write;
+#c allow user_t chromium_exec_t:file { unlink write };
+#c allow user_t chromium_naclhelper_exec_t:file { unlink write };
+#c allow user_t chromium_sandbox_exec_t:file { unlink write };
+#c allow user_t chromium_sandbox_t:unix_stream_socket getattr;
+#c allow user_t chromium_t:fd use;
+#c allow user_t chromium_t:netlink_kobject_uevent_socket getattr;
+#c allow user_t chromium_t:netlink_route_socket getattr;
+#c allow user_t chromium_t:tcp_socket getattr;
+#c allow user_t chromium_t:udp_socket getattr;
+#c allow user_t chromium_t:unix_stream_socket getattr;
+allow user_t colord_var_lib_t:dir { add_name setattr write };
+allow user_t configfs_t:dir { open read };
+allow user_t crack_db_t:file { open read };
+allow user_t cron_log_t:file { read write };
+allow user_t crond_t:unix_dgram_socket getattr;
+allow user_t cupsd_config_exec_t:file { unlink write };
+allow user_t cupsd_etc_t:dir { add_name remove_name write };
+allow user_t cupsd_etc_t:file { rename setattr unlink write };
+allow user_t cupsd_etc_t:lnk_file { read setattr unlink };
+allow user_t cupsd_exec_t:file { unlink write };
+allow user_t cupsd_rw_etc_t:dir write;
+allow user_t cupsd_t:tcp_socket getattr;
+allow user_t cupsd_t:unix_stream_socket getattr;
+allow user_t cupsd_unit_t:file { open read };
+allow user_t cupsd_unit_t:file { unlink write };
+allow user_t dbusd_etc_t:dir { add_name remove_name write };
+allow user_t dbusd_etc_t:file { setattr unlink write };
+allow user_t dbusd_unit_t:file { open read };
+allow user_t debugfs_t:file { open read };
+allow user_t default_context_t:dir { add_name remove_name write };
+allow user_t default_context_t:file { setattr unlink write };
+allow user_t default_t:file unlink;
+allow user_t device_t:chr_file { create ioctl open read unlink };
+allow user_t device_t:dir { add_name remove_name write };
+allow user_t devicekit_disk_exec_t:file { unlink write };
+allow user_t devicekit_disk_t:netlink_kobject_uevent_socket getattr;
+allow user_t devicekit_disk_t:unix_dgram_socket getattr;
+allow user_t devicekit_disk_t:unix_stream_socket getattr;
+allow user_t devicekit_var_lib_t:dir { rmdir write };
+allow user_t devicekit_var_lib_t:file { open read };
+allow user_t devicekit_var_run_t:dir write;
+allow user_t devlog_t:sock_file write;
+allow user_t devpts_t:chr_file { getattr ioctl read write };
+allow user_t devpts_t:filesystem mount;
+allow user_t dhcp_etc_t:file { open read };
+allow user_t dhcpd_unit_t:file { open read };
+allow user_t dirmngr_t:unix_stream_socket getattr;
+allow user_t dnsmasq_etc_t:file { open read };
+allow user_t dri_device_t:chr_file map;
+allow user_t dmrc_home_t:file { open read write };
+allow user_t dosfs_t:dir mounton;
+allow user_t dosfs_t:filesystem { mount remount };
+allow user_t dosfs_t:sock_file read;
+allow user_t etc_t:dir { add_name rmdir remove_name setattr write };
+allow user_t etc_t:file { append link rename setattr unlink write };
+allow user_t etc_t:lnk_file { setattr unlink };
+allow user_t etc_t:service status;
+allow user_t event_device_t:chr_file write;
+allow user_t evolution_exec_t:file { unlink write };
+allow user_t exports_t:file { open read };
+allow user_t faillog_t:file { open read write };
+allow user_t file_context_t:dir { add_name remove_name write };
+allow user_t file_context_t:file { rename setattr unlink write };
+allow user_t fixed_disk_device_t:blk_file { ioctl lock open };
+allow user_t fonts_cache_t:dir { add_name remove_name setattr write };
+allow user_t fonts_cache_t:file { execute link rename unlink write };
+allow user_t fonts_t:dir { add_name map remove_name rmdir setattr write  };
+allow user_t fonts_t:file { execute link rename setattr unlink write };
+allow user_t fsadm_exec_t:file { unlink write };
+allow user_t fs_t:filesystem { remount unmount };
+allow user_t fuse_device_t:chr_file { open read write };
+allow user_t fusefs_t:filesystem { mount remount unmount };
+allow user_t games_data_t:dir write;
+allow user_t gconf_etc_t:dir { add_name remove_name write };
+allow user_t gconf_etc_t:file { open read rename unlink write };
+allow user_t gconf_tmp_t:file map;
+allow user_t geoclue_etc_t:file { open read };
+allow user_t geoclue_var_lib_t:dir setattr;
+allow user_t gitd_exec_t:file { unlink write };
+allow user_t glusterd_conf_t:dir { add_name remove_name write };
+allow user_t glusterd_conf_t:file { open read rename setattr unlink write };
+allow user_t glusterd_exec_t:file { unlink write };
+allow user_t glusterd_log_t:dir write;
+allow user_t glusterd_var_lib_t:dir { add_name remove_name write };
+allow user_t glusterd_var_lib_t:file { open setattr unlink write };
+allow user_t glusterd_var_lib_t:lnk_file { read setattr unlink };
+allow user_t gkeyringd_exec_t:file entrypoint;
+allow user_t home_root_t:dir { add_name remove_name setattr write };
+allow user_t home_root_t:file { append open read rename setattr unlink write };
+allow user_t home_root_t:lnk_file { create setattr };
+allow user_t home_root_t:sock_file { create setattr };
+allow user_t hplip_etc_t:dir { add_name remove_name write };
+allow user_t hplip_etc_t:file { open read rename setattr unlink write };
+allow user_t hplip_exec_t:file { unlink write };
+allow user_t httpd_git_content_t:dir { add_name remove_name write };
+allow user_t httpd_git_content_t:file { open read setattr unlink write };
+allow user_t httpd_git_script_exec_t:file { unlink write };
+allow user_t httpd_modules_t:dir { add_name remove_name write };
+allow user_t httpd_modules_t:file { open setattr unlink write };
+allow user_t ifplugd_etc_t:dir { add_name remove_name write };
+allow user_t ifplugd_etc_t:file { open read setattr unlink write };
+allow user_t iptables_runtime_t:file { lock open read };
+allow user_t init_exec_t:file write;
+allow user_t init_t:bluetooth_socket getattr;
+allow user_t init_t:dbus send_msg;
+allow user_t init_t:netlink_audit_socket getattr;
+allow user_t init_t:netlink_kobject_uevent_socket getattr;
+allow user_t init_t:netlink_route_socket getattr;
+allow user_t init_t:netlink_selinux_socket getattr;
+allow user_t init_t:process { getpgid sigkill signal };
+allow user_t init_t:service status;
+allow user_t init_t:system reload;
+allow user_t init_t:unix_dgram_socket getattr;
+allow user_t init_t:unix_stream_socket { connectto getattr read write };
+allow user_t init_var_lib_t:file { map open read };
+allow user_t init_var_run_t:dir { add_name write };
+allow user_t init_var_run_t:fifo_file { open read };
+allow user_t init_var_run_t:sock_file write;
+allow user_t initrc_t:dbus send_msg;
+allow user_t initrc_t:unix_dgram_socket getattr;
+allow user_t initrc_t:unix_stream_socket getattr;
+allow user_t iptables_unit_t:file { open read };
+allow user_t java_exec_t:file { unlink write };
+allow user_t java_home_t:dir write;
+allow user_t java_t:tcp_socket getattr;
+allow user_t java_t:unix_stream_socket getattr;
+allow user_t java_tmp_t:file map;
+allow user_t kdump_exec_t:file { unlink write };
+allow user_t kernel_t:system module_request;
+allow user_t kmod_tmpfiles_conf_t:file { open read };
+allow user_t kmsg_device_t:chr_file { open read };
+allow user_t kvm_device_t:chr_file { ioctl open read write };
+allow user_t lastlog_t:file { open read write };
+allow user_t ld_so_cache_t:file { execute unlink };
+allow user_t ldconfig_cache_t:dir { add_name remove_name write };
+allow user_t ldconfig_cache_t:file { map open read rename unlink write };
+allow user_t lib_t:dir { add_name remove_name rmdir setattr write };
+allow user_t lib_t:file { execmod link lock rename setattr unlink write };
+allow user_t lib_t:lnk_file { setattr unlink };
+allow user_t locale_t:dir { add_name remove_name rmdir setattr write };
+allow user_t locale_t:file { execute setattr unlink write };
+allow user_t locale_t:lnk_file { setattr unlink };
+allow user_t logrotate_unit_t:file { open read };
+allow user_t lost_found_t:dir write;
+allow user_t lvm_control_t:chr_file { ioctl open read write };
+allow user_t lvm_etc_t:file { map open read };
+allow user_t lvm_exec_t:file { unlink write };
+allow user_t lvm_t:unix_stream_socket { connectto getattr };
+allow user_t lvm_unit_t:file { open read };
+allow user_t lvm_var_run_t:sock_file write;
+allow user_t mandb_unit_t:file { open read };
+allow user_t mail_spool_t:dir write;
+allow user_t man_cache_t:dir write;
+allow user_t man_t:dir { add_name remove_name rmdir setattr write };
+allow user_t man_t:file { link setattr unlink write };
+allow user_t man_t:lnk_file { setattr unlink };
+allow user_t mandb_exec_t:file { unlink write };
+allow user_t mandb_unit_t:file { unlink write };
+allow user_t mdadm_unit_t:file { open read };
+allow user_t memory_device_t:chr_file { map open };
+allow user_t mesa_shader_cache_t:file execute;
+allow user_t modemmanager_t:dbus send_msg;
+allow user_t modemmanager_t:netlink_kobject_uevent_socket getattr;
+allow user_t modemmanager_t:unix_dgram_socket getattr;
+allow user_t modemmanager_t:unix_stream_socket getattr;
+allow user_t modules_conf_t:dir { add_name remove_name write };
+allow user_t modules_conf_t:file { rename setattr unlink write };
+allow user_t modules_dep_t:file { ioctl open map read unlink write };
+allow user_t modules_object_t:dir { add_name remove_name rmdir setattr write };
+allow user_t modules_object_t:file { execute execute_no_trans ioctl map open read rename setattr unlink write };
+allow user_t modules_object_t:lnk_file { read setattr unlink };
+allow user_t mount_exec_t:file { unlink write };
+allow user_t mount_runtime_t:dir write;
+allow user_t mount_runtime_t:file { open read };
+allow user_t mozilla_exec_t:file { unlink write };
+allow user_t mozilla_t:netlink_route_socket getattr;
+allow user_t mozilla_t:tcp_socket getattr;
+allow user_t mozilla_t:udp_socket getattr;
+allow user_t mozilla_t:unix_stream_socket getattr;
+allow user_t mnt_t:dir write;
+allow user_t mpd_data_t:dir setattr;
+allow user_t mpd_etc_t:file { open read unlink };
+allow user_t mpd_exec_t:file { unlink write };
+allow user_t mpd_port_t:tcp_socket name_bind;
+allow user_t mpd_var_lib_t:dir { add_name setattr write };
+allow user_t mplayer_exec_t:file { unlink write };
+allow user_t mtrr_device_t:file getattr;
+allow user_t net_conf_t:file { write };
+allow user_t NetworkManager_etc_rw_t:dir write;
+allow user_t NetworkManager_etc_rw_t:file { open read unlink };
+allow user_t NetworkManager_etc_t:dir { add_name remove_name write };
+allow user_t NetworkManager_etc_t:file { open read rename setattr write };
+allow user_t NetworkManager_exec_t:file { unlink write };
+allow user_t NetworkManager_t:netlink_generic_socket getattr;
+allow user_t NetworkManager_t:netlink_kobject_uevent_socket getattr;
+allow user_t NetworkManager_t:netlink_route_socket getattr;
+allow user_t NetworkManager_t:packet_socket getattr;
+allow user_t NetworkManager_t:rawip_socket getattr;
+allow user_t NetworkManager_t:udp_socket getattr;
+allow user_t NetworkManager_t:unix_dgram_socket getattr;
+allow user_t NetworkManager_t:unix_stream_socket getattr;
+allow user_t NetworkManager_unit_t:file { open read unlink write };
+allow user_t NetworkManager_unit_t:service { start status stop };
+allow user_t NetworkManager_var_lib_t:dir write;
+allow user_t NetworkManager_var_lib_t:file { open read };
+allow user_t nsfs_t:file getattr;
+allow user_t ntp_conf_t:file { open read };
+allow user_t ntpd_t:dbus send_msg;
+allow user_t pam_var_run_t:file { open read };
+allow user_t policy_config_t:dir { add_name getattr open read remove_name write };
+allow user_t policy_config_t:file { getattr map open read rename unlink write };
+allow user_t policykit_t:unix_dgram_socket getattr;
+allow user_t policykit_t:unix_stream_socket getattr;
+allow user_t policykit_unit_t:file { open read };
+allow user_t power_unit_t:file { open read unlink write };
+allow user_t power_unit_t:service { start status };
+allow user_t proc_kcore_t:file getattr;
+allow user_t proc_kmsg_t:file getattr;
+allow user_t proc_t:dir write;
+allow user_t proc_t:filesystem mount;
+allow user_t pulseaudio_exec_t:file { unlink write };
+allow user_t pulseaudio_t:netlink_kobject_uevent_socket getattr;
+allow user_t pulseaudio_t:unix_stream_socket getattr;
+allow user_t pulseaudio_tmp_t:file map;
+allow user_t pulseaudio_tmpfs_t:file execute;
+allow user_t restorecond_t:unix_dgram_socket getattr;
+allow user_t restorecond_unit_t:file { open read };
+allow user_t root_t:dir { add_name mounton remove_name write };
+allow user_t rsync_etc_t:file { open read };
+allow user_t rtkit_daemon_unit_t:file { open read unlink write };
+allow user_t samba_etc_t:dir { add_name write };
+allow user_t samba_etc_t:file { open read write };
+allow user_t samba_log_t:file { open read };
+allow user_t samba_unit_t:file { open read };
+allow user_t samba_unit_t:service { reload start status stop };
+allow user_t samba_var_t:dir write;
+allow user_t screen_exec_t:file { unlink write };
+allow user_t scsi_generic_device_t:chr_file { ioctl open };
+allow user_t security_t:security { compute_user read_policy };
+allow user_t self:bluetooth_socket { create ioctl };
+allow user_t self:cap_userns { net_admin setpcap setuid sys_admin };
+allow user_t self:capability { audit_write dac_override dac_read_search kill linux_immutable mknod net_admin net_raw setfcap setpcap setuid sys_admin sys_ptrace sys_rawio sys_resource };
+allow user_t self:dir { add_name write };
+allow user_t self:file create;
+allow user_t self:icmp_socket create;
+allow user_t self:netlink_generic_socket { bind create getattr read setopt write };
+allow user_t self:netlink_tcpdiag_socket { bind create getattr nlmsg_read read setopt write };
+allow user_t self:passwd rootok;
+allow user_t self:process execstack;
+allow user_t self:rawip_socket { create getopt read setopt write };
+allow user_t self:system module_load;
+allow user_t selinux_config_t:dir { add_name remove_name write };
+allow user_t selinux_config_t:file { create rename relabelfrom relabelto setattr unlink write };
+allow user_t semanage_read_lock_t:file { lock open read unlink };
+allow user_t semanage_store_t:dir { add_name create rmdir remove_name rename write };
+allow user_t semanage_store_t:file { create lock open read rename setattr unlink write };
+allow user_t semanage_trans_lock_t:file { lock open read unlink };
+allow user_t session_dbusd_runtime_t:dir { add_name write };
+allow user_t session_dbusd_runtime_t:file { create map open read write };
+allow user_t session_dbusd_runtime_t:sock_file write;
+allow user_t setrans_unit_t:file { open read };
+allow user_t shadow_t:file { setattr rename unlink };
+allow user_t shell_exec_t:file { unlink write };
+allow user_t smbd_t:tcp_socket getattr;
+allow user_t smbd_t:unix_dgram_socket getattr;
+allow user_t smbd_t:unix_stream_socket getattr;
+allow user_t snmpd_exec_t:file { unlink write };
+allow user_t src_t:dir { add_name remove_name rmdir setattr write };
+allow user_t src_t:file { append ioctl map open read rename setattr unlink write };
+allow user_t src_t:lnk_file { read setattr unlink };
+allow user_t ssh_agent_exec_t:file { unlink write };
+allow user_t ssh_exec_t:file { unlink write };
+allow user_t ssh_keygen_exec_t:file { unlink write };
+allow user_t ssh_keysign_exec_t:file { unlink write };
+allow user_t sshd_exec_t:file { unlink write };
+allow user_t sshd_keygen_unit_t:file { open read unlink write };
+allow user_t sshd_unit_t:file { open read unlink write };
+allow user_t svnserve_exec_t:file { unlink write };
+allow user_t sysctl_fs_t:file { open write };
+allow user_t sysctl_irq_t:dir getattr;
+allow user_t sysctl_kernel_t:file write;
+allow user_t sysctl_modprobe_t:file { open read };
+allow user_t sysctl_net_t:file write;
+allow user_t sysctl_t:file { open read };
+allow user_t sysctl_vm_overcommit_t:file { open read };
+allow user_t sysctl_vm_t:dir search;
+allow user_t sysfs_t:dir { add_name write };
+allow user_t sysfs_t:file write;
+allow user_t syslog_conf_t:file { open read };
+allow user_t syslogd_exec_t:file { unlink write };
+allow user_t syslogd_t:netlink_audit_socket getattr;
+allow user_t syslogd_t:unix_dgram_socket { getattr sendto };
+allow user_t syslogd_t:unix_stream_socket getattr;
+allow user_t syslogd_unit_t:file { open read };
+allow user_t syslogd_var_lib_t:dir write;
+allow user_t system_cron_spool_t:dir { add_name remove_name write };
+allow user_t system_cron_spool_t:file { create setattr unlink write };
+allow user_t system_cronjob_tmp_t:dir { add_name create remove_name write };
+allow user_t system_cronjob_tmp_t:file { create execute execute_no_trans ioctl open read setattr unlink write };
+allow user_t system_dbusd_t:netlink_audit_socket getattr;
+allow user_t system_dbusd_t:netlink_selinux_socket getattr;
+allow user_t system_dbusd_t:netlink_route_socket getattr;
+allow user_t system_dbusd_t:process sigkill;
+allow user_t system_dbusd_t:unix_dgram_socket getattr;
+allow user_t system_dbusd_t:unix_stream_socket getattr;
+allow user_t system_dbusd_var_lib_t:lnk_file read;
+allow user_t systemd_backlight_unit_t:file { open read };
+allow user_t systemd_backlight_unit_t:service status;
+allow user_t systemd_backlight_var_lib_t:file { open read };
+allow user_t systemd_binfmt_unit_t:file { open read };
+allow user_t systemd_coredump_t:unix_stream_socket getattr;
+allow user_t systemd_coredump_var_lib_t:file { open read };
+allow user_t systemd_hostnamed_t:dbus send_msg;
+allow user_t systemd_journal_t:dir setattr;
+allow user_t systemd_journal_t:file { map open read setattr };
+allow user_t systemd_logind_inhibit_var_run_t:fifo_file write;
+allow user_t systemd_logind_t:fd use;
+allow user_t systemd_logind_t:netlink_kobject_uevent_socket getattr;
+allow user_t systemd_logind_t:unix_dgram_socket getattr;
+allow user_t systemd_logind_t:unix_stream_socket getattr;
+allow user_t systemd_networkd_unit_t:file { open read };
+allow user_t systemd_rfkill_unit_t:file { open read };
+allow user_t systemd_rfkill_var_lib_t:file { open read };
+allow user_t systemd_sessions_var_run_t:file { open read };
+allow user_t systemd_unit_t:dir { add_name remove_name setattr write };
+allow user_t systemd_unit_t:file { open read setattr unlink write };
+allow user_t systemd_unit_t:lnk_file { read setattr unlink };
+allow user_t systemd_unit_t:service { reload start status stop };
+allow user_t textrel_shlib_t:file { unlink write };
+allow user_t tftpd_conf_t:file { open read };
+allow user_t thunderbird_home_t:file map;
+allow user_t thunderbird_exec_t:file { unlink write };
+allow user_t tmp_t:chr_file { create open read unlink };
+allow user_t tmp_t:file read;
+allow user_t tmpfs_t:filesystem { mount remount unmount };
+allow user_t tracefs_t:dir search;
+allow user_t tty_device_t:chr_file { append ioctl };
+allow user_t udev_helper_exec_t:file { unlink write };
+allow user_t udev_rules_t:dir { add_name write };
+allow user_t udev_rules_t:file { append open write };
+allow user_t udev_t:netlink_kobject_uevent_socket getattr;
+allow user_t udev_t:unix_dgram_socket getattr;
+allow user_t udev_t:unix_stream_socket { connectto getattr };
+allow user_t udev_var_run_t:dir { add_name remove_name write };
+allow user_t udev_var_run_t:file { open read unlink write };
+allow user_t udev_var_run_t:sock_file write;
+allow user_t unlabeled_t:dir { add_name create remove_name rmdir setattr write };
+allow user_t unlabeled_t:file { append create execute execute_no_trans ioctl link lock map open read rename setattr unlink write };
+allow user_t unlabeled_t:lnk_file { create link read setattr unlink };
+allow user_t unlabeled_t:sock_file { create link setattr unlink };
+allow user_t unreserved_port_t:tcp_socket name_bind;
+allow user_t unreserved_port_t:udp_socket name_bind;
+allow user_t user_dbusd_t:unix_stream_socket { getattr ioctl read write };
+allow user_t user_home_dir_t:file { append execute ioctl map open setattr read rename unlink write };
+allow user_t user_home_t:file relabelfrom;
+allow user_t user_home_t:sock_file execute;
+allow user_t user_runtime_t:dir { mounton setattr };
+allow user_t user_runtime_t:file { map open read write };
+allow user_t user_runtime_t:sock_file write;
+allow user_t user_su_t:unix_dgram_socket getattr;
+allow user_t user_sudo_t:process getpgid;
+allow user_t user_sudo_t:unix_dgram_socket getattr;
+allow user_t user_tmp_t:dir mounton;
+allow user_t user_tmp_t:file { execmod mounton relabelfrom };
+allow user_t user_tmpfs_t:dir mounton;
+allow user_t user_tmpfs_t:file { execute mounton };
+allow user_t usr_t:dir { add_name remove_name rmdir setattr write };
+allow user_t usr_t:file { append link rename setattr unlink write };
+allow user_t usr_t:lnk_file { setattr unlink };
+allow user_t usr_t:service { start status };
+allow user_t v4l_device_t:chr_file { ioctl map open read write };
+allow user_t var_lib_t:dir { add_name remove_name rmdir setattr write };
+allow user_t var_lib_t:file { append rename setattr unlink write };
+allow user_t var_lib_t:lnk_file { read unlink };
+allow user_t var_lock_t:dir { add_name remove_name write };
+allow user_t var_lock_t:file { append lock open read unlink write };
+allow user_t var_log_t:dir { add_name setattr remove_name write };
+allow user_t var_log_t:file { append ioctl open read rename write };
+allow user_t var_run_t:chr_file { create unlink };
+allow user_t var_run_t:dir { add_name remove_name rmdir setattr write };
+allow user_t var_run_t:file { ioctl link lock open read rename setattr unlink write };
+allow user_t var_spool_t:dir { add_name setattr write };
+allow user_t var_t:dir { add_name remove_name rename reparent rmdir setattr write };
+allow user_t var_t:file { append execute execute_no_trans link map rename setattr unlink write };
+allow user_t var_t:lnk_file { setattr unlink };
+allow user_t virsh_exec_t:file { unlink write };
+allow user_t virt_cache_t:dir write;
+allow user_t virt_content_t:dir write;
+allow user_t virt_etc_rw_t:dir { add_name remove_name write };
+allow user_t virt_etc_rw_t:file { open read rename setattr unlink write };
+allow user_t virt_etc_t:dir { add_name remove_name write };
+allow user_t virt_etc_t:file { open read rename setattr unlink write };
+allow user_t virt_image_t:dir write;
+allow user_t virt_leaseshelper_exec_t:file { unlink write };
+allow user_t virt_log_t:dir { remove_name rmdir write };
+allow user_t virt_var_lib_t:dir { remove_name rmdir write };
+allow user_t virtd_exec_t:file { unlink write };
+allow user_t virtd_lxc_exec_t:file { unlink write };
+allow user_t virtlockd_exec_t:file { unlink write };
+allow user_t virtlockd_var_lib_t:dir write;
+allow user_t virtlogd_exec_t:file { unlink write };
+allow user_t wine_exec_t:file { unlink write };
+allow user_t wine_home_t:dir { add_name remove_name write };
+allow user_t wine_home_t:file { execmod execute map open read rename setattr unlink write };
+allow user_t wine_home_t:lnk_file { read unlink };
+allow user_t wireless_device_t:chr_file { open read };
+allow user_t xauth_tmp_t:file unlink;
+allow user_t xdg_cache_t:file { execute execute_no_trans };
+allow user_t xdg_config_t:file { execute execute_no_trans };
+allow user_t xdg_data_t:file execute;
+allow user_t xdg_downloads_t:file { execute execute_no_trans };
+allow user_t xdg_videos_t:file execute;
+allow user_t xdm_exec_t:file { unlink write };
+allow user_t xdm_t:unix_dgram_socket getattr;
+allow user_t xdm_t:unix_stream_socket getattr;
+allow user_t xdm_var_lib_t:dir { setattr write };
+allow user_t xkb_var_lib_t:dir { add_name remove_name write };
+allow user_t xdm_var_lib_t:file { open read };
+allow user_t xdm_var_run_t:dir setattr;
+allow user_t xkb_var_lib_t:dir rmdir;
+allow user_t xkb_var_lib_t:file { setattr unlink write };
+allow user_t xkb_var_lib_t:lnk_file { setattr unlink };
+allow user_t xserver_exec_t:file { unlink write };
+allow user_t xserver_log_t:dir setattr;
+allow user_t xserver_log_t:file { open read };
+allow user_t xserver_t:netlink_kobject_uevent_socket getattr;
+allow user_t xserver_t:unix_stream_socket getattr;
+allow user_t xserver_tmp_t:file { map open write };
+allow user_t xsession_exec_t:file unlink;
+
+#============= useradd_t ==============
+allow useradd_t gnome_xdg_config_t:dir { getattr open read };
+allow useradd_t gnome_xdg_config_t:file getattr;
+allow useradd_t etc_t:file map;
+allow useradd_t gpg_secret_t:dir { getattr open read setattr };
+allow useradd_t gpg_secret_t:file { getattr setattr };
+allow useradd_t gstreamer_orcexec_t:file { getattr setattr };
+allow useradd_t mesa_shader_cache_t:dir { getattr open read setattr };
+allow useradd_t mesa_shader_cache_t:file { getattr setattr };
+allow useradd_t mozilla_home_t:dir { getattr open read setattr };
+allow useradd_t mozilla_home_t:file { getattr setattr };
+allow useradd_t mozilla_xdg_cache_t:dir { getattr open read setattr };
+allow useradd_t mozilla_xdg_cache_t:file { getattr setattr };
+allow useradd_t pulseaudio_home_t:file { getattr setattr };
+allow useradd_t pulseaudio_xdg_config_t:dir { getattr open read setattr };
+allow useradd_t pulseaudio_xdg_config_t:file { getattr setattr };
+allow useradd_t self:capability { dac_read_search sys_ptrace };
+allow useradd_t user_cert_t:dir { getattr open read setattr };
+allow useradd_t user_cert_t:file { getattr setattr };
+allow useradd_t user_fonts_cache_t:dir { getattr open read };
+allow useradd_t user_fonts_cache_t:file getattr;
+allow useradd_t user_home_dir_t:file { getattr setattr };
+allow useradd_t user_home_t:lnk_file { getattr setattr };
+allow useradd_t xauth_home_t:file { getattr setattr };
+allow useradd_t xdg_cache_t:dir { getattr open read setattr };
+allow useradd_t xdg_cache_t:file { getattr setattr };
+allow useradd_t xdg_cache_t:lnk_file getattr;
+allow useradd_t xdg_config_t:dir { getattr open read setattr };
+allow useradd_t xdg_config_t:file { getattr setattr };
+allow useradd_t xdg_data_t:dir { getattr open read };
+allow useradd_t xdg_data_t:file getattr;
+allow useradd_t xdg_documents_t:dir { getattr open read setattr };
+allow useradd_t xdg_downloads_t:dir { getattr open read setattr };
+allow useradd_t xdg_downloads_t:file { getattr setattr };
+allow useradd_t xdg_music_t:dir { getattr open read setattr };
+allow useradd_t xdg_music_t:file { getattr setattr };
+allow useradd_t xdg_pictures_t:dir { getattr open read setattr };
+allow useradd_t xdg_pictures_t:file { getattr setattr };
+allow useradd_t xdg_videos_t:dir { getattr open read setattr };
+allow useradd_t xsession_log_t:file { getattr setattr };
+
+#============= xauth_t ==============
+allow xauth_t etc_t:file map;
+allow xauth_t sysfs_t:lnk_file read;
+allow xauth_t tmpfs_t:filesystem getattr;
+allow xauth_t tty_device_t:chr_file { append read };
+allow xauth_t user_tmp_t:file { create link unlink write };
+
+
+#============= xdm_t ==============
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     allow_execmem, allow_execstack, xserver_gnome_xdm
+allow xdm_t self:process execmem;
+
+#============= xserver_t ==============
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     allow_execmem, allow_execstack
+allow xserver_t self:process execmem;

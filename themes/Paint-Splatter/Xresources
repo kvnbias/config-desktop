@@ -1,0 +1,141 @@
+! ~/.Xresources
+!
+! Wallpaper: ~/Pictures/wallpapers/paint-splatter-abstract.jpg
+! Conky Foreground: #0d4a66
+! Conky Helper Foreground: #0d4a66
+! Aether Color: #cdbb97
+! Config file for URxvt
+
+! Font
+! Requirement: AUR - nerd-fonts-complete
+! Used by: ranger, polybar, i3status, vim
+URxvt.font: xft:UbuntuMono\ Nerd\ Font\ Mono:size=12:antialias=true
+URxvt.letterSpace: -1
+
+! Xft.dpi: HIDPI
+! Xft.autohint: 0
+! Xft.lcdfilter:  lcddefault
+! Xft.hintstyle:  hintfull
+! Xft.hinting: 1
+! Xft.antialias: 1
+! Xft.rgba: rgb
+
+! Scrollbar
+URxvt.scrollStyle: rxvt
+URxvt.scrollBar: false
+
+! Perl extensions
+URxvt.perl-ext-common: default,matcher
+URxvt.matcher.button: 1
+URxvt.urlLauncher: firefox
+
+! Cursor
+URxvt.cursorBlink: true
+URxvt.cursorUnderline: false
+
+URxvt.pointerBlank: true
+URxvt.visualBell: true
+URxvt.internalBorder: 8
+
+Xcursor.theme: Breeze
+Xcursor.size: 0
+
+! special
+*fading: 20
+*fadeColor: black
+
+polybar.foreground: #29253c
+polybar.foregroundAlt: #29253c
+polybar.background: #a28a5b
+polybar.backgroundAlt: #29253c
+polybar.cursorColor: #c5c8c6
+
+polybar.foregroundFcs: #cfa28d
+polybar.backgroundTrn: #ddd9c7a3
+polybar.borderTrn: #00000000
+
+! terminal transparency
+URxvt*inheritPixmap: true
+URxvt*transparent: true
+! URxvt*shading: 0 to 99 darkens, 101 to 200 lightens
+URxvt*shading: 5
+URxvt*.blurRadius: 0
+
+! special
+*.foreground:   #c7cec2
+*.background:   #0e0e0d
+*.cursorColor:  #c7cec2
+
+! black
+*.color0:       #171816
+*.color8:       #d2acb7
+
+! red
+*.color1:       #1f211e
+*.color9:       #96ad85
+
+! green
+*.color2:       #30322f
+*.color10:      #cbb995
+
+! yellow
+*.color3:       #474a45
+*.color11:      #e6b679
+
+! blue
+*.color4:       #646861
+*.color12:      #b4997d
+
+! magenta
+*.color5:       #878c83
+*.color13:      #e4b67e
+
+! cyan
+*.color6:       #afb6ab
+*.color14:      #aecd94
+
+! white
+*.color7:       #dde5d7
+*.color15:      #b38ec6
+
+
+
+rofi.modi:                drun,ssh,window
+
+!                         'background',  'border',      'separator'
+rofi.color-window:        argb:ddd9c7a3, argb:dd2d292e, argb:dd2d292e
+!                         'item bg'      'font'   'alt item bg'  'highlight bg' 'highlight font'
+rofi.color-normal:        argb:002d292e, #0c4f69, argb:002d292e, argb:002d292e, #93093d
+rofi.color-urgent:        #d9c7a3, #cc6666, #d9c7a3, #d9c7a3, #a54242
+rofi.color-active:        #d9c7a3, #b5bd68, #d9c7a3, #d9c7a3, #8c9440
+
+rofi.width:               50
+rofi.lines:               10
+rofi.columns:             1
+rofi.font:                mono 15
+rofi.bw:                  0
+rofi.location:            0
+rofi.padding:             200
+rofi.show-icons:          false
+rofi.terminal:            rofi-sensible-terminal
+rofi.run-command:         {cmd}
+rofi.run-list-command:
+rofi.run-shell-command:   {terminal} -e {cmd}
+rofi.icon-theme:
+rofi.drun-show-actions:   true
+rofi.drun-display-format: {name}
+rofi.disable-history:     false
+rofi.sort:                true
+rofi.sorting-method:      normal
+rofi.case-sensitive:      false
+rofi.cycle:               true
+rofi.fullscreen:          true
+rofi.max-history-size:    15
+rofi.kb-primary-paste:    Control+V
+rofi.kb-cancel:           Escape
+! rofi.fake-transparency:   true
+! rofi.fake-background:     screenshot
+! rofi.drun-display-format: {name} [<span weight='light' size='small'><i>({generic})</i></span>]
+
+
+

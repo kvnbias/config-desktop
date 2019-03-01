@@ -1,0 +1,155 @@
+# Name: Oomox (Numix fork) Openbox theme
+# Author: Satyajit Sahoo <satyajit.happy@gmail.com>
+# License: GPL-3.0+
+
+# @TODO: finish replacing the colors here
+
+
+# Menu
+menu.border.color: #f1f9fc
+
+menu.title.bg: Solid Flat
+menu.title.bg.color: #151517
+menu.title.bg.shadow: 0
+menu.title.text.color: #e44742
+menu.title.text.justify: Center
+
+menu.items.bg: Solid Flat
+menu.items.bg.color: #151517
+menu.items.text.color: #e44742
+menu.items.disabled.text.color: #b03a37
+
+menu.items.active.bg: Solid Flat
+menu.items.active.bg.color: #1e1e21
+menu.items.active.text.color: #e44742
+
+menu.separator.color: #b03a37
+menu.separator.width: 1
+menu.separator.padding.width: 2
+menu.separator.padding.height: 4
+
+# Window focused
+window.active.title.separator.color: #151517
+
+# Active window
+window.active.border.color: #151517
+
+
+window.active.title.bg: flat solid
+window.active.title.bg.color: #151517
+window.active.title.separator.color: #151517
+window.active.text.justify: center
+
+window.active.label.bg: parentrelative
+window.active.label.text.color: #e44742
+
+window.active.handle.bg: flat solid
+window.active.handle.bg.color: #151517
+
+window.active.grip.bg: flat solid
+window.active.grip.bg.color: #151517
+
+window.active.button.unpressed.bg: flat solid
+window.active.button.unpressed.bg.color: #151517
+window.active.button.unpressed.image.color: #e44742
+
+window.active.button.pressed.bg: flat solid
+window.active.button.pressed.bg.color: #1e1e21
+window.active.button.pressed.image.color: #f1f9fc
+
+window.active.button.disabled.bg: flat solid
+window.active.button.disabled.bg.color: #151517
+window.active.button.disabled.image.color: #b03a37
+
+window.active.button.hover.bg: flat solid
+window.active.button.hover.bg.color: #151517
+window.active.button.hover.image.color: #1e1e21
+
+#window.active.button.toggled.bg: #1e1e21
+#window.active.button.toggled.image.color: #f1f9fc
+
+# Inactive window
+window.inactive.border.color: #f1f9fc
+
+window.inactive.title.bg: flat solid
+window.inactive.title.bg.color: #151517
+window.inactive.title.separator.color: #151517
+window.inactive.text.justify: center
+
+window.inactive.label.bg: parentrelative
+window.inactive.label.text.color: #b03a37
+
+window.inactive.handle.bg: flat solid
+window.inactive.handle.bg.color: #151517
+
+window.inactive.grip.bg: flat solid
+window.inactive.grip.bg.color: #151517
+
+window.inactive.button.unpressed.bg: flat solid
+window.inactive.button.unpressed.bg.color: #151517
+window.inactive.button.unpressed.image.color: #b03a37
+
+window.inactive.button.pressed.bg: flat solid
+window.inactive.button.pressed.bg.color: #1e1e21
+window.inactive.button.pressed.image.color: #f1f9fc
+
+window.inactive.button.disabled.bg: flat solid
+window.inactive.button.disabled.bg.color: #b03a37
+window.inactive.button.disabled.image.color: #151517
+
+window.inactive.button.hover.bg: flat solid
+window.inactive.button.hover.bg.color: #151517
+window.inactive.button.hover.image.color: #1e1e21
+
+
+# OSD
+osd.border.width: 1
+osd.border.color: #1e1e21
+
+osd.bg: flat solid
+osd.bg.color: #151517
+osd.label.bg: flat solid
+osd.label.bg.color: #151517
+osd.label.text.color: #e44742
+
+# OSD
+osd.bg: Solid Flat
+osd.bg.color: #151517
+osd.bg.shadow: 0
+
+osd.border.width: 2
+osd.hilight.bg: Solid Flat
+osd.hilight.bg.color: #1e1e21
+osd.unhilight.bg: flat solid
+osd.unhilight.bg.color: #2e2f33
+
+osd.button.unpressed.bg: flat border
+osd.button.unpressed.bg.color: #2e2f33
+#osd.button.unpressed.*.border.color: #e44742
+
+osd.button.pressed.bg: flat border
+osd.button.pressed.bg.color: #1e1e21
+#osd.button.pressed.*.border.color: #f1f9fc
+
+osd.button.focused.bg: flat solid border
+osd.button.focused.bg.color: #f1f9fc
+#osd.button.focused.*.border.color: #2e2f33
+
+osd.button.focused.box.color: #1e1e21
+
+
+# Fonts
+window.active.label.text.font:shadow=n
+window.inactive.label.text.font:shadow=n
+menu.items.font:shadow=n
+menu.title.text.font:shadow=n
+
+
+# Everything else
+border.width: 4
+padding.width: 8
+padding.height: 4
+window.handle.width: 0
+window.client.padding.width: 0
+window.label.text.justify: center
+#menu.overlap: 0
