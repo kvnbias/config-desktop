@@ -318,12 +318,11 @@ Would you like to rice rEFInd [yN]?   " rr
           [Yy]* )
             yes | sudo pacman -S refind-efi
             refind-install
-            
-            cwd=$(pwd)
 
+            git clone https://github.com/EvanPurkhiser/rEFInd-minimal.git /tmp/refind-minimal
             sudo mkdir -p /boot/efi/EFI/refind/themes/rEFInd-minimal
-            sudo cp -raf --no-preserve=mode,ownership $cwd/boot/* /boot/efi/EFI/refind/themes/rEFInd-minimal
-            echo "include themes/refind-minimal/theme.conf" | sudo tee -a refind.conf
+            sudo cp -raf --no-preserve=mode,ownership /tmp/refind-minimal/* /boot/efi/EFI/refind/themes/rEFInd-minimal
+            echo "include themes/refind-minimal/theme.conf" | sudo tee -a /boot/efi/EFI/refind/refind.conf
 
             cd $cwd
 

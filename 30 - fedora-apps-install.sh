@@ -312,9 +312,10 @@ Would you like to rice rEFInd [yN]?   " rr
             wget -O "refind-bin-0.11.4.zip" "http://sourceforge.net/projects/refind/files/0.11.4/refind-bin-0.11.4.zip/download"
             unzip refind-bin-0.11.4.zip && unzip refind-bin-0.11.4.zip && sudo bash refind-bin-0.11.4/refind-install
 
+            git clone https://github.com/EvanPurkhiser/rEFInd-minimal.git /tmp/refind-minimal
             sudo mkdir -p /boot/efi/EFI/refind/themes/rEFInd-minimal
-            sudo cp -raf --no-preserve=mode,ownership $mainCWD/boot/* /boot/efi/EFI/refind/themes/rEFInd-minimal
-            echo "include themes/refind-minimal/theme.conf" | sudo tee -a refind.conf
+            sudo cp -raf --no-preserve=mode,ownership /tmp/refind-minimal/* /boot/efi/EFI/refind/themes/rEFInd-minimal
+            echo "include themes/refind-minimal/theme.conf" | sudo tee -a /boot/efi/EFI/refind/refind.conf
 
             cd /tmp
 
