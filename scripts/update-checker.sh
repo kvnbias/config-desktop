@@ -15,14 +15,17 @@ if [ "$os" = "arch" ]; then
 fi
 
 if [ "$os" = "fedora" ]; then
-  dnf=$(dnf upgrade --refresh --assumeno 2> /dev/null)
+  dnf=$(sudo dnf upgrade --refresh --assumeno 2> /dev/null)
 
-  upgrade=$(echo "$dnf" | grep '^Upgrade' | awk '{ print $2 }')
-  install=$(echo "$dnf" | grep '^Install' | awk '{ print $2 }')
+  upgrade=$(echo "$dnf" | grep '^Upgrade ' | awk '{ print $2 }')
 
-  updates=$(( upgrade + install ))
+  install=$(echo "$dnf" | grep '^Install ' | awk '{ print $2 }')
+
+updates=$(( upgrade + install ))
 fi
 
 if [ "$updates" -gt 0 ]; then
   echo " $updates"
+else 
+  echo ""
 fi
