@@ -118,7 +118,9 @@ while true; do
 [k]  Solarized Kali    [*]  Default
 [l]  Solarized Debian
 [m]  Solarized Ubuntu
-" theme
+
+
+Enter theme:   " theme
   case $theme in
     [a] )
       gen_conky_conf "#ffffff" "#ffffff"
