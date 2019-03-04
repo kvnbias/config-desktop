@@ -625,6 +625,14 @@ allow chkpwd_t etc_t:file map;
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     chromium_read_all_user_content, chromium_manage_all_user_content
+#c allow chromium_t gnome_xdg_config_t:dir read;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     chromium_read_all_user_content, chromium_manage_all_user_content
+#c allow chromium_t gnome_xdg_config_t:file { getattr open read };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     chromium_read_all_user_content, chromium_manage_all_user_content
 #c allow chromium_t gpg_secret_t:dir { read search write };
 
 #!!!! This avc can be allowed using one of the these booleans:
@@ -708,6 +716,14 @@ allow chkpwd_t etc_t:file map;
 #c allow chromium_t xauth_home_t:file write;
 
 #!!!! This avc can be allowed using one of the these booleans:
+#     'chromium_manage_all_user_content'
+#c allow chromium_t xdg_data_t:dir { add_name remove_name setattr write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'chromium_manage_all_user_content'
+#c allow chromium_t xdg_data_t:file { append create rename setattr unlink write };
+
+#!!!! This avc can be allowed using one of the these booleans:
 #     chromium_read_all_user_content, chromium_manage_all_user_content
 #c allow chromium_t xdg_cache_t:file { create getattr open read rename unlink write };
 
@@ -755,10 +771,12 @@ allow chkpwd_t etc_t:file map;
 #c allow chromium_t chromium_sandbox_t:file { getattr open read };
 #c allow chromium_t chromium_tmp_t:file mounton;
 #c allow chromium_t chromium_tmpfs_t:file { execute mounton };
+#c allow chromium_t chromium_xdg_config_t:file execute;
 #c allow chromium_t devpts_t:filesystem mount;
 #c allow chromium_t dri_device_t:chr_file { getattr ioctl read write };
 #c allow chromium_t etc_t:file map;
 #c allow chromium_t fs_t:filesystem { quotaget remount unmount };
+#c allow chromium_t gnome_xdg_config_t:file map;
 #c allow chromium_t hi_reserved_port_t:tcp_socket name_connect;
 #c allow chromium_t inetd_child_port_t:tcp_socket name_connect;
 #c allow chromium_t init_t:dbus send_msg;
@@ -800,7 +818,7 @@ allow chkpwd_t etc_t:file map;
 #c allow chromium_t tmpfs_t:lnk_file create;
 #c allow chromium_t unlabeled_t:dir { add_name create open read remove_name rmdir search setattr write };
 #c allow chromium_t unlabeled_t:file { append create execute getattr ioctl lock map open read rename setattr unlink write };
-#c allow chromium_t unlabeled_t:lnk_file create;
+#c allow chromium_t unlabeled_t:lnk_file { create read unlink };
 #c allow chromium_t user_home_dir_t:dir { create setattr };
 #c allow chromium_t user_home_dir_t:file { append create getattr ioctl map open read rename setattr unlink write };
 #c allow chromium_t user_home_t:file execute;
@@ -817,6 +835,7 @@ allow chkpwd_t etc_t:file map;
 #============= crond_t ==============
 allow crond_t etc_t:file map;
 allow crond_t init_t:dbus send_msg;
+allow crond_t setrans_var_run_t:dir search;
 
 #============= crontab_t ==============
 allow crontab_t etc_t:file map;
@@ -1365,6 +1384,8 @@ allow mozilla_t pulseaudio_tmp_t:file map;
 allow mozilla_t radsec_port_t:tcp_socket name_connect;
 allow mozilla_t redis_port_t:tcp_socket name_connect;
 allow mozilla_t ricci_port_t:tcp_socket name_connect;
+allow mozilla_t self:cap_userns sys_admin;
+allow mozilla_t self:capability dac_read_search;
 allow mozilla_t self:process ptrace;
 allow mozilla_t selinux_config_t:lnk_file read;
 allow mozilla_t servistaitsm_port_t:tcp_socket name_connect;
@@ -1795,6 +1816,10 @@ allow systemd_coredump_t systemd_coredump_var_lib_t:file map;
 allow systemd_coredump_t unlabeled_t:lnk_file read;
 
 #============= system_cronjob_t ==============
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'authlogin_nsswitch_use_ldap'
+allow system_cronjob_t cert_t:file { open read };
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     'authlogin_nsswitch_use_ldap'
@@ -2534,6 +2559,8 @@ dontaudit user_t bluetooth_unit_t:file { create relabelfrom relabelto };
 dontaudit user_t boot_t:file { create relabelfrom relabelto };
 dontaudit user_t bootloader_tmp_t:dir { create relabelfrom relabelto };
 dontaudit user_t bootloader_tmp_t:file { create relabelfrom relabelto };
+dontaudit user_t cert_t:file { create relabelfrom relabelto };
+dontaudit user_t cert_t:lnk_file { create relabelfrom relabelto };
 #c dontaudit user_t chromium_exec_t:file { create relabelfrom relabelto };
 #c dontaudit user_t chromium_naclhelper_exec_t:file { create relabelfrom relabelto };
 #c dontaudit user_t chromium_sandbox_exec_t:file { create relabelfrom relabelto };
@@ -2700,6 +2727,8 @@ dontaudit user_t user_runtime_t:sock_file { create relabelfrom relabelto };
 dontaudit user_t usr_t:dir { create relabelfrom relabelto };
 dontaudit user_t usr_t:file { create relabelfrom relabelto };
 dontaudit user_t usr_t:lnk_file { create relabelfrom relabelto };
+dontaudit user_t user_tmp_t:dir { create relabelfrom relabelto };
+dontaudit user_t user_tmp_t:lnk_file { create relabelfrom relabelto };
 dontaudit user_t utempter_exec_t:file { create relabelfrom relabelto };
 dontaudit user_t var_lib_t:dir { create relabelfrom relabelto };
 dontaudit user_t var_lib_t:file { create relabelfrom relabelto };
@@ -2827,6 +2856,7 @@ allow user_t bin_t:dir { add_name remove_name rmdir setattr write };
 allow user_t bin_t:file { append link rename setattr unlink write };
 allow user_t bin_t:lnk_file { setattr unlink };
 allow user_t binfmt_misc_fs_t:file { open write };
+allow user_t blueman_var_lib_t:file { open read };
 allow user_t bluetooth_conf_t:file { open read };
 allow user_t bluetooth_unit_t:file { open read };
 allow user_t bluetooth_unit_t:service { reload start status stop };
@@ -2834,7 +2864,9 @@ allow user_t boot_t:dir { add_name remove_name write };
 allow user_t boot_t:file { append ioctl open read rename setattr unlink write };
 allow user_t bootloader_tmp_t:dir { add_name mounton remove_name rmdir write };
 allow user_t bootloader_tmp_t:file { append open unlink };
-allow user_t cert_t:file write;
+allow user_t cert_t:dir { add_name remove_name write };
+allow user_t cert_t:file { rename setattr write unlink };
+allow user_t cert_t:lnk_file { setattr unlink };
 #c allow user_t chromium_exec_t:file { unlink write };
 #c allow user_t chromium_naclhelper_exec_t:file { unlink write };
 #c allow user_t chromium_sandbox_exec_t:file { unlink write };
@@ -2850,6 +2882,7 @@ allow user_t configfs_t:dir { open read };
 allow user_t crack_db_t:file { open read };
 allow user_t cron_log_t:file { read write };
 allow user_t crond_t:unix_dgram_socket getattr;
+allow user_t crond_var_run_t:file { link read unlink write };
 allow user_t cupsd_config_exec_t:file { unlink write };
 allow user_t cupsd_etc_t:dir { add_name remove_name write };
 allow user_t cupsd_etc_t:file { rename setattr unlink write };
