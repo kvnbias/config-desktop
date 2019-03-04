@@ -427,45 +427,7 @@ Inherits=Breeze
         # sudo chmod +x $HOME/.config/vifm/scripts/vifm-run.sh
         # sudo chmod +x $HOME/.config/vifm/scripts/vifm-viewer.sh
 
-        # create .bashrc if not exists
-        if [ ! -f $HOME/.bashrc ]; then
-          touch $HOME/.bashrc;
-        fi
-
-        echo "
-
-# If not running interactively, don't do anythin
-[[ \$- != *i* ]] && return
-
-alias ls='ls --color=auto'
-PS1='[\u@\h \W]\\\$ '
-
-# Enable history appending instead of overwriting.
-shopt -s histappend
-
-# change theme alias
-alias spawn-mpd='$HOME/.config/mpd/spawn-mpd.sh'
-alias network-connect='$HOME/.config/network/network-connect.sh'
-alias update-mirrors='$HOME/.config/network/update-mirrors.sh'
-alias change-theme='$HOME/.config/themes/change-theme.sh'
-alias update-polybar-network-interface='$HOME/.config/themes/update-polybar-network-interface.sh'
-# alias vifm='$HOME/.config/vifm/scripts/vifm-run.sh'
-
-PATH=\"\$HOME/.local/bin:\$HOME/bin:\$PATH\"
-export PATH;
-
-# execute neofetch depending on cols and lines in .bashrc
-os=\$(echo -n \$(cat /etc/*-release | grep ^ID= | sed -e \"s/ID=//\"))
-cols=\$(tput cols)
-lines=\$(tput lines)
-if [ \"\$cols\" -gt 67 ] && [ \"\$lines\" -gt 34 ];
-then
-  neofetch --config \"$HOME/.config/neofetch/\$os.conf\"
-fi
-
-export EDITOR=vim
-
-        " | tee $HOME/.bashrc
+        cp -rf $(pwd)/rice/bashrc      $HOME/.bashrc
 
         # vifm
         # cp -raf $(pwd)/rice/vifmrc  $HOME/.config/vifm/vifmrc
