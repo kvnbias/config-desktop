@@ -61,7 +61,8 @@ font-0 = RobotoMono Nerd Font Mono:pixelsize=10;3
 
 modules-left = i3
 modules-center = mpd
-modules-right = xbacklight filesystem cpu ram battery wlan eth date
+modules-right = xbacklight filesystem cpu ram battery date updates
+# modules-right = xbacklight filesystem cpu ram battery wlan eth date updates
 
 cursor-click = pointer
 cursor-scroll = ns-resize
