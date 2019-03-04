@@ -2728,6 +2728,7 @@ dontaudit user_t usr_t:dir { create relabelfrom relabelto };
 dontaudit user_t usr_t:file { create relabelfrom relabelto };
 dontaudit user_t usr_t:lnk_file { create relabelfrom relabelto };
 dontaudit user_t user_tmp_t:dir { create relabelfrom relabelto };
+dontaudit user_t user_tmp_t:file { create relabelfrom relabelto };
 dontaudit user_t user_tmp_t:lnk_file { create relabelfrom relabelto };
 dontaudit user_t utempter_exec_t:file { create relabelfrom relabelto };
 dontaudit user_t var_lib_t:dir { create relabelfrom relabelto };
