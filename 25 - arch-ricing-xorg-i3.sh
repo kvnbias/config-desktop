@@ -388,6 +388,7 @@ Inherits=Breeze
         cp $(pwd)/scripts/generate-conky-helper.sh            $HOME/.config/conky/generate-conky-helper.sh
         cp $(pwd)/scripts/keyboard-disabler.sh                $HOME/.config/keyboard/keyboard-disabler.sh
         cp $(pwd)/scripts/polybar.sh                          $HOME/.config/i3/polybar.sh
+        cp $(pwd)/scripts/polkit-launch.sh                    $HOME/.config/i3/polkit-launch.sh
         cp $(pwd)/scripts/startup.sh                          $HOME/.config/i3/startup.sh
         cp $(pwd)/scripts/kali-rofi.sh                        $HOME/.config/kali/rofi.sh
         cp $(pwd)/scripts/kali-launch.sh                      $HOME/.config/kali/launch.sh
@@ -413,6 +414,7 @@ Inherits=Breeze
         sudo chmod +x $HOME/.config/conky/generate-conky-helper.sh
         sudo chmod +x $HOME/.config/keyboard/keyboard-disabler.sh
         sudo chmod +x $HOME/.config/i3/polybar.sh
+        sudo chmod +x $HOME/.config/i3/polkit-launch.sh
         sudo chmod +x $HOME/.config/i3/startup.sh
         sudo chmod +x $HOME/.config/kali/rofi.sh
         sudo chmod +x $HOME/.config/kali/launch.sh

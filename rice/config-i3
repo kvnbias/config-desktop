@@ -432,7 +432,7 @@ bindsym $mod+Shift+minus exec --no-startup-id ~/.config/display/brightness-manag
 # exec --no-startup-id blueman-applet
 exec --no-startup-id pa-applet
 exec --no-startup-id nm-applet
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+exec --no-startup-id ~/.config/i3/polkit-launch.sh
 exec --no-startup-id "conky --config ~/.config/conky/conky.conf"
 exec --no-startup-id "conky --config ~/.config/conky/helper.conf"
 
