@@ -222,27 +222,27 @@ Would you like to enable chromium-typed policies [yN]?" echrm
         case $echrm in
           [Yy]* )
             echo "usepasswd = False" | sudo tee -a /etc/selinux/semanage.conf
-            cp $(pwd)/selinux/karch-base.te $(pwd)/karch-base.te
-            sed -i "s/#c //g" $(pwd)/karch-base.te
-            sudo checkmodule -M -m -o karch-base.mod karch-base.te
-            sudo semodule_package -o karch-base.pp -m karch-base.mod
-            sudo semodule -i karch-base.pp
+            cp $(pwd)/selinux/cse-arch.te $(pwd)/cse-arch.te
+            sed -i "s/#c //g" $(pwd)/cse-arch.te
+            sudo checkmodule -M -m -o cse-arch.mod cse-arch.te
+            sudo semodule_package -o cse-arch.pp -m cse-arch.mod
+            sudo semodule -i cse-arch.pp
 
-            sudo rm karch-base.te
-            sudo rm karch-base.mod
-            sudo rm karch-base.pp
+            sudo rm cse-arch.te
+            sudo rm cse-arch.mod
+            sudo rm cse-arch.pp
 
             break 2;;
           * )
             echo "usepasswd = False" | sudo tee -a /etc/selinux/semanage.conf
-            cp $(pwd)/selinux/karch-base.te $(pwd)/karch-base.te
-            sudo checkmodule -M -m -o karch-base.mod karch-base.te
-            sudo semodule_package -o karch-base.pp -m karch-base.mod
-            sudo semodule -i karch-base.pp
+            cp $(pwd)/selinux/cse-arch.te $(pwd)/cse-arch.te
+            sudo checkmodule -M -m -o cse-arch.mod cse-arch.te
+            sudo semodule_package -o cse-arch.pp -m cse-arch.mod
+            sudo semodule -i cse-arch.pp
 
-            sudo rm karch-base.te
-            sudo rm karch-base.mod
-            sudo rm karch-base.pp
+            sudo rm cse-arch.te
+            sudo rm cse-arch.mod
+            sudo rm cse-arch.pp
 
             break 2;;
         esac

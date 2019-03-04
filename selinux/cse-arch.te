@@ -1,5 +1,5 @@
 
-module karch-base 1.0;
+module cse-arch 1.0;
 
 require {
     type accountsd_var_lib_t;
@@ -1717,6 +1717,8 @@ allow system_dbusd_t gconf_tmp_t:file { map open read unlink write };
 allow system_dbusd_t gkeyringd_exec_t:file { execute execute_no_trans map open read };
 allow system_dbusd_t gnome_xdg_config_t:dir { add_name read remove_name search write };
 allow system_dbusd_t gnome_xdg_config_t:file { create getattr map open read rename unlink write };
+allow system_dbusd_t gnome_xdg_data_t:dir { getattr open read };
+allow system_dbusd_t gnome_xdg_data_t:file { getattr open read };
 allow system_dbusd_t init_t:unix_stream_socket connectto;
 allow system_dbusd_t mesa_shader_cache_t:dir { add_name create getattr remove_name search write };
 allow system_dbusd_t mesa_shader_cache_t:file { create getattr lock map open read rename write };

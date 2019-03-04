@@ -1,5 +1,5 @@
 
-module kfedora-base 1.0;
+module cse-fedora 1.0;
 
 require {
     type efivarfs_t;

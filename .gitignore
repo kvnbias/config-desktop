@@ -1,4 +1,4 @@
-selinux/karch-base.mod
-selinux/karch-base.pp
-selinux/kfedora-base.mod
-selinux/kfedora-base.pp
+selinux/cse-arch.mod
+selinux/cse-arch.pp
+selinux/cse-fedora.mod
+selinux/cse-fedora.pp
