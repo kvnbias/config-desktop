@@ -374,12 +374,12 @@ groupmod -g $guid wheel
       sudo dnf install -y dunst conky compton w3m --releasever=$fedver
 
       # for vifm
-      sudo dnf install -y ffmpegthumbnailer python3-pip --releasever=$fedver
-      sudo dnf install -y redhat-rpm-config --releasever=$fedver
+      # sudo dnf install -y ffmpegthumbnailer python3-pip --releasever=$fedver
+      # sudo dnf install -y redhat-rpm-config --releasever=$fedver
 
-      sudo dnf install -y python3-devel libjpeg-turbo-devel zlib-devel libXext-devel --releasever=$fedver
-      sudo pip3 install ueberzug
-      sudo dnf remove -y python3-devel libjpeg-turbo-devel zlib-devel libXext-devel --releasever=$fedver
+      # sudo dnf install -y python3-devel libjpeg-turbo-devel zlib-devel libXext-devel --releasever=$fedver
+      # sudo pip3 install ueberzug
+      # sudo dnf remove -y python3-devel libjpeg-turbo-devel zlib-devel libXext-devel --releasever=$fedver
 
       # MANUAL: i3lock-color. Some are already installed
       sudo dnf remove -y i3lock
@@ -410,7 +410,8 @@ groupmod -g $guid wheel
       sudo dnf remove -y pam-devel xcb-util-devel xcb-util-image-devel xcb-util-xrm-devel autoconf automake 
 
       # terminal-based file viewer
-      sudo dnf install -y ranger vifm --releasever=$fedver
+      sudo dnf install -y ranger --releasever=$fedver
+      # sudo dnf install -y vifm --releasever=$fedver
 
       # requirements for ranger [scope.sh]
       sudo dnf install -y file libcaca python3-pygments atool libarchive unrar lynx --releasever=$fedver
@@ -646,8 +647,8 @@ Inherits=Breeze
         mkdir -p $HOME/.config/network
         mkdir -p $HOME/.config/touchpad
         mkdir -p $HOME/.config/themes
-        mkdir -p $HOME/.config/vifm
-        mkdir -p $HOME/.config/vifm/scripts
+        # mkdir -p $HOME/.config/vifm
+        # mkdir -p $HOME/.config/vifm/scripts
 
         # create folders for configs
         mkdir -p  "$HOME/.config/Code"
@@ -679,8 +680,8 @@ Inherits=Breeze
         cp $(pwd)/scripts/update-checker.sh                   $HOME/.config/polybar/update-checker.sh
         cp $(pwd)/scripts/change-theme.sh                     $HOME/.config/themes/change-theme.sh
         cp $(pwd)/scripts/update-polybar-network-interface.sh $HOME/.config/themes/update-polybar-network-interface.sh
-        cp $(pwd)/scripts/vifm-run.sh                         $HOME/.config/vifm/scripts/vifm-run.sh
-        cp $(pwd)/scripts/vifm-viewer.sh                      $HOME/.config/vifm/scripts/vifm-viewer.sh
+        # cp $(pwd)/scripts/vifm-run.sh                         $HOME/.config/vifm/scripts/vifm-run.sh
+        # cp $(pwd)/scripts/vifm-viewer.sh                      $HOME/.config/vifm/scripts/vifm-viewer.sh
 
         # copy keyboard-disabler icons
         # cp $(pwd)/rice/images/keyboard/* $HOME/.config/keyboard
@@ -704,8 +705,8 @@ Inherits=Breeze
         sudo chmod +x $HOME/.config/polybar/update-checker.sh
         sudo chmod +x $HOME/.config/themes/change-theme.sh
         sudo chmod +x $HOME/.config/themes/update-polybar-network-interface.sh
-        sudo chmod +x $HOME/.config/vifm/scripts/vifm-run.sh
-        sudo chmod +x $HOME/.config/vifm/scripts/vifm-viewer.sh
+        # sudo chmod +x $HOME/.config/vifm/scripts/vifm-run.sh
+        # sudo chmod +x $HOME/.config/vifm/scripts/vifm-viewer.sh
 
         # create .bashrc if not exists
         if [ ! -f $HOME/.bashrc ]; then
@@ -728,8 +729,8 @@ alias spawn-mpd='$HOME/.config/mpd/spawn-mpd.sh'
 alias network-connect='$HOME/.config/network/network-connect.sh'
 alias update-mirrors='$HOME/.config/network/update-mirrors.sh'
 alias change-theme='$HOME/.config/themes/change-theme.sh'
-alias vifm='$HOME/.config/vifm/scripts/vifm-run.sh'
 alias update-polybar-network-interface='$HOME/.config/themes/update-polybar-network-interface.sh'
+# alias vifm='$HOME/.config/vifm/scripts/vifm-run.sh'
 
 PATH=\"\$HOME/.local/bin:\$HOME/bin:\$PATH\"
 export PATH;
@@ -748,7 +749,7 @@ export EDITOR=vim
         " | tee $HOME/.bashrc
 
         # vifm
-        cp -raf $(pwd)/rice/vifmrc  $HOME/.config/vifm/vifmrc
+        # cp -raf $(pwd)/rice/vifmrc  $HOME/.config/vifm/vifmrc
 
         # copy vim colors
         mkdir -p $HOME/.vim
