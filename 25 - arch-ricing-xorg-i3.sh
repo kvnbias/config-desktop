@@ -472,8 +472,8 @@ export EDITOR=vim
 
         # copy vim colors
         mkdir -p $HOME/.vim
-        cp -raf $(pwd)/rice/.vim/*  $HOME/.vim
-        cp -raf $(pwd)/rice/.vimrc  $HOME/.vimrc
+        cp -raf $(pwd)/rice/vim/*  $HOME/.vim
+        cp -raf $(pwd)/rice/vimrc  $HOME/.vimrc
 
         git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
 
