@@ -1,4 +1,8 @@
-# Quick start (Arch)
+# CONFIG-DESKTOP
+
+Current default configs and scripts for my desktop environments.
+
+## Quick start (Arch)
 
 
 ```sh
@@ -6,7 +10,7 @@
 # bash arch-install
 ```
 
-# Post install (Arch)
+## Post install (Arch)
 
 ```sh
 $ bash 10\ -\ arch-post-install.sh
