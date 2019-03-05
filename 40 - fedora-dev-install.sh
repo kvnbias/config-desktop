@@ -68,5 +68,56 @@ Install DBeaver [yN]?   " idbvr
   esac
 done
 
+while true; do
+  read -p "
+
+Install NVM (NodeJS) [yN]?   " invm
+  case $invm in
+    [Yy]* )
+      wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+      break;;
+    * ) break;;
+  esac
+done
+
+while true; do
+  read -p "
+
+Install PHP-Build (PHP) [yN]?   " invm
+  case $invm in
+    [Yy]* )
+      git clone https://github.com/php-build/php-build.git /tmp/php-build
+      cp $(pwd)/dev/php/installation/configure-options  /tmp/php-build/share/php-build/default_configure_options
+      mkdir -p $HOME/.config/dev
+      cp $(pwd)/dev/php/installation/switch-php.sh  $HOME/.config/dev/switch-php.sh
+
+      if ! cat $HOME/.bashrc | grep -q "alias php-switch"; then
+        echo "alias php-switch=\"\$HOME/.config/dev/switch-php.sh\"" | tee -a $HOME/.bashrc
+      fi
+
+      sudo /tmp/php-build/install.sh
+
+      while true; do
+        read -p "
+Installing build packages...
+Already Installed:
+
+aspell    curl      db           enchant            gmp
+icu       libnsl    libsodium    libtool            libxslt
+libzip    pcre2     sqlite       postgresql-libs    procps-ng
+tidy
+
+Enter any key to proceed...   " eak
+        case $eak in
+          * ) break;;
+        esac
+      done
+      yes | sudo pacman -S aspell curl db enchant gmp icu libnsl libsodium libtool
+      yes | sudo pacman -S libxslt libzip pcre2 sqlite postgresql-libs procps-ng tidy
+      break;;
+    * ) break;;
+  esac
+done
+
 cd $mainCWD
 sudo dnf autoremove
