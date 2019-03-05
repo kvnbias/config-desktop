@@ -1,0 +1,47 @@
+
+module cse-arch-php 1.0;
+
+require {
+    type hugetlbfs_t;
+    type http_port_t;
+    type node_t;
+    type user_home_dir_t;
+    type user_sudo_t;
+    type user_t;
+    class dir { add_name create remove_name write };
+    class file { create lock map open read setattr write };
+    class process execmem;
+    class tcp_socket { accept listen name_bind name_connect node_bind };
+}
+
+#============= user_sudo_t ==============
+
+##### ALLOWS USER TO BIND A NODE IN A TCP SOCKET USING PHP SERVER
+#!!!! This avc can be allowed using one of the these booleans:
+#     'allow_ypbind'
+allow user_sudo_t node_t:tcp_socket node_bind;
+
+##### ALLOWS USER TO ACCEPT & LISTEN TO A PORT IN A TCP SOCKET BINDED BY PHP
+#!!!! This avc can be allowed using one of the these booleans:
+#     'allow_ypbind'
+allow user_sudo_t self:tcp_socket { accept listen };
+
+##### ALLOWS USER TO BIND & CONNECT A HTTP_PORT [:80] IN A TCP SOCKET USING PHP SERVER
+allow user_sudo_t http_port_t:tcp_socket { name_bind name_connect };
+
+###### PHP-FPM RELATED ACTION
+allow user_sudo_t hugetlbfs_t:file { map read write };
+
+###### PHP-FPM RELATED ACTION
+allow user_sudo_t self:process execmem;
+
+##### ALLOWS USER TO MANIPULATE USER HOME DIRS USING PHP
+allow user_sudo_t user_home_dir_t:dir { add_name create remove_name write };
+
+##### ALLOWS USER TO MANIPULATE USER HOME FILES USING PHP
+allow user_sudo_t user_home_dir_t:file { create lock open setattr write };
+
+#============= user_t ==============
+
+###### PHP-FPM RELATED ACTION
+allow user_t hugetlbfs_t:file { map read write };
