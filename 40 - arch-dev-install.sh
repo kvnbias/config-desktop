@@ -88,20 +88,19 @@ Install PHP-Build (PHP) [yN]?   " invm
       while true; do
         read -p "
 Installing build packages...
-Already Installed:
 
-aspell    curl      db           enchant            gmp
-icu       libnsl    libsodium    libtool            libxslt
-libzip    pcre2     sqlite       postgresql-libs    procps-ng
-tidy
+autoconf         bzip2     curl       gcc                icu
+libjpeg-turbo    libpng    libtidy    libxml2            libxslt
+libzip           make      openssl    postgresql-libs    readline
+tar
 
 Enter any key to proceed...   " eak
         case $eak in
           * ) break;;
         esac
       done
-      yes | sudo pacman -S aspell curl db enchant gmp icu libnsl libsodium libtool
-      yes | sudo pacman -S libxslt libzip pcre2 sqlite postgresql-libs procps-ng tidy
+      yes | sudo pacman -S autoconf bzip2 curl gcc icu libjpeg-turbo libpng libtidy libxml2
+      yes | sudo pacman -S libxslt libzip make openssl postgresql-libs readline tar
       break;;
     * ) break;;
   esac

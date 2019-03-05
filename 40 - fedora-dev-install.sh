@@ -62,7 +62,7 @@ Install DBeaver [yN]?   " idbvr
     [Yy]* )
       cd /tmp
       wget https://dbeaver.io/files/dbeaver-ce-latest-stable.x86_64.rpm
-      sudo dnf install -y dbeaver-ce-latest-stable.x86_64.rpm
+      sudo dnf install -y dbeaver-ce-latest-stable.x86_64.rpm --releasever=$fedver
       break;;
     * ) break;;
   esac
@@ -75,6 +75,8 @@ Install NVM (NodeJS) [yN]?   " invm
   case $invm in
     [Yy]* )
       wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+      curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
+      sudo dnf install -y yarn --releasever=$fedver
       break;;
     * ) break;;
   esac
@@ -100,20 +102,21 @@ Install PHP-Build (PHP) [yN]?   " invm
       while true; do
         read -p "
 Installing build packages...
-Already Installed:
 
-aspell    curl      db           enchant            gmp
-icu       libnsl    libsodium    libtool            libxslt
-libzip    pcre2     sqlite       postgresql-libs    procps-ng
-tidy
+autoconf         bzip2            bzip2-devel            gcc-c++
+libcurl-devel    libicu-devel     libjpeg-turbo-devel    libpng-devel
+libtidy-devel    libxml2-devel    libxslt-devel          libzip-devel
+make             openssl-devel    postgresql-devel       readline-devel
+tar
 
 Enter any key to proceed...   " eak
         case $eak in
           * ) break;;
         esac
       done
-      yes | sudo pacman -S aspell curl db enchant gmp icu libnsl libsodium libtool
-      yes | sudo pacman -S libxslt libzip pcre2 sqlite postgresql-libs procps-ng tidy
+      sudo dnf install -y autoconf bzip2 bzip2-devel gcc-c++ libcurl-devel libicu-devel libjpeg-turbo-devel --releasever=$fedver
+      sudo dnf install -y libpng-devel libtidy-devel libxml2-devel libxslt-devel libzip-devel --releasever=$fedver
+      sudo dnf install -y make openssl-devel postgresql-devel readline-devel tar --releasever=$fedver
       break;;
     * ) break;;
   esac
