@@ -16,32 +16,44 @@ require {
 
 #============= user_sudo_t ==============
 
-##### ALLOWS USER TO BIND A NODE IN A TCP SOCKET USING PHP SERVER
 #!!!! This avc can be allowed using one of the these booleans:
 #     'allow_ypbind'
+#
+# Allows the user [sudo] to bind a node in a tcp socket using the PHP server.
 allow user_sudo_t node_t:tcp_socket node_bind;
 
-##### ALLOWS USER TO ACCEPT & LISTEN TO A PORT IN A TCP SOCKET BINDED BY PHP
 #!!!! This avc can be allowed using one of the these booleans:
 #     'allow_ypbind'
+#
+# Allows the user [sudo] to accept & listen to a port of a tcp socket binded by
+# PHP server.
 allow user_sudo_t self:tcp_socket { accept listen };
 
-##### ALLOWS USER TO BIND & CONNECT A HTTP_PORT [:80] IN A TCP SOCKET USING PHP SERVER
+# Allows user [sudo] to bind & connect a HTTP port [:80] to a tcp socket using
+# PHP server.
 allow user_sudo_t http_port_t:tcp_socket { name_bind name_connect };
 
-###### PHP-FPM RELATED ACTION
+# Allows the user [sudo] to access & manipulate the filesystem using PHP server.
 allow user_sudo_t hugetlbfs_t:file { map read write };
 
-###### PHP-FPM RELATED ACTION
+# Allows the user [sudo] to execute programs requiring memory addresses that
+# are both executable and writeable using PHP server.
 allow user_sudo_t self:process execmem;
 
-##### ALLOWS USER TO MANIPULATE USER HOME DIRS USING PHP
+# Allows the user [sudo] to access & manipulate the home DIR using PHP server.
 allow user_sudo_t user_home_dir_t:dir { add_name create remove_name write };
 
-##### ALLOWS USER TO MANIPULATE USER HOME FILES USING PHP
+# Allows the user [sudo] to access & manipulate the home DIR files using PHP server.
 allow user_sudo_t user_home_dir_t:file { create lock open setattr write };
+
+# Allows the user [sudo] to access & manipulate the var_log DIR using PHP server.
+allow user_sudo_t var_log_t:dir { add_name create write };
+
+# Allows the user [sudo] to access & manipulate the var_log DIR files using PHP server.
+allow user_sudo_t var_log_t:file { append create open };
 
 #============= user_t ==============
 
-###### PHP-FPM RELATED ACTION
+# Allows the user to access & manipulate the filesystem using PHP server.
+# Wil be rejected anyway since the user needs sudo priviledges to bind to port 80.
 allow user_t hugetlbfs_t:file { map read write };
