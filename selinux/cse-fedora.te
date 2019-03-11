@@ -19,7 +19,7 @@ require {
     type xdm_t;
     class dir read;
     class fifo_file read;
-    class file { map rename unlink write };
+    class file { map open rename unlink write };
     class filesystem associate;
 }
 
@@ -66,4 +66,4 @@ allow systemd_logind_t etc_t:file map;
 allow thumb_t user_tmp_t:fifo_file read;
 
 #============= xdm_t ==============
-allow xdm_t unlabeled_t:file { rename write };
+allow xdm_t unlabeled_t:file { open rename unlink write };

@@ -45,16 +45,16 @@ require {
     type certmaster_port_t;
     type cgroup_t;
     type chkpwd_t;
-#c     type chromium_exec_t;
-#c     type chromium_naclhelper_exec_t;
-#c     type chromium_naclhelper_t;
-#c     type chromium_sandbox_exec_t;
-#c     type chromium_sandbox_t;
-#c     type chromium_t;
-#c     type chromium_tmp_t;
-#c     type chromium_tmpfs_t;
-#c     type chromium_xdg_cache_t;
-#c     type chromium_xdg_config_t;
+    type chromium_exec_t;
+    type chromium_naclhelper_exec_t;
+    type chromium_naclhelper_t;
+    type chromium_sandbox_exec_t;
+    type chromium_sandbox_t;
+    type chromium_t;
+    type chromium_tmp_t;
+    type chromium_tmpfs_t;
+    type chromium_xdg_cache_t;
+    type chromium_xdg_config_t;
     type clamd_port_t;
     type clock_device_t;
     type cluster_port_t;
@@ -612,229 +612,229 @@ allow chkpwd_t etc_t:file map;
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     'chromium_read_system_info'
-#c allow chromium_naclhelper_t proc_t:dir read;
+allow chromium_naclhelper_t proc_t:dir read;
 
-#c allow chromium_naclhelper_t etc_t:file { getattr map open read };
+allow chromium_naclhelper_t etc_t:file { getattr map open read };
 
 #============= chromium_sandbox_t ==============
-#c allow chromium_sandbox_t etc_t:file { getattr map open read };
+allow chromium_sandbox_t etc_t:file { getattr map open read };
 
 #============= chromium_t ==============
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     chromium_read_all_user_content, chromium_manage_all_user_content
-#c allow chromium_t gconf_home_t:dir search;
+allow chromium_t gconf_home_t:dir search;
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     chromium_read_all_user_content, chromium_manage_all_user_content
-#c allow chromium_t gnome_xdg_config_t:dir read;
+allow chromium_t gnome_xdg_config_t:dir read;
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     chromium_read_all_user_content, chromium_manage_all_user_content
-#c allow chromium_t gnome_xdg_config_t:file { getattr open read };
+allow chromium_t gnome_xdg_config_t:file { getattr open read };
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     chromium_read_all_user_content, chromium_manage_all_user_content
-#c allow chromium_t gpg_secret_t:dir { read search write };
+allow chromium_t gpg_secret_t:dir { read search write };
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     'chromium_manage_all_user_content'
-#c allow chromium_t mesa_shader_cache_t:dir { add_name create remove_name write };
+allow chromium_t mesa_shader_cache_t:dir { add_name create remove_name write };
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     chromium_read_all_user_content, chromium_manage_all_user_content
-#c allow chromium_t mesa_shader_cache_t:dir search;
+allow chromium_t mesa_shader_cache_t:dir search;
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     'chromium_manage_all_user_content'
-#c allow chromium_t mesa_shader_cache_t:file { create getattr lock open read rename unlink write };
+allow chromium_t mesa_shader_cache_t:file { create getattr lock open read rename unlink write };
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     chromium_read_all_user_content, chromium_manage_all_user_content
-#c allow chromium_t mozilla_home_t:dir { read search write };
+allow chromium_t mozilla_home_t:dir { read search write };
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     chromium_read_all_user_content, chromium_manage_all_user_content
-#c allow chromium_t mozilla_home_t:file { open read };
+allow chromium_t mozilla_home_t:file { open read };
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     'chromium_bind_tcp_unreserved_ports'
-#c allow chromium_t node_t:tcp_socket node_bind;
+allow chromium_t node_t:tcp_socket node_bind;
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     chromium_read_all_user_content, chromium_manage_all_user_content
-#c allow chromium_t pulseaudio_home_t:file { getattr open read };
+allow chromium_t pulseaudio_home_t:file { getattr open read };
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     'chromium_manage_all_user_content'
-#c allow chromium_t pulseaudio_home_t:file write;
+allow chromium_t pulseaudio_home_t:file write;
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     chromium_read_all_user_content, chromium_manage_all_user_content
-#c allow chromium_t pulseaudio_home_t:file lock;
+allow chromium_t pulseaudio_home_t:file lock;
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     chromium_read_all_user_content, chromium_manage_all_user_content
-#c allow chromium_t pulseaudio_xdg_config_t:file { lock open read };
+allow chromium_t pulseaudio_xdg_config_t:file { lock open read };
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     'chromium_bind_tcp_unreserved_ports'
-#c allow chromium_t self:tcp_socket listen;
+allow chromium_t self:tcp_socket listen;
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     'chromium_read_system_info'
-#c allow chromium_t sysctl_kernel_t:dir search;
+allow chromium_t sysctl_kernel_t:dir search;
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     chromium_manage_generic_user_content, chromium_manage_all_user_content
-#c allow chromium_t user_home_t:dir { add_name write };
+allow chromium_t user_home_t:dir { add_name write };
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     chromium_manage_generic_user_content, chromium_manage_all_user_content
-#c allow chromium_t user_home_t:dir setattr;
+allow chromium_t user_home_t:dir setattr;
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     chromium_manage_generic_user_content, chromium_manage_all_user_content
-#c allow chromium_t user_home_t:dir { create remove_name rename reparent };
+allow chromium_t user_home_t:dir { create remove_name rename reparent };
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     chromium_manage_generic_user_content, chromium_manage_all_user_content
-#c allow chromium_t user_home_t:file { create write };
+allow chromium_t user_home_t:file { create write };
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     chromium_manage_generic_user_content, chromium_manage_all_user_content
-#c allow chromium_t user_home_t:file unlink;
+allow chromium_t user_home_t:file unlink;
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     chromium_manage_generic_user_content, chromium_manage_all_user_content
-#c allow chromium_t user_home_t:file { rename setattr };
+allow chromium_t user_home_t:file { rename setattr };
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     chromium_manage_generic_user_content, chromium_manage_all_user_content
-#c allow chromium_t user_tmp_t:file write;
+allow chromium_t user_tmp_t:file write;
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     'chromium_manage_all_user_content'
-#c allow chromium_t xauth_home_t:file write;
+allow chromium_t xauth_home_t:file write;
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     'chromium_manage_all_user_content'
-#c allow chromium_t xdg_data_t:dir { add_name remove_name setattr write };
+allow chromium_t xdg_data_t:dir { add_name remove_name setattr write };
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     'chromium_manage_all_user_content'
-#c allow chromium_t xdg_data_t:file { append create rename setattr unlink write };
+allow chromium_t xdg_data_t:file { append create rename setattr unlink write };
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     chromium_read_all_user_content, chromium_manage_all_user_content
-#c allow chromium_t xdg_cache_t:file { create getattr open read rename unlink write };
+allow chromium_t xdg_cache_t:file { create getattr open read rename unlink write };
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     chromium_read_all_user_content, chromium_manage_all_user_content
-#c allow chromium_t xdg_cache_t:file lock;
+allow chromium_t xdg_cache_t:file lock;
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     'chromium_manage_all_user_content'
-#c allow chromium_t xdg_cache_t:file setattr;
+allow chromium_t xdg_cache_t:file setattr;
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     'chromium_manage_all_user_content'
-#c allow chromium_t xdg_config_t:dir { rename reparent rmdir };
+allow chromium_t xdg_config_t:dir { rename reparent rmdir };
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     'chromium_manage_all_user_content'
-#c allow chromium_t xdg_config_t:file { append create rename unlink write };
+allow chromium_t xdg_config_t:file { append create rename unlink write };
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     'chromium_manage_all_user_content'
-#c allow chromium_t xdg_config_t:file setattr;
+allow chromium_t xdg_config_t:file setattr;
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     'chromium_manage_all_user_content'
-#c allow chromium_t xdg_config_t:lnk_file { create unlink };
+allow chromium_t xdg_config_t:lnk_file { create unlink };
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     chromium_read_all_user_content, chromium_manage_all_user_content
-#c allow chromium_t xdg_documents_t:dir { open read search write };
+allow chromium_t xdg_documents_t:dir { open read search write };
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     chromium_read_all_user_content, chromium_manage_all_user_content
-#c allow chromium_t xdg_music_t:dir { open read search write };
+allow chromium_t xdg_music_t:dir { open read search write };
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     chromium_read_all_user_content, chromium_manage_all_user_content
-#c allow chromium_t xdg_pictures_t:dir { open read search write };
+allow chromium_t xdg_pictures_t:dir { open read search write };
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     chromium_read_all_user_content, chromium_manage_all_user_content
-#c allow chromium_t xdg_videos_t:dir { open read search write };
+allow chromium_t xdg_videos_t:dir { open read search write };
 
 
-#c allow chromium_t chromium_sandbox_t:file { getattr open read };
-#c allow chromium_t chromium_tmp_t:file mounton;
-#c allow chromium_t chromium_tmpfs_t:file { execute mounton };
-#c allow chromium_t chromium_xdg_config_t:file execute;
-#c allow chromium_t devpts_t:filesystem mount;
-#c allow chromium_t dri_device_t:chr_file { getattr ioctl read write };
-#c allow chromium_t etc_t:file map;
-#c allow chromium_t fs_t:filesystem { quotaget remount unmount };
-#c allow chromium_t gnome_xdg_config_t:file map;
-#c allow chromium_t hi_reserved_port_t:tcp_socket name_connect;
-#c allow chromium_t inetd_child_port_t:tcp_socket name_connect;
-#c allow chromium_t init_t:dbus send_msg;
-#c allow chromium_t init_t:unix_stream_socket connectto;
-#c allow chromium_t initrc_t:dbus send_msg;
-#c allow chromium_t lib_t:file execute_no_trans;
-#c allow chromium_t man_cache_t:dir search;
-#c allow chromium_t man_t:dir { open read };
-#c allow chromium_t man_t:file { getattr ioctl open read };
-#c allow chromium_t man_t:lnk_file { getattr read };
-#c allow chromium_t mesa_shader_cache_t:file map;
-#c allow chromium_t mount_exec_t:file { execute getattr };
-#c allow chromium_t mount_runtime_t:file { getattr open read };
-#c allow chromium_t mozilla_exec_t:file { execute execute_no_trans getattr map open read };
-#c allow chromium_t mozilla_tmp_t:dir { add_name remove_name write };
-#c allow chromium_t mozilla_tmp_t:file { getattr lock open write };
-#c allow chromium_t mozilla_tmp_t:lnk_file { create unlink };
-#c allow chromium_t NetworkManager_t:dbus send_msg;
-#c allow chromium_t nsfs_t:file getattr;
-#c allow chromium_t proc_net_t:file { getattr open read };
-#c allow chromium_t proc_t:filesystem { associate mount };
-#c allow chromium_t pulseaudio_t:fd use;
-#c allow chromium_t pulseaudio_t:unix_stream_socket connectto;
-#c allow chromium_t pulseaudio_tmpfs_t:file { getattr map read write };
-#c allow chromium_t reserved_port_t:tcp_socket name_connect;
-#c allow chromium_t root_t:dir mounton;
-#c allow chromium_t self:cap_userns { net_admin setpcap setuid };
-#c allow chromium_t self:capability { setgid setpcap setuid };
-#c allow chromium_t self:dir { add_name write };
-#c allow chromium_t self:file create;
-#c allow chromium_t self:netlink_route_socket nlmsg_write;
-#c allow chromium_t selinux_config_t:lnk_file read;
-#c allow chromium_t sysctl_t:file { getattr open read };
-#c allow chromium_t sysctl_vm_overcommit_t:file { open read };
-#c allow chromium_t sysctl_vm_t:dir search;
-#c allow chromium_t system_dbusd_var_lib_t:lnk_file read;
-#c allow chromium_t systemd_hostnamed_t:dbus send_msg;
-#c allow chromium_t tmp_t:fifo_file { create open read unlink };
-#c allow chromium_t tmpfs_t:dir { create mounton };
-#c allow chromium_t tmpfs_t:filesystem { mount unmount };
-#c allow chromium_t tmpfs_t:lnk_file create;
-#c allow chromium_t unlabeled_t:dir { add_name create open read remove_name rmdir search setattr write };
-#c allow chromium_t unlabeled_t:file { append create execute getattr ioctl lock map open read rename setattr unlink write };
-#c allow chromium_t unlabeled_t:lnk_file { create read unlink };
-#c allow chromium_t user_home_dir_t:dir { create setattr };
-#c allow chromium_t user_home_dir_t:file { append create getattr ioctl map open read rename setattr unlink write };
-#c allow chromium_t user_home_t:file execute;
-#c allow chromium_t user_runtime_t:dir { add_name create mounton remove_name write };
-#c allow chromium_t user_runtime_t:file { create execute map open read unlink write };
-#c allow chromium_t user_runtime_t:sock_file write;
-#c allow chromium_t user_tmp_t:dir mounton;
-#c allow chromium_t user_tmp_t:file map;
-#c allow chromium_t v4l_device_t:chr_file { getattr ioctl open read };
-#c allow chromium_t xdg_cache_t:file map;
-#c allow chromium_t xdg_config_t:file execute;
-#c allow chromium_t xserver_tmp_t:file { map write };
+allow chromium_t chromium_sandbox_t:file { getattr open read };
+allow chromium_t chromium_tmp_t:file mounton;
+allow chromium_t chromium_tmpfs_t:file { execute mounton };
+allow chromium_t chromium_xdg_config_t:file execute;
+allow chromium_t devpts_t:filesystem mount;
+allow chromium_t dri_device_t:chr_file { getattr ioctl read write };
+allow chromium_t etc_t:file map;
+allow chromium_t fs_t:filesystem { quotaget remount unmount };
+allow chromium_t gnome_xdg_config_t:file map;
+allow chromium_t hi_reserved_port_t:tcp_socket name_connect;
+allow chromium_t inetd_child_port_t:tcp_socket name_connect;
+allow chromium_t init_t:dbus send_msg;
+allow chromium_t init_t:unix_stream_socket connectto;
+allow chromium_t initrc_t:dbus send_msg;
+allow chromium_t lib_t:file execute_no_trans;
+allow chromium_t man_cache_t:dir search;
+allow chromium_t man_t:dir { open read };
+allow chromium_t man_t:file { getattr ioctl open read };
+allow chromium_t man_t:lnk_file { getattr read };
+allow chromium_t mesa_shader_cache_t:file map;
+allow chromium_t mount_exec_t:file { execute getattr };
+allow chromium_t mount_runtime_t:file { getattr open read };
+allow chromium_t mozilla_exec_t:file { execute execute_no_trans getattr map open read };
+allow chromium_t mozilla_tmp_t:dir { add_name remove_name write };
+allow chromium_t mozilla_tmp_t:file { getattr lock open write };
+allow chromium_t mozilla_tmp_t:lnk_file { create unlink };
+allow chromium_t NetworkManager_t:dbus send_msg;
+allow chromium_t nsfs_t:file getattr;
+allow chromium_t proc_net_t:file { getattr open read };
+allow chromium_t proc_t:filesystem { associate mount };
+allow chromium_t pulseaudio_t:fd use;
+allow chromium_t pulseaudio_t:unix_stream_socket connectto;
+allow chromium_t pulseaudio_tmpfs_t:file { getattr map read write };
+allow chromium_t reserved_port_t:tcp_socket name_connect;
+allow chromium_t root_t:dir mounton;
+allow chromium_t self:cap_userns { net_admin setpcap setuid };
+allow chromium_t self:capability { setgid setpcap setuid };
+allow chromium_t self:dir { add_name write };
+allow chromium_t self:file create;
+allow chromium_t self:netlink_route_socket nlmsg_write;
+allow chromium_t selinux_config_t:lnk_file read;
+allow chromium_t sysctl_t:file { getattr open read };
+allow chromium_t sysctl_vm_overcommit_t:file { open read };
+allow chromium_t sysctl_vm_t:dir search;
+allow chromium_t system_dbusd_var_lib_t:lnk_file read;
+allow chromium_t systemd_hostnamed_t:dbus send_msg;
+allow chromium_t tmp_t:fifo_file { create open read unlink };
+allow chromium_t tmpfs_t:dir { create mounton };
+allow chromium_t tmpfs_t:filesystem { mount unmount };
+allow chromium_t tmpfs_t:lnk_file create;
+allow chromium_t unlabeled_t:dir { add_name create open read remove_name rmdir search setattr write };
+allow chromium_t unlabeled_t:file { append create execute getattr ioctl lock map open read rename setattr unlink write };
+allow chromium_t unlabeled_t:lnk_file { create read unlink };
+allow chromium_t user_home_dir_t:dir { create setattr };
+allow chromium_t user_home_dir_t:file { append create getattr ioctl map open read rename setattr unlink write };
+allow chromium_t user_home_t:file execute;
+allow chromium_t user_runtime_t:dir { add_name create mounton remove_name write };
+allow chromium_t user_runtime_t:file { create execute map open read unlink write };
+allow chromium_t user_runtime_t:sock_file write;
+allow chromium_t user_tmp_t:dir mounton;
+allow chromium_t user_tmp_t:file map;
+allow chromium_t v4l_device_t:chr_file { getattr ioctl open read };
+allow chromium_t xdg_cache_t:file map;
+allow chromium_t xdg_config_t:file execute;
+allow chromium_t xserver_tmp_t:file { map write };
 
 #============= crond_t ==============
 allow crond_t etc_t:file map;
@@ -1268,7 +1268,15 @@ allow mozilla_t user_home_t:dir write;
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     mozilla_manage_generic_user_content, mozilla_manage_all_user_content
+allow mozilla_t user_home_t:dir { add_name remove_name };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     mozilla_manage_generic_user_content, mozilla_manage_all_user_content
 allow mozilla_t user_home_t:file { create rename setattr unlink write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     mozilla_manage_generic_user_content, mozilla_manage_all_user_content
+allow mozilla_t user_home_t:file append;
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     mozilla_read_all_user_content, mozilla_manage_all_user_content
@@ -1289,6 +1297,14 @@ allow mozilla_t xdg_data_t:file { create rename setattr unlink write };
 #!!!! This avc can be allowed using one of the these booleans:
 #     mozilla_read_all_user_content, mozilla_manage_all_user_content
 allow mozilla_t xdg_documents_t:dir getattr;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     mozilla_read_all_user_content, mozilla_manage_all_user_content
+allow mozilla_t xdg_documents_t:dir { open read write };
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     mozilla_read_all_user_content, mozilla_manage_all_user_content
+allow mozilla_t xdg_documents_t:file { getattr open read };
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     mozilla_read_all_user_content, mozilla_manage_all_user_content
@@ -1313,6 +1329,7 @@ allow mozilla_t xdg_pictures_t:file { getattr open read };
 #!!!! This avc can be allowed using one of the these booleans:
 #     mozilla_read_all_user_content, mozilla_manage_all_user_content
 allow mozilla_t xdg_videos_t:dir getattr;
+
 
 allow mozilla_t amanda_port_t:tcp_socket name_connect;
 allow mozilla_t amavisd_recv_port_t:tcp_socket name_connect;
@@ -1408,8 +1425,8 @@ allow mozilla_t system_dbusd_var_lib_t:lnk_file read;
 allow mozilla_t systemd_hostnamed_t:dbus send_msg;
 allow mozilla_t tcs_port_t:tcp_socket name_connect;
 allow mozilla_t tor_port_t:tcp_socket name_connect;
-allow mozilla_t unlabeled_t:dir { add_name create getattr open read remove_name rename rmdir write };
-allow mozilla_t unlabeled_t:file { create getattr link map rename unlink write };
+allow mozilla_t unlabeled_t:dir { add_name create getattr open read remove_name rename rmdir search write };
+allow mozilla_t unlabeled_t:file { create getattr link map rename setattr unlink write };
 allow mozilla_t unreserved_port_t:tcp_socket name_connect;
 allow mozilla_t user_home_dir_t:file { getattr map open read };
 allow mozilla_t user_home_t:file map;
@@ -1527,7 +1544,7 @@ allow mplayer_t xdg_data_t:file map;
 allow mplayer_t xserver_tmp_t:file { map write };
 
 #============= NetworkManager_t ==============
-#c allow NetworkManager_t chromium_t:dbus send_msg;
+allow NetworkManager_t chromium_t:dbus send_msg;
 allow NetworkManager_t evolution_t:dbus send_msg;
 allow NetworkManager_t etc_t:file map;
 allow NetworkManager_t event_device_t:chr_file { open read write };
@@ -1560,7 +1577,7 @@ allow policykit_t init_t:dbus send_msg;
 allow policykit_t selinux_config_t:lnk_file read;
 
 #============= pulseaudio_t ==============
-#c allow pulseaudio_t chromium_t:fd use;
+allow pulseaudio_t chromium_t:fd use;
 allow pulseaudio_t etc_t:file map;
 allow pulseaudio_t evolution_t:fd use;
 allow pulseaudio_t evolution_tmpfs_t:file { getattr map read write };
@@ -1702,7 +1719,7 @@ allow system_dbusd_t random_device_t:chr_file getattr;
 allow system_dbusd_t bin_t:file { execute execute_no_trans getattr ioctl map open read };
 allow system_dbusd_t blueman_var_lib_t:dir { getattr search };
 allow system_dbusd_t blueman_var_lib_t:file { getattr ioctl open read write };
-#c allow system_dbusd_t chromium_t:fd use;
+allow system_dbusd_t chromium_t:fd use;
 allow system_dbusd_t devicekit_var_run_t:dir getattr;
 allow system_dbusd_t devpts_t:filesystem mount;
 allow system_dbusd_t etc_t:file map;
@@ -1715,7 +1732,7 @@ allow system_dbusd_t fusefs_t:dir { getattr read search };
 allow system_dbusd_t fusefs_t:file { getattr open read };
 allow system_dbusd_t gconf_etc_t:dir { getattr open read search };
 allow system_dbusd_t gconf_etc_t:file { getattr open read };
-allow system_dbusd_t gconf_home_t:dir getattr;
+allow system_dbusd_t gconf_home_t:dir { getattr search };
 allow system_dbusd_t gconf_tmp_t:dir { remove_name write };
 allow system_dbusd_t gconf_tmp_t:file { map open read unlink write };
 allow system_dbusd_t gkeyringd_exec_t:file { execute execute_no_trans map open read };
@@ -1810,7 +1827,7 @@ allow systemd_backlight_t selinux_config_t:lnk_file read;
 allow systemd_backlight_t unlabeled_t:lnk_file read;
 
 #============= systemd_coredump_t ==============
-#c allow systemd_coredump_t chromium_exec_t:file map;
+allow systemd_coredump_t chromium_exec_t:file map;
 allow systemd_coredump_t etc_t:file map;
 allow systemd_coredump_t kernel_t:fifo_file getattr;
 allow systemd_coredump_t mount_exec_t:file map;
@@ -1842,6 +1859,7 @@ allow system_cronjob_t cupsd_rw_etc_t:file { open read };
 allow system_cronjob_t device_t:chr_file getattr;
 allow system_cronjob_t devicekit_disk_t:dbus send_msg;
 allow system_cronjob_t devicekit_var_lib_t:file { open read };
+allow system_cronjob_t dosfs_t:file { open read };
 allow system_cronjob_t faillog_t:file { open read };
 allow system_cronjob_t fixed_disk_device_t:blk_file open;
 allow system_cronjob_t fonts_cache_t:file { open read };
@@ -1898,7 +1916,7 @@ allow systemd_gpt_generator_t selinux_config_t:lnk_file read;
 allow systemd_gpt_generator_t unlabeled_t:lnk_file read;
 
 #============= systemd_hostnamed_t ==============
-#c allow systemd_hostnamed_t chromium_t:dbus send_msg;
+allow systemd_hostnamed_t chromium_t:dbus send_msg;
 allow systemd_hostnamed_t etc_t:file map;
 allow systemd_hostnamed_t evolution_t:dbus send_msg;
 allow systemd_hostnamed_t initrc_t:dbus send_msg;
@@ -2163,10 +2181,10 @@ allow user_sudo_t cgroup_t:dir { getattr open read search };
 allow user_sudo_t cgroup_t:file getattr;
 allow user_sudo_t cgroup_t:filesystem getattr;
 allow user_sudo_t cgroup_t:lnk_file getattr;
-#c allow user_sudo_t chromium_xdg_cache_t:dir { getattr open read relabelto };
-#c allow user_sudo_t chromium_xdg_cache_t:file relabelto;
-#c allow user_sudo_t chromium_xdg_config_t:dir { getattr open read relabelto };
-#c allow user_sudo_t chromium_xdg_config_t:file relabelto;
+allow user_sudo_t chromium_xdg_cache_t:dir { getattr open read relabelto };
+allow user_sudo_t chromium_xdg_cache_t:file relabelto;
+allow user_sudo_t chromium_xdg_config_t:dir { getattr open read relabelto };
+allow user_sudo_t chromium_xdg_config_t:file relabelto;
 allow user_sudo_t clock_device_t:chr_file getattr;
 allow user_sudo_t colord_var_lib_t:dir { getattr open read };
 allow user_sudo_t configfs_t:dir getattr;
@@ -2474,7 +2492,7 @@ allow user_sudo_t unlabeled_t:dir getattr;
 allow user_sudo_t udev_var_run_t:file { getattr open read };
 allow user_sudo_t unlabeled_t:dir { open read relabelfrom search };
 allow user_sudo_t unlabeled_t:file { getattr relabelfrom };
-allow user_sudo_t unlabeled_t:lnk_file { getattr read };
+allow user_sudo_t unlabeled_t:lnk_file { getattr read relabelfrom };
 allow user_sudo_t unlabeled_t:sock_file getattr;
 allow user_sudo_t user_cert_t:dir { getattr open read relabelto };
 allow user_sudo_t user_cert_t:file { getattr relabelto };
@@ -2520,7 +2538,7 @@ allow user_sudo_t wtmp_t:file write;
 allow user_sudo_t xauth_home_t:file { getattr relabelfrom relabelto };
 allow user_sudo_t xdg_cache_t:dir { getattr open read relabelfrom relabelto };
 allow user_sudo_t xdg_cache_t:file { getattr relabelfrom relabelto };
-allow user_sudo_t xdg_cache_t:lnk_file getattr;
+allow user_sudo_t xdg_cache_t:lnk_file { getattr relabelto };
 allow user_sudo_t xdg_config_t:dir { getattr open read relabelfrom relabelto search };
 allow user_sudo_t xdg_config_t:file { getattr relabelfrom relabelto };
 allow user_sudo_t xdg_data_t:dir { getattr open read relabelto search };
@@ -2577,9 +2595,9 @@ dontaudit user_t bootloader_tmp_t:dir { create relabelfrom relabelto };
 dontaudit user_t bootloader_tmp_t:file { create relabelfrom relabelto };
 dontaudit user_t cert_t:file { create relabelfrom relabelto };
 dontaudit user_t cert_t:lnk_file { create relabelfrom relabelto };
-#c dontaudit user_t chromium_exec_t:file { create relabelfrom relabelto };
-#c dontaudit user_t chromium_naclhelper_exec_t:file { create relabelfrom relabelto };
-#c dontaudit user_t chromium_sandbox_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t chromium_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t chromium_naclhelper_exec_t:file { create relabelfrom relabelto };
+dontaudit user_t chromium_sandbox_exec_t:file { create relabelfrom relabelto };
 dontaudit user_t colord_var_lib_t:dir { create relabelfrom relabelto };
 dontaudit user_t cups_pdf_exec_t:file { create relabelfrom relabelto };
 dontaudit user_t cupsd_config_exec_t:file { create relabelfrom relabelto };
@@ -2884,16 +2902,16 @@ allow user_t bootloader_tmp_t:file { append open unlink };
 allow user_t cert_t:dir { add_name remove_name write };
 allow user_t cert_t:file { rename setattr write unlink };
 allow user_t cert_t:lnk_file { setattr unlink };
-#c allow user_t chromium_exec_t:file { unlink write };
-#c allow user_t chromium_naclhelper_exec_t:file { unlink write };
-#c allow user_t chromium_sandbox_exec_t:file { unlink write };
-#c allow user_t chromium_sandbox_t:unix_stream_socket getattr;
-#c allow user_t chromium_t:fd use;
-#c allow user_t chromium_t:netlink_kobject_uevent_socket getattr;
-#c allow user_t chromium_t:netlink_route_socket getattr;
-#c allow user_t chromium_t:tcp_socket getattr;
-#c allow user_t chromium_t:udp_socket getattr;
-#c allow user_t chromium_t:unix_stream_socket getattr;
+allow user_t chromium_exec_t:file { unlink write };
+allow user_t chromium_naclhelper_exec_t:file { unlink write };
+allow user_t chromium_sandbox_exec_t:file { unlink write };
+allow user_t chromium_sandbox_t:unix_stream_socket getattr;
+allow user_t chromium_t:fd use;
+allow user_t chromium_t:netlink_kobject_uevent_socket getattr;
+allow user_t chromium_t:netlink_route_socket getattr;
+allow user_t chromium_t:tcp_socket getattr;
+allow user_t chromium_t:udp_socket getattr;
+allow user_t chromium_t:unix_stream_socket getattr;
 allow user_t colord_var_lib_t:dir { add_name setattr write };
 allow user_t configfs_t:dir { open read };
 allow user_t crack_db_t:file { open read };
@@ -3261,8 +3279,8 @@ allow user_t var_lib_t:file { append rename setattr unlink write };
 allow user_t var_lib_t:lnk_file { read unlink };
 allow user_t var_lock_t:dir { add_name remove_name write };
 allow user_t var_lock_t:file { append lock open read unlink write };
-allow user_t var_log_t:dir { add_name setattr remove_name write };
-allow user_t var_log_t:file { append ioctl open read rename write };
+allow user_t var_log_t:dir { add_name setattr remove_name rmdir write };
+allow user_t var_log_t:file { append ioctl open read rename setattr unlink write };
 allow user_t var_run_t:chr_file { create unlink };
 allow user_t var_run_t:dir { add_name remove_name rmdir setattr write };
 allow user_t var_run_t:file { ioctl link lock open read rename setattr unlink write };

@@ -1,5 +1,7 @@
 selinux/cse-arch.mod
 selinux/cse-arch.pp
+selinux/cse-arch-node.mod
+selinux/cse-arch-node.pp
 selinux/cse-arch-php.mod
 selinux/cse-arch-php.pp
 selinux/cse-fedora.mod

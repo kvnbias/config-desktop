@@ -1,0 +1,79 @@
+
+# This module shouldn't be activated in production servers. Read & modify the
+# module before using.
+
+module cse-arch-php 1.0;
+
+require {
+    type hugetlbfs_t;
+    type http_port_t;
+    type node_t;
+    type unreserved_port_t;
+    type user_home_dir_t;
+    type user_sudo_t;
+    type user_t;
+    type var_log_t;
+    class dir { add_name create remove_name write };
+    class file { append create lock map open read setattr write };
+    class process execmem;
+    class tcp_socket { accept listen name_bind name_connect node_bind };
+}
+
+#============= user_sudo_t ==============
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'allow_ypbind'
+#
+## arch
+## Allows the user [sudo] to bind a node in a tcp socket using the PHP server.
+allow user_sudo_t node_t:tcp_socket node_bind;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'allow_ypbind'
+#
+## arch
+## Allows the user [sudo] to accept & listen to a port of a tcp socket binded by
+## PHP server.
+allow user_sudo_t self:tcp_socket { accept listen };
+
+## arch
+## Allows user [sudo] to bind a HTTP port [:80, :443] to a tcp socket
+## using PHP server.
+allow user_sudo_t http_port_t:tcp_socket name_bind;
+
+## arch
+## Allows the user [sudo] to access & manipulate the filesystem using PHP server.
+allow user_sudo_t hugetlbfs_t:file { map read write };
+
+## arch
+## Allows the user [sudo] to execute programs requiring memory addresses that
+## are both executable and writeable using PHP server.
+allow user_sudo_t self:process execmem;
+
+## arch
+## Allows user [sudo] to bind an unreserved port [:11060] to a tcp
+## socket using PHP server.
+allow user_sudo_t unreserved_port_t:tcp_socket name_bind;
+
+## arch
+## Allows the user [sudo] to access & manipulate the home DIR using PHP server.
+allow user_sudo_t user_home_dir_t:dir { add_name create remove_name write };
+
+## arch
+## Allows the user [sudo] to access & manipulate the home DIR files using PHP server.
+allow user_sudo_t user_home_dir_t:file { create lock open setattr write };
+
+## arch
+## Allows the user [sudo] to access & manipulate the var_log DIR using PHP server.
+allow user_sudo_t var_log_t:dir { add_name create write };
+
+## arch
+## Allows the user [sudo] to access & manipulate the var_log DIR files using PHP server.
+allow user_sudo_t var_log_t:file { append create open };
+
+#============= user_t ==============
+
+## arch
+## Allows the user to access & manipulate the filesystem using PHP server.
+## Wil be rejected anyway since the user needs sudo priviledges to bind to port 80.
+allow user_t hugetlbfs_t:file { map read write };

@@ -1,0 +1,64 @@
+
+module cse-test 1.0;
+
+require {
+    type httpd_tmp_t;
+    type httpd_log_t;
+    type httpd_sys_content_t;
+    type httpd_t;
+    type hugetlbfs_t;
+    type init_t;
+    type var_log_t;
+    type var_t;
+    class dir { read rmdir write };
+    class file { create getattr map open read };
+}
+
+#============= init_t ==============
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'domain_can_mmap_files'
+#
+## fedora
+## Allows PHP-FPM to map httpd_sys_content_t files.
+allow init_t httpd_sys_content_t:file map;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'domain_can_mmap_files'
+#
+## fedora
+## Allows an init process [PHP-FPM] to map the filesystem using
+## PHP server.
+allow init_t hugetlbfs_t:file map;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'use_virtualbox'
+#
+## fedora
+## Allows PHP-FPM to create a log file under /var/log directory.
+allow init_t var_log_t:file create;
+
+## fedora
+## Allows an init process [PHP-FPM] to append to a log file [currently on
+## /etc/php/PHP_PREFIX/var/log].
+allow init_t etc_t:file append;
+
+## fedora
+## Allows PHP-FPM to write on the log dir [/var/log].
+allow init_t httpd_log_t:dir write;
+
+## fedora
+## Allows PHP-FPM to append on the log file [/var/log].
+allow init_t httpd_log_t:file append;
+
+## fedora
+## Allows PHP-FPM to access & read httpd_sys_content_t files.
+allow init_t httpd_sys_content_t:file { getattr open read };
+
+## fedora
+## Allows PHP-FPM to manipulate httpd tmp directory.
+allow init_t httpd_tmp_t:dir { read rmdir };
+
+## fedora
+## Allows PHP-FPM to read a file in /var directory.
+allow init_t var_t:file read;
