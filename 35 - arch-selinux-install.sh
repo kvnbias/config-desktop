@@ -220,41 +220,16 @@ Do you want to install custom base module [Yn]?   " yn
   case $yn in
     [Nn]* ) break;;
     * )
-      while true; do
-        read -p "
+      echo "usepasswd = False" | sudo tee -a /etc/selinux/semanage.conf
+      cp $(pwd)/selinux/cse-arch.te $(pwd)/cse-arch.te
+      sudo checkmodule -M -m -o cse-arch.mod cse-arch.te
+      sudo semodule_package -o cse-arch.pp -m cse-arch.mod
+      sudo semodule -i cse-arch.pp
 
-NOTE: In some distros (e.g. Manjaro) this module cannot be installed if
-chromium-typed related policies is enabled.
-
-Would you like to enable chromium-typed policies [yN]?" echrm
-        case $echrm in
-          [Yy]* )
-            echo "usepasswd = False" | sudo tee -a /etc/selinux/semanage.conf
-            cp $(pwd)/selinux/cse-arch.te $(pwd)/cse-arch.te
-            sed -i "s/#c //g" $(pwd)/cse-arch.te
-            sudo checkmodule -M -m -o cse-arch.mod cse-arch.te
-            sudo semodule_package -o cse-arch.pp -m cse-arch.mod
-            sudo semodule -i cse-arch.pp
-
-            sudo rm cse-arch.te
-            sudo rm cse-arch.mod
-            sudo rm cse-arch.pp
-
-            break 2;;
-          * )
-            echo "usepasswd = False" | sudo tee -a /etc/selinux/semanage.conf
-            cp $(pwd)/selinux/cse-arch.te $(pwd)/cse-arch.te
-            sudo checkmodule -M -m -o cse-arch.mod cse-arch.te
-            sudo semodule_package -o cse-arch.pp -m cse-arch.mod
-            sudo semodule -i cse-arch.pp
-
-            sudo rm cse-arch.te
-            sudo rm cse-arch.mod
-            sudo rm cse-arch.pp
-
-            break 2;;
-        esac
-      done;;
+      sudo rm cse-arch.te
+      sudo rm cse-arch.mod
+      sudo rm cse-arch.pp
+      break;;
   esac
 done
 
