@@ -69,6 +69,7 @@ sudo dnf install -y libva-vdpau-driver --releasever=$fedver
 
 # Network
 sudo dnf install -y kernel-devel --releasever=$fedver
+sudo dnf mark install kernel-devel
 while true; do
   lspci -nnk | grep 0280 -A3
   read -p "
@@ -372,9 +373,10 @@ groupmod -g $guid wheel
 
       # notification, system monitor, compositor, image on terminal
       sudo dnf install -y dunst conky compton w3m --releasever=$fedver
+      sudo dnf install -y ffmpegthumbnailer --releasever=$fedver
 
       # for vifm
-      # sudo dnf install -y ffmpegthumbnailer python3-pip --releasever=$fedver
+      # sudo dnf install -y python3-pip --releasever=$fedver
       # sudo dnf install -y redhat-rpm-config --releasever=$fedver
 
       # sudo dnf install -y python3-devel libjpeg-turbo-devel zlib-devel libXext-devel --releasever=$fedver

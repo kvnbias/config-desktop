@@ -28,7 +28,7 @@ cd ..
 rm -rf yay
 
 while true; do
-  read -p "What kernel? [l]ts | [n]ormal | [b]oth   " ilts
+  read -p "What kernel? [l]ts | [n]ormal | [b]oth | [s]kip   " ilts
   case $ilts in
     [Ll]* )
       yes | sudo pacman -S linux-lts linux-lts-headers
@@ -39,6 +39,8 @@ while true; do
     [Bb]* )
       yes | sudo pacman -S linux linux-headers
       yes | sudo pacman -S linux-lts linux-lts-headers
+      break;;
+    [Ss]* )
       break;;
     * ) echo Invalid input
   esac
@@ -57,7 +59,6 @@ Use archlinuxhardened/selinux [Yn]?   " ualh
       sudo sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/g' /home/$user/sudoers
       echo 'Defaults timestamp_timeout=-1' | sudo tee -a /etc/sudoers
       echo 'Defaults timestamp_timeout=-1' | sudo tee -a /home/$user/sudoers
-
 
       # SELINUX INSTALLATION
       #
@@ -181,6 +182,13 @@ Would you like to proceed [Yn]?
 
       break;;
     * )
+
+      # SELINUX INSTALLATION
+      #
+      # delete mlocate first to prevent conflict later since yay
+      # can only delete findutils, will be replaced by findutils-selinux
+      yes | sudo pacman -Rns mlocate
+
       sudo sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/g' /home/$user/sudoers
       echo 'Defaults timestamp_timeout=-1' | sudo tee -a /etc/sudoers
 

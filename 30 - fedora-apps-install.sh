@@ -82,6 +82,8 @@ https://wiki.archlinux.org/index.php/VirtualBox   " ivb
     [Yy]* )
       sudo dnf install -y gcc make perl --releasever=$fedver
       sudo dnf install -y VirtualBox virtualbox-guest-additions --releasever=$fedver
+      sudo dnf install -y akmod-VirtualBox kmod-VirtualBox --releasever=$fedver
+      sudo dracut -v -f
       break;;
     * ) break;;
   esac

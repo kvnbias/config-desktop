@@ -6,7 +6,7 @@ Current default configs and scripts for my desktop environments.
 
 
 ```sh
-# wget -O arch-install https://git.io/fhAlt
+# wget -O arch-install https://git.io/fhhhk
 # bash arch-install
 ```
 

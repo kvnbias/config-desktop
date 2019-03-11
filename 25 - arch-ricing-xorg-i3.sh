@@ -186,9 +186,10 @@ groupmod -g $guid wheel
       # mouse cursor theme, notification, system monitor, compositor, image on terminal
       yes | yay -S xcursor-breeze
       yes | sudo pacman -S dunst conky compton w3m
+      yes | sudo pacman -S ffmpegthumbnailer
 
       # for vifm
-      # yes | sudo pacman -S ffmpegthumbnailer python-pip
+      # yes | sudo pacman -S python-pip
       # sudo pip3 install ueberzug
 
       # better desktop locker

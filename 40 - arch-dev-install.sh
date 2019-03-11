@@ -7,6 +7,9 @@ sudo pacman -Syu
 # extra
 yes | sudo pacman -S htop
 
+sudo mkdir /var/www/workspace
+sudo chown -R $(whoami):wheel /var/www/workspace
+
 # vscode
 yes | sudo pacman -S code
 

@@ -579,76 +579,86 @@ echo '
 
 passwd
 
-pacman -S grub efibootmgr
-
 while true; do
   read -p \"
+
+Do you want to install a bootloader [Yn]?   \" ibl
+  case \$ibl in
+    [Nn]* ) break;;
+    * )
+      while true; do
+        read -p \"
 
 BOOTLOADER
 
 Are you using UEFI + GPT partition? [y]es | [n]o   \" yn
-  case \$yn in
-    [Yy]* )
-      while true; do
-        read -p \"EFI directory (e.g. /boot/efi) or [e]xit   \" ed
-        case \$ed in
-          [Ee] ) break;;
-          * )
-            if [ -d \$ed ]; then
-              while true; do
-                read -p \"Are you sure you want to install GRUB in UEFI mode? [y]es | [n]o   \" cnfrm
-                case \$cnfrm in
-                  [Yy]* )
-                    grub-install --target=x86_64-efi --efi-directory=\$ed --bootloader-id=GRUB;
-                    grub-mkconfig -o /boot/grub/grub.cfg
-
-                    mkdir -p /boot/efi/EFI/BOOT
-                    cp -a /boot/efi/EFI/GRUB/grubx64.efi /boot/efi/EFI/BOOT/BOOTX64.EFI
-                    echo '
-bcf boot add 1 fs0:\EFI\GRUB\grubx64.efi \"Fallback Bootloader\"
-exit
-                    ' | tee /boot/efi/startup.nsh
-
-                    echo Installed GRUB in UEFI mode;
-                    break 3;;
-                  [Nn]* ) break 2;;
-                  * ) echo Invalid input;;
-                esac
-              done;
-            else
-              echo Directory doesnt exist; break;
-            fi
-        esac
-      done;;
-    [Nn]* )
-      while true; do
-        echo '
-        
-        
-        '
-        fdisk -l
-        echo '
-        
-        
-        '
-        read -p \"Target device (e.g. /dev/sdX) or [e]xit   \" td
-        case \$td in
-          [Ee] ) break;;
-          * )
+        case \$yn in
+          [Yy]* )
             while true; do
-              read -p \"Are you sure you want to install GRUB in LEGACY mode? [y]es | [n]o   \" cnfrm
-              case \$cnfrm in
-                [Yy]* ) grub-install --target=i386-pc \$td;
-                  grub-mkconfig -o /boot/grub/grub.cfg
-                  echo Installed GRUB in LEGACY mode;
-                  break 3;;
-                [Nn]* ) break 2;;
-                * ) echo Invaid input;;
+              read -p \"EFI directory (e.g. /boot/efi) or [e]xit   \" ed
+              case \$ed in
+                [Ee] ) break;;
+                * )
+                  if [ -d \$ed ]; then
+                    while true; do
+                      read -p \"Are you sure you want to install GRUB in UEFI mode? [y]es | [n]o   \" cnfrm
+                      case \$cnfrm in
+                        [Yy]* )
+                          pacman -S grub efibootmgr
+                          grub-install --target=x86_64-efi --efi-directory=\$ed --bootloader-id=GRUB;
+                          grub-mkconfig -o /boot/grub/grub.cfg
+
+                          mkdir -p /boot/efi/EFI/BOOT
+                          cp -a /boot/efi/EFI/GRUB/grubx64.efi /boot/efi/EFI/BOOT/BOOTX64.EFI
+                          echo '
+      bcf boot add 1 fs0:\EFI\GRUB\grubx64.efi \"Fallback Bootloader\"
+      exit
+                          ' | tee /boot/efi/startup.nsh
+
+                          echo Installed GRUB in UEFI mode;
+                          break 4;;
+                        [Nn]* ) break 3;;
+                        * ) echo Invalid input;;
+                      esac
+                    done;
+                  else
+                    echo Directory doesnt exist; break 2;
+                  fi
               esac
             done;;
+          [Nn]* )
+            while true; do
+              echo '
+              
+              
+              '
+              fdisk -l
+              echo '
+              
+              
+              '
+              read -p \"Target device (e.g. /dev/sdX) or [e]xit   \" td
+              case \$td in
+                [Ee] ) break 2;;
+                * )
+                  while true; do
+                    read -p \"Are you sure you want to install GRUB in LEGACY mode? [y]es | [n]o   \" cnfrm
+                    case \$cnfrm in
+                      [Yy]* )
+                        pacman -S grub efibootmgr
+                        grub-install --target=i386-pc \$td;
+                        grub-mkconfig -o /boot/grub/grub.cfg
+                        echo Installed GRUB in LEGACY mode;
+                        break 4;;
+                      [Nn]* ) break 3;;
+                      * ) echo Invaid input;;
+                    esac
+                  done;;
+              esac
+            done;;
+          * ) echo Invalid input
         esac
       done;;
-    * ) echo Invalid input
   esac
 done
 
