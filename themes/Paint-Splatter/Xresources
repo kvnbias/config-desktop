@@ -10,7 +10,7 @@
 ! Requirement: AUR - nerd-fonts-complete
 ! Used by: ranger, polybar, i3status, vim
 URxvt.font: xft:UbuntuMono\ Nerd\ Font\ Mono:size=12:antialias=true
-URxvt.letterSpace: -1
+URxvt.letterSpace: 0
 
 ! Xft.dpi: HIDPI
 ! Xft.autohint: 0
