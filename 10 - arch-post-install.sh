@@ -3,21 +3,37 @@
 
 sudo rm /arch-install
 
+isManjaro=false
 while true; do
-  read -p "
-
-
-Install LTS kernel? [y]es | [n]o   " ilts
-  case $ilts in
+  read -p "Using manjaro [yN]?   " p
+  case $p in
     [Yy]* )
-      yes | sudo pacman -S linux-lts linux-lts-headers
-      break;;
-    [Nn]* )
-      yes | sudo pacman -S linux linux-headers
-      break;;
-    * ) echo Invalid input
+      isManjaro=true
+    * ) break;;
   esac
 done
+
+if [ "$isManjaro" = true ]; then
+  major=$(uname -r | cut -f 1 -d .);
+  minor=$(uname -r | cut -f 2 -d .);
+  version=$(echo$major$minor);
+  yes | sudo pacman -S linux$version linux$version-headers;
+else
+  while true; do
+    read -p "
+
+Install LTS kernel? [y]es | [n]o   " ilts
+    case $ilts in
+      [Yy]* )
+        yes | sudo pacman -S linux-lts linux-lts-headers
+        break;;
+      [Nn]* )
+        yes | sudo pacman -S linux linux-headers
+        break;;
+      * ) echo Invalid input
+    esac
+  done;
+fi
 
 sudo sed -i 's/GRUB_DEFAULT=0/GRUB_DEFAULT=saved/g' /etc/default/grub
 sudo sed -i 's/#GRUB_SAVEDEFAULT="true"/GRUB_SAVEDEFAULT="true"/g' /etc/default/grub
@@ -43,7 +59,6 @@ fi
 
 while true; do
   read -p "
-
 
 Would you like to increase AUR threads [Yn]?   " aurt
   case $aurt in

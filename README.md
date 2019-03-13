@@ -25,3 +25,8 @@ $ bash 25\ -\ arch-ricing-xorg-i3.sh
 * For debian-based distros using ubiquity installer you can remove the bootloader from the installation by executing `ubiquity -b` on the terminal.
 * For RHEL-based distros using anaconda installer you can remove bootloader on full disk summary.
 * Use `os-prober` to detect other OS.
+
+## As of 03/15/2019
+
+* Arch scripts are tested on: Arch, Manjaro (18)
+* RHEL scripts are tested on: Fedora (Everything - Minimal, 29)

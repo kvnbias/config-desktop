@@ -27,24 +27,42 @@ yes | makepkg --syncdeps --install
 cd ..
 rm -rf yay
 
+isManjaro=false
 while true; do
-  read -p "What kernel? [l]ts | [n]ormal | [b]oth | [s]kip   " ilts
-  case $ilts in
-    [Ll]* )
-      yes | sudo pacman -S linux-lts linux-lts-headers
-      break;;
-    [Nn]* )
-      yes | sudo pacman -S linux linux-headers
-      break;;
-    [Bb]* )
-      yes | sudo pacman -S linux linux-headers
-      yes | sudo pacman -S linux-lts linux-lts-headers
-      break;;
-    [Ss]* )
-      break;;
-    * ) echo Invalid input
+  read -p "Using manjaro [yN]?   " p
+  case $p in
+    [Yy]* )
+      isManjaro=true
+    * ) break;;
   esac
 done
+
+if [ "$isManjaro" = true ]; then
+  major=$(uname -r | cut -f 1 -d .);
+  minor=$(uname -r | cut -f 2 -d .);
+  version=$(echo$major$minor);
+  yes | sudo pacman -S linux$version linux$version-headers;
+else
+  while true; do
+    read -p "What kernel? [l]ts | [n]ormal | [b]oth | [s]kip   " ilts
+    case $ilts in
+      [Ll]* )
+        yes | sudo pacman -S linux-lts linux-lts-headers
+        break;;
+      [Nn]* )
+        yes | sudo pacman -S linux linux-headers
+        break;;
+      [Bb]* )
+        yes | sudo pacman -S linux linux-headers
+        yes | sudo pacman -S linux-lts linux-lts-headers
+        break;;
+      [Ss]* )
+        break;;
+      * ) echo Invalid input
+    esac
+  done;
+fi
+
 
 sudo grub-mkconfig -o /boot/grub/grub.cfg;
 
