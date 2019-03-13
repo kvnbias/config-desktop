@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-os=$(echo -n $(sudo cat /etc/*-release | grep ^ID= | sed -e "s/ID=//"))
+os=$(echo -n $(sudo cat /etc/*-release | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
 
 if [ "$1" = "" ];then
   fedver=$(rpm -E %$os)

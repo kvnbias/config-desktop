@@ -1,10 +1,16 @@
 
 #!/bin/bash
 
+os=$(echo -n $(sudo cat /etc/*-release | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
+
 if [ "$1" = "" ];then
-  fedver=$(rpm -E %fedora)
+  fedver=$(rpm -E %$os)
 else
   fedver=$1
+fi
+
+if [ ! -f /usr/bin/dnf ]; then
+  sudo yum install -y dnf
 fi
 
 sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$fedver.noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$fedver.noarch.rpm
