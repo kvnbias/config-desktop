@@ -3,6 +3,16 @@
 
 sudo rm /arch-install
 
+# https://www.archlinux.org/groups/x86_64/base-devel/
+# Current libs (3/15/2019)
+# autoconf    automake     binutils    bison      fakeroot
+# file        findutils    flex        gawk       gcc
+# gettext     grep         groff       gzip       libtool
+# m4          make         pacman      patch      pkgconf
+# sed         sudo         systemd     texinfo    util-linux
+# which
+sudo pacman -S base-devel
+
 isManjaro=false
 while true; do
   read -p "Using manjaro [yN]?   " p
@@ -36,8 +46,10 @@ Install LTS kernel? [y]es | [n]o   " ilts
   done;
 fi
 
-sudo sed -i 's/GRUB_DEFAULT=0/GRUB_DEFAULT=saved/g' /etc/default/grub
-sudo sed -i 's/#GRUB_SAVEDEFAULT="true"/GRUB_SAVEDEFAULT="true"/g' /etc/default/grub
+if [ -f /etc/default/grub ]; then
+  sudo sed -i 's/GRUB_DEFAULT=0/GRUB_DEFAULT=saved/g' /etc/default/grub
+  sudo sed -i 's/#GRUB_SAVEDEFAULT="true"/GRUB_SAVEDEFAULT="true"/g' /etc/default/grub
+fi
 
 cpu=intel
 while true; do
@@ -129,17 +141,19 @@ Do you like to enable hibernation [Yn]?   " yn
   esac
 done
 
-while true; do
-  read -p "Update GRUB [Yn]?   " updgr
-  case $updgr in
-    [Nn]* )
-      break;;
-    * )
-      sudo mkinitcpio -P;
-      sudo grub-mkconfig -o /boot/grub/grub.cfg;
-      break;;
-  esac
-done
+if [ -f /etc/default/grub ]; then
+  while true; do
+    read -p "Update GRUB [Yn]?   " updgr
+    case $updgr in
+      [Nn]* )
+        break;;
+      * )
+        sudo mkinitcpio -P;
+        sudo grub-mkconfig -o /boot/grub/grub.cfg;
+        break;;
+    esac
+  done;
+fi
 
 yes | sudo pacman -S acpid
 

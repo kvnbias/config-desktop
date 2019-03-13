@@ -64,8 +64,9 @@ else
   done;
 fi
 
-
-sudo grub-mkconfig -o /boot/grub/grub.cfg;
+if [ -f /etc/default/grub ]; then
+  sudo grub-mkconfig -o /boot/grub/grub.cfg;
+fi
 
 while true; do
   read -p "
@@ -224,8 +225,10 @@ Would you like to proceed [Yn]?
   esac
 done
 
-sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="/GRUB_CMDLINE_LINUX_DEFAULT="security=selinux selinux=1 /g' /etc/default/grub
-sudo grub-mkconfig -o /boot/grub/grub.cfg
+if [ -f /etc/default/grub ]; then
+  sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="/GRUB_CMDLINE_LINUX_DEFAULT="security=selinux selinux=1 /g' /etc/default/grub
+  sudo grub-mkconfig -o /boot/grub/grub.cfg
+fi
 
 while true; do
   read -p "
