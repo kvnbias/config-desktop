@@ -1,10 +1,16 @@
 
 #!/bin/bash
 
+os=$(echo -n $(sudo cat /etc/*-release | grep ^ID= | sed -e "s/ID=//"))
+
 if [ "$1" = "" ];then
-  fedver=$(rpm -E %fedora)
+  fedver=$(rpm -E %$os)
 else
   fedver=$1
+fi
+
+if [ ! -f /usr/bin/dnf ]; then
+  sudo yum install -y dnf
 fi
 
 ## Start swap initialization

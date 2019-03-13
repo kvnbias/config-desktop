@@ -1,10 +1,16 @@
 
 #!/bin/bash
 
+os=$(echo -n $(sudo cat /etc/*-release | grep ^ID= | sed -e "s/ID=//"))
+
 if [ "$1" = "" ];then
-  fedver=$(rpm -E %fedora)
+  fedver=$(rpm -E %$os)
 else
   fedver=$1
+fi
+
+if [ ! -f /usr/bin/dnf ]; then
+  sudo yum install -y dnf
 fi
 
 # selinux utils
@@ -141,17 +147,18 @@ options snd_hda_intel model=$hdam" | sudo tee /etc/modprobe.d/alsa-base.conf
   esac
 done
 
+
+if [ -d /etc/gdm ]; then
+  # use lightdm instead
+  sudo systemctl disable gdm
+fi
+
 # Greeter
 sudo dnf install -y lightdm lightdm-settings slick-greeter --releasever=$fedver
 sudo dnf install -y google-noto-sans-fonts google-noto-fonts-common --releasever=$fedver
 sudo sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=slick-greeter/g' /etc/lightdm/lightdm.conf
 sudo systemctl enable lightdm
 sudo systemctl set-default graphical.target
-
-if [ -d /etc/gdm ]; then
-  # use lightdm instead
-  sudo systemctl disable gdm
-fi
 
 # Install window tiling manager
 sudo dnf install -y dmenu i3 i3status i3lock rxvt-unicode-256color-ml --releasever=$fedver
@@ -658,6 +665,7 @@ Inherits=Breeze
         mkdir -p $HOME/.config/kali
         mkdir -p $HOME/.config/mpd
         mkdir -p $HOME/.config/network
+        mkdir -p $HOME/.config/polybar
         mkdir -p $HOME/.config/touchpad
         mkdir -p $HOME/.config/themes
         # mkdir -p $HOME/.config/vifm
@@ -826,7 +834,7 @@ Inherits=Breeze
 
       bash $(pwd)/scripts/update-screen-detector.sh
       bash $(pwd)/scripts/update-themes.sh
-      sudo dnf autoremove
+      sudo dnf -y autoremove
 
       echo '
 

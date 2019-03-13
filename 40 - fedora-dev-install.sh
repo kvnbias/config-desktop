@@ -126,4 +126,4 @@ Enter any key to proceed...   " eak
 done
 
 cd $mainCWD
-sudo dnf autoremove
+sudo dnf -y autoremove

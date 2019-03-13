@@ -21,7 +21,7 @@ $ bash 25\ -\ arch-ricing-xorg-i3.sh
 
 ## Notes
 
-* For multiboot it is recommended to only install a bootloader in you main distro.
-* For debian-based distros using ubiquity installer you can remove bootloader installation by executing `ubiquity -b`.
+* For multiboot it is recommended to only install a bootloader in your main distro.
+* For debian-based distros using ubiquity installer you can remove the bootloader from the installation by executing `ubiquity -b` on the terminal.
 * For RHEL-based distros using anaconda installer you can remove bootloader on full disk summary.
 * Use `os-prober` to detect other OS.
