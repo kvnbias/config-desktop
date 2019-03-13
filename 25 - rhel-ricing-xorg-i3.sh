@@ -15,6 +15,7 @@ fi
 
 # selinux utils
 sudo dnf install -y checkpolicy policycoreutils-python-utils --releasever=$fedver
+sudo dnf install -y gcc gcc-c++ autoconf automake cmake make dkms pkgconfig bzip2 --releasever=$fedver
 
 sudo dnf install -y at
 sudo systemctl enable atd
@@ -361,7 +362,6 @@ groupmod -g $guid wheel
 
       sudo dnf remove -y glib2-devel gtk3-devel libnotify-devel
       sudo dnf remove -y pulseaudio-libs-devel libX11-devel
-      sudo dnf remove -y autoconf automake
 
       sudo sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf
       sudo sed -i 's/; autospawn = yes/autospawn = yes/g' /etc/pulse/client.conf
@@ -432,7 +432,7 @@ groupmod -g $guid wheel
       cd /tmp
 
       sudo dnf remove -y cairo-devel libev-devel libjpeg-devel libxkbcommon-x11-devel
-      sudo dnf remove -y pam-devel xcb-util-devel xcb-util-image-devel xcb-util-xrm-devel autoconf automake 
+      sudo dnf remove -y pam-devel xcb-util-devel xcb-util-image-devel xcb-util-xrm-devel
 
       # terminal-based file viewer
       sudo dnf install -y ranger --releasever=$fedver
@@ -474,7 +474,7 @@ groupmod -g $guid wheel
       sudo dnf remove -y libxcb-devel xcb-util-keysyms-devel xcb-util-devel xcb-util-wm-devel
       sudo dnf remove -y xcb-util-xrm-devel yajl-devel libXrandr-devel startup-notification-devel
       sudo dnf remove -y libev-devel xcb-util-cursor-devel libXinerama-devel libxkbcommon-devel
-      sudo dnf remove -y libxkbcommon-x11-devel pcre-devel pango-devel automake
+      sudo dnf remove -y libxkbcommon-x11-devel pcre-devel pango-devel
       cd /tmp
 
       # MANUAL: polybar
@@ -512,7 +512,7 @@ groupmod -g $guid wheel
       cmake .. && make -j$(nproc) && sudo make install
 
       sudo dnf remove -y cairo-devel xcb-proto xcb-util-devel xcb-util-cursor-devel xcb-util-image-devel xcb-util-wm-devel xcb-util-xrm-devel
-      sudo dnf remove -y alsa-lib-devel libcurl-devel jsoncpp-devel libmpdclient-devel pulseaudio-libs-devel libnl3-devel cmake wireless-tools-devel
+      sudo dnf remove -y alsa-lib-devel libcurl-devel jsoncpp-devel libmpdclient-devel pulseaudio-libs-devel libnl3-devel wireless-tools-devel
       cd /tmp
 
       # popup calendar

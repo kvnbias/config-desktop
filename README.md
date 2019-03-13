@@ -28,5 +28,9 @@ $ bash 25\ -\ arch-ricing-xorg-i3.sh
 
 ## As of 03/15/2019
 
-* Arch scripts are tested on: Arch, Manjaro (18)
-* RHEL scripts are tested on: Fedora (Everything - Minimal, 29)
+##### Arch scripts are tested on:
+* Arch
+* Manjaro (18)
+* Manjaro Arch (18 - Minimal CLI)
+##### RHEL scripts are tested on
+* Fedora (Everything 29 - Minimal, Workstation 29)

@@ -11,7 +11,7 @@ sudo rm /arch-install
 # m4          make         pacman      patch      pkgconf
 # sed         sudo         systemd     texinfo    util-linux
 # which
-sudo pacman -S base-devel
+yes | sudo pacman -S base-devel
 
 isManjaro=false
 while true; do

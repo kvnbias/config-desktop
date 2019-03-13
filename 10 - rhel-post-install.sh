@@ -40,7 +40,7 @@ fi
 sudo dnf -y upgrade
 
 sudo dnf install -y kernel-devel kernel-headers --releasever=$fedver
-sudo dnf install -y gcc make dkms pkgconfig bzip2 --releasever=$fedver
+sudo dnf install -y gcc gcc-c++ autoconf automake cmake make dkms pkgconfig bzip2 --releasever=$fedver
 
 # Activate numlock on boot
 sudo dnf install -y numlockx --releasever=$fedver

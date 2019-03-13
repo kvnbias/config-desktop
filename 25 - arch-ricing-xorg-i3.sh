@@ -10,6 +10,16 @@ yes | yay -Syu
 cd ..
 rm -rf yay
 
+# https://www.archlinux.org/groups/x86_64/base-devel/
+# Current libs (3/15/2019)
+# autoconf    automake     binutils    bison      fakeroot
+# file        findutils    flex        gawk       gcc
+# gettext     grep         groff       gzip       libtool
+# m4          make         pacman      patch      pkgconf
+# sed         sudo         systemd     texinfo    util-linux
+# which
+yes | sudo pacman -S base-devel
+
 # Sound
 yes | sudo pacman -S alsa-utils
 
