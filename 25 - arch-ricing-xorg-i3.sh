@@ -555,6 +555,7 @@ Inherits=Breeze
         mkdir -p $HOME/.config/mpd
         mkdir -p $HOME/.config/network
         mkdir -p $HOME/.config/touchpad
+        mkdir -p $HOME/.config/polybar
         mkdir -p $HOME/.config/themes
         # mkdir -p $HOME/.config/vifm
         # mkdir -p $HOME/.config/vifm/scripts
