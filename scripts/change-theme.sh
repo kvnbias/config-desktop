@@ -117,7 +117,8 @@ while true; do
 
 [k]  Solarized Kali    [*]  Default
 [l]  Solarized Debian
-[m]  Solarized Ubuntu
+[m]  Solarized Manjaro
+[n]  Solarized Ubuntu
 
 
 Enter theme:   " theme
@@ -250,6 +251,9 @@ Enter theme:   " theme
       use_solarized "debian"
       break;;
     [m] )
+      use_solarized "manjaro"
+      break;;
+    [n] )
       use_solarized "ubuntu"
       break;;
     * )
