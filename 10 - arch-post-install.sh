@@ -8,7 +8,8 @@ while true; do
   read -p "Using manjaro [yN]?   " p
   case $p in
     [Yy]* )
-      isManjaro=true
+      isManjaro=true;
+      break;;
     * ) break;;
   esac
 done
