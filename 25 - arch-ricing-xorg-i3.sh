@@ -144,6 +144,7 @@ groupmod -g $guid wheel
       # theme icon
       yes | yay -S flat-remix-git
       yes | yay -S flat-remix-gtk-git
+      sudo ln -sf /usr/share/icons/Flat-Remix-Blue /usr/share/icons/Flat-Remix
 
       # display
       yes | sudo pacman -S feh arandr lxappearance xorg-xbacklight xorg-xrandr

@@ -92,17 +92,17 @@ Install PHP-Build (PHP) [yN]?   " invm
         read -p "
 Installing build packages...
 
-autoconf         bzip2     curl       gcc                icu
-libjpeg-turbo    libpng    libtidy    libxml2            libxslt
-libzip           make      openssl    postgresql-libs    readline
-tar
+autoconf         bzip2      curl               gcc         icu
+libjpeg-turbo    libpng     libxml2            libxslt     libzip
+make             openssl    postgresql-libs    readline    tar
+tidy
 
 Enter any key to proceed...   " eak
         case $eak in
           * ) break;;
         esac
       done
-      yes | sudo pacman -S autoconf bzip2 curl gcc icu libjpeg-turbo libpng libtidy libxml2
+      yes | sudo pacman -S autoconf bzip2 curl gcc icu libjpeg-turbo libpng tidy libxml2
       yes | sudo pacman -S libxslt libzip make openssl postgresql-libs readline tar
       break;;
     * ) break;;

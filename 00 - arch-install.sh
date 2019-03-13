@@ -579,88 +579,126 @@ echo '
 
 passwd
 
+installBootLoader=true
 while true; do
-  read -p \"
-
-Do you want to install a bootloader [Yn]?   \" ibl
+  read -p \"Do you want to install a bootloader [Yn]?    \" ibl
   case \$ibl in
-    [Nn]* ) break;;
-    * )
-      while true; do
-        read -p \"
+    [Nn] ) installBootLoader=false; break;;
+    * ) installBootLoader=true; break;;
+  esac
+done
+
+if [[ \"\$installBootLoader\" = \"true\" ]]; then
+  while true; do
+    read -p \"
 
 BOOTLOADER
 
 Are you using UEFI + GPT partition? [y]es | [n]o   \" yn
-        case \$yn in
-          [Yy]* )
-            while true; do
-              read -p \"EFI directory (e.g. /boot/efi) or [e]xit   \" ed
-              case \$ed in
-                [Ee] ) break;;
-                * )
-                  if [ -d \$ed ]; then
-                    while true; do
-                      read -p \"Are you sure you want to install GRUB in UEFI mode? [y]es | [n]o   \" cnfrm
-                      case \$cnfrm in
-                        [Yy]* )
-                          pacman -S grub efibootmgr
-                          grub-install --target=x86_64-efi --efi-directory=\$ed --bootloader-id=GRUB;
-                          grub-mkconfig -o /boot/grub/grub.cfg
+    case \$yn in
+      [Yy]* )
+        while true; do
+          read -p \"EFI directory (e.g. /boot/efi) or [e]xit   \" ed
+          case \$ed in
+            [Ee] ) break;;
+            * )
+              if [ -d \$ed ]; then
+                while true; do
+                  read -p \"
 
-                          mkdir -p /boot/efi/EFI/BOOT
-                          cp -a /boot/efi/EFI/GRUB/grubx64.efi /boot/efi/EFI/BOOT/BOOTX64.EFI
-                          echo '
-      bcf boot add 1 fs0:\EFI\GRUB\grubx64.efi \"Fallback Bootloader\"
-      exit
-                          ' | tee /boot/efi/startup.nsh
+Choose bootloader
 
-                          echo Installed GRUB in UEFI mode;
-                          break 4;;
-                        [Nn]* ) break 3;;
-                        * ) echo Invalid input;;
-                      esac
-                    done;
-                  else
-                    echo Directory doesnt exist; break 2;
-                  fi
-              esac
-            done;;
-          [Nn]* )
-            while true; do
-              echo '
-              
-              
-              '
-              fdisk -l
-              echo '
-              
-              
-              '
-              read -p \"Target device (e.g. /dev/sdX) or [e]xit   \" td
-              case \$td in
-                [Ee] ) break 2;;
-                * )
-                  while true; do
-                    read -p \"Are you sure you want to install GRUB in LEGACY mode? [y]es | [n]o   \" cnfrm
-                    case \$cnfrm in
-                      [Yy]* )
-                        pacman -S grub efibootmgr
-                        grub-install --target=i386-pc \$td;
-                        grub-mkconfig -o /boot/grub/grub.cfg
-                        echo Installed GRUB in LEGACY mode;
-                        break 4;;
-                      [Nn]* ) break 3;;
-                      * ) echo Invaid input;;
-                    esac
-                  done;;
-              esac
-            done;;
-          * ) echo Invalid input
-        esac
-      done;;
-  esac
-done
+[a] rEFInd
+[*] GRUB
+
+Enter bootloader [default=GRUB]:   \" bl
+                  case \$bl in
+                    [Aa] )
+                      yes | pacman -S refind-efi efibootmgr
+                      refind-install
+
+                      mkdir -p \$ed/EFI/BOOT
+                      cp -a \$ed/EFI/refind/refind_x64.efi \$ed/EFI/BOOT/BOOTX64.EFI
+                      echo '
+bcf boot add 1 fs0:\EFI\refind\refind_x64.efi \"Fallback Bootloader\"
+exit' | tee \$ed/startup.nsh
+
+                      root=\$(mount -v | grep 'on / ' | cut -f 1 -d ' ')
+                      uuid=\$(blkid | grep \$root | cut -f 2 -d ' ')
+
+                      if [[ \$uuid == *\"LABEL\"* ]]; then
+                        uuid=\$(blkid | grep \$root | cut -f 3 -d ' ')
+                      fi
+
+                      if [[ \$uuid != *\"UUID\"* ]]; then
+                        uuid=\$root
+                      fi
+
+                      uuid=\$(echo \$uuid | sed 's/\"//g')
+
+                      echo \"
+\\\"Boot with standard options\\\"  \\\"root=\$uuid rw\\\"
+\\\"Boot to single-user mode\\\"    \\\"root=\$uuid rw single\\\"
+\\\"Boot with minimal options\\\"   \\\"ro root=\$uuid\\\"
+\" | tee /boot/refind_linux.conf
+
+                      while true; do
+                        read -p \"Would you like to rice rEFInd [Yn]?   \" rrfnd
+                        case \$rrfnd in
+                          [Nn] ) break 4;;
+                          * )
+                            git clone https://github.com/EvanPurkhiser/rEFInd-minimal.git /tmp/refind-minimal
+                            sudo mkdir -p \$ed/EFI/refind/themes/rEFInd-minimal
+                            sudo cp -raf --no-preserve=mode,ownership /tmp/refind-minimal/* \$ed/EFI/refind/themes/rEFInd-minimal
+                            echo 'include themes/refind-minimal/theme.conf' | sudo tee -a \$ed/EFI/refind/refind.conf
+                            break 4;;
+                        esac
+                      done;;
+                    * )
+                      yes | pacman -S grub efibootmgr
+                      grub-install --target=x86_64-efi --efi-directory=\$ed --bootloader-id=GRUB;
+                      grub-mkconfig -o /boot/grub/grub.cfg
+
+                      mkdir -p \$ed/EFI/BOOT
+                      cp -a \$ed/EFI/GRUB/grubx64.efi \$ed/EFI/BOOT/BOOTX64.EFI
+                      echo '
+bcf boot add 1 fs0:\EFI\GRUB\grubx64.efi \"Fallback Bootloader\"
+exit' | tee \$ed/startup.nsh
+
+                      echo Installed GRUB in UEFI mode;
+                      break 3;;
+                  esac
+                done;
+              else
+                echo EFI Directory doesnt exist;
+                break;
+              fi
+          esac
+        done;;
+      [Nn]* )
+        while true; do
+          echo '
+
+          '
+          fdisk -l
+          echo '
+
+          '
+          read -p \"Target device (e.g. /dev/sdX) or [e]xit   \" td
+          case \$td in
+            [Ee] ) break;;
+            * )
+              pacman -S grub
+              grub-install --target=i386-pc \$td;
+              grub-mkconfig -o /boot/grub/grub.cfg
+              echo Installed GRUB in LEGACY mode;
+              break 2;;
+          esac
+        done;;
+      * ) echo Invalid input;;
+    esac
+  done
+fi
 
 sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/g' /etc/sudoers
 

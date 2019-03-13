@@ -21,9 +21,13 @@ sudo dnf -y upgrade
 sudo dnf install -y alsa-utils --releasever=$fedver
 
 # Gstreamer
-sudo dnf install -y gstreamer clutter-gst3 --releasever=$fedver
+sudo dnf install -y gstreamer clutter-gst3 gstreamer-ffmpeg gstreamer-tools --releasever=$fedver
 sudo dnf install -y gstreamer-plugins-bad gstreamer-plugins-base gstreamer-plugins-good gstreamer-plugins-ugly --releasever=$fedver
 sudo dnf install -y gstreamer-plugins-bad-nonfree gstreamer-plugins-good-extras gstreamer-plugins-bad-free-extras --releasever=$fedver
+sudo dnf install -y gstreamer1 gstreamer1-libav gstreamer1-vaapi --releasever=$fedver
+sudo dnf install -y gstreamer1-plugins-bad-free gstreamer1-plugins-base gstreamer1-plugins-good-gtk gstreamer1-plugins-good --releasever=$fedver
+sudo dnf install -y gstreamer1-plugins-bad-nonfree gstreamer1-plugins-good-extras gstreamer1-plugins-bad-free-extras --releasever=$fedver
+sudo dnf install -y gstreamer1-plugins-ugly-free gstreamer1-plugins-bad-freeworld gstreamer1-plugins-base-tools --releasever=$fedver
 
 # Flash Repo
 sudo dnf install -y http://linuxdownload.adobe.com/adobe-release/adobe-release-x86_64-1.0-1.noarch.rpm
@@ -144,6 +148,11 @@ sudo sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=slick-greeter/
 sudo systemctl enable lightdm
 sudo systemctl set-default graphical.target
 
+if [ -d /etc/gdm ]; then
+  # use lightdm instead
+  sudo systemctl disable gdm
+fi
+
 # Install window tiling manager
 sudo dnf install -y dmenu i3 i3status i3lock rxvt-unicode-256color-ml --releasever=$fedver
 
@@ -235,6 +244,7 @@ This UID will also be used on the other OS
 Execute the commands below in tty2 (Ctrl+Alt+F2) as a root user:
 
 usermod -u $uid $(whoami)
+groupmod -g 1000 $(whoami)
 groupmod -g $guid wheel
 
 "
@@ -273,6 +283,7 @@ groupmod -g $guid wheel
 
       git tag -f "git-$(git rev-parse --short HEAD)"
       sudo mkdir -p /usr/share/icons && sudo cp -raf Flat-Remix* /usr/share/icons/
+      sudo ln -sf /usr/share/icons/Flat-Remix-Blue /usr/share/icons/Flat-Remix
       cd /tmp
 
       # gtk theme
