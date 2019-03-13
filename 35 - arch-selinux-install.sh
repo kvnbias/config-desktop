@@ -41,7 +41,7 @@ done
 if [ "$isManjaro" = true ]; then
   major=$(uname -r | cut -f 1 -d .);
   minor=$(uname -r | cut -f 2 -d .);
-  version=$(echo$major$minor);
+  version=$(echo $major$minor);
   yes | sudo pacman -S linux$version linux$version-headers;
 else
   while true; do
