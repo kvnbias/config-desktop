@@ -438,7 +438,7 @@ exec --no-startup-id "conky --config ~/.config/conky/helper.conf"
 
 exec_always --no-startup-id compton --config ~/.config/compton/config.conf
 exec_always --no-startup-id xrdb ~/.Xresources
-exec_always --no-startup-id feh --bg-fill ~/Pictures/wallpapers/wallpaper.jpg
+exec_always --no-startup-id nitrogen --set-zoom-fill --save ~/Pictures/wallpapers/wallpaper.jpg
 exec_always --no-startup-id ~/.config/i3/startup.sh &
 exec_always --no-startup-id ~/.config/i3/polybar.sh &
 exec_always --no-startup-id ~/.config/display/screen-detector.sh
