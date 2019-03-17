@@ -1,7 +1,8 @@
 
 #!/bin/bash
+# NOTE this script is only tested in my machines
 
-os=$(echo -n $(sudo cat /etc/*-release | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
+os=$(echo -n $(cat /etc/*-release | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
 
 if [ "$1" = "" ];then
   fedver=$(rpm -E %$os)
@@ -53,53 +54,55 @@ if [ ! -d "/home/$(whoami)/Desktop" ];then
 fi
 
 # Hibernation
-if dnf list installed | grep -q grub2; then
+if [ -f /etc/default/grub ]; then
+  sudo sed -i 's/GRUB_DEFAULT=0/GRUB_DEFAULT=saved/g' /etc/default/grub
+
+  if cat /etc/default/grub | grep -q 'GRUB_SAVEDEFAULT'; then
+    sudo sed -i 's/#GRUB_SAVEDEFAULT="true"/GRUB_SAVEDEFAULT="true"/g' /etc/default/grub
+  else
+    echo 'GRUB_SAVEDEFAULT="true"' | sudo tee -a /etc/default/grub
+  fi
+
   if sudo cat /etc/default/grub | grep -q 'resume='; then
     echo "Hibernation already enabled..."
   else
-    if [ -f /etc/default/grub ]; then
-      while true; do
-        read -p "
+    while true; do
+      read -p "Do you like to enable hibernation [Yn]?   " yn
+      case $yn in
+        [Nn]* ) break;;
+        * )
+        while true; do
+            sudo fdisk -l;
+            read -p "What device to use (e.g. /dev/sdXn) or [e]xit   ?   " dvc
+            case $dvc in
+            [Ee]* ) break;;
+            * )
+                sudo sed -i "s~GRUB_CMDLINE_LINUX=\"~GRUB_CMDLINE_LINUX=\"resume=$dvc ~g" /etc/default/grub
+                sudo dracut -v -f
+                break 2;;
+            esac
+        done;;
+      esac
+    done
 
-Do you like to enable hibernation [Yn]?   " yn
-        case $yn in
-          [Nn]* ) break;;
-          * )
+    while true; do
+      read -p "Update GRUB [Yn]?   " updgr
+      case $updgr in
+        [Nn]* ) break;;
+        * )
           while true; do
-              sudo fdisk -l;
-              read -p "What device to use (e.g. /dev/sdXn) or [e]xit   ?   " dvc
-              case $dvc in
-              [Ee]* ) break;;
+            read -p "Using UEFI [Yn]?   " yn
+            case $yn in
+              [Nn]* )
+                sudo grub2-mkconfig -o /boot/grub2/grub.cfg;
+                break 2;;
               * )
-                  sudo sed -i "s~GRUB_CMDLINE_LINUX=\"~GRUB_CMDLINE_LINUX=\"resume=$dvc ~g" /etc/default/grub
-                  break 2;;
-              esac
+                sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg;
+                break 2;;
+            esac
           done;;
-        esac
-      done
-
-      while true; do
-        read -p "Update GRUB [Yn]?   " updgr
-        case $updgr in
-          [Nn]* ) break;;
-          * )
-            while true; do
-              read -p "Using UEFI [Yn]?   " yn
-              case $yn in
-                [Nn]* )
-                  sudo grub2-mkconfig -o /boot/grub2/grub.cfg;
-                  break 2;;
-                * )
-                  sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg;
-                  break 2;;
-              esac
-            done
-            break;;
-        esac
-      done
-    else
-      echo No GRUB config
-    fi
+      esac
+    done
   fi
 fi
 

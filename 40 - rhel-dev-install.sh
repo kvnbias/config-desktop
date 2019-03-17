@@ -3,7 +3,7 @@
 
 mainCWD=$(pwd)
 
-os=$(echo -n $(sudo cat /etc/*-release | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
+os=$(echo -n $(cat /etc/*-release | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
 
 if [ "$1" = "" ];then
   fedver=$(rpm -E %$os)

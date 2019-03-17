@@ -25,11 +25,7 @@ done
 
 ## Start keymap
 while true; do
-  read -p "
-
-KEYBOARD KEYMAP
-
-Set keyboard keymap (e.g. us, de_latin1)   " l
+  read -p "Set keyboard keymap (e.g. us, de_latin1)   " l
   case $l in
     * )
       if ls /usr/share/kbd/keymaps/**/* | grep "^$l.map.gz$"; then
@@ -75,7 +71,8 @@ Choose partition action:
     [m]ake flag
     f[o]rmat
     [p]roceed
-" slfdcmop
+
+Enter action:   " slfdcmop
   case $slfdcmop in
     [Ss]* ) echo '
       
@@ -202,7 +199,8 @@ Starting point -- Examples:
 Units available are: s (sectors), B (bytes), kBm kiB, MB, MiB, GB, GiB, TB, TiB, %
 
 or [e]xit
-" sp
+
+Enter starting point:   " sp
                     case $sp in
                       [Ee] ) break 3;;
                       * )
@@ -218,7 +216,8 @@ Ending point -- Examples:
 Units available are: s (sectors), B (bytes), kBm kiB, MB, MiB, GB, GiB, TB, TiB, %
 
 or [e]xit
-" ep
+
+Enter ending point:   " ep
                           case $ep in
                             [Ee] ) break 4;;
                             * ) parted -s $tp mkpart primary $fs $sp $ep;
@@ -434,8 +433,11 @@ while true; do
   read -p "
 
 Select action:
-  [r]eactivate mirror | [d]eactivate mirror | [e]xit
-" a
+  [r]eactivate mirror
+  [d]eactivate mirror
+  [e]xit
+
+Enter action:   " a
   case $a in
     [Ee]* ) break;;
     [Rr]* )
@@ -469,11 +471,7 @@ echo "
 #!/bin/bash
 
 while true; do
-  read -p \"
-
-TIMEZONE
-
-Set timezone (e.g. America/Chicago)   \" tz
+  read -p \"Set timezone (e.g. America/Chicago)   \" tz
   case \$tz in
     * )
       if [[ \$tz =~ ^[a-zA-Z]+/[a-zA-Z]+$ ]]; then
@@ -492,11 +490,7 @@ done
 hwclock --systohc
 
 while true; do
-  read -p \"
-
-LOCALE
-
-Actions: [a]ctivate locales | [d]eactivate locales | [g]enerate locales | [e]xit   \" a
+  read -p \"Actions: [a]ctivate locales | [d]eactivate locales | [g]enerate locales | [e]xit   \" a
   case \$a in
     [Aa] )
       while true; do
@@ -525,9 +519,7 @@ Actions: [a]ctivate locales | [d]eactivate locales | [g]enerate locales | [e]xit
 done
 
 while true; do
-  read -p \"
-
-Set LANG (e.g. 'en_US.UTF-8') or [e]xit   \" l
+  read -p \"Set LANG (e.g. 'en_US.UTF-8') or [e]xit   \" l
   case \$l in
     [Ee] ) break;;
     * ) echo \"LANG=\$l\" | tee /etc/locale.conf;;
@@ -535,9 +527,7 @@ Set LANG (e.g. 'en_US.UTF-8') or [e]xit   \" l
 done
 
 while true; do
-  read -p \"
-
-Set KEYMAP (e.g. us, de-latin1) or [e]xit   \" k
+  read -p \"Set KEYMAP (e.g. us, de-latin1) or [e]xit   \" k
   case \$k in
     [Ee] ) break;;
     * ) echo \"KEYMAP=\$k\" | tee /etc/vconsole.conf;;
@@ -545,9 +535,7 @@ Set KEYMAP (e.g. us, de-latin1) or [e]xit   \" k
 done
 
 while true; do
-  read -p \"
-
-Enter hostname or [e]xit   \" hn
+  read -p \"Enter hostname or [e]xit   \" hn
   case \$hn in
     [Ee] ) break;;
     * )
@@ -590,11 +578,7 @@ done
 
 if [[ \"\$installBootLoader\" = \"true\" ]]; then
   while true; do
-    read -p \"
-
-BOOTLOADER
-
-Are you using UEFI + GPT partition? [y]es | [n]o   \" yn
+    read -p \"Are you using UEFI + GPT partition? [y]es | [n]o   \" yn
     case \$yn in
       [Yy]* )
         while true; do
@@ -704,11 +688,7 @@ sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/g' /etc/sudoers
 
 
 while true; do
-  read -p \"
-
-USERS
-
-Would you like to create a new user [yN]?   \" yn
+  read -p \"Would you like to create a new user [yN]?   \" yn
   case \$yn in
     [Yy]* )
       while true; do
@@ -736,11 +716,7 @@ yes | sudo pacman -S reflector
 
 
 while true; do
-  read -p \"
-
-MIRRORS
-
-Would you like to refresh mirrors [yN]?   \" yn
+  read -p \"Would you like to refresh mirrors [yN]?   \" yn
   case \$yn in
     [Yy]* )
       sudo reflector --latest 50 --protocol https --sort rate --save /etc/pacman.d/mirrorlist

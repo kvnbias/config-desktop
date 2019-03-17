@@ -13,13 +13,13 @@ yes | yay -S downgrade
 yes | sudo pacman -S exfat-utils fuse-exfat ntfs-3g
 
 # media
-yes | sudo pacman -S eog totem
+yes | sudo pacman -S eog
 
 # firefox
 yes | sudo pacman -S firefox
 
 # extra
-yes | sudo pacman -S libreoffice-fresh vlc 
+yes | sudo pacman -S libreoffice-fresh vlc
 yes | sudo pacman -S transmission-gtk --noconfirm
 
 # extra

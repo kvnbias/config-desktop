@@ -3,7 +3,7 @@
 
 mainCWD=$(pwd)
 
-os=$(echo -n $(sudo cat /etc/*-release | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
+os=$(echo -n $(cat /etc/*-release | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
 
 if [ "$1" = "" ];then
   fedver=$(rpm -E %$os)
@@ -24,7 +24,7 @@ sudo dnf install -y lsof bash-completion gamin polkit-gnome --releasever=$fedver
 sudo dnf install -y exfat-utils fuse-exfat ntfs-3g --releasever=$fedver
 
 # media
-sudo dnf install -y eog totem --releasever=$fedver
+sudo dnf install -y eog --releasever=$fedver
 
 # firefox
 sudo dnf install -y firefox --releasever=$fedver
@@ -90,6 +90,28 @@ https://wiki.archlinux.org/index.php/VirtualBox   " ivb
       sudo dnf install -y VirtualBox virtualbox-guest-additions --releasever=$fedver
       sudo dnf install -y akmod-VirtualBox kmod-VirtualBox --releasever=$fedver
       sudo dracut -v -f
+
+      if [ -f /etc/default/grub ]; then
+        while true; do
+          read -p "Update GRUB [Yn]?   " updgr
+          case $updgr in
+            [Nn]* ) break;;
+            * )
+              while true; do
+                read -p "Using UEFI [Yn]?   " yn
+                case $yn in
+                  [Nn]* )
+                    sudo grub2-mkconfig -o /boot/grub2/grub.cfg;
+                    break 2;;
+                  * )
+                    sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg;
+                    break 2;;
+                esac
+              done;;
+          esac
+        done;
+      fi
+
       break;;
     * ) break;;
   esac
