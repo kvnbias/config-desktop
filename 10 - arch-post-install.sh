@@ -51,29 +51,8 @@ if [ -f /etc/default/grub ]; then
   sudo sed -i 's/#GRUB_SAVEDEFAULT="true"/GRUB_SAVEDEFAULT="true"/g' /etc/default/grub
 fi
 
-cpu=intel
 while true; do
-  read -p "
-
-
-What CPU are you using? [i]ntel | [a]md   " cpui
-  case $cpui in
-    [Ii]* ) cpu=intel; break;;
-    [Aa]* ) cpu=amd; break;;
-    * ) echo Invalid input
-  esac
-done
-
-if [ "$cpu" == "intel" ]; then
-  yes | sudo pacman -S intel-ucode;
-else
-  yes | sudo pacman -S amd-ucode;
-fi
-
-while true; do
-  read -p "
-
-Would you like to increase AUR threads [Yn]?   " aurt
+  read -p "Would you like to increase AUR threads [Yn]?   " aurt
   case $aurt in
     [Nn]* ) break;;
     * )
@@ -121,10 +100,7 @@ xdg-user-dirs-update
 
 # Hibernation
 while true; do
-  read -p "
-
-
-Do you like to enable hibernation [Yn]?   " yn
+  read -p "Do you like to enable hibernation [Yn]?   " yn
   case $yn in
     [Nn]* ) break;;
     * )

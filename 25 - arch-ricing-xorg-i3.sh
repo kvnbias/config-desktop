@@ -1,6 +1,57 @@
 
 #!/bin/bash
 
+while true; do
+  read -p "Will use for dual boot with other linux [yN]?   " wdb
+  case $wdb in
+    [Yy]* )
+      while true; do
+        echo "
+
+NOTE: Use a UID that will less likely be used as an ID by other distros (e.g. 1106).
+This UID will also be used on the other distro installations
+
+"
+        read -p "Enter UID or [e]xit:   " uid
+        case $uid in
+          [Ee]* ) break;;
+          * )
+            while true; do
+              echo "
+
+NOTE: Use a UID that will less likely be used as an ID by other distros (e.g. 1106).
+This UID will also be used on the other distro installations
+
+"
+              read -p "Enter GUID or [e]xit:   " guid
+              case $guid in
+                [Ee]* ) break 2;;
+                * )
+                  while true; do
+                    echo "
+
+Logout this user account and execute the commands below as a root user on tty2:
+
+usermod -u $uid $(whoami)
+groupmod -g $guid wheel
+usermod -g wheel $(whoami)
+chown -R $(whoami):wheel /home/$(whoami)
+
+"
+                    read -p "Would you like to proceed [Yn]?   " wultp
+                    case $wultp in
+                      [Nn]* ) ;;
+                      * )
+                        break 4;;
+                    esac
+                  done;;
+              esac
+            done;;
+        esac
+      done;;
+    * ) break;;
+  esac
+done
 
 # install AUR helper: yay
 git clone https://aur.archlinux.org/yay.git
@@ -26,15 +77,17 @@ yes | sudo pacman -S alsa-utils
 amixer sset "Master" unmute
 amixer sset "Speaker" unmute
 amixer sset "Headphone" unmute
+amixer sset "Mic" unmute
+amixer sset "Mic Boost" unmute
 
 amixer sset "Master" 100%
 amixer sset "Speaker" 100%
 amixer sset "Headphone" 100%
+amixer sset "Mic" 100%
 amixer sset "Mic Boost" 100%
 
 # Gstreamer
 yes | sudo pacman -S gstreamer
-yes | sudo pacman -S clutter-gst
 yes | sudo pacman -S gst-libav
 yes | sudo pacman -S gst-plugins-bad
 yes | sudo pacman -S gst-plugins-base
@@ -46,75 +99,237 @@ yes | sudo pacman -S gst-plugins-ugly
 yes | sudo pacman -S jre-openjdk flashplugin pepper-flash
 yes | yay -S ttf-ms-fonts --noconfirm
 
-## Hardware acceleration drivers installation
-gpu=;
+while true; do
+  read -p "What CPU are you using? [i]ntel | [a]md   " cpui
+  case $cpui in
+    [Ii]* )
+      yes | sudo pacman -S intel-ucode;
+      break;;
+    [Aa]* )
+      yes | sudo pacman -S amd-ucode;
+      break;;
+    * ) echo Invalid input
+  esac
+done
+
+generate_intel_gpu_config() {
+  if [ ! -f /etc/X11/xorg.conf.d/20-intel.conf ];then
+    sudo touch /etc/X11/xorg.conf.d/20-intel.conf;
+  fi
+
+  echo '
+Section "Device"
+  Identifier  "Intel Graphics"
+  Driver      "intel"
+EndSection
+
+Section "Device"
+  Identifier  "Intel Graphics"
+  Driver      "intel"
+  Option      "TearFree" "true"
+  Option      "DRI"    "3"
+EndSection
+' | sudo tee -a /etc/X11/xorg.conf.d/20-intel.conf;
+
+}
+
+
+generate_ati_gpu_config() {
+  if [ ! -f /etc/X11/xorg.conf.d/20-radeon.conf ];then
+    sudo touch /etc/X11/xorg.conf.d/20-radeon.conf;
+  fi
+
+  echo '
+Section "Device"
+  Identifier "Radeon"
+  Driver "radeon"
+EndSection
+
+Section "Device"
+  Identifier  "Radeon"
+  Driver "radeon"
+  Option "AccelMethod" "glamor"
+  Option "DRI" "3"
+  Option "TearFree" "on"
+  Option "ColorTiling" "on"
+  Option "ColorTiling2D" "on"
+  Option "SWCursor" "True"
+EndSection
+' | sudo tee -a /etc/X11/xorg.conf.d/20-radeon.conf;
+
+}
+
+generate_amd_gpu_config() {
+  if [ ! -f /etc/X11/xorg.conf.d/10-screen.conf ];then
+    sudo touch /etc/X11/xorg.conf.d/10-screen.conf;
+  fi
+
+  if [ ! -f /etc/X11/xorg.conf.d/20-radeon.conf ];then
+    sudo touch /etc/X11/xorg.conf.d/20-radeon.conf;
+  fi
+
+  echo '
+Section "Screen"
+  Identifier     "Screen"
+  DefaultDepth    24
+  SubSection      "Display"
+    Depth         24
+  EndSubSection
+EndSection
+' | sudo tee -a /etc/X11/xorg.conf.d/10-screen.conf;
+
+  echo '
+Section "Device"
+  Identifier "AMD"
+  Driver "amdgpu"
+EndSection
+
+Section "Device"
+  Identifier  "AMD"
+  Driver "amdgpu"
+  Option "DRI" "3"
+  Option "TearFree" "on"
+  Option "SWCursor" "True"
+EndSection
+' | sudo tee -a /etc/X11/xorg.conf.d/20-radeon.conf;
+
+}
+
+generate_nvidia_gpu_config() {
+  sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="/GRUB_CMDLINE_LINUX_DEFAULT="nvidia-drm.modeset=1 /g' /etc/default/grub;
+  sudo mkdir -p /etc/pacman.d/hooks
+
+  if [ ! -f /etc/pacman.d/hooks/nvidia.hook ];then
+    sudo touch /etc/pacman.d/hooks/nvidia.hook;
+  fi
+
+  echo "
+[Trigger]
+Operation=Install
+Operation=Upgrade
+Operation=Remove
+Type=Package
+Target=nvidia
+Target=linux
+Target=linux-lts
+
+[Action]
+Description=Update Nvidia module in initcpio
+Depends=mkinitcpio
+When=PostTransaction
+NeedsTargets
+Exec=/bin/sh -c 'while read -r trg; do case \$trg in linux) exit 0; esac; done; /usr/bin/mkinitcpio -P'
+" | sudo tee -a /etc/pacman.d/hooks/nvidia.hook;
+
+  if [ -f /etc/default/grub ]; then
+    sudo mkinitcpio -P
+  fi
+}
+
+enable_amdgpu_kms() {
+  sudo sed -i 's/MODULES=(/MODULES=(amdgpu radeon /g' /etc/mkinitcpio.conf;
+  sudo sed -i 's/MODULES=""/MODULES=(amdgpu radeon)/g' /etc/mkinitcpio.conf;
+
+  if [ -f /etc/default/grub ]; then
+    sudo mkinitcpio -P;
+  fi
+}
+
+enable_amdati_kms() {
+  sudo sed -i 's/MODULES=(/MODULES=(radeon /g' /etc/mkinitcpio.conf;
+  sudo sed -i 's/MODULES=""/MODULES=(radeon)/g' /etc/mkinitcpio.conf;
+
+  if [ -f /etc/default/grub ]; then
+    sudo mkinitcpio -P;
+  fi
+}
+
 while true; do
   echo "Your GPU: ";
   lspci -k | grep -A 2 -E "(VGA|3D)";
   read -p "
 
+What GPU are you using?
+  [i]ntel
+  [a]md
+  [n]vidia
+  [v]m
+  [e]xit
 
-What GPU are you using? [i]ntel | [a]md | [n]vidia | [v]m | [e]xit   " gpui
+Enter GPU:   " gpui
   case $gpui in
+    [Vv]* )
+      yes | sudo pacman -S xf86-video-vmware;
+      echo Driver for VM installed;
+      break;;
     [Ii]* )
-      while true; do
-        read -p "
-
-Model?
-Check: https://en.wikipedia.org/wiki/Intel_Graphics_Technology
-[1] Broadwell and newer
-[2] GMA 4500 series and newer GPUs up to Coffee Lake
-[e]xit
-    " ihva
-        case $ihva in
-          [1] )
-            gpu=intel;
-            yes | sudo pacman -S intel-media-driver;
-            break 2;;
-          [2] )
-            gpu=intel;
-            yes | sudo pacman -S libva-intel-driver intel-media-driver;
-            break 2;;
-          [Ee]* ) break;;
-          * ) echo Invalid input;
-        esac
-      done;;
+      yes | sudo pacman -S xf86-video-intel mesa lib32-mesa;
+      yes | sudo pacman -S vulkan-icd-loader lib32-vulkan-icd-loader;
+      yes | sudo pacman -S vulkan-intel lib32-vulkan-intel;
+      generate_intel_gpu_config
+      echo Intel drivers installed;
+      break;;
     [Aa]* )
       while true; do
         read -p "
-
-Model?
-Check: https://en.wikipedia.org/wiki/Template:AMD_graphics_API_support
-[1] Radeon R300 and newer
-[2] Radeon HD 2000 and newer
-[e]xit
-    " ihva
-        case $ihva in
-          [1] )
-            gpu=amd;
-            yes | sudo pacman -S mesa-vdpau lib32-mesa-vdpau;
+What driver to use?
+  Check: https://en.wikipedia.org/wiki/Template:AMD_graphics_API_support
+  [1] AMDGPU    - GCN 3, GCN 4 and newer
+  [2] ATI       - TeraScale 1, TeraScale 2, TeraScale 3, GCN 1, GCN 2
+  [e]xit
+  " amdd
+        case $amdd in
+          [1]* )
+            yes | sudo pacman -S xf86-video-amdgpu mesa lib32-mesa;
+            yes | sudo pacman -S vulkan-icd-loader lib32-vulkan-icd-loader;
+            yes | sudo pacman -S vulkan-radeon lib32-vulkan-radeon;
+            generate_amd_gpu_config
+            enable_amdgpu_kms
+            echo AMDGPU drivers installed;
             break 2;;
-          [2] )
-            gpu=amd;
-            yes | sudo pacman -S mesa-vdpau lib32-mesa-vdpau;
-            yes | sudo pacman -S libva-mesa-driver lib32-libva-mesa-driver;
+          [2]* )
+            yes | sudo pacman -S xf86-video-ati mesa lib32-mesa;
+            yes | sudo pacman -S vulkan-icd-loader lib32-vulkan-icd-loader;
+            yes | sudo pacman -S vulkan-radeon lib32-vulkan-radeon;
+            generate_ati_gpu_config
+            enable_amdati_kms
+            echo ATI drivers installed;
             break 2;;
-          [Ee]* ) break;;
-          * ) echo Invalid input;
+          [Ee]* ) break 2;;
+          * ) echo Invalid input
         esac
       done;;
     [Nn]* )
-      gpu=nvidia;
-      yes | sudo pacman -S nvidia-utils libva-mesa-driver mesa-vdpau;
-      yes | yay -S nouveau-fw;
+      yes | sudo pacman -S nvidia-lts;
+      yes | sudo pacman -S nvidia;
+
+      yes | sudo pacman -S nvidia-utils lib32-nvidia-utils;
+      generate_nvidia_gpu_config
+      sudo nvidia-xconfig
+      echo NVIDIA NVEx and newer drivers installed;
       break;;
-    [Vv]* )
-      gpu=vm;
-      break;;
-    [Ee]* ) break;;
-    * ) echo Invalid input
   esac
 done
+
+# Adding intel backlight
+if ls /sys/class/backlight | grep -q "^intel_backlight$"; then
+  if [ !$(ls /etc/X11/xorg.conf.d | grep -q ^20-intel.conf$) ];then
+    sudo touch /etc/X11/xorg.conf.d/20-intel.conf;
+  fi
+
+  echo '
+Section "Device"
+  Identifier  "Card0"
+  Driver      "intel"
+  Option      "Backlight"  "intel_backlight"
+EndSection
+  ' | sudo tee -a /etc/X11/xorg.conf.d/20-intel.conf;
+    echo Added intel_backlight;
+fi
+
+## Hardware acceleration drivers installation
+yes | sudo pacman -S mesa-vdpau lib32-mesa-vdpau;
+yes | sudo pacman -S libva-mesa-driver lib32-libva-mesa-driver;
 
 ## Fallback hardware video acceleration
 yes | sudo pacman -S libva-vdpau-driver libvdpau-va-gl;
@@ -201,7 +416,6 @@ done
 
 # Install display manager
 yes | sudo pacman -S lightdm
-yes | yay -S lightdm-settings
 yes | yay -S noto-fonts
 yes | yay -S lightdm-slick-greeter
 sudo sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-slick-greeter/g' /etc/lightdm/lightdm.conf
@@ -284,58 +498,6 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
     [Nn]* ) break;;
     * ) 
 
-      while true; do
-        read -p "Will use for dual boot [yN]?   " wdb
-        case $wdb in
-          [Yy]* )
-            while true; do
-              echo "
-
-NOTE: Use a UID that will less likely be used as an ID by other distros (e.g. 1106).
-This UID will also be used on the other OS
-
-"
-              read -p "Enter UID or [e]xit:   " uid
-              case $uid in
-                [Ee]* ) break;;
-                * )
-                  while true; do
-                    echo "
-
-NOTE: Use a UID that will less likely be used as an ID by other distros (e.g. 1106).
-This UID will also be used on the other OS
-
-"
-                    read -p "Enter GUID or [e]xit:   " guid
-                    case $guid in
-                      [Ee]* ) break 2;;
-                      * )
-                        while true; do
-                          echo "
-
-Execute the commands below in tty2 (Ctrl+Alt+F2) as a root user:
-
-usermod -u $uid $(whoami)
-groupmod -g $guid wheel
-
-"
-                          read -p "Would you like to proceed [Yn]?   " wultp
-                          case $wultp in
-                            [Nn]* ) ;;
-                            * )
-                              sudo usermod -g wheel $(whoami)
-                              sudo chown -R $(whoami):wheel /home/$(whoami)
-                              break 4;;
-                          esac
-                        done;;
-                    esac
-                  done;;
-              esac
-            done;;
-          * ) break;;
-        esac
-      done
-
       # update all
       sudo pacman -Syu
 
@@ -345,7 +507,7 @@ groupmod -g $guid wheel
       sudo ln -sf /usr/share/icons/Flat-Remix-Blue /usr/share/icons/Flat-Remix
 
       # display
-      yes | sudo pacman -S feh arandr lxappearance xorg-xbacklight xorg-xrandr
+      yes | sudo pacman -S nitrogen arandr lxappearance xorg-xbacklight xorg-xrandr
 
       # package manager - arch
       # yes | yay -S pamac-tray-appindicator pamac-aur --noconfirm
@@ -716,7 +878,7 @@ Enter device ID:   " did
       # sed -i "s/# exec --no-startup-id pamac-tray/exec --no-startup-id pamac-tray/g" $HOME/.config/i3/config
       # sed -i "s/# for_window \[class=\"Pamac-manager\"\]/for_window [class=\"Pamac-manager\"]/g" $HOME/.config/i3/config
 
-      os=$(echo -n $(sudo cat /etc/*-release | grep ^ID= | sed -e "s/ID=//"))
+      os=$(echo -n $(cat /etc/*-release | grep ^ID= | sed -e "s/ID=//"))
       mkdir -p "$HOME/.config/neofetch"
       cp -rf $(pwd)/rice/neofetch.conf $HOME/.config/neofetch/$os.conf
 

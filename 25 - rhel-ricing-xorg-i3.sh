@@ -1,7 +1,59 @@
 
 #!/bin/bash
 
-os=$(echo -n $(sudo cat /etc/*-release | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
+while true; do
+  read -p "Will use for dual boot with other linux [yN]?   " wdb
+  case $wdb in
+    [Yy]* )
+      while true; do
+        echo "
+
+NOTE: Use a UID that will less likely be used as an ID by other distros (e.g. 1106).
+This UID will also be used on the other distro installations
+
+"
+        read -p "Enter UID or [e]xit:   " uid
+        case $uid in
+          [Ee]* ) break;;
+          * )
+            while true; do
+              echo "
+
+NOTE: Use a UID that will less likely be used as an ID by other distros (e.g. 1106).
+This UID will also be used on the other distro installations
+
+"
+              read -p "Enter GUID or [e]xit:   " guid
+              case $guid in
+                [Ee]* ) break 2;;
+                * )
+                  while true; do
+                    echo "
+
+Logout this user account and execute the commands below as a root user on tty2:
+
+usermod -u $uid $(whoami)
+groupmod -g $guid wheel
+usermod -g wheel $(whoami)
+chown -R $(whoami):wheel /home/$(whoami)
+
+"
+                    read -p "Would you like to proceed [Yn]?   " wultp
+                    case $wultp in
+                      [Nn]* ) ;;
+                      * )
+                        break 4;;
+                    esac
+                  done;;
+              esac
+            done;;
+        esac
+      done;;
+    * ) break;;
+  esac
+done
+
+os=$(echo -n $(cat /etc/*-release | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
 
 if [ "$1" = "" ];then
   fedver=$(rpm -E %$os)
@@ -33,9 +85,6 @@ sudo dnf -y upgrade
 sudo dnf install -y alsa-utils --releasever=$fedver
 
 # Gstreamer
-sudo dnf install -y gstreamer clutter-gst3 gstreamer-ffmpeg gstreamer-tools --releasever=$fedver
-sudo dnf install -y gstreamer-plugins-bad gstreamer-plugins-base gstreamer-plugins-good gstreamer-plugins-ugly --releasever=$fedver
-sudo dnf install -y gstreamer-plugins-bad-nonfree gstreamer-plugins-good-extras gstreamer-plugins-bad-free-extras --releasever=$fedver
 sudo dnf install -y gstreamer1 gstreamer1-libav gstreamer1-vaapi --releasever=$fedver
 sudo dnf install -y gstreamer1-plugins-bad-free gstreamer1-plugins-base gstreamer1-plugins-good-gtk gstreamer1-plugins-good --releasever=$fedver
 sudo dnf install -y gstreamer1-plugins-bad-nonfree gstreamer1-plugins-good-extras gstreamer1-plugins-bad-free-extras --releasever=$fedver
@@ -51,36 +100,281 @@ sudo dnf install -y java-openjdk flash-plugin flash-player-ppapi --releasever=$f
 # sudo dnf system-upgrade reboot
 sudo dnf install -y dnf-plugin-system-upgrade
 
-## Hardware acceleration drivers installation
-gpu=;
+## GPU DRIVERS
+generate_intel_gpu_config() {
+  if [ ! -f /etc/X11/xorg.conf.d/20-intel.conf ];then
+    sudo touch /etc/X11/xorg.conf.d/20-intel.conf;
+  fi
+
+  echo '
+Section "Device"
+  Identifier  "Intel Graphics"
+  Driver      "intel"
+EndSection
+
+Section "Device"
+  Identifier  "Intel Graphics"
+  Driver      "intel"
+  Option      "TearFree" "true"
+  Option      "DRI"    "3"
+EndSection
+  ' | sudo tee -a /etc/X11/xorg.conf.d/20-intel.conf;
+
+
+  if [ -f /etc/default/grub ]; then
+    while true; do
+      read -p "Update GRUB [Yn]?   " updgr
+      case $updgr in
+        [Nn]* ) break;;
+        * )
+          while true; do
+            read -p "Using UEFI [Yn]?   " yn
+            case $yn in
+              [Nn]* )
+                sudo grub2-mkconfig -o /boot/grub2/grub.cfg;
+                break 2;;
+              * )
+                sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg;
+                break 2;;
+            esac
+          done;;
+      esac
+    done
+  fi
+}
+
+generate_ati_gpu_config() {
+  if [ ! -f /etc/X11/xorg.conf.d/20-radeon.conf ];then
+    sudo touch /etc/X11/xorg.conf.d/20-radeon.conf;
+  fi
+
+  echo '
+Section "Device"
+  Identifier "Radeon"
+  Driver "radeon"
+EndSection
+
+Section "Device"
+  Identifier  "Radeon"
+  Driver "radeon"
+  Option "AccelMethod" "glamor"
+  Option "DRI" "3"
+  Option "TearFree" "on"
+  Option "ColorTiling" "on"
+  Option "ColorTiling2D" "on"
+  Option "SWCursor" "True"
+EndSection
+  ' | sudo tee -a /etc/X11/xorg.conf.d/20-radeon.conf;
+
+  if [ -f /etc/default/grub ]; then
+    while true; do
+      read -p "Update GRUB [Yn]?   " updgr
+      case $updgr in
+        [Nn]* ) break;;
+        * )
+          while true; do
+            read -p "Using UEFI [Yn]?   " yn
+            case $yn in
+              [Nn]* )
+                sudo grub2-mkconfig -o /boot/grub2/grub.cfg;
+                break 2;;
+              * )
+                sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg;
+                break 2;;
+            esac
+          done;;
+      esac
+    done
+  fi
+}
+
+generate_amd_gpu_config() {
+  if [ ! -f /etc/X11/xorg.conf.d/10-screen.conf ];then
+    sudo touch /etc/X11/xorg.conf.d/10-screen.conf;
+  fi
+
+  if [ ! -f /etc/X11/xorg.conf.d/20-radeon.conf ];then
+    sudo touch /etc/X11/xorg.conf.d/20-radeon.conf;
+  fi
+
+  echo '
+Section "Screen"
+  Identifier     "Screen"
+  DefaultDepth    24
+  SubSection      "Display"
+    Depth         24
+  EndSubSection
+EndSection
+  ' | sudo tee -a /etc/X11/xorg.conf.d/10-screen.conf;
+
+  echo '
+Section "Device"
+  Identifier "AMD"
+  Driver "amdgpu"
+EndSection
+
+Section "Device"
+  Identifier  "AMD"
+  Driver "amdgpu"
+  Option "DRI" "3"
+  Option "TearFree" "on"
+  Option "SWCursor" "True"
+EndSection
+  ' | sudo tee -a /etc/X11/xorg.conf.d/20-radeon.conf;
+
+
+  if [ -f /etc/default/grub ]; then
+    while true; do
+      read -p "Update GRUB [Yn]?   " updgr
+      case $updgr in
+        [Nn]* ) break;;
+        * )
+          while true; do
+            read -p "Using UEFI [Yn]?   " yn
+            case $yn in
+              [Nn]* )
+                sudo grub2-mkconfig -o /boot/grub2/grub.cfg;
+                break 2;;
+              * )
+                sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg;
+                break 2;;
+            esac
+          done;;
+      esac
+    done
+  fi
+}
+
+generate_nvidia_gpu_config() {
+  if [ -f /etc/default/grub ]; then
+    sudo sed -i 's/GRUB_CMDLINE_LINUX="/GRUB_CMDLINE_LINUX="nvidia-drm.modeset=1 /g' /etc/default/grub;
+
+    while true; do
+      read -p "Update GRUB [Yn]?   " updgr
+      case $updgr in
+        [Nn]* ) break;;
+        * )
+          while true; do
+            read -p "Using UEFI [Yn]?   " yn
+            case $yn in
+              [Nn]* )
+                sudo grub2-mkconfig -o /boot/grub2/grub.cfg;
+                break 2;;
+              * )
+                sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg;
+                break 2;;
+            esac
+          done;;
+      esac
+    done
+  fi
+}
+
+
 while true; do
-  echo "Your GPU: ";
-  lspci -k | grep -A 2 -E "(VGA|3D)";
   read -p "
 
+What GPU are you using?
+  [i]ntel
+  [a]md
+  [n]vidia
+  [v]m
+  [e]xit
 
-What GPU are you using? [i]ntel | [a]md | [n]vidia | [v]m | [e]xit   " gpui
+Enter GPU   " gpui
   case $gpui in
+    [Vv]* )
+      sudo dnf install -y xorg-x11-drv-vmware --releasever=$fedver
+      echo Driver for VM installed;
+      break;;
     [Ii]* )
-      gpu=intel;
-      sudo dnf install -y libva-intel-driver intel-media-driver --releasever=$fedver
+      sudo dnf install -y xorg-x11-drv-intel --releasever=$fedver
+
+      sudo dnf install -y mesa-dri-drivers mesa-filesystem --releasever=$fedver
+      sudo dnf install -y mesa-libEGL mesa-libGL mesa-libGLU --releasever=$fedver
+      sudo dnf install -y mesa-libOSMesa mesa-libOpenCL --releasever=$fedver
+      sudo dnf install -y mesa-libgbm mesa-libglapi --releasever=$fedver
+      sudo dnf install -y mesa-libxatracker --releasever=$fedver
+
+      sudo dnf install -y vulkan-loader --releasever=$fedver
+      sudo dnf install -y mesa-vulkan-drivers --releasever=$fedver
+      generate_intel_gpu_config
+      echo Intel drivers installed;
       break;;
     [Aa]* )
-      gpu=amd;
-      sudo dnf install -y mesa-vdpau-drivers --releasever=$fedver
-      break;;
+      while true; do
+        read -p "
+
+
+What driver to use?
+  Check: https://en.wikipedia.org/wiki/Template:AMD_graphics_API_support
+  [1] AMDGPU    - GCN 3, GCN 4 and newer
+  [2] ATI       - TeraScale 1, TeraScale 2, TeraScale 3, GCN 1, GCN 2
+  [e]xit
+  " amdd
+        case $amdd in
+          [1]* )
+            sudo dnf install -y xorg-x11-drv-amdgpu --releasever=$fedver
+
+            sudo dnf install -y mesa-dri-drivers mesa-filesystem --releasever=$fedver
+            sudo dnf install -y mesa-libEGL mesa-libGL mesa-libGLU --releasever=$fedver
+            sudo dnf install -y mesa-libOSMesa mesa-libOpenCL --releasever=$fedver
+            sudo dnf install -y mesa-libgbm mesa-libglapi --releasever=$fedver
+            sudo dnf install -y mesa-libxatracker --releasever=$fedver
+
+            sudo dnf install -y vulkan-loader --releasever=$fedver
+            sudo dnf install -y mesa-vulkan-drivers --releasever=$fedver
+
+            generate_amd_gpu_config
+            echo AMDGPU drivers installed;
+            break 2;;
+          [2]* )
+            sudo dnf install -y xorg-x11-drv-ati --releasever=$fedver
+
+            sudo dnf install -y mesa-dri-drivers mesa-filesystem --releasever=$fedver
+            sudo dnf install -y mesa-libEGL mesa-libGL mesa-libGLU --releasever=$fedver
+            sudo dnf install -y mesa-libOSMesa mesa-libOpenCL --releasever=$fedver
+            sudo dnf install -y mesa-libgbm mesa-libglapi --releasever=$fedver
+            sudo dnf install -y mesa-libxatracker --releasever=$fedver
+
+            sudo dnf install -y vulkan-loader --releasever=$fedver
+            sudo dnf install -y mesa-vulkan-drivers --releasever=$fedver
+
+            generate_ati_gpu_config
+            echo ATI drivers installed;
+            break 2;;
+          [Ee]* ) break 2;;
+          * ) echo Invalid input
+        esac
+      done;;
     [Nn]* )
-      gpu=nvidia;
-      sudo dnf install -y mesa-vdpau-drivers --releasever=$fedver
+      sudo dnf install -y xorg-x11-drv-nvidia akmod-nvidia nvidia-xconfig --releasever=$fedver
+
+      generate_nvidia_gpu_config
+      sudo nvidia-xconfig
+      echo NVIDIA drivers installed;
       break;;
-    [Vv]* )
-      gpu=vm;
-      break;;
-    [Ee]* ) break;;
-    * ) echo Invalid input
   esac
 done
 
+# Adding intel backlight
+if ls /sys/class/backlight | grep -q "^intel_backlight$"; then
+  if [ !$(ls /etc/X11/xorg.conf.d | grep -q ^20-intel.conf$) ];then
+    sudo touch /etc/X11/xorg.conf.d/20-intel.conf;
+  fi
+
+  echo '
+Section "Device"
+  Identifier  "Card0"
+  Driver      "intel"
+  Option      "Backlight"  "intel_backlight"
+EndSection
+  ' | sudo tee -a /etc/X11/xorg.conf.d/20-intel.conf;
+    echo Added intel_backlight;
+fi
+
+## Hardware acceleration drivers installation
+sudo dnf install -y mesa-vdpau-drivers --releasever=$fedver
 sudo dnf install -y libva-vdpau-driver --releasever=$fedver
 
 # Network
@@ -99,7 +393,8 @@ https://wiki.archlinux.org/index.php/Wireless_network_configuration
 [2] Broadcom
 [m] Modprobe a module
 [e] Exit
-  " wd
+
+Enter action:   " wd
   case $wd in
     [Ee]* ) break;;
     [Mm]* )
@@ -113,7 +408,8 @@ https://wiki.archlinux.org/index.php/Wireless_network_configuration
     [2] )
       sudo dnf install -y NetworkManager-wifi broadcom-wl kmod-wl kernel-devel --releasever=$fedver;
       sudo akmods --force --kernel `uname -r` --akmod wl
-      sudo modprobe -a wl
+      sudo modprobe -r b44 b43 b43legacy ssb brcmsmac bcma
+      sudo modprobe wl
       echo "
 Installation done...
 ";;
@@ -225,66 +521,13 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
     [Nn]* ) break;;
     * )
 
-      while true; do
-        read -p "Will use for dual boot [yN]?   " wdb
-        case $wdb in
-          [Yy]* )
-            while true; do
-              echo "
-
-NOTE: Use a UID that will less likely be used as an ID by other distros (e.g. 1106).
-This UID will also be used on the other OS
-
-"
-              read -p "Enter UID or [e]xit:   " uid
-              case $uid in
-                [Ee]* ) break;;
-                * )
-                  while true; do
-                    echo "
-
-NOTE: Use a UID that will less likely be used as an ID by other distros (e.g. 1106).
-This UID will also be used on the other OS
-
-"
-                    read -p "Enter GUID or [e]xit:   " guid
-                    case $guid in
-                      [Ee]* ) break 2;;
-                      * )
-                        while true; do
-                          echo "
-
-Execute the commands below in tty2 (Ctrl+Alt+F2) as a root user:
-
-usermod -u $uid $(whoami)
-groupmod -g 1000 $(whoami)
-groupmod -g $guid wheel
-
-"
-                          read -p "Would you like to proceed [Yn]?   " wultp
-                          case $wultp in
-                            [Nn]* ) ;;
-                            * )
-                              sudo usermod -g wheel $(whoami)
-                              sudo chown -R $(whoami):wheel /home/$(whoami)
-                              break 4;;
-                          esac
-                        done;;
-                    esac
-                  done;;
-              esac
-            done;;
-          * ) break;;
-        esac
-      done
-
       # will use for manually installed packages, /tmp has limited space
       cd /tmp
 
       sudo dnf install -y curl wget vim-minimal vim-enhanced httpie lsof git tmux gedit --releasever=$fedver
 
       # theme icon
-      git clone --recurse-submodules -j8 https://github.com/daniruiz/flat-remix.git
+      git clone --recurse-submodules https://github.com/daniruiz/flat-remix.git
       cd flat-remix
 
       git fetch --tags
@@ -300,7 +543,7 @@ groupmod -g $guid wheel
       cd /tmp
 
       # gtk theme
-      git clone --recurse-submodules -j8 https://github.com/daniruiz/flat-remix-gtk.git
+      git clone --recurse-submodules https://github.com/daniruiz/flat-remix-gtk.git
       cd flat-remix-gtk
 
       git fetch --tags
@@ -315,7 +558,7 @@ groupmod -g $guid wheel
       cd /tmp
 
       # display
-      sudo dnf install -y feh arandr lxappearance xbacklight xorg-x11-server-utils --releasever=$fedver
+      sudo dnf install -y nitrogen arandr lxappearance xbacklight xorg-x11-server-utils --releasever=$fedver
 
       # package manager
       # sudo dnf install -y dnfdragora dnfdragora-updater --releasever=$fedver
@@ -333,10 +576,13 @@ groupmod -g $guid wheel
       amixer sset "Master" unmute
       amixer sset "Speaker" unmute
       amixer sset "Headphone" unmute
+      amixer sset "Mic" unmute
+      amixer sset "Mic Boost" unmute
 
       amixer sset "Master" 100%
       amixer sset "Speaker" 100%
       amixer sset "Headphone" 100%
+      amixer sset "Mic" 100%
       amixer sset "Mic Boost" 100%
 
       # MANUAL: PulseAudio Applet. Some are already installed
@@ -346,7 +592,7 @@ groupmod -g $guid wheel
 
       sudo dnf mark install gtk3 libnotify pulseaudio-libs
 
-      git clone --recurse-submodules -j8 https://github.com/fernandotcl/pa-applet.git
+      git clone --recurse-submodules https://github.com/fernandotcl/pa-applet.git
       cd pa-applet
 
       git fetch --tags
@@ -416,7 +662,7 @@ groupmod -g $guid wheel
 
       sudo dnf mark install cairo libev libjpeg-turbo libxcb libxkbcommon libxkbcommon-x11 xcb-util-image
 
-      git clone --recurse-submodules -j8 https://github.com/PandorasFox/i3lock-color.git
+      git clone --recurse-submodules https://github.com/PandorasFox/i3lock-color.git
       cd i3lock-color
 
       git fetch --tags
@@ -456,7 +702,7 @@ groupmod -g $guid wheel
       sudo dnf install -y xcb-util-cursor xcb-util-keysyms xcb-util-wm xcb-util-xrm yajl --releasever=$fedver
       sudo dnf install -y libev xcb-util-cursor xcb-util-keysyms --releasever=$fedver
 
-      git clone --recurse-submodules -j8 https://github.com/Airblader/i3.git i3-gaps
+      git clone --recurse-submodules https://github.com/Airblader/i3.git i3-gaps
       cd i3-gaps
 
       git fetch --tags
@@ -497,7 +743,7 @@ groupmod -g $guid wheel
       sudo dnf mark install alsa-lib curl jsoncpp libmpdclient pulseaudio-libs libnl3 wireless-tools
       sudo dnf mark install mpd mpc ncmpcpp
 
-      git clone --recurse-submodules -j8 https://github.com/jaagr/polybar.git
+      git clone --recurse-submodules https://github.com/jaagr/polybar.git
       cd polybar
 
       git fetch --tags
@@ -819,7 +1065,7 @@ Enter device ID:   " did
       # sed -i "s/# exec --no-startup-id dnfdragora-updater/exec --no-startup-id dnfdragora-updater/g" $HOME/.config/i3/config
       # sed -i "s/# for_window \[class=\"Dnfdragora-updater\"\]/for_window [class=\"Dnfdragora-updater\"]/g" $HOME/.config/i3/config
 
-      os=$(echo -n $(sudo cat /etc/*-release | grep ^ID= | sed -e "s/ID=//"))
+      os=$(echo -n $(cat /etc/*-release | grep ^ID= | sed -e "s/ID=//"))
       mkdir -p "$HOME/.config/neofetch"
       cp -rf $(pwd)/rice/neofetch.conf $HOME/.config/neofetch/$os.conf
 
