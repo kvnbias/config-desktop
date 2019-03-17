@@ -258,6 +258,8 @@ What GPU are you using?
 
 Enter GPU:   " gpui
   case $gpui in
+    [Ee]* )
+      break;;
     [Vv]* )
       sudo apt install -y --no-install-recommends xserver-xorg-video-vmware
       echo Driver for VM installed;
@@ -421,7 +423,11 @@ sudo apt install -y --no-install-recommends fonts-noto
 sudo sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=slick-greeter/g' /etc/lightdm/lightdm.conf
 
 if cat /usr/lib/systemd/system/lightdm.service | grep -q 'Alias=display-manager.service'; then
+  echo 'Alias already exists'
+else
   if cat /usr/lib/systemd/system/lightdm.service | grep -q '\[Install\]'; then
+    echo 'Install already exists'
+  else
     echo '[Install]' | sudo tee -a /usr/lib/systemd/system/lightdm.service
   fi
 
