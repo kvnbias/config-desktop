@@ -53,7 +53,8 @@ EndSection
 ## XORG-DRIVERS
 # Provide advanced support for touch (multitouch and gesture) features
 # of touchpads and touchscreens.
-sudo apt install -y --no-install-recommends xserver-xorg-input-kbd xserver-xorg-input-libinput xserver-xorg-mouse
+sudo apt install -y --no-install-recommends xserver-xorg-input-libinput
+sudo apt install -y --no-install-recommends xserver-xorg-input-kbd xserver-xorg-input-mouse
 
 # Fallback GPU 
 sudo apt install -y --no-install-recommends xserver-xorg-video-fbdev
