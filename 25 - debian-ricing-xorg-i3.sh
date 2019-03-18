@@ -91,7 +91,7 @@ sudo apt -y upgrade
 sudo apt install -y --no-install-recommends firmware-linux-nonfree
 
 sudo apt install -y build-essential linux-headers-$(uname -r)
-sudo apt install -y --no-install-recommends autoconf automake cmake make dkms pkgconf
+sudo apt install -y --no-install-recommends autoconf automake cmake make dkms pkgconf man-db
 
 sudo apt install -y --no-install-recommends at
 sudo systemctl enable atd
@@ -606,6 +606,453 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       # terminal
       sudo apt install -y --no-install-recommends neofetch
 
+      # gtk theme change
+      sudo apt install -y --no-install-recommends gtk2-engines gtk2-engines-murrine libgtk2.0-0 libgtk-3-0
+
+      # mouse cursor theme
+      sudo apt install -y --no-install-recommends breeze-cursor-theme
+      sudo ln -s /usr/share/icons/breeze_cursors /usr/share/icons/Breeze
+
+      # notification, system monitor, compositor, image on terminal
+      sudo apt install -y --no-install-recommends dunst conky compton w3m
+      sudo apt install -y --no-install-recommends ffmpegthumbnailer
+
+      # for vifm
+      # sudo apt install -y --no-install-recommends python3-pip
+      # sudo apt install -y --no-install-recommends python3-dev libturbojpeg0-dev zlib1g-dev libxext-dev
+      # sudo pip3 install ueberzug
+      # sudo apt remove -y python3-dev python3-dev libturbojpeg0-dev zlib1g-dev libxext-dev
+
+      # MANUAL: i3lock-color. Some are already installed
+      sudo apt remove -y i3lock
+      sudo apt install -y --no-install-recommends libcairo2-dev libev-dev libjpeg-dev libxcb-composite0 libxkbcommon-x11-dev
+      sudo apt install -y --no-install-recommends libpam0g-dev libxcb-util0-dev libxcb-image0-dev libxcb-xrm-dev libxcb-xinerama0-dev
+      sudo apt install -y --no-install-recommends autoconf automake
+
+      sudo apt install -y --no-install-recommends libcairo2 libev4 libjpeg62-turbo libxcb-composite0-dev libxkbcommon-x11-0
+      sudo apt install -y --no-install-recommends libxkbcommon0 libxcb1 libxcb-image0 pkgconf libxcb-xinerama0
+
+      git clone --recurse-submodules https://github.com/PandorasFox/i3lock-color.git
+      cd i3lock-color
+
+      git fetch --tags
+      tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+
+      if [ ${#tag} -ge 1 ]; then
+        git checkout $tag
+      fi
+
+      git tag -f "git-$(git rev-parse --short HEAD)"
+      autoreconf -fi && ./configure && make && sudo make install
+      echo "auth include login" | sudo tee /etc/pam.d/i3lock
+      cd /tmp
+
+      sudo apt remove -y libcairo2-dev libev-dev libjpeg-dev libxcb-composite0 libxkbcommon-x11-dev
+      sudo apt remove -y libpam0g-dev libxcb-util0-dev libxcb-image0-dev libxcb-xrm-dev libxcb-xinerama0-dev
+
+      # terminal-based file viewer
+      sudo apt install -y --no-install-recommends ranger
+      # sudo apt install -y --no-install-recommends vifm
+
+      # requirements for ranger [scope.sh]
+      sudo apt install -y --no-install-recommends file libcaca0 python3-pygments atool libarchive13 unrar lynx
+      sudo apt install -y --no-install-recommends mupdf transmission-cli mediainfo odt2txt python3-chardet
+
+      # i3wm customization, dmenu replacement, i3status replacement
+      sudo apt install -y --no-install-recommends rofi
+
+      # MANUAL: i3-gaps
+      sudo apt remove -y i3
+      sudo apt install -y --no-install-recommends libxcb-util0-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libxcb-icccm4-dev
+      sudo apt install -y --no-install-recommends libxcb-xrm-dev libyajl-dev libxrandr-dev libstartup-notification0-dev
+      sudo apt install -y --no-install-recommends libev-dev libxcb-cursor-dev libxinerama-dev libxkbcommon-dev libxkbcommon-x11-dev
+      sudo apt install -y --no-install-recommends libpcre3-dev libpango1.0-dev automake git gcc
+
+      sudo apt install -y --no-install-recommends libev4 libxkbcommon-x11-0 perl libpango1.0-0 libstartup-notification0 libxcb-icccm4
+      sudo apt install -y --no-install-recommends libxcb-cursor0 libxcb-keysyms1 libxcb-xrm0 libyajl2 libxcb-xinerama0
+
+      git clone --recurse-submodules https://github.com/Airblader/i3.git i3-gaps
+      cd i3-gaps
+
+      git fetch --tags
+      tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+
+      if [ ${#tag} -ge 1 ]; then
+        git checkout $tag
+      fi
+
+      git tag -f "git-$(git rev-parse --short HEAD)"
+      autoreconf -fi && rm -rf build/ && mkdir -p build && cd build/
+      ../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers
+      make && sudo make install
+
+      sudo apt remove -y libxcb-util0-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libxcb-icccm4-dev libpango1.0-dev
+      sudo apt remove -y libxcb-xrm-dev libyajl-dev libxrandr-dev libstartup-notification0-dev libpcre3-dev
+      sudo apt remove -y libev-dev libxcb-cursor-dev libxinerama-dev libxkbcommon-dev libxkbcommon-x11-dev
+      cd /tmp
+
+      # MANUAL: polybar
+      sudo apt install -y --no-install-recommends libcairo2-dev xcb-proto libxcb-util0-dev libxcb-cursor-dev libxcb-image0-dev libxcb-xrm-dev
+      sudo apt install -y --no-install-recommends libcurl4-openssl-dev libjsoncpp-dev libmpdclient-dev libpulse-dev libnl-3-dev libiw-dev
+      sudo apt install -y --no-install-recommends libxcb-composite0-dev libxcb-icccm4-dev libxcb-ewmh-dev g++ gcc python python2 git pkgconf cmake
+
+      sudo apt install -y --no-install-recommends libcairo2 libxcb-cursor0 libxcb-image0 libxcb-xrm0 libxcb-icccm4 libxcb-ewmh2
+      sudo apt install -y --no-install-recommends curl libjsoncpp1 libmpdclient2 libpulse0 libnl-3-200 wireless-tools python-xcbgen
+
+      # ncmpcpp playlist
+      # 1) go to browse
+      # 2) press "v" (it reverse selection, so when you have nothing selected, it selects all)
+      # 3) press "A"
+      #
+      # r: repeat, z: shuffle, y: repeat one
+      sudo apt install -y --no-install-recommends mpd mpc ncmpcpp
+
+      git clone --recurse-submodules https://github.com/jaagr/polybar.git
+      cd polybar
+
+      git fetch --tags
+      tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+
+      if [ ${#tag} -ge 1 ]; then
+        git checkout $tag
+      fi
+
+      git tag -f "git-$(git rev-parse --short HEAD)"
+      rm -rf build/ && mkdir -p build && cd build/
+      cmake .. && make -j$(nproc) && sudo make install
+
+      sudo apt remove -y libcairo2-dev xcb-proto libxcb-util0-dev libxcb-cursor-dev libxcb-image0-dev libxcb-xrm-dev
+      sudo apt remove -y libcurl4-openssl-dev libjsoncpp-dev libmpdclient-dev libpulse-dev libnl-3-dev libiw-dev
+      sudo apt remove -y libxcb-composite0-dev libxcb-icccm4-dev libxcb-ewmh-dev
+      cd /tmp
+
+      # popup calendar
+      # sudo apt install -y --no-install-recommends xdotool yad
+
+      sudo apt install -y --no-install-recommends scrot
+
+      sudo apt install -y --no-install-recommends accountsservice
+      user=$(whoami)
+
+      echo "
+[User]
+Icon=/var/lib/AccountsService/icons/$user.png
+XSession=i3
+SystemAccount=false
+" | sudo tee /var/lib/AccountsService/users/$user
+
+      cd $mainCWD
+      sudo cp $(pwd)/rice/images/avatar/default-user.png /var/lib/AccountsService/icons/$user.png
+      sudo chown root:root /var/lib/AccountsService/users/$user
+      sudo chown root:root /var/lib/AccountsService/icons/$user.png
+
+      sudo chmod 644 /var/lib/AccountsService/users/$user
+      sudo chmod 644 /var/lib/AccountsService/icons/$user.png
+
+      if [ ! -f /usr/share/X11/xorg.conf.d/40-libinput.conf ];then
+        sudo touch /usr/share/X11/xorg.conf.d/40-libinput.conf;
+      fi
+
+      # For more advance gestures, install: https://github.com/bulletmark/libinput-gestures
+      echo '
+# Match on all types of devices but joysticks
+Section "InputClass"
+  Identifier "libinput pointer catchall"
+  MatchIsPointer "on"
+  MatchDevicePath "/dev/input/event*"
+  Driver "libinput"
+
+  Option "NaturalScrolling" "true"
+EndSection
+
+Section "InputClass"
+  Identifier "libinput keyboard catchall"
+  MatchIsKeyboard "on"
+  MatchDevicePath "/dev/input/event*"
+  Driver "libinput"
+EndSection
+
+Section "InputClass"
+  Identifier "libinput touchpad catchall"
+  MatchIsTouchpad "on"
+  MatchDevicePath "/dev/input/event*"
+  Driver "libinput"
+
+  Option "Tapping" "true"
+  Option "ScrollMethod" "twofinger"
+  Option "NaturalScrolling" "true"
+  Option "ClickMethod" "clickfinger"
+  Option "TappingDrag" "true"
+EndSection
+
+Section "InputClass"
+  Identifier "libinput touchscreen catchall"
+  MatchIsTouchscreen "on"
+  MatchDevicePath "/dev/input/event*"
+  Driver "libinput"
+EndSection
+
+Section "InputClass"
+  Identifier "libinput tablet catchall"
+  MatchIsTablet "on"
+  MatchDevicePath "/dev/input/event*"
+  Driver "libinput"
+EndSection
+      ' | sudo tee /usr/share/X11/xorg.conf.d/40-libinput.conf
+
+      # Option 1: apt list --upgradable. Manipulate the result: Number of lines -1.
+      # Option 2: sudo apt update. Grep & sed this result: # of packages can be upgraded. Run 'apt list --upgradable' to see them.
+      # echo "$(whoami) ALL=(ALL) NOPASSWD: /usr/bin/apt" | sudo tee -a "/etc/sudoers"
+
+      if [ ! -f $HOME/.riced ];then
+        mkdir -p $HOME/.icons/default
+        echo "
+[Icon Theme]
+Inherits=Breeze
+        " | tee $HOME/.icons/default/index.theme
+      fi
+
+      sudo mkdir -p /usr/share/icons/default
+      echo "
+[Icon Theme]
+Inherits=Breeze
+      " | sudo tee /usr/share/icons/default/index.theme
+
+      if [ ! -f $HOME/.riced ];then
+        while true; do
+          read -p "Do you want to configure git [Yn]?   " yn
+          case $yn in
+            [Nn]* ) break;;
+            * )
+              while true; do
+                read -p "Enter email or [e]xit:   " email
+                case $email in
+                  [Ee] ) break;;
+                  * )
+                    while true; do
+                      read -p "Enter name or [e]xit:   " name
+                      case $name in
+                        [Ee] ) break 2;;
+                        * )
+                          while true; do
+                            read -p "Enter username or [e]xit:   " username
+                            case $username in
+                              [Ee] ) break 3;;
+                              * ) echo "
+[user]
+  email = $email
+  name = $name
+  username = $username
+[diff]
+  tool = vimdiff
+[difftool]
+  prompt = false
+[color]
+  ui = auto
+[color \"branch\"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color \"diff\"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+[color \"status\"]
+  added = yellow
+  changed = green
+  untracked = cyan
+" | tee $HOME/.gitconfig;
+
+                                break 4;;
+                            esac
+                          done;;
+                      esac
+                    done;;
+                esac
+              done;;
+          esac
+        done
+
+        # create folders for executables
+        mkdir -p $HOME/.config/audio
+        mkdir -p $HOME/.config/display
+        mkdir -p $HOME/.config/conky
+        mkdir -p $HOME/.config/keyboard
+        mkdir -p $HOME/.config/i3
+        mkdir -p $HOME/.config/kali
+        mkdir -p $HOME/.config/mpd
+        mkdir -p $HOME/.config/network
+        mkdir -p $HOME/.config/polybar
+        mkdir -p $HOME/.config/touchpad
+        mkdir -p $HOME/.config/themes
+        # mkdir -p $HOME/.config/vifm
+        # mkdir -p $HOME/.config/vifm/scripts
+
+        # create folders for configs
+        mkdir -p  "$HOME/.config/Code"
+        mkdir -p  "$HOME/.config/Code/User"
+        mkdir -p  "$HOME/.config/Code - OSS"
+        mkdir -p  "$HOME/.config/Code - OSS/User"
+        mkdir -p  "$HOME/.config/gtk-3.0"
+
+        # copy vscode user settings
+        cp $(pwd)/rice/vscode/keybindings.json "$HOME/.config/Code/User/keybindings.json"
+        cp $(pwd)/rice/vscode/keybindings.json "$HOME/.config/Code - OSS/User/keybindings.json"
+
+        # copy executables
+        cp $(pwd)/scripts/volume-manager.sh                   $HOME/.config/audio/volume-manager.sh
+        cp $(pwd)/scripts/brightness-manager.sh               $HOME/.config/display/brightness-manager.sh
+        cp $(pwd)/scripts/lockscreen.sh                       $HOME/.config/display/lockscreen.sh
+        cp $(pwd)/scripts/generate-conky-config.sh            $HOME/.config/conky/generate-conky-config.sh
+        cp $(pwd)/scripts/generate-conky-helper.sh            $HOME/.config/conky/generate-conky-helper.sh
+        cp $(pwd)/scripts/keyboard-disabler.sh                $HOME/.config/keyboard/keyboard-disabler.sh
+        cp $(pwd)/scripts/polybar.sh                          $HOME/.config/i3/polybar.sh
+        cp $(pwd)/scripts/polkit-launch.sh                    $HOME/.config/i3/polkit-launch.sh
+        cp $(pwd)/scripts/startup.sh                          $HOME/.config/i3/startup.sh
+        cp $(pwd)/scripts/kali-rofi.sh                        $HOME/.config/kali/rofi.sh
+        cp $(pwd)/scripts/kali-launch.sh                      $HOME/.config/kali/launch.sh
+        cp $(pwd)/scripts/spawn-mpd.sh                        $HOME/.config/mpd/spawn-mpd.sh
+        cp $(pwd)/scripts/network-connect.sh                  $HOME/.config/network/network-connect.sh
+        cp $(pwd)/scripts/update-mirrors.sh                   $HOME/.config/network/update-mirrors.sh
+        cp $(pwd)/scripts/toggle-touchpad.sh                  $HOME/.config/touchpad/toggle-touchpad.sh
+        cp $(pwd)/scripts/popup-calendar.sh                   $HOME/.config/polybar/popup-calendar.sh
+        cp $(pwd)/scripts/update-checker.sh                   $HOME/.config/polybar/update-checker.sh
+        cp $(pwd)/scripts/change-theme.sh                     $HOME/.config/themes/change-theme.sh
+        cp $(pwd)/scripts/update-polybar-network-interface.sh $HOME/.config/themes/update-polybar-network-interface.sh
+        # cp $(pwd)/scripts/vifm-run.sh                         $HOME/.config/vifm/scripts/vifm-run.sh
+        # cp $(pwd)/scripts/vifm-viewer.sh                      $HOME/.config/vifm/scripts/vifm-viewer.sh
+
+        # copy keyboard-disabler icons
+        # cp $(pwd)/rice/images/keyboard/* $HOME/.config/keyboard
+
+        # make executables
+        sudo chmod +x $HOME/.config/audio/volume-manager.sh
+        sudo chmod +x $HOME/.config/display/brightness-manager.sh
+        sudo chmod +x $HOME/.config/display/lockscreen.sh
+        sudo chmod +x $HOME/.config/conky/generate-conky-config.sh
+        sudo chmod +x $HOME/.config/conky/generate-conky-helper.sh
+        sudo chmod +x $HOME/.config/keyboard/keyboard-disabler.sh
+        sudo chmod +x $HOME/.config/i3/polybar.sh
+        sudo chmod +x $HOME/.config/i3/polkit-launch.sh
+        sudo chmod +x $HOME/.config/i3/startup.sh
+        sudo chmod +x $HOME/.config/kali/rofi.sh
+        sudo chmod +x $HOME/.config/kali/launch.sh
+        sudo chmod +x $HOME/.config/mpd/spawn-mpd.sh
+        sudo chmod +x $HOME/.config/network/network-connect.sh
+        sudo chmod +x $HOME/.config/network/update-mirrors.sh
+        sudo chmod +x $HOME/.config/touchpad/toggle-touchpad.sh
+        sudo chmod +x $HOME/.config/polybar/popup-calendar.sh
+        sudo chmod +x $HOME/.config/polybar/update-checker.sh
+        sudo chmod +x $HOME/.config/themes/change-theme.sh
+        sudo chmod +x $HOME/.config/themes/update-polybar-network-interface.sh
+        # sudo chmod +x $HOME/.config/vifm/scripts/vifm-run.sh
+        # sudo chmod +x $HOME/.config/vifm/scripts/vifm-viewer.sh
+
+        cp -rf $(pwd)/rice/bashrc      $HOME/.bashrc
+
+        # vifm
+        # cp -raf $(pwd)/rice/vifmrc  $HOME/.config/vifm/vifmrc
+
+        # copy vim colors
+        mkdir -p $HOME/.vim
+        cp -raf $(pwd)/rice/vim/*  $HOME/.vim
+        cp -raf $(pwd)/rice/vimrc  $HOME/.vimrc
+
+        git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
+
+        # copy wallpapers
+        mkdir -p $HOME/Pictures/wallpapers
+        cp -rf $(pwd)/rice/images/wallpapers/compressed/* $HOME/Pictures/wallpapers
+
+        # copy ranger configs
+        mkdir -p $HOME/.config/ranger
+        cp -rf $(pwd)/rice/ranger/* $HOME/.config/ranger
+
+        # copy i3 config
+        mkdir -p $HOME/.config/i3
+        cp -rf $(pwd)/rice/config-i3      $HOME/.config/i3/config
+        cp -rf $(pwd)/rice/i3status.conf  $HOME/.config/i3/i3status.conf
+
+        sed -i 's/# exec --no-startup-id pa-applet/exec --no-startup-id pa-applet/g' $HOME/.config/i3/config
+
+        # copy ncmpcpp config
+        mkdir -p $HOME/.ncmpcpp
+        cp -rf $(pwd)/rice/config-ncmpcpp $HOME/.ncmpcpp/config
+
+        # copy polybar config
+        mkdir -p $HOME/.config/polybar
+        cp -rf $(pwd)/rice/config-polybar $HOME/.config/polybar/config
+        bash $(pwd)/scripts/update-polybar-network-interface.sh
+
+        # copy i3status config
+        sudo cp -rf $(pwd)/rice/i3status.conf /etc/i3status.conf
+
+        # copy mpd config
+        mkdir -p $HOME/.config/mpd
+        mkdir -p $HOME/.config/mpd/playlists
+        cp -rf $(pwd)/rice/mpd.conf $HOME/.config/mpd/mpd.conf
+
+        # copy neofetch config
+        mkdir -p $HOME/.config/neofetch
+        cp -rf $(pwd)/rice/neofetch.conf $HOME/.config/neofetch/config.conf
+
+        # copy compton config
+        mkdir -p $HOME/.config/compton
+        cp -rf $(pwd)/rice/compton.conf $HOME/.config/compton/config.conf
+
+        # copy dunst config
+        mkdir -p $HOME/.config/dunst
+        cp -rf $(pwd)/rice/dunstrc $HOME/.config/dunst/dunstrc
+
+        while true; do
+          read -p "Do you want to activate keyboard disabler [yN]?   " yn
+          case $yn in
+            [Yy]* )
+              while true; do
+                xinput
+                read -p "
+
+Enter device ID:   " did
+                case $did in
+                  * )
+                    echo "exec --no-startup-id ~/.config/keyboard/keyboard-disabler.sh $did" | tee -a $HOME/.config/i3/config
+                    break 2;;
+                esac
+              done;;
+            * ) break;;
+          esac
+        done
+
+        touch $HOME/.riced
+      fi
+
+      # NOTE: needs adjustment for the sake of fedora
+      sudo ln -sf /usr/bin/urxvt /usr/bin/urxvt256c-ml
+
+      cd $mainCWD
+
+      os=$(echo -n $(cat /etc/*-release | grep ^ID= | sed -e "s/ID=//"))
+      mkdir -p "$HOME/.config/neofetch"
+      cp -rf $(pwd)/rice/neofetch.conf $HOME/.config/neofetch/$os.conf
+
+      sudo mkdir -p /usr/share/icons/default
+      echo "
+[Icon Theme]
+Inherits=Breeze
+      " | sudo tee /usr/share/icons/default/index.theme
+
+      sudo mkdir -p /root/.vim
+      sudo cp -raf $HOME/.vim/* /root/.vim
+      sudo cp -raf $HOME/.vimrc /root/.vimrc
+
+      sudo mkdir -p /usr/share/backgrounds/wallpapers
+      sudo cp -rf $(pwd)/rice/images/wallpapers/compressed/* /usr/share/backgrounds/wallpapers
+      sudo cp -rf $(pwd)/rice/slick-greeter.conf /etc/lightdm/slick-greeter.conf
+
+      bash $(pwd)/scripts/update-screen-detector.sh
+      bash $(pwd)/scripts/update-themes.sh
+      sudo apt autoremove -y
 
       echo '
 
