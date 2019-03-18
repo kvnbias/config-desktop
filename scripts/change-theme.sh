@@ -63,13 +63,13 @@ set_neofetch_colors() {
 
   case $os in
     [arch|manjaro|debian] )
-      sed -i "s/^ascii_colors=.*/ascii_colors=$3/g" "$HOME/.config/neofetch/arch.conf"
+      sed -i "s/^ascii_colors=.*/ascii_colors=$3/g" "$HOME/.config/neofetch/$os.conf"
       break;;
     [fedora] )
-      sed -i "s/^ascii_colors=.*/ascii_colors=$4/g" "$HOME/.config/neofetch/manjaro.conf"
+      sed -i "s/^ascii_colors=.*/ascii_colors=$4/g" "$HOME/.config/neofetch/$os.conf"
       break;;
     * )
-      sed -i "s/^ascii_colors=.*/ascii_colors=$3/g" "$HOME/.config/neofetch/arch.conf"
+      sed -i "s/^ascii_colors=.*/ascii_colors=$3/g" "$HOME/.config/neofetch/$os.conf"
   esac
 }
 
@@ -102,8 +102,8 @@ use_solarized() {
 
   set_i3_colors "#2d8bcb" "#0d68a6" "#0e3642" "#0e3642"
 
-  single='(1 1 1 1 1 1)';
-  dual='(1 2 1 1 1 1)';
+    single='(10 10 10 10 10 10)';
+    dual='(10 7 10 10 10 10)';
 
   set_git_branch_colors "black bold" "green bold" "red bold"
   set_git_diff_colors "yellow bold" "yellow bold" "red bold" "black bold"
@@ -149,8 +149,8 @@ Enter theme:   " theme
       cp_settings "Horizon-Zero-Dawn" "horizon-zero-dawn.jpg" "#5f242a"
       set_i3_colors "#fdeddd" "#6c837b" "#5f242a" "#92082A"
 
-      single='(1 1 1 1 1 1)';
-      dual='(1 2 1 1 1 1)';
+      single='(10 10 10 10 10 10)';
+      dual='(10 7 10 10 10 10)';
       
       set_git_branch_colors "white bold" "blue bold" "black bold"
       set_git_diff_colors "red bold" "green bold" "cyan bold" "white bold"
@@ -164,8 +164,8 @@ Enter theme:   " theme
       cp_settings "Lara-Croft" "lara-croft-minimalism.jpg" "#281d2e"
       set_i3_colors "#241b2e" "#ebf4f1" "#ad6334" "#ad6334"
 
-      single='(1 1 1 1 1 1)';
-      dual='(1 2 1 1 1 1)';
+      single='(10 10 10 10 10 10)';
+      dual='(10 7 10 10 10 10)';
 
       set_git_branch_colors "black bold" "red bold" "green bold"
       set_git_diff_colors "red bold" "yellow bold" "white bold" "black bold"
@@ -179,8 +179,8 @@ Enter theme:   " theme
       cp_settings "Nier-2B" "nier-2b-circle.jpg" "#1e1e21"
       set_i3_colors "#dad3cd" "#050a0e" "#e44742" "#e44742"
 
-      single='(1 1 1 1 1 1)';
-      dual='(1 2 1 1 1 1)';
+      single='(10 10 10 10 10 10)';
+      dual='(10 7 10 10 10 10)';
 
       set_git_branch_colors "yellow bold" "green bold" "black bold"
       set_git_diff_colors "black bold" "black bold" "green bold" "yellow bold"
@@ -194,8 +194,8 @@ Enter theme:   " theme
       cp_settings "Paint-Splatter" "paint-splatter-abstract.jpg" "#9c7a3"
       set_i3_colors "#D6C4A0" "#A89267" "#29253c" "#29253c"
 
-      single='(1 1 1 1 1 1)';
-      dual='(1 2 1 1 1 1)';
+      single='(10 10 10 10 10 10)';
+      dual='(10 7 10 10 10 10)';
 
       set_git_branch_colors "cyan bold" "white bold" "magenta bold"
       set_git_diff_colors "magenta bold" "magenta bold" "white bold" "cyan bold"
@@ -209,8 +209,8 @@ Enter theme:   " theme
       cp_settings "TLOU-Pale-Blue" "the-last-of-us-pale-blue.jpg" "#374d5b"
       set_i3_colors "#c0c3c6" "#667c8b" "#374d5b" "#374d5b"
 
-      single='(1 1 1 1 1 1)';
-      dual='(1 2 1 1 1 1)';
+      single='(10 10 10 10 10 10)';
+      dual='(10 7 10 10 10 10)';
 
       set_git_branch_colors "red bold" "green bold" "yellow bold"
       set_git_diff_colors "blue bold" "blue bold" "yellow bold" "red bold"
@@ -224,8 +224,8 @@ Enter theme:   " theme
       cp_settings "Dark-Deer" "dark-deer.jpg" "#2b343b"
       set_i3_colors "#C44741" "#9C3531" "#2B343B" "#2B343B"
 
-      single='(1 1 1 1 1 1)';
-      dual='(1 2 1 1 1 1)';
+      single='(10 10 10 10 10 10)';
+      dual='(10 7 10 10 10 10)';
 
       set_git_branch_colors "black bold" "magenta bold" "white bold"
       set_git_diff_colors "magenta bold" "magenta bold" "green bold" "black bold"
@@ -260,8 +260,9 @@ Enter theme:   " theme
       cp_settings "Default" "nier-sword.jpg" "#1e1e21"
       set_i3_colors "#111320" "#534e54" "#ffffff" "#ffffff"
 
-      single='(1 1 1 1 1 1)';
-      dual='(1 2 1 1 1 1)';
+      arch='(12 12 12 12 12 12)'
+      manjaro='(12 12 12 12 12 12)'
+      fedora='(12 7 12 12 12 12)';
 
       set_git_branch_colors "green bold" "blue bold" "red bold"
       set_git_diff_colors "blue bold" "yellow bold" "red bold" "green bold"

@@ -113,7 +113,7 @@ sudo apt -y upgrade
 sudo apt install -y --no-install-recommends firmware-linux-nonfree
 
 sudo apt install -y build-essential linux-headers-$(uname -r)
-sudo apt install -y --no-install-recommends autoconf automake cmake make dkms pkgconf man-db
+sudo apt install -y --no-install-recommends autoconf automake cmake make dkms pkgconf man-db psmisc
 
 sudo apt install -y --no-install-recommends at
 sudo systemctl enable atd
