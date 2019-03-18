@@ -28,28 +28,6 @@ sudo apt install -y --no-install-recommends x11-xserver-utils
 # xdpyinfo - Display information utility.
 sudo apt install -y --no-install-recommends x11-utils
 
-# fonts
-if [ ! -f /etc/X11/xorg.conf ];then
-  sudo touch /etc/X11/xorg.conf;
-fi
-
-# Font DIRS for X.org
-echo '
-Section "Files"
-  FontPath    "/usr/share/fonts/100dpi"
-  FontPath    "/usr/share/fonts/75dpi"
-  FontPath    "/usr/share/fonts/cantarell"
-  FontPath    "/usr/share/fonts/cyrillic"
-  FontPath    "/usr/share/fonts/encodings"
-  FontPath    "/usr/share/fonts/misc"
-  FontPath    "/usr/share/fonts/truetype"
-  FontPath    "/usr/share/fonts/TTF"
-  FontPath    "/usr/share/fonts/util"
-  FontPath    "/usr/share/fonts/nerd-fonts-complete/ttf"
-  FontPath    "/usr/share/fonts/nerd-fonts-complete/otf"
-EndSection
-' | sudo tee -a /etc/X11/xorg.conf
-
 ## XORG-DRIVERS
 # Provide advanced support for touch (multitouch and gesture) features
 # of touchpads and touchscreens.
