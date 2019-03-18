@@ -759,6 +759,8 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       #
       # r: repeat, z: shuffle, y: repeat one
       sudo dnf install -y mpd mpc ncmpcpp --releasever=$fedver
+      sudo systemctl disable mpd
+      sudo systemctl stop mpd
 
       sudo dnf mark install cairo xcb-util-cursor xcb-util-image xcb-util-wm xcb-util-xrm
       sudo dnf mark install alsa-lib curl jsoncpp libmpdclient pulseaudio-libs libnl3 wireless-tools

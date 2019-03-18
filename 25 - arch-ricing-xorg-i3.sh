@@ -598,6 +598,8 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       # r: repeat, z: shuffle, y: repeat one
       yes | sudo pacman -S mpd mpc ncmpcpp
       yes | sudo pacman -S libpulse jsoncpp libmpdclient
+      sudo systemctl disable mpd
+      sudo systemctl stop mpd
 
       # i3wm customization, dmenu replacement, i3status replacement
       yes | sudo pacman -S i3-gaps rofi

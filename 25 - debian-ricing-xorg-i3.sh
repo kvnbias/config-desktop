@@ -728,6 +728,8 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       #
       # r: repeat, z: shuffle, y: repeat one
       sudo apt install -y --no-install-recommends mpd mpc ncmpcpp
+      sudo systemctl disable mpd
+      sudo systemctl stop mpd
 
       git clone --recurse-submodules https://github.com/jaagr/polybar.git
       cd polybar
