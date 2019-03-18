@@ -112,7 +112,7 @@ sudo apt -y upgrade
 # non-free kernel drivers
 sudo apt install -y --no-install-recommends firmware-linux-nonfree
 
-sudo apt install -y build-essential linux-headers-$(uname -r)
+sudo apt install -y build-essential linux-headers-$(uname -r) git
 sudo apt install -y --no-install-recommends autoconf automake cmake make dkms pkgconf man-db psmisc
 
 sudo apt install -y --no-install-recommends at
