@@ -191,7 +191,7 @@ label-visible-padding = ${self.label-focused-padding}
 
 ; urgent = Workspace with urgency hint set
 label-urgent = %index%
-label-urgent-background = ${xrdb:polybar.color1}
+label-urgent-background = ${xrdb:polybar.backgroundAlt}
 label-urgent-padding = 1
 
 ; Separator in between workspaces
