@@ -625,11 +625,11 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
 
       # MANUAL: i3lock-color. Some are already installed
       sudo apt remove -y i3lock
-      sudo apt install -y --no-install-recommends libcairo2-dev libev-dev libjpeg-dev libxcb-composite0 libxkbcommon-x11-dev
+      sudo apt install -y --no-install-recommends libcairo2-dev libev-dev libjpeg-dev libxcb-composite0-dev libxkbcommon-x11-dev
       sudo apt install -y --no-install-recommends libpam0g-dev libxcb-util0-dev libxcb-image0-dev libxcb-xrm-dev libxcb-xinerama0-dev
       sudo apt install -y --no-install-recommends autoconf automake
 
-      sudo apt install -y --no-install-recommends libcairo2 libev4 libjpeg62-turbo libxcb-composite0-dev libxkbcommon-x11-0
+      sudo apt install -y --no-install-recommends libcairo2 libev4 libjpeg62-turbo libxcb-composite0 libxkbcommon-x11-0
       sudo apt install -y --no-install-recommends libxkbcommon0 libxcb1 libxcb-image0 pkgconf libxcb-xinerama0
 
       git clone --recurse-submodules https://github.com/PandorasFox/i3lock-color.git
@@ -696,7 +696,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo apt install -y --no-install-recommends libcurl4-openssl-dev libjsoncpp-dev libmpdclient-dev libpulse-dev libnl-3-dev libiw-dev
       sudo apt install -y --no-install-recommends libxcb-composite0-dev libxcb-icccm4-dev libxcb-ewmh-dev g++ gcc python python2 git pkgconf cmake
 
-      sudo apt install -y --no-install-recommends libcairo2 libxcb-cursor0 libxcb-image0 libxcb-xrm0 libxcb-icccm4 libxcb-ewmh2
+      sudo apt install -y --no-install-recommends libcairo2 libxcb-cursor0 libxcb-image0 libxcb-xrm0 libxcb-icccm4 libxcb-ewmh2 libxcb-composite0
       sudo apt install -y --no-install-recommends curl libjsoncpp1 libmpdclient2 libpulse0 libnl-3-200 wireless-tools python-xcbgen
 
       # ncmpcpp playlist
