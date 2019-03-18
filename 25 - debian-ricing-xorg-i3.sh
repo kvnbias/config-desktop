@@ -557,12 +557,29 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       # display
       sudo apt install -y --no-install-recommends nitrogen arandr lxappearance xbacklight x11-xserver-utils
 
-      sudo apt install -y --no-install-recommends notification-daemon
-#       echo "
-# [D-BUS Service]
-# Name=org.freedesktop.Notifications
-# Exec=/usr/libexec/notification-daemon
-# " | sudo tee /usr/share/dbus-1/services/org.freedesktop.Notifications.service
+      # Generic notification
+      # echo "
+      # [D-BUS Service]
+      # Name=org.freedesktop.Notifications
+      # Exec=/usr/libexec/notification-daemon
+      # " | sudo tee /usr/share/dbus-1/services/org.freedesktop.Notifications.service
+
+      # # Xfce notification
+      # echo "
+      # [D-BUS Service]
+      # Name=org.freedesktop.Notifications
+      # Exec=/usr/lib/x86_64-linux-gnu/xfce4/notifyd/xfce4-notifyd
+      # SystemdService=xfce4-notifyd.service
+      # " | sudo tee /usr/share/dbus-1/services/org.xfce.xfce4-notifyd.Notifications.service
+
+      # Make sure other notification service exists to give way to dunst
+      if [ -f /usr/share/dbus-1/services/org.freedesktop.Notifications.service ]; then
+        sudo rm /usr/share/dbus-1/services/org.freedesktop.Notifications.service
+      fi
+
+      if [ -f /usr/share/dbus-1/services/org.xfce.xfce4-notifyd.Notifications.service ]; then
+        sudo rm /usr/share/dbus-1/services/org.xfce.xfce4-notifyd.Notifications.service
+      fi
 
       # audio
       sudo apt install -y --no-install-recommends alsa-utils
@@ -636,7 +653,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo ln -s /usr/share/icons/breeze_cursors /usr/share/icons/Breeze
 
       # notification, system monitor, compositor, image on terminal
-      sudo apt install -y --no-install-recommends dunst conky compton w3m
+      sudo apt install -y --no-install-recommends dbus-x11 dunst conky compton w3m
       sudo apt install -y --no-install-recommends ffmpegthumbnailer
 
       # for vifm

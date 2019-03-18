@@ -585,11 +585,30 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       # package manager
       # sudo dnf install -y dnfdragora dnfdragora-updater --releasever=$fedver
       sudo dnf install -y notification-daemon --releasever=$fedver
-#       echo "
-# [D-BUS Service]
-# Name=org.freedesktop.Notifications
-# Exec=/usr/libexec/notification-daemon
-# " | sudo tee /usr/share/dbus-1/services/org.freedesktop.Notifications.service
+
+      # Generic notification
+      # echo "
+      # [D-BUS Service]
+      # Name=org.freedesktop.Notifications
+      # Exec=/usr/libexec/notification-daemon
+      # " | sudo tee /usr/share/dbus-1/services/org.freedesktop.Notifications.service
+
+      # # Xfce notification
+      # echo "
+      # [D-BUS Service]
+      # Name=org.freedesktop.Notifications
+      # Exec=/usr/lib/x86_64-linux-gnu/xfce4/notifyd/xfce4-notifyd
+      # SystemdService=xfce4-notifyd.service
+      # " | sudo tee /usr/share/dbus-1/services/org.xfce.xfce4-notifyd.Notifications.service
+
+      # Make sure other notification service exists to give way to dunst
+      if [ -f /usr/share/dbus-1/services/org.freedesktop.Notifications.service ]; then
+        sudo rm /usr/share/dbus-1/services/org.freedesktop.Notifications.service
+      fi
+
+      if [ -f /usr/share/dbus-1/services/org.xfce.xfce4-notifyd.Notifications.service ]; then
+        sudo rm /usr/share/dbus-1/services/org.xfce.xfce4-notifyd.Notifications.service
+      fi
 
       # audio
       sudo dnf install -y alsa-utils --releasever=$fedver
