@@ -302,7 +302,8 @@ What driver to use?
   [1] AMDGPU    - GCN 3, GCN 4 and newer
   [2] ATI       - TeraScale 1, TeraScale 2, TeraScale 3, GCN 1, GCN 2
   [e]xit
-  " amdd
+
+Enter driver to use: " amdd
         case $amdd in
           [1]* )
             yes | sudo pacman -S xf86-video-amdgpu;
@@ -394,7 +395,8 @@ https://wiki.archlinux.org/index.php/Wireless_network_configuration
 [5] Realtek RTL8188CUS (8188C, 8192C) 
 [m] Modprobe a module
 [e] Exit
-  " wd
+
+Enter action: " wd
   case $wd in
     [Ee]* ) break;;
     [Mm]* )
