@@ -720,8 +720,9 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo apt install -y --no-install-recommends libpam0g-dev libxcb-util0-dev libxcb-image0-dev libxcb-xrm-dev libxcb-xinerama0-dev
       sudo apt install -y --no-install-recommends autoconf automake
 
-      sudo apt install -y --no-install-recommends libturbojpeg
-      sudo apt install -y --no-install-recommends libturbojpeg0
+      sudo apt install -y --no-install-recommends libturbojpeg  #elementary
+      sudo apt install -y --no-install-recommends libturbojpeg0 # debian
+
       sudo apt install -y --no-install-recommends libcairo2 libev4 libxcb-composite0 libxkbcommon-x11-0
       sudo apt install -y --no-install-recommends libxkbcommon0 libxcb1 libxcb-image0 libxcb-xinerama0
 
@@ -790,7 +791,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo apt install -y --no-install-recommends libxcb-composite0-dev libxcb-icccm4-dev libxcb-ewmh-dev 
       sudo apt install -y --no-install-recommends g++ gcc python git pkgconf cmake
 
-      sudo apt install -y --no-install-recommends libcairo2 libxcb-cursor0 libxcb-image0 libxcb-xrm0 libxcb-icccm4 libxcb-ewmh2 libxcb-composite0
+      sudo apt install -y --no-install-recommends alsa-tools libcairo2 libxcb-cursor0 libxcb-image0 libxcb-xrm0 libxcb-icccm4 libxcb-ewmh2 libxcb-composite0
       sudo apt install -y --no-install-recommends curl libjsoncpp1 libmpdclient2 libpulse0 libnl-3-200 wireless-tools python-xcbgen
 
       # ncmpcpp playlist
