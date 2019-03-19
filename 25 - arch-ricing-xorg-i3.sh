@@ -118,7 +118,6 @@ yes | sudo pacman -S gst-plugins-ugly
 
 # Browser packages
 yes | sudo pacman -S jre-openjdk flashplugin pepper-flash
-yes | yay -S ttf-ms-fonts --noconfirm
 
 while true; do
   read -p "What CPU are you using? [i]ntel | [a]md   " cpui
@@ -390,9 +389,6 @@ https://wiki.archlinux.org/index.php/Wireless_network_configuration
 
 [1] Show Network Controller
 [2] Broadcom
-[3] Realtek R8168
-[4] Realtek RTL8188EUS (RTL8188EUS, RTL8188ETV)
-[5] Realtek RTL8188CUS (8188C, 8192C) 
 [m] Modprobe a module
 [e] Exit
 
@@ -408,15 +404,6 @@ Enter action: " wd
       done;;
     [1] ) lspci | grep Network;;
     [2] ) sudo pacman -S broadcom-wl-dkms; echo "
-Installation done...
-";;
-    [3] ) sudo pacman -S r8168; echo "
-Installation done...
-";;
-    [4] ) yay -S 8188eu-dkms; echo "
-Installation done...
-";;
-    [5] ) yay -S 8192cu-dkms; echo "
 Installation done...
 ";;
   esac
@@ -462,7 +449,7 @@ done
 
 # Install display manager
 yes | sudo pacman -S lightdm
-yes | yay -S noto-fonts
+yes | sudo pacman -S noto-fonts
 yes | yay -S lightdm-slick-greeter
 sudo sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-slick-greeter/g' /etc/lightdm/lightdm.conf
 
@@ -655,9 +642,10 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       yes | yay -S polybar --noconfirm
 
       # popup calendar
-      # yay -S xdotool yad
+      # sudo pacman -S xdotool
+      # yay -S yad
 
-      yes | yay -S scrot
+      yes | sudo pacman -S scrot
 
       yes | sudo pacman -S accountsservice
       user=$(whoami)
