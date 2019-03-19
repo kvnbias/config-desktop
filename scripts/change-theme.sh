@@ -62,13 +62,12 @@ set_neofetch_colors() {
   done
 
   case $os in
-    arch|manjaro|debian )
-      sed -i "s/^ascii_colors=.*/ascii_colors=$3/g" "$HOME/.config/neofetch/$os.conf"
-      break;;
-    fedora )
+    fedora|ubuntu )
+      # dual color
       sed -i "s/^ascii_colors=.*/ascii_colors=$4/g" "$HOME/.config/neofetch/$os.conf"
       break;;
     * )
+      # single color
       sed -i "s/^ascii_colors=.*/ascii_colors=$3/g" "$HOME/.config/neofetch/$os.conf"
   esac
 }
@@ -102,8 +101,8 @@ use_solarized() {
 
   set_i3_colors "#2d8bcb" "#0d68a6" "#0e3642" "#0e3642"
 
-    single='(10 10 10 10 10 10)';
-    dual='(10 7 10 10 10 10)';
+  single='(10 10 10 10 10 10)';
+  dual='(10 7 10 10 10 10)';
 
   set_git_branch_colors "black bold" "green bold" "red bold"
   set_git_diff_colors "yellow bold" "yellow bold" "red bold" "black bold"
