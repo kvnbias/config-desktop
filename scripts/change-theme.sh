@@ -62,10 +62,10 @@ set_neofetch_colors() {
   done
 
   case $os in
-    [arch|manjaro|debian] )
+    arch|manjaro|debian )
       sed -i "s/^ascii_colors=.*/ascii_colors=$3/g" "$HOME/.config/neofetch/$os.conf"
       break;;
-    [fedora] )
+    fedora )
       sed -i "s/^ascii_colors=.*/ascii_colors=$4/g" "$HOME/.config/neofetch/$os.conf"
       break;;
     * )
