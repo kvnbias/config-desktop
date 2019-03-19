@@ -322,8 +322,6 @@ Enter GPU:   " gpui
     [Ee]* )
       break;;
     [Vv]* )
-      sudo apt install -y --no-install-recommends xserver-xorg-video-vmware
-      echo Driver for VM installed;
       break;;
     [Ii]* )
       sudo apt install -y --no-install-recommends xserver-xorg-video-intel

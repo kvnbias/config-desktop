@@ -344,8 +344,6 @@ What GPU are you using?
 Enter GPU   " gpui
   case $gpui in
     [Vv]* )
-      sudo dnf install -y xorg-x11-drv-vmware --releasever=$fedver
-      echo Driver for VM installed;
       break;;
     [Ii]* )
       sudo dnf install -y xorg-x11-drv-intel --releasever=$fedver

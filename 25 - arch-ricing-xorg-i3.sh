@@ -285,8 +285,6 @@ What GPU are you using?
 Enter GPU:   " gpui
   case $gpui in
     [Vv]* )
-      yes | sudo pacman -S xf86-video-vmware;
-      echo Driver for VM installed;
       break;;
     [Ii]* )
       yes | sudo pacman -S xf86-video-intel;
