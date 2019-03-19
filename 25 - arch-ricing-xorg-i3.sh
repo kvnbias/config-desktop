@@ -150,7 +150,7 @@ Section "Device"
   Option      "TearFree" "true"
   Option      "DRI"    "3"
 EndSection
-' | sudo tee -a /etc/X11/xorg.conf.d/20-intel.conf;
+' | sudo tee /etc/X11/xorg.conf.d/20-intel.conf;
 
 }
 
@@ -176,7 +176,7 @@ Section "Device"
   Option "ColorTiling2D" "on"
   Option "SWCursor" "True"
 EndSection
-' | sudo tee -a /etc/X11/xorg.conf.d/20-radeon.conf;
+' | sudo tee /etc/X11/xorg.conf.d/20-radeon.conf;
 
 }
 
@@ -197,7 +197,7 @@ Section "Screen"
     Depth         24
   EndSubSection
 EndSection
-' | sudo tee -a /etc/X11/xorg.conf.d/10-screen.conf;
+' | sudo tee /etc/X11/xorg.conf.d/10-screen.conf;
 
   echo '
 Section "Device"
@@ -212,7 +212,7 @@ Section "Device"
   Option "TearFree" "on"
   Option "SWCursor" "True"
 EndSection
-' | sudo tee -a /etc/X11/xorg.conf.d/20-radeon.conf;
+' | sudo tee /etc/X11/xorg.conf.d/20-radeon.conf;
 
 }
 
@@ -240,7 +240,7 @@ Depends=mkinitcpio
 When=PostTransaction
 NeedsTargets
 Exec=/bin/sh -c 'while read -r trg; do case \$trg in linux) exit 0; esac; done; /usr/bin/mkinitcpio -P'
-" | sudo tee -a /etc/pacman.d/hooks/nvidia.hook;
+" | sudo tee /etc/pacman.d/hooks/nvidia.hook;
 
   if [ -f /etc/default/grub ]; then
     sudo mkinitcpio -P
@@ -344,7 +344,7 @@ Section "Device"
   Driver      "intel"
   Option      "Backlight"  "intel_backlight"
 EndSection
-  ' | sudo tee -a /etc/X11/xorg.conf.d/20-intel.conf;
+  ' | sudo tee /etc/X11/xorg.conf.d/20-intel.conf;
     echo Added intel_backlight;
 fi
 

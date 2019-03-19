@@ -92,7 +92,7 @@ Section "Files"
   FontPath    "/usr/share/fonts/nerd-fonts-complete/ttf"
   FontPath    "/usr/share/fonts/nerd-fonts-complete/otf"
 EndSection
-' | sudo tee -a /etc/X11/xorg.conf
+' | sudo tee /etc/X11/xorg.conf
 
 os=$(echo -n $(cat /etc/*-release | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
 
@@ -160,7 +160,7 @@ Section "Device"
   Option      "TearFree" "true"
   Option      "DRI"    "3"
 EndSection
-  ' | sudo tee -a /etc/X11/xorg.conf.d/20-intel.conf;
+  ' | sudo tee /etc/X11/xorg.conf.d/20-intel.conf;
 
 
   if [ -f /etc/default/grub ]; then
@@ -195,7 +195,7 @@ Section "Device"
   Option "ColorTiling2D" "on"
   Option "SWCursor" "True"
 EndSection
-' | sudo tee -a /etc/X11/xorg.conf.d/20-radeon.conf;
+' | sudo tee /etc/X11/xorg.conf.d/20-radeon.conf;
 
   if [ -f /etc/default/grub ]; then
     while true; do
@@ -225,7 +225,7 @@ Section "Screen"
     Depth         24
   EndSubSection
 EndSection
-' | sudo tee -a /etc/X11/xorg.conf.d/10-screen.conf;
+' | sudo tee /etc/X11/xorg.conf.d/10-screen.conf;
 
   echo '
 Section "Device"
@@ -240,7 +240,7 @@ Section "Device"
   Option "TearFree" "on"
   Option "SWCursor" "True"
 EndSection
-' | sudo tee -a /etc/X11/xorg.conf.d/20-radeon.conf;
+' | sudo tee /etc/X11/xorg.conf.d/20-radeon.conf;
 
 
   if [ -f /etc/default/grub ]; then
@@ -355,7 +355,7 @@ Section "Device"
   Driver      "intel"
   Option      "Backlight"  "intel_backlight"
 EndSection
-  ' | sudo tee -a /etc/X11/xorg.conf.d/20-intel.conf;
+  ' | sudo tee /etc/X11/xorg.conf.d/20-intel.conf;
     echo Added intel_backlight;
 fi
 
