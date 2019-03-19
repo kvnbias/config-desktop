@@ -90,7 +90,7 @@ rm -rf yay
 # m4          make         pacman      patch      pkgconf
 # sed         sudo         systemd     texinfo    util-linux
 # which
-yes | sudo pacman -S base-devel
+yes | sudo pacman -S base-devel --noconfirm
 
 # Sound
 yes | sudo pacman -S alsa-utils
