@@ -96,7 +96,6 @@ Use archlinuxhardened/selinux [Yn]?   " ualh
       yes | yay -S policycoreutils
       yes | yay -S python-ipy
       yes | yay -S selinux-python
-      yes | yay -S python-ipy
       yes | yay -S mcstrans
       yes | yay -S restorecond
 
@@ -136,13 +135,13 @@ Would you like to proceed [Yn]?
       while true; do
         read -p "
 
-      INTERACTION NEEDED!
+INTERACTION NEEDED!
 
-      Go to tty 2 [Ctrl+Alt+F2] then execute the command below then proceed:
-      cp /home/$user/sudoers /etc/sudoers
+Go to tty 2 [Ctrl+Alt+F2] then execute the command below then proceed:
+cp /home/$user/sudoers /etc/sudoers
 
 
-      Would you like to proceed [Yn]?
+Would you like to proceed [Yn]?
 
 
       " yn
@@ -158,16 +157,16 @@ Would you like to proceed [Yn]?
       while true; do
         read -p "
 
-      NOTE:
+NOTE:
 
-      If the systemd/libsystemd installation failed, you may
-      need to downgrade your systemd.
+If the systemd/libsystemd installation failed, you may
+need to downgrade your systemd.
 
-      You can downgrade by:
-      yay -S downgrade
-      downgrade systemd
+You can downgrade by:
+yay -S downgrade
+downgrade systemd
 
-      Proceed [Yn]?
+Proceed [Yn]?
 
 
       " yn

@@ -109,7 +109,7 @@ fi
 sudo apt update
 sudo apt -y upgrade
 
-# non-free kernel drivers
+# non-free kernel drivers for debian
 sudo apt install -y --no-install-recommends firmware-linux-nonfree
 
 sudo apt install -y build-essential linux-headers-$(uname -r) git
