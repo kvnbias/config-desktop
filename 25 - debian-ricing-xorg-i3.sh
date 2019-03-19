@@ -716,11 +716,11 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
 
       # MANUAL: i3lock-color. Some are already installed
       sudo apt remove -y i3lock
-      sudo apt install -y --no-install-recommends libcairo2-dev libev-dev libjpeg-dev libxcb-composite0-dev libxkbcommon-x11-dev
+      sudo apt install -y --no-install-recommends libcairo2-dev libev-dev libturbojpeg0-dev libxcb-composite0-dev libxkbcommon-x11-dev
       sudo apt install -y --no-install-recommends libpam0g-dev libxcb-util0-dev libxcb-image0-dev libxcb-xrm-dev libxcb-xinerama0-dev
       sudo apt install -y --no-install-recommends autoconf automake
 
-      sudo apt install -y --no-install-recommends libcairo2 libev4 libjpeg62-turbo libxcb-composite0 libxkbcommon-x11-0
+      sudo apt install -y --no-install-recommends libcairo2 libev4 libturbojpeg0-turbo libxcb-composite0 libxkbcommon-x11-0
       sudo apt install -y --no-install-recommends libxkbcommon0 libxcb1 libxcb-image0 libxcb-xinerama0
 
       git clone --recurse-submodules https://github.com/PandorasFox/i3lock-color.git
@@ -738,7 +738,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       echo "auth include login" | sudo tee /etc/pam.d/i3lock
       cd /tmp
 
-      sudo apt remove -y libcairo2-dev libev-dev libjpeg-dev libxcb-composite0 libxkbcommon-x11-dev
+      sudo apt remove -y libcairo2-dev libev-dev libturbojpeg0-dev libxcb-composite0 libxkbcommon-x11-dev
       sudo apt remove -y libpam0g-dev libxcb-util0-dev libxcb-image0-dev libxcb-xrm-dev libxcb-xinerama0-dev
 
       # terminal-based file viewer
