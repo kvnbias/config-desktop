@@ -634,7 +634,7 @@ exit' | tee \$ed/startup.nsh
                             git clone https://github.com/EvanPurkhiser/rEFInd-minimal.git /tmp/refind-minimal
                             sudo mkdir -p \$ed/EFI/refind/themes/rEFInd-minimal
                             sudo cp -raf --no-preserve=mode,ownership /tmp/refind-minimal/* \$ed/EFI/refind/themes/rEFInd-minimal
-                            echo 'include themes/refind-minimal/theme.conf' | sudo tee -a \$ed/EFI/refind/refind.conf
+                            echo 'include themes/rEFInd-minimal/theme.conf' | sudo tee -a \$ed/EFI/refind/refind.conf
                             break 4;;
                         esac
                       done;;
