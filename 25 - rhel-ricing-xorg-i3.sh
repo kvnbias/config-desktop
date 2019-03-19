@@ -742,6 +742,8 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo dnf install -y libev libxkbcommon-x11 perl pango startup-notification --releasever=$fedver
       sudo dnf install -y xcb-util-cursor xcb-util-keysyms xcb-util-wm xcb-util-xrm yajl --releasever=$fedver
 
+      sudo dnf mark install libev libxkbcommon-x11 perl pango startup-notification xcb-util-cursor xcb-util-keysyms xcb-util-wm xcb-util-xrm yajl
+
       git clone --recurse-submodules https://github.com/Airblader/i3.git i3-gaps
       cd i3-gaps
 
