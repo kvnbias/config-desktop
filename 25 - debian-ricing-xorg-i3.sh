@@ -487,16 +487,25 @@ sudo apt install -y --no-install-recommends lightdm slick-greeter
 sudo apt install -y --no-install-recommends fonts-noto
 sudo sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=slick-greeter/g' /etc/lightdm/lightdm.conf
 
-if cat /usr/lib/systemd/system/lightdm.service | grep -q 'Alias=display-manager.service'; then
+lightdmUnit='/usr/lib/systemd/system/lightdm.service'
+if [ -f /usr/lib/systemd/system/lightdm.service ]; then
+  lightdmUnit='/usr/lib/systemd/system/lightdm.service'
+else
+  if [ -f /etc/systemd/system/lightdm.service ]; then
+    lightdmUnit='/etc/systemd/system/lightdm.service'
+  fi
+fi
+
+if cat $lightdmUnit | grep -q 'Alias=display-manager.service'; then
   echo 'Alias already exists'
 else
-  if cat /usr/lib/systemd/system/lightdm.service | grep -q '\[Install\]'; then
+  if cat $lightdmUnit | grep -q '\[Install\]'; then
     echo 'Install already exists'
   else
-    echo '[Install]' | sudo tee -a /usr/lib/systemd/system/lightdm.service
+    echo '[Install]' | sudo tee -a $lightdmUnit
   fi
 
-  echo 'Alias=display-manager.service' | sudo tee -a /usr/lib/systemd/system/lightdm.service
+  echo 'Alias=display-manager.service' | sudo tee -a $lightdmUnit
 fi
 
 sudo systemctl enable lightdm
