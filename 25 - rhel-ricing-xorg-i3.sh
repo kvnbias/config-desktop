@@ -292,6 +292,44 @@ generate_nvidia_gpu_config() {
   fi
 }
 
+install_mesa_vulkan_drivers() {
+
+  sudo dnf install -y mesa-dri-drivers.x86_64 --releasever=$fedver
+  sudo dnf install -y mesa-filesystem.x86_64 --releasever=$fedver
+  sudo dnf install -y mesa-libd3d.x86_64 --releasever=$fedver
+  sudo dnf install -y mesa-libEGL.x86_64 --releasever=$fedver
+  sudo dnf install -y mesa-libgbm.x86_64 --releasever=$fedver
+  sudo dnf install -y mesa-libGL.x86_64 --releasever=$fedver
+  sudo dnf install -y mesa-libglapi.x86_64 --releasever=$fedver
+  sudo dnf install -y mesa-libGLES.x86_64 --releasever=$fedver
+  sudo dnf install -y mesa-libGLU.x86_64 --releasever=$fedver
+  sudo dnf install -y mesa-libGLw.x86_64 --releasever=$fedver
+  sudo dnf install -y mesa-libOpenCL.x86_64 --releasever=$fedver
+  sudo dnf install -y mesa-libOSMesa.x86_64 --releasever=$fedver
+  sudo dnf install -y mesa-libxatracker.x86_64 --releasever=$fedver
+
+  sudo dnf install -y mesa-dri-drivers.i686 --releasever=$fedver
+  sudo dnf install -y mesa-filesystem.i686 --releasever=$fedver
+  sudo dnf install -y mesa-libd3d.i686 --releasever=$fedver
+  sudo dnf install -y mesa-libEGL.i686 --releasever=$fedver
+  sudo dnf install -y mesa-libgbm.i686 --releasever=$fedver
+  sudo dnf install -y mesa-libGL.i686 --releasever=$fedver
+  sudo dnf install -y mesa-libglapi.i686 --releasever=$fedver
+  sudo dnf install -y mesa-libGLES.i686 --releasever=$fedver
+  sudo dnf install -y mesa-libGLU.i686 --releasever=$fedver
+  sudo dnf install -y mesa-libGLw.i686 --releasever=$fedver
+  sudo dnf install -y mesa-libOpenCL.i686 --releasever=$fedver
+  sudo dnf install -y mesa-libOSMesa.i686 --releasever=$fedver
+  sudo dnf install -y mesa-libxatracker.i686 --releasever=$fedver
+
+  sudo dnf install -y vulkan-loader.x86_64 --releasever=$fedver
+  sudo dnf install -y mesa-vulkan-drivers.x86_64 --releasever=$fedver
+
+  sudo dnf install -y vulkan-loader.i686 --releasever=$fedver
+  sudo dnf install -y mesa-vulkan-drivers.i686 --releasever=$fedver
+  
+  sudo dnf install -y vulkan-tools.x86_64 --releasever=$fedver
+}
 
 while true; do
   read -p "
@@ -311,15 +349,8 @@ Enter GPU   " gpui
       break;;
     [Ii]* )
       sudo dnf install -y xorg-x11-drv-intel --releasever=$fedver
+      install_mesa_vulkan_drivers
 
-      sudo dnf install -y mesa-dri-drivers mesa-filesystem --releasever=$fedver
-      sudo dnf install -y mesa-libEGL mesa-libGL mesa-libGLU --releasever=$fedver
-      sudo dnf install -y mesa-libOSMesa mesa-libOpenCL --releasever=$fedver
-      sudo dnf install -y mesa-libgbm mesa-libglapi --releasever=$fedver
-      sudo dnf install -y mesa-libxatracker --releasever=$fedver
-
-      sudo dnf install -y vulkan-loader --releasever=$fedver
-      sudo dnf install -y mesa-vulkan-drivers --releasever=$fedver
       generate_intel_gpu_config
       echo Intel drivers installed;
       break;;
@@ -337,30 +368,14 @@ What driver to use?
         case $amdd in
           [1]* )
             sudo dnf install -y xorg-x11-drv-amdgpu --releasever=$fedver
-
-            sudo dnf install -y mesa-dri-drivers mesa-filesystem --releasever=$fedver
-            sudo dnf install -y mesa-libEGL mesa-libGL mesa-libGLU --releasever=$fedver
-            sudo dnf install -y mesa-libOSMesa mesa-libOpenCL --releasever=$fedver
-            sudo dnf install -y mesa-libgbm mesa-libglapi --releasever=$fedver
-            sudo dnf install -y mesa-libxatracker --releasever=$fedver
-
-            sudo dnf install -y vulkan-loader --releasever=$fedver
-            sudo dnf install -y mesa-vulkan-drivers --releasever=$fedver
+            install_mesa_vulkan_drivers
 
             generate_amd_gpu_config
             echo AMDGPU drivers installed;
             break 2;;
           [2]* )
             sudo dnf install -y xorg-x11-drv-ati --releasever=$fedver
-
-            sudo dnf install -y mesa-dri-drivers mesa-filesystem --releasever=$fedver
-            sudo dnf install -y mesa-libEGL mesa-libGL mesa-libGLU --releasever=$fedver
-            sudo dnf install -y mesa-libOSMesa mesa-libOpenCL --releasever=$fedver
-            sudo dnf install -y mesa-libgbm mesa-libglapi --releasever=$fedver
-            sudo dnf install -y mesa-libxatracker --releasever=$fedver
-
-            sudo dnf install -y vulkan-loader --releasever=$fedver
-            sudo dnf install -y mesa-vulkan-drivers --releasever=$fedver
+            install_mesa_vulkan_drivers
 
             generate_ati_gpu_config
             echo ATI drivers installed;
@@ -371,6 +386,9 @@ What driver to use?
       done;;
     [Nn]* )
       sudo dnf install -y xorg-x11-drv-nvidia akmod-nvidia nvidia-xconfig --releasever=$fedver
+
+      sudo dnf install -y vulkan-loader.x86_64 vulkan-tools.x86_64 --releasever=$fedver
+      sudo dnf install -y vulkan-loader.i686 vulkan-tools.i686 --releasever=$fedver
 
       generate_nvidia_gpu_config
       sudo nvidia-xconfig

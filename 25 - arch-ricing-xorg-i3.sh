@@ -265,6 +265,11 @@ enable_amdati_kms() {
   fi
 }
 
+install_mesa_vulkan_drivers() {
+  yes | sudo pacman -S mesa lib32-mesa;
+  yes | sudo pacman -S vulkan-icd-loader lib32-vulkan-icd-loader;
+}
+
 while true; do
   echo "Your GPU: ";
   lspci -k | grep -A 2 -E "(VGA|3D)";
@@ -284,9 +289,10 @@ Enter GPU:   " gpui
       echo Driver for VM installed;
       break;;
     [Ii]* )
-      yes | sudo pacman -S xf86-video-intel mesa lib32-mesa;
-      yes | sudo pacman -S vulkan-icd-loader lib32-vulkan-icd-loader;
+      yes | sudo pacman -S xf86-video-intel;
+      install_mesa_vulkan_drivers
       yes | sudo pacman -S vulkan-intel lib32-vulkan-intel;
+
       generate_intel_gpu_config
       echo Intel drivers installed;
       break;;
@@ -301,17 +307,19 @@ What driver to use?
   " amdd
         case $amdd in
           [1]* )
-            yes | sudo pacman -S xf86-video-amdgpu mesa lib32-mesa;
-            yes | sudo pacman -S vulkan-icd-loader lib32-vulkan-icd-loader;
+            yes | sudo pacman -S xf86-video-amdgpu;
+            install_mesa_vulkan_drivers;
             yes | sudo pacman -S vulkan-radeon lib32-vulkan-radeon;
+
             generate_amd_gpu_config
             enable_amdgpu_kms
             echo AMDGPU drivers installed;
             break 2;;
           [2]* )
-            yes | sudo pacman -S xf86-video-ati mesa lib32-mesa;
-            yes | sudo pacman -S vulkan-icd-loader lib32-vulkan-icd-loader;
+            yes | sudo pacman -S xf86-video-ati;
+            install_mesa_vulkan_drivers;
             yes | sudo pacman -S vulkan-radeon lib32-vulkan-radeon;
+
             generate_ati_gpu_config
             enable_amdati_kms
             echo ATI drivers installed;
@@ -321,14 +329,31 @@ What driver to use?
         esac
       done;;
     [Nn]* )
-      yes | sudo pacman -S nvidia-lts;
-      yes | sudo pacman -S nvidia;
+      while true; do
+        read -p "Using LTS kernel [yN]?   " ults
+        case $ults in
+          [Yy]* )
+            yes | sudo pacman -S nvidia-lts;
 
-      yes | sudo pacman -S nvidia-utils lib32-nvidia-utils;
-      generate_nvidia_gpu_config
-      sudo nvidia-xconfig
-      echo NVIDIA NVEx and newer drivers installed;
-      break;;
+            yes | sudo pacman -S vulkan-icd-loader lib32-vulkan-icd-loader;
+            yes | sudo pacman -S nvidia-utils lib32-nvidia-utils;
+
+            generate_nvidia_gpu_config
+            sudo nvidia-xconfig
+            echo NVIDIA drivers installed;
+            break 2;;
+          * )
+            yes | sudo pacman -S nvidia;
+
+            yes | sudo pacman -S vulkan-icd-loader lib32-vulkan-icd-loader;
+            yes | sudo pacman -S nvidia-utils lib32-nvidia-utils;
+
+            generate_nvidia_gpu_config
+            sudo nvidia-xconfig
+            echo NVIDIA drivers installed;
+            break 2;;
+        esac
+      done
   esac
 done
 

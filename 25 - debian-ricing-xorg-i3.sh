@@ -268,6 +268,45 @@ generate_nvidia_gpu_config() {
   fi
 }
 
+install_mesa_vulkan_drivers() {
+
+  sudo apt install -y --no-install-recommends libd3dadapter9-mesa:amd64
+  sudo apt install -y --no-install-recommends libegl-mesa0:amd64
+  sudo apt install -y --no-install-recommends libgbm1:amd64
+  sudo apt install -y --no-install-recommends libgl1-mesa-dri:amd64
+  sudo apt install -y --no-install-recommends libglapi-mesa:amd64
+  sudo apt install -y --no-install-recommends libglu1-mesa:amd64
+  sudo apt install -y --no-install-recommends libglw1-mesa:amd64
+  sudo apt install -y --no-install-recommends libglx0-mesa:amd64
+  sudo apt install -y --no-install-recommends libosmesa6:amd64
+  sudo apt install -y --no-install-recommends mesa-opencl-icd:amd64
+  sudo apt install -y --no-install-recommends mesa-utils:amd64
+  sudo apt install -y --no-install-recommends mesa-utils-extra:amd64
+
+  sudo apt install -y --no-install-recommends libd3dadapter9-mesa:i386
+  sudo apt install -y --no-install-recommends libegl-mesa0:i386
+  sudo apt install -y --no-install-recommends libgbm1:i386
+  sudo apt install -y --no-install-recommends libgl1-mesa-dri:i386
+  sudo apt install -y --no-install-recommends libglapi-mesa:i386
+  sudo apt install -y --no-install-recommends libglu1-mesa:i386
+  sudo apt install -y --no-install-recommends libglw1-mesa:i386
+  sudo apt install -y --no-install-recommends libglx0-mesa:i386
+  sudo apt install -y --no-install-recommends libosmesa6:i386
+  sudo apt install -y --no-install-recommends mesa-opencl-icd:i386
+  sudo apt install -y --no-install-recommends mesa-utils:i386
+  sudo apt install -y --no-install-recommends mesa-utils-extra:i386
+
+  sudo apt install -y --no-install-recommends mesa-vulkan-drivers:amd64
+  sudo apt install -y --no-install-recommends libvulkan1:amd64
+  sudo apt install -y --no-install-recommends libva-glx2:amd64
+
+  sudo apt install -y --no-install-recommends mesa-vulkan-drivers:i386
+  sudo apt install -y --no-install-recommends libvulkan1:i386
+  sudo apt install -y --no-install-recommends libva-glx2:i386
+
+  sudo apt install -y --no-install-recommends vulkan-utils
+}
+
 while true; do
   read -p "
 
@@ -288,11 +327,8 @@ Enter GPU:   " gpui
       break;;
     [Ii]* )
       sudo apt install -y --no-install-recommends xserver-xorg-video-intel
-      # 32bit packages included
-      sudo apt install -y libgl1-mesa-dri libgl1-mesa-glx
+      install_mesa_vulkan_drivers
 
-      sudo apt install -y --no-install-recommends libvulkan1
-      sudo apt install -y --no-install-recommends mesa-vulkan-drivers
       generate_intel_gpu_config
       echo Intel drivers installed;
       break;;
@@ -310,19 +346,14 @@ What driver to use?
         case $amdd in
           [1]* )
             sudo apt install -y --no-install-recommends xserver-xorg-video-amdgpu
-            # 32bit packages included
-            sudo apt install -y libgl1-mesa-dri libgl1-mesa-glx libva-glx1
+            install_mesa_vulkan_drivers
 
             generate_amd_gpu_config
             echo AMDGPU drivers installed;
             break 2;;
           [2]* )
             sudo apt install -y --no-install-recommends xserver-xorg-video-ati
-            # 32bit packages included
-            sudo apt install -y libgl1-mesa-dri libgl1-mesa-glx libva-glx1
-
-            sudo apt install -y --no-install-recommends libvulkan1
-            sudo apt install -y --no-install-recommends mesa-vulkan-drivers
+            install_mesa_vulkan_drivers
 
             generate_ati_gpu_config
             echo ATI drivers installed;
@@ -332,9 +363,21 @@ What driver to use?
         esac
       done;;
     [Nn]* )
-      sudo apt install -y --no-install-recommends xserver-xorg-video-nvidia nvidia-detect
-      # 32bit packages included
-      sudo apt install -y nvidia-driver libgl1-mesa-dri libgl1-nvidia-glx nvidia-xconfig
+      sudo apt install -y --no-install-recommends xserver-xorg-video-nvidia nvidia-detect nvidia-xconfig
+
+      sudo apt install -y nvidia-driver:amd64
+      sudo apt install -y libgl1-nvidia-glx:amd64
+
+      sudo apt install -y nvidia-driver:i386
+      sudo apt install -y libgl1-nvidia-glx:i386
+
+      sudo apt install -y --no-install-recommends libvulkan1:amd64
+      sudo apt install -y --no-install-recommends libva-glx2:amd64
+
+      sudo apt install -y --no-install-recommends libvulkan1:i386
+      sudo apt install -y --no-install-recommends libva-glx2:i386
+
+      sudo apt install -y --no-install-recommends vulkan-utils
 
       generate_nvidia_gpu_config
       sudo nvidia-xconfig
@@ -669,7 +712,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo apt install -y --no-install-recommends autoconf automake
 
       sudo apt install -y --no-install-recommends libcairo2 libev4 libjpeg62-turbo libxcb-composite0 libxkbcommon-x11-0
-      sudo apt install -y --no-install-recommends libxkbcommon0 libxcb1 libxcb-image0 pkgconf libxcb-xinerama0
+      sudo apt install -y --no-install-recommends libxkbcommon0 libxcb1 libxcb-image0 libxcb-xinerama0
 
       git clone --recurse-submodules https://github.com/PandorasFox/i3lock-color.git
       cd i3lock-color
