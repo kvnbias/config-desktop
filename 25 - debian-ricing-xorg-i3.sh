@@ -481,9 +481,11 @@ if [ -d /etc/gdm ]; then
 fi
 
 # Greeter
-sudo apt install -y --no-install-recommends lightdm slick-greeter
+sudo apt install -y --no-install-recommends lightdm
 sudo apt install -y --no-install-recommends fonts-noto
-sudo sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=slick-greeter/g' /etc/lightdm/lightdm.conf
+sudo apt install -y --no-install-recommends lightdm-gtk-greeter
+sudo apt install -y --no-install-recommends lightdm-gtk-greeter-settings
+sudo sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-gtk-greeter/g' /etc/lightdm/lightdm.conf
 
 lightdmUnit='/usr/lib/systemd/system/lightdm.service'
 if [ -f /usr/lib/systemd/system/lightdm.service ]; then
@@ -1148,7 +1150,7 @@ Inherits=Breeze
 
       sudo mkdir -p /usr/share/backgrounds/wallpapers
       sudo cp -rf $(pwd)/rice/images/wallpapers/compressed/* /usr/share/backgrounds/wallpapers
-      sudo cp -rf $(pwd)/rice/slick-greeter.conf /etc/lightdm/slick-greeter.conf
+      sudo cp -rf $(pwd)/rice/lightdm-gtk-greeter.conf /etc/lightdm/lightdm-gtk-greeter.conf
 
       bash $(pwd)/scripts/update-screen-detector.sh
       bash $(pwd)/scripts/update-themes.sh

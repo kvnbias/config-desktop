@@ -460,8 +460,9 @@ done
 # Install display manager
 yes | sudo pacman -S lightdm
 yes | sudo pacman -S noto-fonts
-yes | yay -S lightdm-slick-greeter
-sudo sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-slick-greeter/g' /etc/lightdm/lightdm.conf
+yes | sudo pacman -S lightdm-gtk-greeter
+yes | sudo pacman -S lightdm-gtk-greeter-settings
+sudo sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-gtk-greeter/g' /etc/lightdm/lightdm.conf
 
 sudo systemctl enable lightdm
 
@@ -964,7 +965,7 @@ Inherits=Breeze
 
       sudo mkdir -p /usr/share/backgrounds/wallpapers
       sudo cp -rf $(pwd)/rice/images/wallpapers/compressed/* /usr/share/backgrounds/wallpapers
-      sudo cp -rf $(pwd)/rice/slick-greeter.conf /etc/lightdm/slick-greeter.conf
+      sudo cp -rf $(pwd)/rice/lightdm-gtk-greeter.conf /etc/lightdm/lightdm-gtk-greeter.conf
 
       bash $(pwd)/scripts/update-screen-detector.sh
       bash $(pwd)/scripts/update-themes.sh

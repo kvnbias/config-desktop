@@ -494,9 +494,12 @@ if [ -d /etc/gdm ]; then
 fi
 
 # Greeter
-sudo dnf install -y lightdm lightdm-settings slick-greeter --releasever=$fedver
+sudo dnf install -y lightdm --releasever=$fedver
 sudo dnf install -y google-noto-sans-fonts google-noto-fonts-common --releasever=$fedver
-sudo sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=slick-greeter/g' /etc/lightdm/lightdm.conf
+sudo dnf install -y lightdm-gtk-greeter --releasever=$fedver
+sudo dnf install -y lightdm-gtk-greeter-settings --releasever=$fedver
+sudo sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-gtk-greeter/g' /etc/lightdm/lightdm.conf
+
 sudo systemctl enable lightdm
 sudo systemctl set-default graphical.target
 
@@ -1141,7 +1144,7 @@ Inherits=Breeze
 
       sudo mkdir -p /usr/share/backgrounds/wallpapers
       sudo cp -rf $(pwd)/rice/images/wallpapers/compressed/* /usr/share/backgrounds/wallpapers
-      sudo cp -rf $(pwd)/rice/slick-greeter.conf /etc/lightdm/slick-greeter.conf
+      sudo cp -rf $(pwd)/rice/lightdm-gtk-greeter.conf /etc/lightdm/lightdm-gtk-greeter.conf
 
       bash $(pwd)/scripts/update-screen-detector.sh
       bash $(pwd)/scripts/update-themes.sh
