@@ -17,7 +17,7 @@ require {
     type unlabeled_t;
     type user_tmp_t;
     type xdm_t;
-    class dir read;
+    class dir { read rmdir write };
     class fifo_file read;
     class file { map open rename unlink write };
     class filesystem associate;
@@ -33,7 +33,7 @@ allow chkpwd_t etc_t:file map;
 allow efivarfs_t sysfs_t:filesystem associate;
 
 #============= init_t ==============
-allow init_t session_dbusd_tmp_t:dir read;
+allow init_t session_dbusd_tmp_t:dir { read rmdir write };
 
 #============= named_t ==============
 
