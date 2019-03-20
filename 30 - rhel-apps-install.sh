@@ -470,4 +470,4 @@ Install GParted [yN]?   " igp
 done
 
 cd $mainCWD
-sudo dnf autoremove
+sudo dnf -y autoremove
