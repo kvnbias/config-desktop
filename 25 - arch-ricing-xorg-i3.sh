@@ -90,7 +90,15 @@ rm -rf yay
 # m4          make         pacman      patch      pkgconf
 # sed         sudo         systemd     texinfo    util-linux
 # which
-yes | sudo pacman -S base-devel --noconfirm
+while true; do
+  read -p "This package might installed during installation. Install base-devel [yN]?   " p
+  case $p in
+    [Yy]* )
+      yes | sudo pacman -S base-devel --noconfirm
+      break;;
+    * ) break;;
+  esac
+done
 
 # Sound
 yes | sudo pacman -S alsa-utils
