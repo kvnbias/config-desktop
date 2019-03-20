@@ -2053,6 +2053,10 @@ allow systemd_sessions_t unlabeled_t:lnk_file read;
 
 #!!!! This avc can be allowed using one of the these booleans:
 #     'systemd_tmpfiles_manage_all'
+allow systemd_tmpfiles_t bin_t:file getattr;
+
+#!!!! This avc can be allowed using one of the these booleans:
+#     'systemd_tmpfiles_manage_all'
 allow systemd_tmpfiles_t colord_var_lib_t:dir { getattr search };
 
 #!!!! This avc can be allowed using one of the these booleans:
@@ -3184,6 +3188,7 @@ allow user_t locale_t:dir { add_name remove_name rmdir setattr write };
 allow user_t locale_t:file { execute setattr unlink write };
 allow user_t locale_t:lnk_file { setattr unlink };
 allow user_t logrotate_unit_t:file { open read };
+allow user_t logrotate_var_lib_t:file { open read };
 allow user_t lost_found_t:dir write;
 allow user_t lvm_control_t:chr_file { ioctl open read write };
 allow user_t lvm_etc_t:file { map open read };
