@@ -86,31 +86,28 @@ Install virtualbox [yN]?
 https://wiki.archlinux.org/index.php/VirtualBox   " ivb
   case $ivb in
     [Yy]* )
-      sudo dnf install -y gcc make perl --releasever=$fedver
-      sudo dnf install -y VirtualBox virtualbox-guest-additions --releasever=$fedver
-      sudo dnf install -y akmod-VirtualBox kmod-VirtualBox --releasever=$fedver
-      sudo dracut -v -f
-
-      if [ -f /etc/default/grub ]; then
-        while true; do
-          read -p "Update GRUB [Yn]?   " updgr
-          case $updgr in
-            [Nn]* ) break;;
-            * )
-              while true; do
-                read -p "Using UEFI [Yn]?   " yn
-                case $yn in
-                  [Nn]* )
-                    sudo grub2-mkconfig -o /boot/grub2/grub.cfg;
-                    break 2;;
-                  * )
-                    sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg;
-                    break 2;;
-                esac
-              done;;
-          esac
-        done;
+      if [ "$os" = "fedora" ]; then
+        wget http://download.virtualbox.org/virtualbox/rpm/fedora/virtualbox.repo
+      else
+        wget http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
       fi
+
+      sudo mv virtualbox.repo /etc/yum.repos.d/virtualbox.repo
+      sudo dnf update
+
+      sudo dnf install -y binutils gcc make perl patch libgomp glibc-headers glibc-devel --releasever=$fedver
+      sudo dnf install -y kernel-headers kernel-devel dkms qt5-qtx11extras libxkbcommon --releasever=$fedver
+
+      sudo dnf remove -y VirtualBox --releasever=$fedver
+      sudo dnf remove -y VirtualBox-server --releasever=$fedver
+      sudo dnf remove -y akmod-VirtualBox --releasever=$fedver
+      sudo dnf remove -y kmod-VirtualBox --releasever=$fedver
+      sudo dnf remove -y virtualbox-guest-additions --releasever=$fedver
+
+      sudo dnf install -y VirtualBox-6.0 --releasever=$fedver
+      sudo dnf install -y virtualbox-guest-additions --releasever=$fedver
+
+      sudo /usr/lib/virtualbox/vboxdrv.sh setup
 
       break;;
     * ) break;;
