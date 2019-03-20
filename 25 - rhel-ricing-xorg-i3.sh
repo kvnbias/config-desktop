@@ -716,12 +716,12 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo dnf install -y ffmpegthumbnailer --releasever=$fedver
 
       # for vifm
-      # sudo dnf install -y python3-pip --releasever=$fedver
-      # sudo dnf install -y redhat-rpm-config --releasever=$fedver
+      sudo dnf install -y python3-pip --releasever=$fedver
+      sudo dnf install -y redhat-rpm-config --releasever=$fedver
 
-      # sudo dnf install -y python3-devel libjpeg-turbo-devel zlib-devel libXext-devel --releasever=$fedver
-      # sudo pip3 install ueberzug
-      # sudo dnf remove -y python3-devel libjpeg-turbo-devel zlib-devel libXext-devel --releasever=$fedver
+      sudo dnf install -y python3-devel libjpeg-turbo-devel zlib-devel libXext-devel --releasever=$fedver
+      sudo pip3 install ueberzug
+      sudo dnf remove -y python3-devel libjpeg-turbo-devel zlib-devel libXext-devel --releasever=$fedver
 
       # MANUAL: i3lock-color. Some are already installed
       sudo dnf remove -y i3lock
@@ -753,7 +753,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
 
       # terminal-based file viewer
       sudo dnf install -y ranger --releasever=$fedver
-      # sudo dnf install -y vifm --releasever=$fedver
+      sudo dnf install -y vifm --releasever=$fedver
 
       # requirements for ranger [scope.sh]
       sudo dnf install -y file libcaca python3-pygments atool libarchive unrar lynx --releasever=$fedver
@@ -994,8 +994,8 @@ Inherits=Breeze
         mkdir -p $HOME/.config/polybar
         mkdir -p $HOME/.config/touchpad
         mkdir -p $HOME/.config/themes
-        # mkdir -p $HOME/.config/vifm
-        # mkdir -p $HOME/.config/vifm/scripts
+        mkdir -p $HOME/.config/vifm
+        mkdir -p $HOME/.config/vifm/scripts
 
         # create folders for configs
         mkdir -p  "$HOME/.config/Code"
@@ -1028,8 +1028,8 @@ Inherits=Breeze
         cp $(pwd)/scripts/update-checker.sh                   $HOME/.config/polybar/update-checker.sh
         cp $(pwd)/scripts/change-theme.sh                     $HOME/.config/themes/change-theme.sh
         cp $(pwd)/scripts/update-polybar-network-interface.sh $HOME/.config/themes/update-polybar-network-interface.sh
-        # cp $(pwd)/scripts/vifm-run.sh                         $HOME/.config/vifm/scripts/vifm-run.sh
-        # cp $(pwd)/scripts/vifm-viewer.sh                      $HOME/.config/vifm/scripts/vifm-viewer.sh
+        cp $(pwd)/scripts/vifm-run.sh                         $HOME/.config/vifm/scripts/vifm-run.sh
+        cp $(pwd)/scripts/vifm-viewer.sh                      $HOME/.config/vifm/scripts/vifm-viewer.sh
 
         # copy keyboard-disabler icons
         # cp $(pwd)/rice/images/keyboard/* $HOME/.config/keyboard
@@ -1054,13 +1054,13 @@ Inherits=Breeze
         sudo chmod +x $HOME/.config/polybar/update-checker.sh
         sudo chmod +x $HOME/.config/themes/change-theme.sh
         sudo chmod +x $HOME/.config/themes/update-polybar-network-interface.sh
-        # sudo chmod +x $HOME/.config/vifm/scripts/vifm-run.sh
-        # sudo chmod +x $HOME/.config/vifm/scripts/vifm-viewer.sh
+        sudo chmod +x $HOME/.config/vifm/scripts/vifm-run.sh
+        sudo chmod +x $HOME/.config/vifm/scripts/vifm-viewer.sh
 
         cp -rf $(pwd)/rice/bashrc      $HOME/.bashrc
 
         # vifm
-        # cp -raf $(pwd)/rice/vifmrc  $HOME/.config/vifm/vifmrc
+        cp -raf $(pwd)/rice/vifmrc  $HOME/.config/vifm/vifmrc
 
         # copy vim colors
         mkdir -p $HOME/.vim
