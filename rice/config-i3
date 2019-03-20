@@ -234,13 +234,13 @@ mode "$mode_system" {
 }
 
 bindsym $mod+n mode "$mode_fm"
-set $mode_fm [r]anger | [n]autilus
+# set $mode_fm [r]anger | [n]autilus
 # set $mode_fm [v]ifm | [r]anger | [p]cmanfm
-# set $mode_fm [v]ifm | [r]anger | [n]autilus
+set $mode_fm [v]ifm | [r]anger | [n]autilus
 # set $mode_fm [v]ifm | [r]anger | [n]autilus | [p]cmanfm
 mode "$mode_fm" {
     bindsym r exec --no-startup-id urxvt256c-ml -e ranger, mode "default"
-    # bindsym v exec --no-startup-id urxvt256c-ml -e "$HOME/.config/vifm/scripts/vifm-run.sh", mode "default"
+    bindsym v exec --no-startup-id urxvt256c-ml -e "$HOME/.config/vifm/scripts/vifm-run.sh", mode "default"
     # bindsym p exec --no-startup-id pcmanfm, mode "default"
     bindsym n exec --no-startup-id nautilus, mode "default"
 
