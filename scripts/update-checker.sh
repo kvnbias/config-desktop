@@ -2,7 +2,7 @@
 os=$(echo -n $(cat /etc/*-release | grep ^ID= | sed -e "s/ID=//"))
 updates=0
 
-if [ "$os" = "arch" ]; then
+if [ -f /usr/bin/pacman ]; then
   if ! updates_arch=$(checkupdates 2> /dev/null | wc -l ); then
     updates_arch=0
   fi
@@ -12,16 +12,13 @@ if [ "$os" = "arch" ]; then
   fi
 
   updates=$(("$updates_arch" + "$updates_aur"))
-fi
-
-if [ "$os" = "fedora" ]; then
+elif [ -f /usr/bin/dnf ]
   dnf=$(sudo dnf upgrade --refresh --assumeno 2> /dev/null)
 
   upgrade=$(echo "$dnf" | grep '^Upgrade ' | awk '{ print $2 }')
-
   install=$(echo "$dnf" | grep '^Install ' | awk '{ print $2 }')
 
-updates=$(( upgrade + install ))
+  updates=$(( upgrade + install ))
 fi
 
 if [ "$updates" -gt 0 ]; then

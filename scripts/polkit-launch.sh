@@ -1,10 +1,11 @@
 
 os=$(echo -n $(cat /etc/*-release | grep ^ID= | sed -e "s/ID=//"))
 
-if [ "$os" = "arch" ]; then
+if [ -f /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ]; then
   /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+elif [ -f /usr/libexec/polkit-gnome-authentication-agent-1 ]; then
+  /usr/libexec/polkit-gnome-authentication-agent-1 &
+else
+  echo "No polkit initialized."
 fi
 
-if [ "$os" = "fedora" ]; then
-  /usr/libexec/polkit-gnome-authentication-agent-1 &
-fi
