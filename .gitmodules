@@ -1,3 +1,9 @@
 [submodule "dev"]
 	path = dev
 	url = https://github.com/kvnbai/config-dev
+[submodule "themes"]
+	path = themes
+	url = https://github.com/kvnbai/desktop-themes.git
+[submodule "rice/images"]
+	path = rice/images
+	url = https://github.com/kvnbai/desktop-images.git
