@@ -102,4 +102,7 @@ cp -raf $HOME/.theme-settings/Paint-Splatter/theme/$tsetting/*                 $
 cp -raf $HOME/.theme-settings/Solarized/theme/$tsetting/*                      $HOME/.themes/Solarized
 cp -raf $HOME/.theme-settings/TLOU-Pale-Blue/theme/$tsetting/*                 $HOME/.themes/TLOU-Pale-Blue
 
+sudo mkdir -p /usr/share/themes/Greeter
+sudo cp -raf $(pwd)/themes/Greeter/theme/$tsetting/*  /usr/share/themes/Greeter
+
 bash $HOME/.config/themes/change-theme.sh

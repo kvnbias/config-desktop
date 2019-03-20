@@ -496,7 +496,7 @@ fi
 # Greeter
 sudo dnf install -y lightdm --releasever=$fedver
 sudo dnf install -y google-noto-sans-fonts google-noto-fonts-common --releasever=$fedver
-sudo dnf install -y lightdm-gtk-greeter --releasever=$fedver
+sudo dnf install -y lightdm-gtk --releasever=$fedver
 sudo dnf install -y lightdm-gtk-greeter-settings --releasever=$fedver
 sudo sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-gtk-greeter/g' /etc/lightdm/lightdm.conf
 
@@ -841,6 +841,7 @@ SystemAccount=false
 
       cd $mainCWD
       sudo cp $(pwd)/rice/images/avatar/default-user.png /var/lib/AccountsService/icons/$user.png
+      sudo cp $(pwd)/rice/images/avatar/default-user.png /usr/share/pixmaps/default-user.png
       sudo chown root:root /var/lib/AccountsService/users/$user
       sudo chown root:root /var/lib/AccountsService/icons/$user.png
 

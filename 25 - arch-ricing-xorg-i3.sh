@@ -669,6 +669,7 @@ SystemAccount=false
 " | sudo tee /var/lib/AccountsService/users/$user
 
       sudo cp $(pwd)/rice/images/avatar/default-user.png /var/lib/AccountsService/icons/$user.png
+      sudo cp $(pwd)/rice/images/avatar/default-user.png /usr/share/pixmaps/default-user.png
       sudo chown root:root /var/lib/AccountsService/users/$user
       sudo chown root:root /var/lib/AccountsService/icons/$user.png
 
