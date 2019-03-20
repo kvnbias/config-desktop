@@ -72,6 +72,17 @@ chown -R $(whoami):wheel /home/$(whoami)
   esac
 done
 
+while true; do
+  read -p "Enter full name or [s]kip?   " fn
+  case $fn in
+    [Ss]* )
+      break;;
+    * )
+      sudo chfn -f "$fn" $(whoami)
+      break;;
+  esac
+done
+
 # fonts
 if [ ! -f /etc/X11/xorg.conf ];then
   sudo touch /etc/X11/xorg.conf;
