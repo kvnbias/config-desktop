@@ -629,6 +629,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       yes | sudo pacman -S ffmpegthumbnailer
 
       # for vifm
+      # https://pillow.readthedocs.io/en/stable/installation.html
       # yes | sudo pacman -S python-pip
       # sudo pip3 install ueberzug
       yay -S python-ueberzug --noconfirm --overwrite

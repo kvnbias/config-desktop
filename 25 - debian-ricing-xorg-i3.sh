@@ -725,10 +725,11 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo apt install -y --no-install-recommends ffmpegthumbnailer
 
       # for vifm
+      # https://pillow.readthedocs.io/en/stable/installation.html
       sudo apt install -y --no-install-recommends python3-pip
-      sudo apt install -y --no-install-recommends python3-dev libturbojpeg0-dev zlib1g-dev libxext-dev python3-setuptools
+      sudo apt install -y --no-install-recommends python3-dev libturbojpeg0-dev zlib1g-dev libxext-dev python3-setuptools libjpeg62-turbo-dev
       sudo pip3 install ueberzug
-      sudo apt remove -y python3-dev python3-dev libturbojpeg0-dev zlib1g-dev libxext-dev python3-setuptools
+      sudo apt remove -y python3-dev python3-dev libturbojpeg0-dev zlib1g-dev libxext-dev python3-setuptools libjpeg62-turbo-dev
 
       # MANUAL: i3lock-color. Some are already installed
       sudo apt remove -y i3lock

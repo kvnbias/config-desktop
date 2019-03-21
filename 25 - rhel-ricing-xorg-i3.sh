@@ -719,6 +719,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo dnf install -y python3-pip --releasever=$fedver
       sudo dnf install -y redhat-rpm-config --releasever=$fedver
 
+      # https://pillow.readthedocs.io/en/stable/installation.html
       sudo dnf install -y python3-devel libjpeg-turbo-devel zlib-devel libXext-devel --releasever=$fedver
       sudo pip3 install ueberzug
       sudo dnf remove -y python3-devel libjpeg-turbo-devel zlib-devel libXext-devel --releasever=$fedver
