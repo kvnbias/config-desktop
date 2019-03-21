@@ -10,6 +10,21 @@ sudo apt -y upgrade
 sudo apt install -y --no-install-recommends curl vim-enhanced wget httpie git tmux gedit
 sudo apt install -y --no-install-recommends lsof bash-completion gamin policykit-1-gnome
 
+while true; do
+  read -p "Enable vi mode on bash [yN]?   " ebvi
+  case $ebvi in
+    [Yy]* )
+      if cat $HOME/.bashrc | grep -q '# set -o vi'; then
+        sed -i 's/# set -o vi/set -o vi/g' $HOME/.bashrc
+      else
+        echo 'set -o vi' | tee -a $HOME/.bashrc
+      fi
+
+      break;;
+    *) break;;
+  esac
+done
+
 # exfat readable
 sudo apt install -y --no-install-recommends exfat-utils exfat-fuse ntfs-3g
 

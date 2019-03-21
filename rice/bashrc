@@ -1,5 +1,8 @@
 
 
+# Enable vi mode
+# set -o vi
+
 # If not running interactively, don't do anythin
 [[ $- != *i* ]] && return
 

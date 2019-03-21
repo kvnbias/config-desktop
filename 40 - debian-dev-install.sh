@@ -30,6 +30,14 @@ sudo apt install --no-install-recommends code
 echo "fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
 
+while true; do
+  read -p "Enable vim mode on VSCode [yN]?   " evm
+  case $evm in
+    [Yy]* ) code --install-extension vscodevim.vim &; break;;
+    *) break;;
+  esac
+done
+
 # vscode theme install via cli
 # code --install-extension equinusocio.vsc-material-theme
 # code --install-extension pkief.material-icon-theme
@@ -38,6 +46,7 @@ sudo sysctl -p
 code --install-extension eamodio.gitlens &
 code --install-extension peterjausovec.vscode-docker &
 code --install-extension ms-vscode.theme-tomorrowkit &
+
 
 while true; do
   read -p "

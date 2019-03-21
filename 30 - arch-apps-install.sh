@@ -9,6 +9,21 @@ yes | sudo pacman -S lsof bash-completion gamin polkit-gnome
 yes | yay -S downgrade
 # yes | yay -S gksu --noconfirm
 
+while true; do
+  read -p "Enable vi mode on bash [yN]?   " ebvi
+  case $ebvi in
+    [Yy]* )
+      if cat $HOME/.bashrc | grep -q '# set -o vi'; then
+        sed -i 's/# set -o vi/set -o vi/g' $HOME/.bashrc
+      else
+        echo 'set -o vi' | tee -a $HOME/.bashrc
+      fi
+
+      break;;
+    *) break;;
+  esac
+done
+
 # exfat readable
 yes | sudo pacman -S exfat-utils fuse-exfat ntfs-3g
 

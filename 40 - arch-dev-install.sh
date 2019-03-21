@@ -17,6 +17,14 @@ sudo chown -R $(whoami):wheel /var/www/workspace
 # vscode
 yes | sudo pacman -S code
 
+while true; do
+  read -p "Enable vim mode on VSCode [yN]?   " evm
+  case $evm in
+    [Yy]* ) code --install-extension vscodevim.vim &; break;;
+    *) break;;
+  esac
+done
+
 # vscode theme install via cli
 # code --install-extension equinusocio.vsc-material-theme
 # code --install-extension pkief.material-icon-theme

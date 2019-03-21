@@ -20,6 +20,21 @@ sudo dnf -y upgrade
 sudo dnf install -y curl vim-enhanced wget httpie git tmux gedit --releasever=$fedver
 sudo dnf install -y lsof bash-completion gamin polkit-gnome --releasever=$fedver
 
+while true; do
+  read -p "Enable vi mode on bash [yN]?   " ebvi
+  case $ebvi in
+    [Yy]* )
+      if cat $HOME/.bashrc | grep -q '# set -o vi'; then
+        sed -i 's/# set -o vi/set -o vi/g' $HOME/.bashrc
+      else
+        echo 'set -o vi' | tee -a $HOME/.bashrc
+      fi
+
+      break;;
+    *) break;;
+  esac
+done
+
 # exfat readable
 sudo dnf install -y exfat-utils fuse-exfat ntfs-3g --releasever=$fedver
 
