@@ -594,21 +594,6 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo ln -sf /usr/share/icons/Flat-Remix-Blue /usr/share/icons/Flat-Remix
       cd /tmp
 
-      # gtk theme
-      git clone --recurse-submodules https://github.com/daniruiz/flat-remix-gtk.git
-      cd flat-remix-gtk
-
-      git fetch --tags
-      tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-
-      if [ ${#tag} -ge 1 ]; then
-        git checkout $tag
-      fi
-
-      git tag -f "git-$(git rev-parse --short HEAD)"
-      sudo mkdir -p /usr/share/themes && sudo cp -raf Flat-Remix-GTK* /usr/share/themes/
-      cd /tmp
-
       # display
       sudo dnf install -y nitrogen arandr lxappearance xbacklight xorg-x11-server-utils --releasever=$fedver
 

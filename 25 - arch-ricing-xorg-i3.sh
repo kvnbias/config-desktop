@@ -558,7 +558,6 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
 
       # theme icon
       yes | yay -S flat-remix-git
-      yes | yay -S flat-remix-gtk-git
       sudo ln -sf /usr/share/icons/Flat-Remix-Blue /usr/share/icons/Flat-Remix
 
       # display
