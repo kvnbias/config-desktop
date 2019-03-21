@@ -13,7 +13,7 @@ if [ -f /usr/bin/pacman ]; then
 
   updates=$(("$updates_arch" + "$updates_aur"))
 
-elif [ -f /usr/bin/dnf ]
+elif [ -f /usr/bin/dnf ]; then
   dnf=$(sudo dnf upgrade --refresh --assumeno 2> /dev/null)
 
   upgrade=$(echo "$dnf" | grep '^Upgrade ' | awk '{ print $2 }')
@@ -21,7 +21,7 @@ elif [ -f /usr/bin/dnf ]
 
   updates=$(( upgrade + install ))
 
-elif [ -f /usr/bin/apt ]
+elif [ -f /usr/bin/apt ]; then
   apt=$(sudo apt update 2> /dev/null)
 
   updates=0
