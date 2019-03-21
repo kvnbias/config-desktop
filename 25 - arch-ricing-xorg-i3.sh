@@ -424,7 +424,7 @@ Enter action: " wd
         esac
       done;;
     [1] ) lspci | grep Network;;
-    [2] ) sudo pacman -S broadcom-wl-dkms; echo "
+    [2] ) yes | sudo pacman -S broadcom-wl-dkms; echo "
 Installation done...
 ";;
   esac
