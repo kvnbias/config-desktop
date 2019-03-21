@@ -1160,6 +1160,7 @@ Inherits=Breeze
 
       sudo mkdir -p /usr/share/backgrounds/wallpapers
       sudo cp -rf $(pwd)/rice/images/wallpapers/compressed/* /usr/share/backgrounds/wallpapers
+      sudo cp -rf $(pwd)/rice/images/wallpapers/grayscaled/* /usr/share/backgrounds/grayscaled
       sudo cp -rf $(pwd)/rice/lightdm-gtk-greeter.conf /etc/lightdm/lightdm-gtk-greeter.conf
 
       bash $(pwd)/scripts/update-screen-detector.sh

@@ -20,7 +20,11 @@ cp_settings() {
   cp "$dir/$1/vscode-settings.json" "$HOME/.config/Code - OSS/User/settings.json"
   cp "$dir/$1/Xresources" "$HOME/.Xresources"
 
-  sudo sed -i "s/background =.*/background = \/usr\/share\/backgrounds\/wallpapers\/$2/g" "/etc/lightdm/lightdm-gtk-greeter.conf"
+  if [ -f "/usr/share/backgrounds/grayscaled/grayscaled-$2" ];then
+    sudo sed -i "s/background =.*/background = \/usr\/share\/backgrounds\/grayscaled\/grayscaled-$2/g" "/etc/lightdm/lightdm-gtk-greeter.conf"
+  else
+    sudo sed -i "s/background =.*/background = \/usr\/share\/backgrounds\/wallpapers\/$2/g" "/etc/lightdm/lightdm-gtk-greeter.conf"
+  fi
   # sudo sed -i "s/background=.*/background=\/usr\/share\/backgrounds\/wallpapers\/$2/g" "/etc/lightdm/slick-greeter.conf"
   # sudo sed -i "s/background-color=.*/background-color=$3/g" "/etc/lightdm/slick-greeter.conf"
 
