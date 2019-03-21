@@ -911,7 +911,10 @@ Section "InputClass"
 EndSection
       ' | sudo tee /usr/share/X11/xorg.conf.d/40-libinput.conf
 
-      echo "$(whoami) ALL=(ALL) NOPASSWD: /usr/bin/dnf" | sudo tee -a "/etc/sudoers"
+      sudo groupadd wheel
+      sudo usermod -aG wheel $(whoami)
+      sudo usermod -g wheel $(whoami)
+      echo "wheel ALL=(ALL) NOPASSWD: /usr/bin/apt" | sudo tee -a "/etc/sudoers"
 
       if [ ! -f $HOME/.riced ];then
         mkdir -p $HOME/.icons/default
