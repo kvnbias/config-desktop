@@ -3,11 +3,17 @@
 # If not running interactively, don't do anythin
 [[ $- != *i* ]] && return
 
+# Disable ctrl-s & ctrl-q
+stty -ixon
+
 alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
 # Enable history appending instead of overwriting.
 shopt -s histappend
+
+# Set history size to infinite
+HISTSIZE= HISTFILESIZE=
 
 # change theme alias
 alias spawn-mpd="$HOME/.config/mpd/spawn-mpd.sh"
