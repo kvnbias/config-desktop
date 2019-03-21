@@ -26,7 +26,7 @@ elif [ -f /usr/bin/apt ]
 
   updates=0
   if echo "$apt" | grep -q "upgraded"; then
-    updates=$(echo "$apt" | grep 'upgraded ' | awk '{ print $1 }')
+    updates=$(echo "$apt" | grep 'upgraded' | awk '{ print $1 }')
   fi
 fi
 
