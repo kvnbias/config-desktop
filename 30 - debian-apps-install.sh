@@ -375,12 +375,13 @@ while true; do
 Install Skype [yN]?   " is
   case $is in
     [Yy]* )
-      sudo apt install -y --no-install-recommends gnome-keyring gnome-keyring-pkcs11 gdebi
+      sudo apt install -y --no-install-recommends gnome-keyring gnome-keyring-pkcs11
       sudo apt install -y --no-install-recommends gconf-service gconf2-common gcr libgconf-2-4 libgcrui-3-1
       sudo apt install -y --no-install-recommends libpam-gnome-keyring p11-kit p11-kit-modules pinentry-gnome3
+
       cd /tmp
       wget -O "skypeforlinux-64.deb" "https://go.skype.com/skypeforlinux-64.deb"
-      sudo gdebi /tmp/skypeforlinux-64.deb
+      sudo dpkg -i /tmp/skypeforlinux-64.deb
       break;;
     * ) break;;
   esac

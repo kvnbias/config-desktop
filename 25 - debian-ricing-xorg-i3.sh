@@ -803,12 +803,12 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       cd /tmp
 
       # MANUAL: polybar
-      sudo apt install -y --no-install-recommends libcairo2-dev xcb-proto libxcb-util0-dev libxcb-cursor-dev libxcb-image0-dev libxcb-xrm-dev
+      sudo apt install -y --no-install-recommends libasound2-dev libcairo2-dev xcb-proto libxcb-util0-dev libxcb-cursor-dev libxcb-image0-dev libxcb-xrm-dev
       sudo apt install -y --no-install-recommends libcurl4-openssl-dev libjsoncpp-dev libmpdclient-dev libpulse-dev libnl-3-dev libiw-dev
       sudo apt install -y --no-install-recommends libxcb-composite0-dev libxcb-icccm4-dev libxcb-ewmh-dev 
       sudo apt install -y --no-install-recommends g++ gcc python git pkgconf cmake
 
-      sudo apt install -y --no-install-recommends alsa-tools libcairo2 libxcb-cursor0 libxcb-image0 libxcb-xrm0 libxcb-icccm4 libxcb-ewmh2 libxcb-composite0
+      sudo apt install -y --no-install-recommends libasound2 libasound2 alsa-tools libcairo2 libxcb-cursor0 libxcb-image0 libxcb-xrm0 libxcb-icccm4 libxcb-ewmh2 libxcb-composite0
       sudo apt install -y --no-install-recommends curl libjsoncpp1 libmpdclient2 libpulse0 libnl-3-200 wireless-tools python-xcbgen
 
       # ncmpcpp playlist
@@ -835,7 +835,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       rm -rf build/ && mkdir -p build && cd build/
       cmake .. && make -j$(nproc) && sudo make install
 
-      sudo apt remove -y libcairo2-dev xcb-proto libxcb-util0-dev libxcb-cursor-dev libxcb-image0-dev libxcb-xrm-dev
+      sudo apt remove -y libasound2-dev libcairo2-dev xcb-proto libxcb-util0-dev libxcb-cursor-dev libxcb-image0-dev libxcb-xrm-dev
       sudo apt remove -y libcurl4-openssl-dev libjsoncpp-dev libmpdclient-dev libpulse-dev libnl-3-dev libiw-dev
       sudo apt remove -y libxcb-composite0-dev libxcb-icccm4-dev libxcb-ewmh-dev
       cd /tmp

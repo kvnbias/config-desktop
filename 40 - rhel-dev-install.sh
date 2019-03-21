@@ -20,6 +20,10 @@ sudo dnf -y upgrade
 # extra
 sudo dnf install -y htop --releasever=$fedver
 
+sudo groupadd wheel
+sudo usermod -aG wheel $(whoami)
+sudo usermod -g wheel $(whoami)
+
 sudo mkdir /var/www/workspace
 sudo chown -R $(whoami):wheel /var/www/workspace
 
