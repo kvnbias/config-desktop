@@ -65,12 +65,72 @@ done
 while true; do
   read -p "
 
-Install NVM (NodeJS) [yN]?   " invm
-  case $invm in
+Install NodeJS [yN]?   " inode
+  case $inode in
     [Yy]* )
-      wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
-      yes | sudo pacman -S yarn
-      break;;
+      while true; do
+        read -p "
+
+Install via NVM [yN]?   " invm
+        case $invm in
+          [Yy]* )
+            wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+            yes | sudo pacman -S yarn
+            break 2;;
+          * )
+            yes | sudo pacman -S nodejs yarn
+            break 2;;
+        esac
+      done;;
+    * ) break;;
+  esac
+done
+
+while true; do
+  read -p "
+
+Install PHP [yN]?   " iphp
+  case $iphp in
+    [Yy]* )
+      while true; do
+        read -p "
+
+Install via php-build [yN]?   " iphpb
+        case $iphpb in
+          [Yy]* )
+            git clone https://github.com/php-build/php-build.git /tmp/php-build
+            cp $(pwd)/dev/php/installation/configure-options  /tmp/php-build/share/php-build/default_configure_options
+            mkdir -p $HOME/.config/dev
+            cp $(pwd)/dev/php/installation/switch-php.sh  $HOME/.config/dev/switch-php.sh
+
+            if ! cat $HOME/.bashrc | grep -q "alias php-switch"; then
+              echo "alias php-switch=\"\$HOME/.config/dev/switch-php.sh\"" | tee -a $HOME/.bashrc
+            fi
+
+            sudo /tmp/php-build/install.sh
+
+            while true; do
+              read -p "
+Installing build packages...
+
+autoconf         bzip2      curl               gcc         icu
+libjpeg-turbo    libpng     libxml2            libxslt     libzip
+make             openssl    postgresql-libs    readline    tar
+tidy
+
+Enter any key to proceed...   " eak
+              case $eak in
+                * ) break;;
+              esac
+            done
+            yes | sudo pacman -S autoconf bzip2 curl gcc icu libjpeg-turbo libpng tidy libxml2
+            yes | sudo pacman -S libxslt libzip make openssl postgresql-libs readline tar
+            break 2;;
+          * )
+            yes | sudo pacman -S php php-fpm composer
+            break 2;;
+        esac
+      done;;
     * ) break;;
   esac
 done
@@ -81,33 +141,6 @@ while true; do
 Install PHP-Build (PHP) [yN]?   " invm
   case $invm in
     [Yy]* )
-      git clone https://github.com/php-build/php-build.git /tmp/php-build
-      cp $(pwd)/dev/php/installation/configure-options  /tmp/php-build/share/php-build/default_configure_options
-      mkdir -p $HOME/.config/dev
-      cp $(pwd)/dev/php/installation/switch-php.sh  $HOME/.config/dev/switch-php.sh
-
-      if ! cat $HOME/.bashrc | grep -q "alias php-switch"; then
-        echo "alias php-switch=\"\$HOME/.config/dev/switch-php.sh\"" | tee -a $HOME/.bashrc
-      fi
-
-      sudo /tmp/php-build/install.sh
-
-      while true; do
-        read -p "
-Installing build packages...
-
-autoconf         bzip2      curl               gcc         icu
-libjpeg-turbo    libpng     libxml2            libxslt     libzip
-make             openssl    postgresql-libs    readline    tar
-tidy
-
-Enter any key to proceed...   " eak
-        case $eak in
-          * ) break;;
-        esac
-      done
-      yes | sudo pacman -S autoconf bzip2 curl gcc icu libjpeg-turbo libpng tidy libxml2
-      yes | sudo pacman -S libxslt libzip make openssl postgresql-libs readline tar
       break;;
     * ) break;;
   esac
@@ -115,3 +148,4 @@ done
 
 # cleaning
 yes | sudo pacman -Rns $(pacman -Qtdq)
+

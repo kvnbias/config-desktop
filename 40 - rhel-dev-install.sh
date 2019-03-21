@@ -84,13 +84,24 @@ done
 while true; do
   read -p "
 
-Install NVM (NodeJS) [yN]?   " invm
-  case $invm in
+Install NodeJS [yN]?   " inode
+  case $inode in
     [Yy]* )
-      wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
-      curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
-      sudo dnf install -y yarn --releasever=$fedver
-      break;;
+      while true; do
+        read -p "
+
+Install via NVM [yN]?   " invm
+        case $invm in
+          [Yy]* )
+            wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+            curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
+            sudo dnf install -y yarn --releasever=$fedver
+            break 2;;
+          * )
+            sudo dnf install -y nodejs yarn --releasever=$fedver
+            break 2;;
+        esac
+      done;;
     * ) break;;
   esac
 done
@@ -98,22 +109,28 @@ done
 while true; do
   read -p "
 
-Install PHP-Build (PHP) [yN]?   " invm
-  case $invm in
+Install PHP [yN]?   " iphp
+  case $iphp in
     [Yy]* )
-      git clone https://github.com/php-build/php-build.git /tmp/php-build
-      cp $(pwd)/dev/php/installation/configure-options  /tmp/php-build/share/php-build/default_configure_options
-      mkdir -p $HOME/.config/dev
-      cp $(pwd)/dev/php/installation/switch-php.sh  $HOME/.config/dev/switch-php.sh
-
-      if ! cat $HOME/.bashrc | grep -q "alias php-switch"; then
-        echo "alias php-switch=\"\$HOME/.config/dev/switch-php.sh\"" | tee -a $HOME/.bashrc
-      fi
-
-      sudo /tmp/php-build/install.sh
-
       while true; do
         read -p "
+
+Install via php-build [yN]?   " iphpb
+        case $iphpb in
+          [Yy]* )
+            git clone https://github.com/php-build/php-build.git /tmp/php-build
+            cp $(pwd)/dev/php/installation/configure-options  /tmp/php-build/share/php-build/default_configure_options
+            mkdir -p $HOME/.config/dev
+            cp $(pwd)/dev/php/installation/switch-php.sh  $HOME/.config/dev/switch-php.sh
+
+            if ! cat $HOME/.bashrc | grep -q "alias php-switch"; then
+              echo "alias php-switch=\"\$HOME/.config/dev/switch-php.sh\"" | tee -a $HOME/.bashrc
+            fi
+
+            sudo /tmp/php-build/install.sh
+
+            while true; do
+              read -p "
 Installing build packages...
 
 autoconf         bzip2            bzip2-devel            gcc-c++
@@ -123,17 +140,24 @@ make             openssl-devel    postgresql-devel       readline-devel
 tar
 
 Enter any key to proceed...   " eak
-        case $eak in
-          * ) break;;
+              case $eak in
+                * ) break;;
+              esac
+            done
+
+            sudo dnf install -y autoconf bzip2 bzip2-devel gcc-c++ libcurl-devel libicu-devel libjpeg-turbo-devel --releasever=$fedver
+            sudo dnf install -y libpng-devel libtidy-devel libxml2-devel libxslt-devel libzip-devel --releasever=$fedver
+            sudo dnf install -y make openssl-devel postgresql-devel readline-devel tar --releasever=$fedver
+            break 2;;
+          * )
+            sudo dnf install -y php php-fpm composer --releasever=$fedver
+            break 2;;
         esac
-      done
-      sudo dnf install -y autoconf bzip2 bzip2-devel gcc-c++ libcurl-devel libicu-devel libjpeg-turbo-devel --releasever=$fedver
-      sudo dnf install -y libpng-devel libtidy-devel libxml2-devel libxslt-devel libzip-devel --releasever=$fedver
-      sudo dnf install -y make openssl-devel postgresql-devel readline-devel tar --releasever=$fedver
-      break;;
+      done;;
     * ) break;;
   esac
 done
 
 cd $mainCWD
 sudo dnf -y autoremove
+
