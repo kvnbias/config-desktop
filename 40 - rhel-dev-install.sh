@@ -50,6 +50,8 @@ code --install-extension eamodio.gitlens &
 code --install-extension peterjausovec.vscode-docker &
 code --install-extension ms-vscode.theme-tomorrowkit &
 
+sleep 20
+
 while true; do
   read -p "
 
@@ -137,21 +139,14 @@ Install via php-build [yN]?   " iphpb
 
             sudo /tmp/php-build/install.sh
 
-            while true; do
-              read -p "
+            echo "
 Installing build packages...
 
 autoconf         bzip2            bzip2-devel            gcc-c++
 libcurl-devel    libicu-devel     libjpeg-turbo-devel    libpng-devel
 libtidy-devel    libxml2-devel    libxslt-devel          libzip-devel
 make             openssl-devel    postgresql-devel       readline-devel
-tar
-
-Enter any key to proceed...   " eak
-              case $eak in
-                * ) break;;
-              esac
-            done
+tar"
 
             sudo dnf install -y autoconf bzip2 bzip2-devel gcc-c++ libcurl-devel libicu-devel libjpeg-turbo-devel --releasever=$fedver
             sudo dnf install -y libpng-devel libtidy-devel libxml2-devel libxslt-devel libzip-devel --releasever=$fedver

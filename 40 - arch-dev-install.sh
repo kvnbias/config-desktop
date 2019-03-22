@@ -20,7 +20,9 @@ yes | sudo pacman -S code
 while true; do
   read -p "Enable vim mode on VSCode [yN]?   " evm
   case $evm in
-    [Yy]* ) code --install-extension vscodevim.vim &; break;;
+    [Yy]* )
+      code --install-extension vscodevim.vim &
+      break;;
     *) break;;
   esac
 done
@@ -33,6 +35,8 @@ done
 code --install-extension eamodio.gitlens &
 code --install-extension peterjausovec.vscode-docker &
 code --install-extension ms-vscode.theme-tomorrowkit &
+
+sleep 20
 
 while true; do
   read -p "
@@ -117,20 +121,14 @@ Install via php-build [yN]?   " iphpb
 
             sudo /tmp/php-build/install.sh
 
-            while true; do
-              read -p "
+            echo "
 Installing build packages...
 
 autoconf         bzip2      curl               gcc         icu
 libjpeg-turbo    libpng     libxml2            libxslt     libzip
 make             openssl    postgresql-libs    readline    tar
-tidy
+tidy"
 
-Enter any key to proceed...   " eak
-              case $eak in
-                * ) break;;
-              esac
-            done
             yes | sudo pacman -S autoconf bzip2 curl gcc icu libjpeg-turbo libpng tidy libxml2
             yes | sudo pacman -S libxslt libzip make openssl postgresql-libs readline tar
             break 2;;
@@ -139,17 +137,6 @@ Enter any key to proceed...   " eak
             break 2;;
         esac
       done;;
-    * ) break;;
-  esac
-done
-
-while true; do
-  read -p "
-
-Install PHP-Build (PHP) [yN]?   " invm
-  case $invm in
-    [Yy]* )
-      break;;
     * ) break;;
   esac
 done

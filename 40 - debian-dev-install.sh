@@ -33,7 +33,9 @@ sudo sysctl -p
 while true; do
   read -p "Enable vim mode on VSCode [yN]?   " evm
   case $evm in
-    [Yy]* ) code --install-extension vscodevim.vim &; break;;
+    [Yy]* )
+      code --install-extension vscodevim.vim &
+      break;;
     *) break;;
   esac
 done
@@ -47,6 +49,7 @@ code --install-extension eamodio.gitlens &
 code --install-extension peterjausovec.vscode-docker &
 code --install-extension ms-vscode.theme-tomorrowkit &
 
+sleep 20
 
 while true; do
   read -p "
@@ -138,21 +141,14 @@ Install via php-build [yN]?   " iphpb
 
             sudo /tmp/php-build/install.sh
 
-            while true; do
-              read -p "
+            echo "
 Installing build packages...
 
 autoconf               bison          bzip2                   g++
 libbison-dev           libbz2-dev     libcurl4-openssl-dev    libicu-dev
 libjpeg62-turbo-dev    libpng-dev     llibpq-dev              libreadline-dev
 libssl-dev             libtidy-dev    libxml2-dev             libxslt1-devel
-libzip-dev             make           re2c                    tar
-
-Enter any key to proceed...   " eak
-              case $eak in
-                * ) break;;
-              esac
-            done
+libzip-dev             make           re2c                    tar"
 
             sudo apt install -y --no-install-recommends autoconf bzip2  g++ libbz2-dev libcurl4-openssl-dev libicu-dev libjpeg62-turbo-dev
             sudo apt install -y --no-install-recommends libpng-dev llibpq-dev libreadline-dev libssl-dev libtidy-dev libxml2-dev libxslt1-devel libzip-dev
