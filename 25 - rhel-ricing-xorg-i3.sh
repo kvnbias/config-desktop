@@ -125,6 +125,7 @@ sudo dnf install -y gstreamer1-plugins-ugly-free gstreamer1-plugins-bad-freeworl
 
 # Flash Repo
 sudo dnf install -y http://linuxdownload.adobe.com/adobe-release/adobe-release-x86_64-1.0-1.noarch.rpm
+sudo dnf update
 
 sudo dnf install -y java-openjdk flash-plugin flash-player-ppapi --releasever=$fedver
 
@@ -505,7 +506,7 @@ if [ -d /etc/gdm ]; then
 fi
 
 # Greeter
-sudo dnf install -y lightdm --releasever=$fedver
+# sudo dnf install -y lightdm --releasever=$fedver
 sudo dnf install -y google-noto-sans-fonts google-noto-fonts-common --releasever=$fedver
 sudo dnf install -y lightdm-gtk --releasever=$fedver
 sudo dnf install -y lightdm-gtk-greeter-settings --releasever=$fedver
