@@ -171,7 +171,6 @@ Choose action   " blcstmztn
                   done
 
                   generate_menu_entry "$entryname" "$icpath" "$bootuuid" "/boot/$loader" "/boot/$initrd" "\"$kernelparams\""
-                  break;;
                 [2] )
                   outputs="KNAME,FSTYPE,TYPE,SIZE,UUID,LABEL,MOUNTPOINT"
                   while true; do
@@ -297,7 +296,7 @@ Choose action   " blcstmztn
                   fi
 
                   echo "Customization done..."
-                  break 2;;
+                  break 3;;
                 * ) echo "Invalid input.";;
               esac
             done;;
