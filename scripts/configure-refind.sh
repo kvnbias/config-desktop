@@ -121,7 +121,7 @@ Choose action   " blcstmztn
                   if [[ $bootuuid != *"UUID"* ]]; then
                     bootuuid=$boot
                   else
-                    bootuuid=$(echo $bootuuid | cut -f )
+                    bootuuid=$(echo $bootuuid | cut -f 2 -d '=' )
                   fi
 
                   while true;do
