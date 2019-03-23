@@ -130,7 +130,6 @@ Choose action   " blcstmztn
                                     * )
                                       if lsblk -i -o $outputs | grep 'part' | grep 'swap' | grep -q "$sprtn "; then
                                         swapuuid=$(lsblk -i -o $outputs | grep 'part' | grep 'swap' | grep "$sprtn "  | cut -f 11 -d ' ')
-                                        echo $swapuuid
                                         kernelparams+="resume=$swapuuid"
                                         echo "$swapuuid added..."
                                         break 2
@@ -154,7 +153,7 @@ Choose action   " blcstmztn
                                   case $akparamsval in
                                     * )
                                       if [ ! -z "$akparamsval" ]; then
-                                        echo $akparamsval
+                                        echo "'$akparamsval' added"
                                         kernelparams+=" $akparamsval"
                                       fi
                                       break;;
@@ -237,9 +236,8 @@ Choose action   " blcstmztn
                             * )
                               if lsblk -i -o $outputs | grep 'part' | grep 'swap' | grep -q "$sprtn "; then
                                 swapuuid=$(lsblk -i -o $outputs | grep 'part' | grep 'swap' | grep "$sprtn "  | head -1 | cut -f 11 -d ' ')
-                                echo $swapuuid
                                 kernelparams+="resume=$swapuuid"
-                                echo "$swapuuid added..."
+                                echo "'$swapuuid' added..."
                                 break 2
                               else
                                 echo "Swap partition doesn't exists..."
@@ -262,7 +260,7 @@ Choose action   " blcstmztn
                           case $akparamsval in
                             * )
                               if [ ! -z "$akparamsval" ]; then
-                                echo $akparamsval
+                                echo "$akparamsval added."
                                 kernelparams+=" $akparamsval"
                               fi
                               break;;
