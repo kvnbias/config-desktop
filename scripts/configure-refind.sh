@@ -109,7 +109,7 @@ Choose action   " blcstmztn
                   if [[ $rootuuid != *"UUID"* ]]; then
                     rootuuid=$root
                   else
-                    rootuuid=$(echo $root | cut -f 2 -d '=')
+                    rootuuid=$(echo $rootuuid | cut -f 2 -d '=')
                   fi
 
                   boot=$(mount -v | grep 'on /boot/efi ' | cut -f 1 -d ' ')
