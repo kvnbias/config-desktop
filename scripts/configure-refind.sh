@@ -170,7 +170,7 @@ Choose action   " blcstmztn
                     esac
                   done
 
-                  generate_menu_entry "$entryname" "$icpath" "$bootuuid" "/boot/$loader" "/boot/$initrd" "\"$kernelparams\""
+                  generate_menu_entry "$entryname" "$icpath" "$bootuuid" "/boot/$loader" "/boot/$initrd" "\"$kernelparams\"";;
                 [2] )
                   outputs="KNAME,FSTYPE,TYPE,SIZE,UUID,LABEL,MOUNTPOINT"
                   while true; do
