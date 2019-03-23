@@ -39,11 +39,12 @@ Do you wish to proceed [yN]?   " prcd
           [Yy]* )
             if [ -f /boot/efi/EFI/refind/refind.conf.bup ]; then
               echo "Backup already exists. Proceeding operation."
-              echo "" | sudo tee /boot/efi/EFI/refind/refind.conf
-              # echo "" | sudo tee $(pwd)/refind.conf
             else
               sudo cp -a /boot/efi/EFI/refind/refind.conf /boot/efi/EFI/refind/refind.conf.bup
             fi
+
+            echo "" | sudo tee /boot/efi/EFI/refind/refind.conf
+            # echo "" | sudo tee $(pwd)/refind.conf
 
             while true; do
               read -p "
@@ -128,7 +129,7 @@ Choose action   " blcstmztn
                                     [Ee]* ) break;;
                                     * )
                                       if lsblk -i -o $outputs | grep 'part' | grep 'swap' | grep -q "$sprtn "; then
-                                        swapuuid=$(echo -n $(lsblk -i -o $outputs | grep 'part' | grep 'swap' | grep "$sprtn "  | head -1 | cut -f 12 -d ' '))
+                                        swapuuid=$(lsblk -i -o $outputs | grep 'part' | grep 'swap' | grep "$sprtn "  | cut -f 11 -d ' ')
                                         echo $swapuuid
                                         kernelparams+="resume=$swapuuid"
                                         echo "$swapuuid added..."
@@ -175,6 +176,7 @@ Choose action   " blcstmztn
                     esac
                   done;;
                 [2] )
+                  outputs="KNAME,FSTYPE,TYPE,SIZE,UUID,LABEL,MOUNTPOINT"
                   distro=$(echo -n $(cat /etc/*-release | grep ^ID= | sed -e "s/ID=//"))
                   themeStr='include themes/rEFInd-minimal/theme.conf'
 
@@ -234,7 +236,7 @@ Choose action   " blcstmztn
                             [Ee]* ) break;;
                             * )
                               if lsblk -i -o $outputs | grep 'part' | grep 'swap' | grep -q "$sprtn "; then
-                                swapuuid=$(echo -n $(lsblk -i -o $outputs | grep 'part' | grep 'swap' | grep "$sprtn "  | head -1 | cut -f 12 -d ' '))
+                                swapuuid=$(lsblk -i -o $outputs | grep 'part' | grep 'swap' | grep "$sprtn "  | head -1 | cut -f 11 -d ' ')
                                 echo $swapuuid
                                 kernelparams+="resume=$swapuuid"
                                 echo "$swapuuid added..."
@@ -249,7 +251,7 @@ Choose action   " blcstmztn
                   done
      
                   uuid=$(echo $uuid | sed 's/\"//g')
-                  kernelparams+="root=$uuid rw"
+                  kernelparams+=" root=$uuid rw"
 
                   while true; do
                     read -p "Do you want to add kernel params (for apparmor, selinux etc) [yN]?   " akparams
