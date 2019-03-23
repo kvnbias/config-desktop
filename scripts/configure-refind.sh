@@ -1,15 +1,158 @@
 
+outputs="KNAME,FSTYPE,TYPE,SIZE,UUID,LABEL,MOUNTPOINT"
+entryname=
+icon=
+volume=
+loader=
+initrd=
+options=
+
 generate_menu_entry() {
   echo "
-menuentry \"$1\" {
-    icon     $2
-    volume   $3
-    loader   $4
-    initrd   $5
-    options  $6
+menuentry \"$entryname\" {
+    icon     $icon
+    volume   \"$volume\"
+    loader   $loader
+    initrd   $initrd
+    options \"$options\"
 }
 " | sudo tee -a /boot/efi/EFI/refind/refind.conf
 # " | sudo tee -a $(pwd)/refind.conf
+}
+
+declare_entryname() {
+  while true; do
+    read -p "Enter this OS's entryname:   " mosen
+    case $mosen in
+      * )
+        if [ -z "$mosen" ]; then
+          echo "Entry name is required..."
+        else
+          entryname=$mosen
+          break
+        fi
+        ;;
+    esac
+  done
+}
+
+declare_icon() {
+  while true; do
+    read -p "This will be used as an icon. Enter OS/Distro:   " tdistro
+    case $tdistro in
+      * )
+        if [ -z $tdistro ]; then
+          echo "Distro/OS input is required... "
+        else
+          distro=$(echo -n "$tdistro" | sed -e 's/\(.*\)/\L\1/')
+          break
+        fi;;
+    esac
+  done
+
+  themeStr='include themes/rEFInd-minimal/theme.conf'
+  if sudo cat /boot/efi/EFI/refind/refind.conf.bup | grep -q "$themeStr"; then
+    if [ -f "/boot/efi/EFI/refind/themes/rEFInd-minimal/icons/os_$distro.png" ]; then
+      icon="/EFI/refind/themes/rEFInd-minimal/icons/os_$distro.png"
+    else
+      icon="/EFI/refind/themes/rEFInd-minimal/icons/os_linux.png"
+    fi
+  else
+    if [ -f "/boot/efi/EFI/refind/icons/os_$distro.png" ]; then
+      icon="/EFI/refind/icons/os_$distro.png"
+    else
+      icon="/EFI/refind/icons/os_linux.png"
+    fi
+  fi
+}
+
+declare_volume(){
+  if sudo blkid | grep $1 | head -1 | grep -q 'PARTLABEL'; then
+    volume=$(sudo blkid | grep $1 | head -1 | awk -F 'PARTLABEL="' '{print $2}' | awk -F '"' '{ print $1 }')
+  else
+    while true; do
+      lsblk -o NAME,TYPE,SIZE,MODEL | grep -v 'part'
+      echo "This partition has no name. Enter a name to proceed."
+      read -p "Target partition (e.g. sdX)   " target
+      case $target in
+        * )
+          if lsblk -o NAME,TYPE,SIZE,MODEL | grep -v 'part' | grep -q $target; then
+            while true; do
+              sudo parted -l
+              read -p "Partition number   " number
+              case $number in
+                * )
+                  if lsblk -o KNAME | grep -v 'part' | grep -q "/dev/$target$number "; then
+                    while true; do
+                      read -p "Partition name   " name
+                      case $name in
+                        * )
+                          parted $target name $name $number
+                          volume="$name"
+                          break 3;;
+                      esac
+                    done
+                  else
+                    echo "Invalid partition number..."
+                  fi;;
+              esac
+            done
+          else
+            echo "Invalid partition..."
+          fi;;
+      esac
+    done
+  fi
+}
+
+declare_loader_initrd() {
+  loader=$(echo -n /boot/$(ls "$1" | grep 'vmlinuz' | grep -v -e 'rescue' -e 'fallback' | tail -1))
+  initrd=$(echo -n /boot/$(ls "$1" | grep 'init' | grep -v -e 'rescue' -e 'fallback' | tail -1))
+}
+
+add_kernel_params(){
+  while true;do
+    read -p "Add hibernation on kernel parameters [yN]?   " ahbrnt
+    case $ahbrnt in
+      [Yy]* )
+        while true; do
+          lsblk -i -o $outputs | grep 'part' | grep 'swap'
+          read -p "Choose swap partition (sdXn) or [e]xit   " sprtn
+          case $sprtn in
+            [Ee]* ) break;;
+            * )
+              if lsblk -i -o $outputs | grep 'part' | grep 'swap' | grep -q "$sprtn "; then
+                swapuuid=$(lsblk -i -o $outputs | grep 'part' | grep 'swap' | grep "$sprtn "  | head -1 | cut -f 12 -d ' ')
+                options+=" resume=$swapuuid"
+                echo "'$swapuuid' added..."
+                break 2
+              else
+                echo "Swap partition doesn't exists..."
+              fi;;
+          esac
+        done;;
+      * ) break;;
+    esac
+  done
+
+  while true; do
+    read -p "Do you want to add kernel params (for apparmor, selinux etc) [yN]?   " akparams
+    case $akparams in
+      [Yy]* )
+        while true; do
+          read -p "Enter kernel params. Use <space> as delimiter (e.g. 'security=selinux selinux=1 quiet')   " akparamsval
+          case $akparamsval in
+            * )
+              if [ ! -z "$akparamsval" ]; then
+                echo "$akparamsval added."
+                options+=" $akparamsval"
+              fi
+              break;;
+          esac
+        done;;
+      * ) break;;
+    esac
+  done
 }
 
 while true; do
@@ -62,45 +205,15 @@ Default=2
 Choose action   " blcstmztn
               case $blcstmztn in
                 [1] )
-                  outputs="KNAME,FSTYPE,TYPE,SIZE,UUID,LABEL,MOUNTPOINT"
-                  distro=$(echo -n $(cat /etc/*-release | grep ^ID= | sed -e "s/ID=//"))
-                  themeStr='include themes/rEFInd-minimal/theme.conf'
+                  options=
 
-                  entryname=
-                  while true; do
-                    read -p "Enter this OS's entryname:   " mosen
-                    case $mosen in
-                      * )
-                        if [ -z "$mosen" ]; then
-                          echo "Entry name is required..."
-                        else
-                          entryname=$mosen
-                          break
-                        fi
-                        ;;
-                    esac
-                  done
-
-                  if sudo cat /boot/efi/EFI/refind/refind.conf.bup | grep -q "$themeStr"; then
-                    if [ -f "/boot/efi/EFI/refind/themes/rEFInd-minimal/icons/os_$distro.png" ]; then
-                      icpath="/EFI/refind/themes/rEFInd-minimal/icons/os_$distro.png"
-                    else
-                      icpath="/EFI/refind/themes/rEFInd-minimal/icons/os_linux.png"
-                    fi
-                  else
-                    if [ -f "/boot/efi/EFI/refind/icons/os_$distro.png" ]; then
-                      icpath="/EFI/refind/icons/os_$distro.png"
-                    else
-                      icpath="/EFI/refind/icons/os_linux.png"
-                    fi
-                  fi
-
-                  loader=$(echo -n $(ls "/boot" | grep 'vmlinuz' | grep -v -e 'rescue' -e 'fallback' | tail -1))
-                  initrd=$(echo -n $(ls "/boot" | grep 'init' | grep -v -e 'rescue' -e 'fallback' | tail -1))
-
-                  kernelparams=
+                  declare_entryname
+                  declare_icon
+                  declare_loader_initrd '/boot'
 
                   root=$(mount -v | grep 'on / ' | cut -f 1 -d ' ')
+                  declare_volume "$root"
+
                   rootuuid=$(sudo blkid | grep $root | head -1 | cut -f 2 -d ' ')
                   if [[ $rootuuid == *"LABEL"* ]]; then
                     rootuuid=$(sudo blkid | grep $root | cut -f 3 -d ' ')
@@ -108,71 +221,16 @@ Choose action   " blcstmztn
 
                   if [[ $rootuuid != *"UUID"* ]]; then
                     rootuuid=$root
-                  else
-                    rootuuid=$(echo $rootuuid | cut -f 2 -d '=')
                   fi
-
-                  boot=$(mount -v | grep 'on /boot/efi ' | cut -f 1 -d ' ')
-                  bootuuid=$(sudo blkid | grep $boot | head -1 | cut -f 2 -d ' ')
-                  if [[ $bootuuid == *"LABEL"* ]]; then
-                    bootuuid=$(sudo blkid | grep $boot | cut -f 3 -d ' ')
-                  fi
-
-                  if [[ $bootuuid != *"UUID"* ]]; then
-                    bootuuid=$boot
-                  else
-                    bootuuid=$(echo $bootuuid | cut -f 2 -d '=' )
-                  fi
-
-                  while true;do
-                    read -p "Add hibernation on kernel parameters [yN]?   " ahbrnt
-                    case $ahbrnt in
-                      [Yy]* )
-                        while true; do
-                          lsblk -i -o $outputs | grep 'part' | grep 'swap'
-                          read -p "Choose swap partition (sdXn) or [e]xit   " sprtn
-                          case $sprtn in
-                            [Ee]* ) break;;
-                            * )
-                              if lsblk -i -o $outputs | grep 'part' | grep 'swap' | grep -q "$sprtn "; then
-                                swapuuid=$(lsblk -i -o $outputs | grep 'part' | grep 'swap' | grep "$sprtn "  | head -1 | cut -f 11 -d ' ')
-                                kernelparams+="resume=$swapuuid"
-                                echo "'$swapuuid' added..."
-                                break 2
-                              else
-                                echo "Swap partition doesn't exists..."
-                              fi;;
-                          esac
-                        done;;
-                      * ) break;;
-                    esac
-                  done
 
                   rootuuid=$(echo $rootuuid | sed 's/\"//g')
-                  kernelparams+=" root=UUID=$rootuuid rw"
+                  options+="ro root=$rootuuid"
 
-                  while true; do
-                    read -p "Do you want to add kernel params (for apparmor, selinux etc) [yN]?   " akparams
-                    case $akparams in
-                      [Yy]* )
-                        while true; do
-                          read -p "Enter kernel params. Use <space> as delimiter (e.g. 'security=selinux selinux=1 quiet')   " akparamsval
-                          case $akparamsval in
-                            * )
-                              if [ ! -z "$akparamsval" ]; then
-                                echo "$akparamsval added."
-                                kernelparams+=" $akparamsval"
-                              fi
-                              break;;
-                          esac
-                        done;;
-                      * ) break;;
-                    esac
-                  done
-
-                  generate_menu_entry "$entryname" "$icpath" "$bootuuid" "/boot/$loader" "/boot/$initrd" "\"$kernelparams\"";;
+                  add_kernel_params
+                  generate_menu_entry;;
                 [2] )
-                  outputs="KNAME,FSTYPE,TYPE,SIZE,UUID,LABEL,MOUNTPOINT"
+                  options=
+
                   while true; do
                     lsblk -i -o $outputs | grep 'part' | grep 'ext4' | grep -v -e 'swap' -e '/'
                     read -p "Enter partition (e.g. sdXn)   " prttn
@@ -183,98 +241,16 @@ Choose action   " blcstmztn
                           echo "Mounting /dev/$prttn"
                           sudo mount "/dev/$prttn" "/mnt-refind"
 
-                          entryname="Entry $prttn"
-                          while true; do
-                            read -p "Enter name of this entry:   " ename
-                            case $ename in
-                              *)
-                                if [ ! -z "$ename" ]; then
-                                  entryname="$ename"
-                                  break
-                                else
-                                  echo "Entry name is required..."
-                                fi;;
-                            esac
-                          done
+                          declare_entryname
+                          declare_volume "/dev/$prttn"
+                          declare_icon
+                          declare_loader_initrd '/mnt-refind/boot'
 
-                          icpath="\\EFI\\refind\\icons\\os_linux.png"
-                          osname="Linux"
-                          while true; do
-                            read -p "Enter name of the distro:   " dname
-                            case $dname in
-                              * )
-                                distro=$(echo -n "$dname" | sed -e 's/\(.*\)/\L\1/')
-                                themeStr='include themes/rEFInd-minimal/theme.conf'
-                                if sudo cat /boot/efi/EFI/refind/refind.conf.bup | grep -q "$themeStr"; then
-                                  if [ -f "/boot/efi/EFI/refind/themes/rEFInd-minimal/icons/os_$distro.png" ]; then
-                                    icpath="/EFI/refind/themes/rEFInd-minimal/icons/os_$distro.png"
-                                  else
-                                    icpath="/EFI/refind/themes/rEFInd-minimal/icons/os_linux.png"
-                                  fi
-                                  break
-                                else
-                                  if [ -f "/boot/efi/EFI/refind/icons/os_$distro.png" ]; then
-                                    icpath="/EFI/refind/icons/os_$distro.png"
-                                  else
-                                    icpath="/EFI/refind/icons/os_linux.png"
-                                  fi
-                                  break
-                                fi;;
-                            esac
-                          done
-
-                          loader=$(echo -n $(ls "/mnt-refind/boot" | grep 'vmlinuz' | grep -v -e 'rescue' -e 'fallback' | tail -1))
-                          initrd=$(echo -n $(ls "/mnt-refind/boot" | grep 'init' | grep -v -e 'rescue' -e 'fallback' | tail -1))
-
-                          kernelparams=
                           uuid=$(lsblk -i -o $outputs | grep 'part' | grep 'ext4' | grep -v -e 'swap' | grep "$prttn " 2> /dev/null | head -1 | cut -f 11 -d ' ')
+                          options+="ro root=UUID=$uuid"
 
-                          while true;do
-                            read -p "Add hibernation on kernel parameters [yN]?   " ahbrnt
-                            case $ahbrnt in
-                              [Yy]* )
-                                while true; do
-                                  lsblk -i -o $outputs | grep 'part' | grep 'swap'
-                                  read -p "Choose swap partition (sdXn) or [e]xit   " sprtn
-                                  case $sprtn in
-                                    [Ee]* ) break;;
-                                    * )
-                                      if lsblk -i -o $outputs | grep 'part' | grep 'swap' | grep -q "$sprtn "; then
-                                        swapuuid=$(lsblk -i -o $outputs | grep 'part' | grep 'swap' | grep "$sprtn "  | cut -f 11 -d ' ')
-                                        kernelparams+="resume=$swapuuid"
-                                        echo "$swapuuid added..."
-                                        break 2
-                                      else
-                                        echo "Swap partition doesn't exists..."
-                                      fi;;
-                                  esac
-                                done;;
-                              * ) break;;
-                            esac
-                          done
-
-                          kernelparams+=" root=UUID=$uuid rw"
-
-                          while true; do
-                            read -p "Do you want to add kernel params (for apparmor, selinux etc) [yN]?   " akparams
-                            case $akparams in
-                              [Yy]* )
-                                while true; do
-                                  read -p "Enter kernel params. Use <space> as delimiter (e.g. 'security=selinux selinux=1 quiet')   " akparamsval
-                                  case $akparamsval in
-                                    * )
-                                      if [ ! -z "$akparamsval" ]; then
-                                        echo "'$akparamsval' added"
-                                        kernelparams+=" $akparamsval"
-                                      fi
-                                      break;;
-                                  esac
-                                done;;
-                              * ) break;;
-                            esac
-                          done
-
-                          generate_menu_entry "$entryname" "$icpath" "$uuid" "/boot/$loader" "/boot/$initrd" "\"$kernelparams\""
+                          add_kernel_params
+                          generate_menu_entry
 
                           echo "Unmounting /dev/$prttn"
                           sudo umount "/dev/$prttn"
