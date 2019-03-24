@@ -12,12 +12,18 @@ generate_menu_entry() {
 menuentry \"$entryname\" {
     icon     $icon
     volume   \"$volume\"
-    loader   $loader
-    initrd   $initrd
-    options \"$options\"
-}
-" | sudo tee -a /boot/efi/EFI/refind/refind.conf
-# " | sudo tee -a $(pwd)/refind.conf
+    loader   $loader" | sudo tee -a /boot/efi/EFI/refind/refind.conf
+
+  if [ ! -z "$initrd" ]; then
+    echo "    initrd   $initrd" | sudo tee -a /boot/efi/EFI/refind/refind.conf
+  fi
+
+  if [ ! -z "$options" ]; then
+    echo "    options \"$options\"" | sudo tee -a /boot/efi/EFI/refind/refind.conf
+  fi
+
+  echo "} " | sudo tee -a /boot/efi/EFI/refind/refind.conf
+  # echo "} " | sudo tee -a $(pwd)/refind.conf
 }
 
 declare_entryname() {
@@ -38,7 +44,7 @@ declare_entryname() {
 
 declare_icon() {
   while true; do
-    read -p "This will be used as an icon. Enter OS/Distro:   " tdistro
+    read -p "Enter OS/Distro (e.g. arch, fedora, mac):   " tdistro
     case $tdistro in
       * )
         if [ -z $tdistro ]; then
@@ -67,42 +73,44 @@ declare_icon() {
 }
 
 declare_volume(){
-  if sudo blkid | grep $1 | head -1 | grep -q 'PARTLABEL'; then
-    volume=$(sudo blkid | grep $1 | head -1 | awk -F 'PARTLABEL="' '{print $2}' | awk -F '"' '{ print $1 }')
-  else
-    while true; do
-      lsblk -o NAME,TYPE,SIZE,MODEL | grep -v 'part'
-      echo "This partition has no name. Enter a name to proceed."
-      read -p "Target partition (e.g. sdX)   " target
-      case $target in
-        * )
-          if lsblk -o NAME,TYPE,SIZE,MODEL | grep -v 'part' | grep -q $target; then
-            while true; do
-              sudo parted -l
-              read -p "Partition number   " number
-              case $number in
-                * )
-                  if lsblk -o KNAME | grep -v 'part' | grep -q "/dev/$target$number "; then
-                    while true; do
-                      read -p "Partition name   " name
-                      case $name in
-                        * )
-                          parted $target name $name $number
-                          volume="$name"
-                          break 3;;
-                      esac
-                    done
-                  else
-                    echo "Invalid partition number..."
-                  fi;;
-              esac
-            done
-          else
-            echo "Invalid partition..."
-          fi;;
-      esac
-    done
-  fi
+  volume=$(sudo blkid | grep $1 | head -1 | awk -F 'PARTUUID="' '{print $2}' | awk -F '"' '{ print $1 }')
+
+  # if sudo blkid | grep $1 | head -1 | grep -q 'PARTLABEL'; then
+  #   volume=$(sudo blkid | grep $1 | head -1 | awk -F 'PARTUUID="' '{print $2}' | awk -F '"' '{ print $1 }')
+  # else
+  #   while true; do
+  #     lsblk -o NAME,TYPE,SIZE,MODEL | grep -v 'part'
+  #     echo "This partition has no name. Enter a name to proceed."
+  #     read -p "Target partition (e.g. sdX)   " target
+  #     case $target in
+  #       * )
+  #         if lsblk -o NAME,TYPE,SIZE,MODEL | grep -v 'part' | grep -q $target; then
+  #           while true; do
+  #             sudo parted -l
+  #             read -p "Partition number   " number
+  #             case $number in
+  #               * )
+  #                 if lsblk -o KNAME | grep -v 'part' | grep -q "/dev/$target$number "; then
+  #                   while true; do
+  #                     read -p "Partition name   " name
+  #                     case $name in
+  #                       * )
+  #                         parted $target name $name $number
+  #                         volume="$name"
+  #                         break 3;;
+  #                     esac
+  #                   done
+  #                 else
+  #                   echo "Invalid partition number..."
+  #                 fi;;
+  #             esac
+  #           done
+  #         else
+  #           echo "Invalid partition..."
+  #         fi;;
+  #     esac
+  #   done
+  # fi
 }
 
 declare_loader_initrd() {
@@ -164,6 +172,10 @@ NOTES:
 * This script assumes you are using UEFI mounted on /boo/efi
 * This script assumes refind config is located on:
     /boot/efi/EFI/refind/refind.conf
+* MacOS volumes cannot be fetch in linux. Execute the command
+  below in macOS to get the volume name:
+    diskutil list
+    diskutil info </dev/diskN>
 
 [1] Customize
 [2] Restore Defaults
@@ -195,16 +207,25 @@ Do you wish to proceed [yN]?   " prcd
 Bootloader Customization
 
 NOTES
-* The menuentry of this distro will be appended automatically in \"Done\" action.
+* MacOS volumes cannot be fetch in linux. Execute the command
+  below in macOS to get the volume name:
+    diskutil list
+    diskutil info </dev/diskN>
 
 [1] Add main menuentry
 [2] Add other menuentry
-[3] Done
+[3] Add macOS menuentry
 
-Default=2
+[0] Done
+
 Choose action   " blcstmztn
               case $blcstmztn in
                 [1] )
+                  entryname=
+                  icon=
+                  volume=
+                  loader=
+                  initrd=
                   options=
 
                   declare_entryname
@@ -224,11 +245,16 @@ Choose action   " blcstmztn
                   fi
 
                   rootuuid=$(echo $rootuuid | sed 's/\"//g')
-                  options+="ro root=$rootuuid"
+                  options+="rw root=$rootuuid"
 
                   add_kernel_params
                   generate_menu_entry;;
                 [2] )
+                  entryname=
+                  icon=
+                  volume=
+                  loader=
+                  initrd=
                   options=
 
                   while true; do
@@ -247,7 +273,7 @@ Choose action   " blcstmztn
                           declare_loader_initrd '/mnt-refind/boot'
 
                           uuid=$(lsblk -i -o $outputs | grep 'part' | grep 'ext4' | grep -v -e 'swap' | grep "$prttn " 2> /dev/null | head -1 | cut -f 11 -d ' ')
-                          options+="ro root=UUID=$uuid"
+                          options+="rw root=UUID=$uuid"
 
                           add_kernel_params
                           generate_menu_entry
@@ -257,15 +283,57 @@ Choose action   " blcstmztn
                           break
                         else
                           echo "$prttn not found..."
-                        fi
-                        ;;
+                        fi;;
                     esac
                   done;;
                 [3] )
-                  themeStr='include themes/rEFInd-minimal/theme.conf'
+                  entryname=
+                  icon=
+                  volume=
+                  loader=
+                  initrd=
+                  options=
+
+                  declare_entryname
+                  declare_icon
+
+                  while true; do
+                    read -p 'Enter volume name:   ' vname
+                    case $vname in
+                      * )
+                        if [ ! -z "$vname" ]; then
+                          volume="$vname"
+                          break
+                        else
+                          echo "Volume name is required for macOS..."
+                        fi;;
+                    esac
+                  done
+
+                  loader='\System\Library\CoreServices\boot.efi'
+
+                  generate_menu_entry
+                  ;;
+                [0] )
+
+                  scanfor='manual,external'
+                  while true; do
+                    read -p 'Append autoscan results [yN]?   ' aas
+                    case $aas in
+                      [Yy]* )
+                        scanfor+=',internal'
+                        break;;
+                      * ) break;;
+                    esac
+                  done
+
+                  echo "scanfor $scanfor" | sudo tee -a /boot/efi/EFI/refind/refind.conf
+                  # echo "scanfor $scanfor" | sudo tee -a $(pwd)/refind.conf
+
                   echo "timeout 10" | sudo tee -a /boot/efi/EFI/refind/refind.conf
                   # echo "timeout 10" | sudo tee -a $(pwd)/refind.conf
 
+                  themeStr='include themes/rEFInd-minimal/theme.conf'
                   if sudo cat /boot/efi/EFI/refind/refind.conf.bup | grep -q "$themeStr"; then
                     echo "$themeStr" | sudo tee -a /boot/efi/EFI/refind/refind.conf
                     # echo "$themeStr" | sudo tee -a $(pwd)/refind.conf
