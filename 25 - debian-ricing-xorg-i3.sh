@@ -155,6 +155,10 @@ done
 
 ## GPU DRIVERS
 generate_intel_gpu_config() {
+  if [ ! -d /etc/X11/xorg.conf.d ];then
+    sudo mkdir -p /etc/X11/xorg.conf.d
+  fi
+
   if [ ! -f /etc/X11/xorg.conf.d/20-intel.conf ];then
     sudo touch /etc/X11/xorg.conf.d/20-intel.conf;
   fi
@@ -186,6 +190,10 @@ EndSection
 }
 
 generate_ati_gpu_config() {
+  if [ ! -d /etc/X11/xorg.conf.d ];then
+    sudo mkdir -p /etc/X11/xorg.conf.d
+  fi
+
   if [ ! -f /etc/X11/xorg.conf.d/20-radeon.conf ];then
     sudo touch /etc/X11/xorg.conf.d/20-radeon.conf;
   fi
@@ -220,6 +228,10 @@ EndSection
 }
 
 generate_amd_gpu_config() {
+  if [ ! -d /etc/X11/xorg.conf.d ];then
+    sudo mkdir -p /etc/X11/xorg.conf.d
+  fi
+
   if [ ! -f /etc/X11/xorg.conf.d/10-screen.conf ];then
     sudo touch /etc/X11/xorg.conf.d/10-screen.conf;
   fi
@@ -397,6 +409,10 @@ done
 
 # Adding intel backlight
 if ls /sys/class/backlight | grep -q "^intel_backlight$"; then
+  if [ ! -d /etc/X11/xorg.conf.d ];then
+    sudo mkdir -p /etc/X11/xorg.conf.d
+  fi
+
   if [ !$(ls /etc/X11/xorg.conf.d | grep -q ^20-intel.conf$) ];then
     sudo touch /etc/X11/xorg.conf.d/20-intel.conf;
   fi
@@ -407,7 +423,7 @@ Section "Device"
   Driver      "intel"
   Option      "Backlight"  "intel_backlight"
 EndSection
-  ' | sudo tee /etc/X11/xorg.conf.d/20-intel.conf;
+  ' | sudo tee -a /etc/X11/xorg.conf.d/20-intel.conf;
     echo Added intel_backlight;
 fi
 
@@ -679,6 +695,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
 
       # network manager
       sudo apt install -y --no-install-recommends network-manager network-manager-gnome
+      sudo sed -i 's/managed=false/managed=true/g' /etc/NetworkManager/NetworkManager.conf
       sudo systemctl enable NetworkManager
 
       # fonts - fc-list
@@ -719,12 +736,14 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       # MANUAL: i3lock-color. Some are already installed
       sudo apt remove -y i3lock
       sudo apt install -y --no-install-recommends libcairo2-dev libev-dev libturbojpeg0-dev libxcb-composite0-dev libxkbcommon-x11-dev
+      sudo apt install -y --no-install-recommends libxcb-randr0-dev libjpeg62-turbo-dev
       sudo apt install -y --no-install-recommends libpam0g-dev libxcb-util0-dev libxcb-image0-dev libxcb-xrm-dev libxcb-xinerama0-dev
       sudo apt install -y --no-install-recommends autoconf automake
 
       sudo apt install -y --no-install-recommends libturbojpeg  #elementary
       sudo apt install -y --no-install-recommends libturbojpeg0 # debian
 
+      sudo apt install -y --no-install-recommends libxcb-randr0 libjpeg62-turbo
       sudo apt install -y --no-install-recommends libcairo2 libev4 libxcb-composite0 libxkbcommon-x11-0
       sudo apt install -y --no-install-recommends libxkbcommon0 libxcb1 libxcb-image0 libxcb-xinerama0
 
@@ -743,7 +762,8 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       echo "auth include login" | sudo tee /etc/pam.d/i3lock
       cd /tmp
 
-      sudo apt remove -y libcairo2-dev libev-dev libturbojpeg0-dev libxcb-composite0 libxkbcommon-x11-dev
+      sudo apt remove -y libcairo2-dev libev-dev libturbojpeg0-dev libxcb-composite0-dev libxkbcommon-x11-dev
+      sudo apt remove -y libxcb-randr0-dev libjpeg62-turbo-dev
       sudo apt remove -y libpam0g-dev libxcb-util0-dev libxcb-image0-dev libxcb-xrm-dev libxcb-xinerama0-dev
 
       # terminal-based file viewer
