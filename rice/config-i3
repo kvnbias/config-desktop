@@ -175,7 +175,7 @@ gaps outer 2
 #         focused_workspace  #D6C4A0            #D6C4A0            #060D29
 #         active_workspace   #D6C4A0            #D6C4A0            #060D29
 #         inactive_workspace #D6C4A0            #D6C4A0            #A89267
-#         urgent_workspace   #D6C4A0            #D6C4A0            #92082A
+#         urgent_workspace   #D6C4A0
 #     }
 # }
 
@@ -220,11 +220,11 @@ mode "$mode_scrot" {
 bindsym $mod+0 mode "$mode_system"
 set $mode_system [l]ock | [e]xit | [u]ser switch | [s]uspend | [h]ibernate | [r]eboot | [S]hutdown
 mode "$mode_system" {
-    bindsym l exec --no-startup-id ~/.config/display/lockscreen.sh, mode "default"
+    bindsym l exec --no-startup-id bash ~/.config/display/lockscreen.sh, mode "default"
     bindsym e exec --no-startup-id i3-msg exit, mode "default"
     bindsym u exec --no-startup-id dm-tool switch-to-greeter, mode "default"
-    bindsym s exec --no-startup-id ~/.config/display/lockscreen.sh & systemctl suspend, mode "default"
-    bindsym h exec --no-startup-id ~/.config/display/lockscreen.sh & systemctl hibernate, mode "default"
+    bindsym s exec --no-startup-id bash ~/.config/display/lockscreen.sh & systemctl suspend, mode "default"
+    bindsym h exec --no-startup-id bash ~/.config/display/lockscreen.sh & systemctl hibernate, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
     bindsym Shift+s exec --no-startup-id systemctl poweroff, mode "default"
 
@@ -263,7 +263,7 @@ mode "$mode_code" {
 bindsym $mod+p mode "$mode_player"
 set $mode_player [s]pawn | [k]ill | [n]cmpcpp
 mode "$mode_player" {
-    bindsym s exec ~/.config/mpd/spawn-mpd.sh, mode "default"
+    bindsym s exec bash ~/.config/mpd/spawn-mpd.sh, mode "default"
     bindsym k exec --no-startup-id mpd --kill, mode "default"
     bindsym n exec --no-startup-id urxvt256c-ml -e ncmpcpp --config ~/.ncmpcpp/config, mode "default"
 
@@ -359,12 +359,12 @@ for_window [class="Pcmanfm"] floating enable normal
 
 # Pulse Audio controls w/ Notification
 # 
-bindsym XF86AudioLowerVolume exec --no-startup-id ~/.config/audio/volume-manager.sh -5% #decrease sound volume
-bindsym $mod+minus exec --no-startup-id ~/.config/audio/volume-manager.sh -5% #increase sound volume
-bindsym XF86AudioRaiseVolume exec --no-startup-id ~/.config/audio/volume-manager.sh +5% #increase sound volume
-bindsym $mod+plus exec --no-startup-id ~/.config/audio/volume-manager.sh +5% #increase sound volume
-bindsym XF86AudioMute exec --no-startup-id ~/.config/audio/volume-manager.sh mute # mute sound
-bindsym $mod+m exec --no-startup-id ~/.config/audio/volume-manager.sh mute # mute sound
+bindsym XF86AudioLowerVolume exec --no-startup-id bash ~/.config/audio/volume-manager.sh -5% #decrease sound volume
+bindsym $mod+minus exec --no-startup-id bash ~/.config/audio/volume-manager.sh -5% #increase sound volume
+bindsym XF86AudioRaiseVolume exec --no-startup-id bash ~/.config/audio/volume-manager.sh +5% #increase sound volume
+bindsym $mod+plus exec --no-startup-id bash ~/.config/audio/volume-manager.sh +5% #increase sound volume
+bindsym XF86AudioMute exec --no-startup-id bash ~/.config/audio/volume-manager.sh mute
+bindsym $mod+m exec --no-startup-id bash ~/.config/audio/volume-manager.sh mute
 
 # Alsa Audio controls
 #
@@ -407,13 +407,13 @@ bindsym $mod+m exec --no-startup-id ~/.config/audio/volume-manager.sh mute # mut
 # Xrandr screen brightness controls
 # CONS: SOFTWARE BRIGHTNESS HANDLING ONLY FOR EXTERNAL MONITORS
 #
-bindsym XF86MonBrightnessUp exec --no-startup-id ~/.config/display/brightness-manager.sh 0.10 # increase screen brightness
-bindsym $mod+Shift+plus exec --no-startup-id ~/.config/display/brightness-manager.sh 0.10 # increase screen brightness
-bindsym XF86MonBrightnessDown exec --no-startup-id ~/.config/display/brightness-manager.sh -0.10 # decrease screen brightness
-bindsym $mod+Shift+minus exec --no-startup-id ~/.config/display/brightness-manager.sh -0.10 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec --no-startup-id bash ~/.config/display/brightness-manager.sh 0.10 # increase screen brightness
+bindsym $mod+Shift+plus exec --no-startup-id bash ~/.config/display/brightness-manager.sh 0.10 # increase screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id bash ~/.config/display/brightness-manager.sh -0.10 # decrease screen brightness
+bindsym $mod+Shift+minus exec --no-startup-id bash ~/.config/display/brightness-manager.sh -0.10 # decrease screen brightness
 
 # Touchpad controls
-# bindsym XF86TouchpadToggle exec --no-startup-id ~/.config/i3/toggletouchpad.sh # toggle touchpad
+# bindsym XF86TouchpadToggle exec --no-startup-id bash ~/.config/i3/toggletouchpad.sh # toggle touchpad
 
 # Media player controls
 # bindsym XF86AudioPlay exec --no-startup-id playerctl play
@@ -432,16 +432,15 @@ bindsym $mod+Shift+minus exec --no-startup-id ~/.config/display/brightness-manag
 # exec --no-startup-id blueman-applet
 exec --no-startup-id pa-applet
 exec --no-startup-id nm-applet
-exec --no-startup-id ~/.config/i3/polkit-launch.sh
+exec --no-startup-id bash ~/.config/i3/polkit-launch.sh
 exec --no-startup-id "conky --config ~/.config/conky/conky.conf"
 exec --no-startup-id "conky --config ~/.config/conky/helper.conf"
 
 exec_always --no-startup-id compton --config ~/.config/compton/config.conf
 exec_always --no-startup-id xrdb ~/.Xresources
 exec_always --no-startup-id nitrogen --set-zoom-fill --save ~/Pictures/wallpapers/wallpaper.jpg
-exec_always --no-startup-id ~/.config/i3/startup.sh &
-exec_always --no-startup-id ~/.config/i3/polybar.sh &
-exec_always --no-startup-id ~/.config/display/screen-detector.sh
+exec_always --no-startup-id bash ~/.config/i3/startup.sh &
+exec_always --no-startup-id bash ~/.config/i3/polybar.sh &
+exec_always --no-startup-id bash ~/.config/display/screen-detector.sh
 
 exec_always --no-startup-id numlockx
-
