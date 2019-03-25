@@ -57,6 +57,7 @@ while true; do
 Install Google Chrome [yN]?   " igc
   case $igc in
     [Yy]* )
+      sudo apt install -y --no-install-recommends fonts-liberation
       cd /tmp
       wget  -O "google-chrome-stable_current_amd64.deb"  https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
       sudo dpkg -i /tmp/google-chrome-stable_current_amd64.deb 
