@@ -105,4 +105,8 @@ cp -raf $HOME/.theme-settings/TLOU-Pale-Blue/theme/$tsetting/*                 $
 sudo mkdir -p /usr/share/themes/Greeter
 sudo cp -raf $(pwd)/themes/Greeter/theme/$tsetting/*  /usr/share/themes/Greeter
 
+if [ -f /usr/sbin/restorecon ]; then
+  sudo restorecon -prF /usr/share/themes
+fi
+
 bash $HOME/.config/themes/change-theme.sh
