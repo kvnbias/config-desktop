@@ -113,6 +113,8 @@ Install via NVM [yN]?   " invm
             sudo dnf install -y yarn --releasever=$fedver
             break 2;;
           * )
+            curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
+            sudo dnf update
             sudo dnf install -y nodejs yarn --releasever=$fedver
             break 2;;
         esac

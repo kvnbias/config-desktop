@@ -108,9 +108,20 @@ Install via NVM [yN]?   " invm
             wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
             curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
             sudo apt install -y --no-install-recommends yarnpkg
+
+            if [ ! -f '/usr/bin/yarn' ]; then
+              sudo ln -sf /usr/bin/yarnpkg /usr/bin/yarn
+            fi
+
             break 2;;
           * )
+            curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
             sudo apt install -y --no-install-recommends nodejs yarnpkg
+
+            if [ ! -f '/usr/bin/yarn' ]; then
+              sudo ln -sf /usr/bin/yarnpkg /usr/bin/yarn
+            fi
+
             break 2;;
         esac
       done;;
