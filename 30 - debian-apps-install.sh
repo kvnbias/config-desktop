@@ -95,6 +95,7 @@ https://wiki.archlinux.org/index.php/VirtualBox   " ivb
       sudo apt install -y --no-install-recommends linux-headers-$(uname -r) dkms libxkbcommon0
 
       sudo apt install -y --no-install-recommends virtualbox
+      sudo apt install -y --no-install-recommends virtualbox-qt
       sudo apt install -y --no-install-recommends virtualbox-guest-additions-iso
 
       break;;
