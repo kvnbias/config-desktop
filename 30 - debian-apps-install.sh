@@ -396,7 +396,8 @@ Install Skype [yN]?   " is
 
       cd /tmp
       wget -O "skypeforlinux-64.deb" "https://go.skype.com/skypeforlinux-64.deb"
-      sudo dpkg -i /tmp/skypeforlinux-64.deb
+      sudo apt install -y --no-install-recommends gdebi
+      sudo gdebi /tmp/skypeforlinux-64.deb
       break;;
     * ) break;;
   esac
