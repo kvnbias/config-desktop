@@ -70,7 +70,6 @@ set_neofetch_colors() {
     fedora|ubuntu )
       # dual color
       sed -i "s/^ascii_colors=.*/ascii_colors=$4/g" "$HOME/.config/neofetch/$os.conf"
-      break;;
     * )
       # single color
       sed -i "s/^ascii_colors=.*/ascii_colors=$3/g" "$HOME/.config/neofetch/$os.conf"
@@ -144,7 +143,7 @@ Enter theme:   " theme
       set_git_branch_colors "blue bold" "cyan bold" "black bold"
       set_git_diff_colors "white bold" "cyan bold" "black bold" "blue bold"
       set_git_status_colors "blue bold" "black bold" "cyan bold"
-      set_neofetch_colors "auto" "(1 10 10 9 9 10)" "$single" "$dual"
+      set_neofetch_colors "auto" "(1 1 10 9 9 10)" "$single" "$dual"
 
       reload_i3
       break;;
@@ -264,9 +263,8 @@ Enter theme:   " theme
       cp_settings "Default" "nier-sword.jpg" "#1e1e21"
       set_i3_colors "#111320" "#534e54" "#ffffff" "#ffffff"
 
-      arch='(12 12 12 12 12 12)'
-      manjaro='(12 12 12 12 12 12)'
-      fedora='(12 7 12 12 12 12)';
+      single='(12 12 12 12 12 12)';
+      dual='(12 7 12 12 12 12)';
 
       set_git_branch_colors "green bold" "blue bold" "red bold"
       set_git_diff_colors "blue bold" "yellow bold" "red bold" "green bold"
