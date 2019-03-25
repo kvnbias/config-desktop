@@ -54,6 +54,23 @@ chown -R $(whoami):wheel /home/$(whoami)
 done
 
 while true; do
+  read -p "Would you like to update the host file [yN]?   " updh
+  case $updh in
+    [Yy]* )
+      echo "
+# ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+# 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+
+127.0.0.1   localhost
+::1         localhost
+127.0.0.1   fedora.localdomain fedora
+" | sudo tee /etc/hosts
+      break;;
+    * ) break;;
+  esac
+done
+
+while true; do
   read -p "Enter full name or [s]kip?   " fn
   case $fn in
     [Ss]* )
