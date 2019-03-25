@@ -97,7 +97,6 @@ https://wiki.archlinux.org/index.php/VirtualBox   " ivb
       yes | sudo pacman -S virtualbox-host-dkms
       yes | sudo pacman -S virtualbox
       yes | sudo pacman -S virtualbox-guest-iso
-      sudo systemctl enable systemd-modules-load
       break;;
     * ) break;;
   esac

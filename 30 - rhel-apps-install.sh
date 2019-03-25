@@ -123,7 +123,6 @@ https://wiki.archlinux.org/index.php/VirtualBox   " ivb
       sudo dnf install -y virtualbox-guest-additions --releasever=$fedver
 
       sudo /usr/lib/virtualbox/vboxdrv.sh setup
-      sudo systemctl enable systemd-modules-load
 
       break;;
     * ) break;;

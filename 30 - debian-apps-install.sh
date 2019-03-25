@@ -97,8 +97,6 @@ https://wiki.archlinux.org/index.php/VirtualBox   " ivb
       sudo apt install -y --no-install-recommends virtualbox
       sudo apt install -y --no-install-recommends virtualbox-guest-additions-iso
 
-      sudo systemctl enable systemd-modules-load
-
       break;;
     * ) break;;
   esac
