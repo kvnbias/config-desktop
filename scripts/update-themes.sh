@@ -63,6 +63,14 @@ tsetting=materia
 #   esac
 # done
 
+mkdir -p $HOME/Pictures/wallpapers
+cp -rf $(pwd)/rice/images/wallpapers/compressed/* $HOME/Pictures/wallpapers
+
+sudo mkdir -p /usr/share/backgrounds/wallpapers
+sudo mkdir -p /usr/share/backgrounds/grayscaled
+
+sudo cp -rf $(pwd)/rice/images/wallpapers/compressed/* /usr/share/backgrounds/wallpapers
+sudo cp -rf $(pwd)/rice/images/wallpapers/grayscaled/* /usr/share/backgrounds/grayscale
 
 cp -raf $(pwd)/scripts/change-theme.sh   $HOME/.config/themes/change-theme.sh
 

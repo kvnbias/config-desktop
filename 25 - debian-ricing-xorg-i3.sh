@@ -1082,10 +1082,6 @@ Inherits=Breeze
 
         git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
 
-        # copy wallpapers
-        mkdir -p $HOME/Pictures/wallpapers
-        cp -rf $(pwd)/rice/images/wallpapers/compressed/* $HOME/Pictures/wallpapers
-
         # copy ranger configs
         mkdir -p $HOME/.config/ranger
         cp -rf $(pwd)/rice/ranger/* $HOME/.config/ranger
@@ -1167,10 +1163,6 @@ Inherits=Breeze
       sudo cp -raf $HOME/.vim/* /root/.vim
       sudo cp -raf $HOME/.vimrc /root/.vimrc
 
-      sudo mkdir -p /usr/share/backgrounds/wallpapers
-      sudo mkdir -p /usr/share/backgrounds/grayscaled
-      sudo cp -rf $(pwd)/rice/images/wallpapers/compressed/* /usr/share/backgrounds/wallpapers
-      sudo cp -rf $(pwd)/rice/images/wallpapers/grayscaled/* /usr/share/backgrounds/grayscaled
       sudo cp -rf $(pwd)/rice/lightdm-gtk-greeter.conf /etc/lightdm/lightdm-gtk-greeter.conf
 
       bash $(pwd)/scripts/update-screen-detector.sh
