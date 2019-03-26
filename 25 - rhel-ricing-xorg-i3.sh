@@ -917,7 +917,7 @@ EndSection
       sudo groupadd wheel
       sudo usermod -aG wheel $(whoami)
       sudo usermod -g wheel $(whoami)
-      echo "wheel ALL=(ALL) NOPASSWD: /usr/bin/apt" | sudo tee -a "/etc/sudoers"
+      echo "$(whoami) ALL=(ALL) NOPASSWD: /usr/bin/dnf" | sudo tee -a "/etc/sudoers"
 
       if [ ! -f $HOME/.riced ];then
         mkdir -p $HOME/.icons/default
