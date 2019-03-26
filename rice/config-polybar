@@ -291,9 +291,9 @@ label-packetloss-foreground = ${xrdb:polybar.background}
 [module/date]
 
 ; type = custom/script
-; exec = ~/.config/polybar/popup-calendar.sh
+; exec = bash ~/.config/polybar/popup-calendar.sh
 ; interval = 1
-; click-left=~/.config/polybar/popup-calendar.sh --popup
+; click-left= bash ~/.config/polybar/popup-calendar.sh --popup
 
 type = internal/date
 interval = 1
@@ -430,7 +430,7 @@ menu-2-1-exec = menu-open-0
 
 [module/updates]
 type = custom/script
-exec = ~/.config/polybar/update-checker.sh
+exec = bash ~/.config/polybar/update-checker.sh
 interval = 600
 
 [settings]
