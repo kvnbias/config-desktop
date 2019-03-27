@@ -69,10 +69,10 @@ set_neofetch_colors() {
   case $os in
     fedora|ubuntu )
       # dual color
-      sed -i "s/^ascii_colors=.*/ascii_colors=$4/g" "$HOME/.config/neofetch/$os.conf"
+      sed -i "s/^ascii_colors=.*/ascii_colors=$4/g" "$HOME/.config/neofetch/$os.conf";;
     * )
       # single color
-      sed -i "s/^ascii_colors=.*/ascii_colors=$3/g" "$HOME/.config/neofetch/$os.conf"
+      sed -i "s/^ascii_colors=.*/ascii_colors=$3/g" "$HOME/.config/neofetch/$os.conf";;
   esac
 }
 
@@ -98,9 +98,9 @@ use_solarized() {
   gen_conky_conf "#2d8bcb" "#2d8bcb"
 
   if [ ! -f "$HOME/Pictures/wallpapers/solarized-wallpaper-$1.jpg" ]; then
-    cp_settings "Solarized" "solarized-wallpaper-root.jpg" "#2d8bcb"
+    cp_settings "Linux-Solarized" "linux-solarized-wallpaper-root.jpg" "#2d8bcb"
   else
-    cp_settings "Solarized" "solarized-wallpaper-$1.jpg" "#2d8bcb"
+    cp_settings "Linux-Solarized" "linux-solarized-wallpaper-$1.jpg" "#2d8bcb"
   fi
 
   set_i3_colors "#2d8bcb" "#0d68a6" "#0e3642" "#0e3642"
@@ -119,7 +119,7 @@ use_solarized() {
 while true; do
   read -p "What theme to use?
 [a]  Bloodborne        [f]  TLOU
-[b]  Aloy              [g]  Deer
+[b]  Horizon Zero Dawn [g]  Deer
 [c]  Lara Croft        [h]  Solarized Root
 [d]  2B                [i]  Solarized Arch
 [e]  Paint Splatter    [j]  Solarized Fedora
@@ -134,7 +134,7 @@ Enter theme:   " theme
   case $theme in
     [a] )
       gen_conky_conf "#ffffff" "#ffffff"
-      cp_settings "Bloodborne" "bloodborne.jpg" "#362130"
+      cp_settings "Bloodborne-Cleric-Beast" "bloodborne-cleric-beast.jpg" "#362130"
       set_i3_colors "#f2e5dc" "#a1894e" "#2d1b27" "#92082A"
 
       single='(1 1 1 1 1 1)';
@@ -149,7 +149,7 @@ Enter theme:   " theme
       break;;
     [b] )
       gen_conky_conf "#661a24" "#ffffff"
-      cp_settings "Horizon-Zero-Dawn" "horizon-zero-dawn.jpg" "#5f242a"
+      cp_settings "Horizon-Zero-Dawn-Aloy" "horizon-zero-dawn-aloy.jpg" "#5f242a"
       set_i3_colors "#fdeddd" "#6c837b" "#5f242a" "#92082A"
 
       single='(10 10 10 10 10 10)';
@@ -164,7 +164,7 @@ Enter theme:   " theme
       break;;
     [c] )
       gen_conky_conf "#ad6334" "#ad6334"
-      cp_settings "Lara-Croft" "lara-croft-minimalism.jpg" "#281d2e"
+      cp_settings "Lara-Croft" "lara-croft.jpg" "#281d2e"
       set_i3_colors "#241b2e" "#ebf4f1" "#ad6334" "#ad6334"
 
       single='(10 10 10 10 10 10)';
@@ -179,7 +179,7 @@ Enter theme:   " theme
       break;;
     [d] )
       gen_conky_conf "#e44742" "#e44742"
-      cp_settings "Nier-2B" "nier-2b-circle.jpg" "#1e1e21"
+      cp_settings "Nier-2B" "nier-2b.jpg" "#1e1e21"
       set_i3_colors "#dad3cd" "#050a0e" "#e44742" "#e44742"
 
       single='(10 10 10 10 10 10)';
@@ -194,7 +194,7 @@ Enter theme:   " theme
       break;;
     [e] )
       gen_conky_conf "#060d29" "#ffffff"
-      cp_settings "Paint-Splatter" "paint-splatter-abstract.jpg" "#9c7a3"
+      cp_settings "Paint-Splatter" "paint-splatter.jpg" "#9c7a3"
       set_i3_colors "#D6C4A0" "#A89267" "#29253c" "#29253c"
 
       single='(10 10 10 10 10 10)';
@@ -260,7 +260,7 @@ Enter theme:   " theme
       break;;
     * )
       gen_conky_conf "#ffffff" "#ffffff"
-      cp_settings "Default" "nier-sword.jpg" "#1e1e21"
+      cp_settings "Nier-Sword" "nier-sword.jpg" "#1e1e21"
       set_i3_colors "#111320" "#534e54" "#ffffff" "#ffffff"
 
       single='(12 12 12 12 12 12)';

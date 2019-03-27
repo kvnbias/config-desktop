@@ -8,16 +8,6 @@ rm -rf $HOME/.themes
 mkdir -p $HOME/.theme-settings
 mkdir -p $HOME/.themes
 
-mkdir -p $HOME/.theme-settings/Bloodborne/theme
-mkdir -p $HOME/.theme-settings/Dark-Deer/theme
-mkdir -p $HOME/.theme-settings/Default/theme
-mkdir -p $HOME/.theme-settings/Horizon-Zero-Dawn/theme
-mkdir -p $HOME/.theme-settings/Lara-Croft/theme
-mkdir -p $HOME/.theme-settings/Nier-2B/theme
-mkdir -p $HOME/.theme-settings/Paint-Splatter/theme
-mkdir -p $HOME/.theme-settings/Solarized/theme
-mkdir -p $HOME/.theme-settings/TLOU-Pale-Blue/theme
-
 usingDPI=false
 dpiValue=96
 while true; do
@@ -64,13 +54,26 @@ tsetting=materia
 # done
 
 mkdir -p $HOME/Pictures/wallpapers
+rm -rf $hHOME/Pictures/wallpapers/*
 cp -rf $(pwd)/rice/images/wallpapers/compressed/* $HOME/Pictures/wallpapers
 
 sudo mkdir -p /usr/share/backgrounds/wallpapers
 sudo mkdir -p /usr/share/backgrounds/grayscaled
+sudo rm -rf /usr/share/backgrounds/wallpapers/*
+sudo rm -rf  /usr/share/backgrounds/grayscaled/*
 
 sudo cp -rf $(pwd)/rice/images/wallpapers/compressed/* /usr/share/backgrounds/wallpapers
-sudo cp -rf $(pwd)/rice/images/wallpapers/grayscaled/* /usr/share/backgrounds/grayscale
+sudo cp -rf $(pwd)/rice/images/wallpapers/grayscaled/* /usr/share/backgrounds/grayscaled
+
+mkdir -p $HOME/.theme-settings/Bloodborne-Cleric-Beast/theme
+mkdir -p $HOME/.theme-settings/Dark-Deer/theme
+mkdir -p $HOME/.theme-settings/Horizon-Zero-Dawn-Aloy/theme
+mkdir -p $HOME/.theme-settings/Lara-Croft/theme
+mkdir -p $HOME/.theme-settings/Linux-Solarized/theme
+mkdir -p $HOME/.theme-settings/Nier-2B/theme
+mkdir -p $HOME/.theme-settings/Nier-Sword/theme
+mkdir -p $HOME/.theme-settings/Paint-Splatter/theme
+mkdir -p $HOME/.theme-settings/TLOU-Pale-Blue/theme
 
 cp -raf $(pwd)/scripts/change-theme.sh   $HOME/.config/themes/change-theme.sh
 
@@ -80,34 +83,34 @@ if [ "$usingDPI" = true ];then
   tsetting+='-hidpi'
 fi
 
-cp -raf $(pwd)/themes/Bloodborne/*                    $HOME/.theme-settings/Bloodborne
+cp -raf $(pwd)/themes/Bloodborne-Cleric-Beast/*       $HOME/.theme-settings/Bloodborne-Cleric-Beast
 cp -raf $(pwd)/themes/Dark-Deer/*                     $HOME/.theme-settings/Dark-Deer
-cp -raf $(pwd)/themes/Default/*                       $HOME/.theme-settings/Default
-cp -raf $(pwd)/themes/Horizon-Zero-Dawn/*             $HOME/.theme-settings/Horizon-Zero-Dawn
+cp -raf $(pwd)/themes/Horizon-Zero-Dawn-Aloy/*        $HOME/.theme-settings/Horizon-Zero-Dawn-Aloy
 cp -raf $(pwd)/themes/Lara-Croft/*                    $HOME/.theme-settings/Lara-Croft
+cp -raf $(pwd)/themes/Linux-Solarized/*               $HOME/.theme-settings/Linux-Solarized
 cp -raf $(pwd)/themes/Nier-2B/*                       $HOME/.theme-settings/Nier-2B
+cp -raf $(pwd)/themes/Nier-Sword/*                    $HOME/.theme-settings/Nier-Sword
 cp -raf $(pwd)/themes/Paint-Splatter/*                $HOME/.theme-settings/Paint-Splatter
-cp -raf $(pwd)/themes/Solarized/*                     $HOME/.theme-settings/Solarized
 cp -raf $(pwd)/themes/TLOU-Pale-Blue/*                $HOME/.theme-settings/TLOU-Pale-Blue
 
-mkdir -p $HOME/.themes/Bloodborne
+mkdir -p $HOME/.themes/Bloodborne-Cleric-Beast
 mkdir -p $HOME/.themes/Dark-Deer
-mkdir -p $HOME/.themes/Default
-mkdir -p $HOME/.themes/Horizon-Zero-Dawn
+mkdir -p $HOME/.themes/Horizon-Zero-Dawn-Aloy
 mkdir -p $HOME/.themes/Lara-Croft
+mkdir -p $HOME/.themes/Linux-Solarized
 mkdir -p $HOME/.themes/Nier-2B
+mkdir -p $HOME/.themes/Nier-Sword
 mkdir -p $HOME/.themes/Paint-Splatter
-mkdir -p $HOME/.themes/Solarized
 mkdir -p $HOME/.themes/TLOU-Pale-Blue
 
-cp -raf $HOME/.theme-settings/Bloodborne/theme/$tsetting/*                     $HOME/.themes/Bloodborne
+cp -raf $HOME/.theme-settings/Bloodborne-Cleric-Beast/theme/$tsetting/*        $HOME/.themes/Bloodborne-Cleric-Beast
 cp -raf $HOME/.theme-settings/Dark-Deer/theme/$tsetting/*                      $HOME/.themes/Dark-Deer
-cp -raf $HOME/.theme-settings/Default/theme/$tsetting/*                        $HOME/.themes/Default
-cp -raf $HOME/.theme-settings/Horizon-Zero-Dawn/theme/$tsetting/*              $HOME/.themes/Horizon-Zero-Dawn
+cp -raf $HOME/.theme-settings/Horizon-Zero-Dawn-Aloy/theme/$tsetting/*         $HOME/.themes/Horizon-Zero-Dawn-Aloy
 cp -raf $HOME/.theme-settings/Lara-Croft/theme/$tsetting/*                     $HOME/.themes/Lara-Croft
+cp -raf $HOME/.theme-settings/Linux-Solarized/theme/$tsetting/*                $HOME/.themes/Linux-Solarized
 cp -raf $HOME/.theme-settings/Nier-2B/theme/$tsetting/*                        $HOME/.themes/Nier-2B
+cp -raf $HOME/.theme-settings/Nier-Sword/theme/$tsetting/*                     $HOME/.themes/Nier-Sword
 cp -raf $HOME/.theme-settings/Paint-Splatter/theme/$tsetting/*                 $HOME/.themes/Paint-Splatter
-cp -raf $HOME/.theme-settings/Solarized/theme/$tsetting/*                      $HOME/.themes/Solarized
 cp -raf $HOME/.theme-settings/TLOU-Pale-Blue/theme/$tsetting/*                 $HOME/.themes/TLOU-Pale-Blue
 
 sudo mkdir -p /usr/share/themes/Greeter
