@@ -97,7 +97,7 @@ reload_i3() {
 use_solarized() {
   gen_conky_conf "#2d8bcb" "#2d8bcb"
 
-  if [ ! -f "$HOME/Pictures/wallpapers/solarized-wallpaper-$1.jpg" ]; then
+  if [ ! -f "$HOME/Pictures/wallpapers/linux-solarized-wallpaper-$1.jpg" ]; then
     cp_settings "Linux-Solarized" "linux-solarized-wallpaper-root.jpg" "#2d8bcb"
   else
     cp_settings "Linux-Solarized" "linux-solarized-wallpaper-$1.jpg" "#2d8bcb"
@@ -149,7 +149,7 @@ Enter theme:   " theme
       break;;
     [b] )
       gen_conky_conf "#661a24" "#ffffff"
-      cp_settings "Horizon-Zero-Dawn-Aloy" "horizon-zero-dawn-aloy.jpg" "#5f242a"
+      cp_settings "Horizon-Zero-Dawn-Aloy" "horizon-zero-dawn-aloy-by-hage_2013.jpg" "#5f242a"
       set_i3_colors "#fdeddd" "#6c837b" "#5f242a" "#92082A"
 
       single='(10 10 10 10 10 10)';
@@ -179,7 +179,7 @@ Enter theme:   " theme
       break;;
     [d] )
       gen_conky_conf "#e44742" "#e44742"
-      cp_settings "Nier-2B" "nier-2b.jpg" "#1e1e21"
+      cp_settings "Nier-2B" "nier-2b-by-23i2ko.jpg" "#1e1e21"
       set_i3_colors "#dad3cd" "#050a0e" "#e44742" "#e44742"
 
       single='(10 10 10 10 10 10)';
@@ -209,7 +209,7 @@ Enter theme:   " theme
       break;;
     [f] )
       gen_conky_conf "#acbed4" "#acbed4"
-      cp_settings "TLOU-Pale-Blue" "the-last-of-us-pale-blue.jpg" "#374d5b"
+      cp_settings "TLOU-Pale-Blue" "the-last-of-us-pale-blue-by-BrandonMeier.jpg" "#374d5b"
       set_i3_colors "#c0c3c6" "#667c8b" "#374d5b" "#374d5b"
 
       single='(10 10 10 10 10 10)';
