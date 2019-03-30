@@ -65,6 +65,12 @@ sudo rm -rf  /usr/share/backgrounds/grayscaled/*
 sudo cp -rf $(pwd)/rice/images/wallpapers/compressed/* /usr/share/backgrounds/wallpapers
 sudo cp -rf $(pwd)/rice/images/wallpapers/grayscaled/* /usr/share/backgrounds/grayscaled
 
+if [ -d $(pwd)/rice/images/wallpapers/private ]; then
+  cp -rf $(pwd)/rice/images/wallpapers/private/compressed/*      $HOME/Pictures/wallpapers
+  sudo cp -rf $(pwd)/rice/images/wallpapers/private/compressed/* /usr/share/backgrounds/wallpapers
+  sudo cp -rf $(pwd)/rice/images/wallpapers/private/grayscaled/* /usr/share/backgrounds/grayscaled
+fi
+
 mkdir -p $HOME/.theme-settings/Bloodborne-Cleric-Beast/theme
 mkdir -p $HOME/.theme-settings/Dark-Deer/theme
 mkdir -p $HOME/.theme-settings/Horizon-Zero-Dawn-Aloy/theme
