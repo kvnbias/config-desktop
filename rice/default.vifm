@@ -1,0 +1,131 @@
+
+" You can edit this file by hand.
+" The " character at the beginning of a line comments out the line.
+" Blank lines are ignored.
+
+" The Default color scheme is used for any directory that does not have
+" a specified scheme and for parts of user interface like menus. A
+" color scheme set for a base directory will also
+" be used for the sub directories.
+
+" The standard ncurses colors are:
+" Default = -1 = None, can be used for transparency or default color
+" Black = 0
+" Red = 1
+" Green = 2
+" Yellow = 3
+" Blue = 4
+" Magenta = 5
+" Cyan = 6
+" White = 7
+
+" Light versions of colors are also available (set bold attribute):
+" LightBlack
+" LightRed
+" LightGreen
+" LightYellow
+" LightBlue
+" LightMagenta
+" LightCyan
+" LightWhite
+
+" Available attributes (some of them can be combined):
+" bold
+" underline
+" reverse or inverse
+" standout
+" none
+
+" Vifm supports 256 colors you can use color numbers 0-255
+" (requires properly set up terminal: set your TERM environment variable
+" (directly or using resources) to some color terminal name (e.g.
+" xterm-256color) from /usr/lib/terminfo/; you can check current number
+" of colors in your terminal with tput colors command)
+
+" highlight group cterm=attrs ctermfg=foreground_color ctermbg=background_color
+
+highlight clear
+
+" default file & window foreground
+" default window background
+highlight Win cterm=none ctermfg=8 ctermbg=0
+
+" directory (symlinks not included) foreground
+" !!! value is 0-7
+" !!! uses the opposite color of the given value (e.g. give 7 - will use 15, give 15 - use 15)
+" directory background
+highlight Directory cterm=bold ctermfg=8 ctermbg=0
+
+" symlink foreground
+" !!! value is 8-15
+" !!! uses the opposite color of the given value (e.g. give 7 - will use 15, give 15 - use 15)
+" symlink background
+highlight Link cterm=bold ctermfg=10 ctermbg=0
+
+" broken symlink foreground
+" !!! value is 8-15
+" !!! uses the opposite color of the given value (e.g. give 7 - will use 15, give 15 - use 15)
+" broken symlink background
+highlight BrokenLink cterm=bold ctermfg=9 ctermbg=default
+
+" socket foreground
+" !!! value is 8-15
+" !!! uses the opposite color of the given value (e.g. give 7 - will use 15, give 15 - use 15)
+" socket background
+highlight Socket cterm=bold ctermfg=11 ctermbg=0
+
+" device foreground
+" !!! value is 8-15
+" !!! uses the opposite color of the given value (e.g. give 7 - will use 15, give 15 - use 15)
+" device background
+highlight Device cterm=bold ctermfg=12 ctermbg=0
+
+" executable foreground
+" !!! value is 8-15
+" !!! uses the opposite color of the given value (e.g. give 7 - will use 15, give 15 - use 15)
+" executable background
+highlight Executable cterm=bold ctermfg=13 ctermbg=0
+
+" selected foreground
+" !!! value is 8-15
+" !!! uses the opposite color of the given value (e.g. give 7 - will use 15, give 15 - use 15)
+" selected background
+highlight Selected cterm=bold ctermfg=15 ctermbg=0
+
+" navigator foreground
+" navigator background
+highlight CurrLine cterm=bold,reverse ctermfg=default ctermbg=default
+
+" top right window text foreground
+" top window line backgroup
+highlight TopLine cterm=none ctermfg=15 ctermbg=7
+
+" top left window text foreground
+" !!! value is 8-15
+" !!! uses the opposite color of the given value (e.g. give 7 - will use 15, give 15 - use 15)
+" top left window line background
+highlight TopLineSel cterm=bold ctermfg=15 ctermbg=7
+
+" ?
+" border window line background
+highlight Border cterm=none ctermfg=15 ctermbg=7
+
+" bottom window text foreground
+" !!! value is 8-15
+" !!! uses the opposite color of the given value (e.g. give 7 - will use 15, give 15 - use 15)
+" bottom window line background
+highlight StatusLine cterm=bold ctermfg=15 ctermbg=7
+
+" cmdline foreground
+" cmdline background
+highlight CmdLine cterm=none ctermfg=7 ctermbg=0
+
+" cmdline error foreground
+" cmdline error background
+highlight ErrorMsg cterm=none ctermfg=9 ctermbg=0
+
+
+highlight WildMenu cterm=underline,reverse ctermfg=white ctermbg=black
+highlight JobLine cterm=bold,reverse ctermfg=black ctermbg=white
+highlight SuggestBox cterm=bold ctermfg=default ctermbg=default
+highlight Fifo cterm=bold ctermfg=cyan ctermbg=default

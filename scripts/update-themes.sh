@@ -71,6 +71,9 @@ if [ -d $(pwd)/rice/images/wallpapers/private ]; then
   sudo cp -rf $(pwd)/rice/images/wallpapers/private/grayscaled/* /usr/share/backgrounds/grayscaled
 fi
 
+mkdir -p $HOME/.config/vifm/colors
+cp -raf $(pwd)/rice/default.vifm   $HOME/.config/vifm/colors/Default.vifm
+
 mkdir -p $HOME/.theme-settings/Bloodborne-Cleric-Beast/theme
 mkdir -p $HOME/.theme-settings/Dark-Deer/theme
 mkdir -p $HOME/.theme-settings/Horizon-Zero-Dawn-Aloy/theme
