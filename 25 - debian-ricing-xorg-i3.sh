@@ -1029,6 +1029,7 @@ Inherits=Breeze
         cp $(pwd)/scripts/use-single-display.sh               $HOME/.config/display/use-single-display.sh
         cp $(pwd)/scripts/generate-conky-config.sh            $HOME/.config/conky/generate-conky-config.sh
         cp $(pwd)/scripts/generate-conky-helper.sh            $HOME/.config/conky/generate-conky-helper.sh
+        cp $(pwd)/scripts/reinitialize-conky.sh               $HOME/.config/conky/reinitialize-conky.sh
         cp $(pwd)/scripts/keyboard-disabler.sh                $HOME/.config/keyboard/keyboard-disabler.sh
         cp $(pwd)/scripts/polybar.sh                          $HOME/.config/i3/polybar.sh
         cp $(pwd)/scripts/polkit-launch.sh                    $HOME/.config/i3/polkit-launch.sh
@@ -1057,6 +1058,7 @@ Inherits=Breeze
         sudo chmod +x $HOME/.config/display/use-single-display.sh
         sudo chmod +x $HOME/.config/conky/generate-conky-config.sh
         sudo chmod +x $HOME/.config/conky/generate-conky-helper.sh
+        sudo chmod +x $HOME/.config/conky/reinitialize-conky.sh
         sudo chmod +x $HOME/.config/keyboard/keyboard-disabler.sh
         sudo chmod +x $HOME/.config/i3/polybar.sh
         sudo chmod +x $HOME/.config/i3/polkit-launch.sh
