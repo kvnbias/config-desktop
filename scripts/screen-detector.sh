@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-# ~/config/display/screen-detector.sh
+# $HOME/config/display/screen-detector.sh
 #
 # 1. Script assumes monitors are aligned left[primary] to right
 #    (HDMI1, HDMI2, HDMI(N)).
@@ -31,14 +31,14 @@ then
     echo "Primary not changed. No primary will be assigned"
 fi
 
-if ! [ -f ~/.config/display/active-screens ];
+if ! [ -f $HOME/.config/display/active-screens ];
 then
     echo "Not found. Initializing."
-    touch ~/.config/display/active-screens
+    touch $HOME/.config/display/active-screens
 fi
 
 
-if ! [ -f ~/.config/display/active-screens ];
+if ! [ -f $HOME/.config/display/active-screens ];
 then
     exit;
 fi
@@ -50,12 +50,12 @@ xrandr | grep disconnected | while read -r line ; do
     # get device id
     device=$(echo $line | cut -f 1 -d ' ')
 
-    # if inside ~/.config/display/active-screens. don't output grep results
-    if cat ~/.config/display/active-screens | grep -q $device ; 
+    # if inside $HOME/.config/display/active-screens. don't output grep results
+    if cat $HOME/.config/display/active-screens | grep -q $device ; 
     then
     echo "Turning off $device"
     xrandr --output $device --off
-    sed -i "s/$device //g" ~/.config/display/active-screens
+    sed -i "s/$device //g" $HOME/.config/display/active-screens
     fi
 done
 
@@ -68,11 +68,11 @@ xrandr | grep connected | grep -v disconnected | while read -r line ; do
     # get device id
     device=$(echo $line | cut -f 1 -d ' ')
 
-    # if inside ~/.config/display/active-screens. don't output grep results
-    if ! (cat ~/.config/display/active-screens | grep -q $device) ; 
+    # if inside $HOME/.config/display/active-screens. don't output grep results
+    if ! (cat $HOME/.config/display/active-screens | grep -q $device) ; 
     then
     echo "Turning on $device"
-    echo -n "$device " >> ~/.config/display/active-screens
+    echo -n "$device " >> $HOME/.config/display/active-screens
     fi
     
     resolution="WIDTHxHEIGHT"
@@ -99,3 +99,8 @@ xrandr | grep connected | grep -v disconnected | while read -r line ; do
     posx=$((posx+WIDTH))
 done
 
+compton --config $HOME/.config/compton/config.conf
+xrdb $HOME/.Xresources
+feh --bg-scale $HOME/Pictures/wallpapers/wallpaper.jpg
+bash $HOME/.config/i3/polybar.sh &
+bash $HOME/.config/conky/reinitialize-conky.sh

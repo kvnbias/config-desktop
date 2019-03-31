@@ -442,8 +442,8 @@ exec --no-startup-id nm-applet
 exec --no-startup-id bash ~/.config/i3/polkit-launch.sh
 exec --no-startup-id "conky --config ~/.config/conky/conky.conf"
 exec --no-startup-id "conky --config ~/.config/conky/helper.conf"
-exec --no-startup-id bash ~/.config/display/screen-detector.sh
 exec --no-startup-id bash ~/.config/i3/startup.sh &
+exec --no-startup-id bash ~/.config/display/screen-detector.sh
 
 exec_always --no-startup-id compton --config ~/.config/compton/config.conf
 exec_always --no-startup-id xrdb ~/.Xresources
