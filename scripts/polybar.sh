@@ -10,14 +10,10 @@ while pgrep -u $UID -x polybar > /dev/null; do sleep 0.5; done
 
 if type "xrandr"; then
 
-  trayrendered=true
   xrandr | grep connected | grep -v disconnected | while read -r line; do
-  echo $line
 
     device=$(echo $line | cut -f 1 -d ' ')
-    if $trayrendered == true;
-    then
-      trayrendered=false
+    if echo $line | grep primary; then
       MONITOR=$device polybar --reload kev &
     else
       MONITOR=$device polybar --reload sub &

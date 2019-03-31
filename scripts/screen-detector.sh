@@ -84,6 +84,10 @@ xrandr | grep connected | grep -v disconnected | while read -r line ; do
         fi
     fi
 
+    if [ -z "$primary" ]; then
+        primary=$device
+    fi
+
     if [[ $primary == $device ]] ;
     then
         echo "Setting $device as primary"
