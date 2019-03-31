@@ -63,15 +63,15 @@ set_neofetch_colors() {
   files=$(ls $HOME/.config/neofetch/*)
   for f in $files; do
     sed -i "s/^ascii_distro=.*/ascii_distro=auto/g" "$f"
-    sed -i "s/^colors=.*/colors=(8 8 7 8 8 7)/g" "$f"
+    sed -i "s/^colors=.*/colors=$1/g" "$f"
 
     case $f in
       *"fedora"*|*"ubuntu"* )
         # dual color
-        sed -i "s/^ascii_colors=.*/ascii_colors=(8 7 8 8 8 8)/g" "$f";;
+        sed -i "s/^ascii_colors=.*/ascii_colors=$2/g" "$f";;
       * )
         # single color
-        sed -i "s/^ascii_colors=.*/ascii_colors=(8 8 8 8 8 8)/g" "$f";;
+        sed -i "s/^ascii_colors=.*/ascii_colors=$3/g" "$f";;
     esac
   done
 }
@@ -108,7 +108,7 @@ use_solarized() {
   set_git_branch_colors "black bold" "green bold" "red bold"
   set_git_diff_colors "yellow bold" "yellow bold" "red bold" "black bold"
   set_git_status_colors "black bold" "yellow bold" "red bold"
-  set_neofetch_colors
+  set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
 
   reload_i3
 }
@@ -137,7 +137,7 @@ Enter theme:   " theme
       set_git_branch_colors "blue bold" "cyan bold" "black bold"
       set_git_diff_colors "white bold" "cyan bold" "black bold" "blue bold"
       set_git_status_colors "blue bold" "black bold" "cyan bold"
-      set_neofetch_colors
+      set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
 
       reload_i3
       break;;
@@ -149,7 +149,7 @@ Enter theme:   " theme
       set_git_branch_colors "white bold" "blue bold" "black bold"
       set_git_diff_colors "red bold" "green bold" "cyan bold" "white bold"
       set_git_status_colors "white bold" "black bold" "cyan bold"
-      set_neofetch_colors
+      set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
 
       reload_i3
       break;;
@@ -161,7 +161,7 @@ Enter theme:   " theme
       set_git_branch_colors "black bold" "red bold" "green bold"
       set_git_diff_colors "red bold" "yellow bold" "white bold" "black bold"
       set_git_status_colors "black bold" "green bold" "red bold"
-      set_neofetch_colors
+      set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
 
       reload_i3
       break;;
@@ -173,7 +173,7 @@ Enter theme:   " theme
       set_git_branch_colors "yellow bold" "green bold" "black bold"
       set_git_diff_colors "black bold" "black bold" "green bold" "yellow bold"
       set_git_status_colors "yellow bold" "black bold" "green bold"
-      set_neofetch_colors
+      set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
 
       reload_i3
       break;;
@@ -185,7 +185,7 @@ Enter theme:   " theme
       set_git_branch_colors "cyan bold" "white bold" "magenta bold"
       set_git_diff_colors "magenta bold" "magenta bold" "white bold" "cyan bold"
       set_git_status_colors "cyan bold" "magenta bold" "white bold"
-      set_neofetch_colors
+      set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
 
       reload_i3
       break;;
@@ -197,7 +197,7 @@ Enter theme:   " theme
       set_git_branch_colors "red bold" "green bold" "yellow bold"
       set_git_diff_colors "blue bold" "blue bold" "yellow bold" "red bold"
       set_git_status_colors "red bold" "green bold" "yellow bold"
-      set_neofetch_colors
+      set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
 
       reload_i3
       break;;
@@ -209,7 +209,7 @@ Enter theme:   " theme
       set_git_branch_colors "black bold" "magenta bold" "white bold"
       set_git_diff_colors "magenta bold" "magenta bold" "green bold" "black bold"
       set_git_status_colors "black bold" "red bold" "green bold"
-      set_neofetch_colors
+      set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
 
       reload_i3
       break;;
@@ -242,7 +242,7 @@ Enter theme:   " theme
       set_git_branch_colors "green bold" "blue bold" "red bold"
       set_git_diff_colors "blue bold" "yellow bold" "red bold" "green bold"
       set_git_status_colors "green bold" "red bold" "yellow bold"
-      set_neofetch_colors
+      set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
 
       reload_i3
       break;;
