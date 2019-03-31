@@ -613,7 +613,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       cd /tmp
 
       # display
-      sudo dnf install -y nitrogen arandr lxappearance xbacklight xorg-x11-server-utils --releasever=$fedver
+      sudo dnf install -y feh arandr lxappearance xbacklight xorg-x11-server-utils --releasever=$fedver
 
       # package manager
       # sudo dnf install -y dnfdragora dnfdragora-updater --releasever=$fedver

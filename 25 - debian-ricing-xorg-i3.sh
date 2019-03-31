@@ -624,7 +624,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       cd /tmp
 
       # display
-      sudo apt install -y --no-install-recommends nitrogen arandr lxappearance xbacklight x11-xserver-utils
+      sudo apt install -y --no-install-recommends feh arandr lxappearance xbacklight x11-xserver-utils
 
       # Generic notification
       # echo "

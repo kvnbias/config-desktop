@@ -561,7 +561,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo ln -sf /usr/share/icons/Flat-Remix-Blue /usr/share/icons/Flat-Remix
 
       # display
-      yes | sudo pacman -S nitrogen arandr lxappearance xorg-xbacklight xorg-xrandr
+      yes | sudo pacman -S feh arandr lxappearance xorg-xbacklight xorg-xrandr
 
       # package manager - arch
       # yes | yay -S pamac-tray-appindicator pamac-aur --noconfirm
