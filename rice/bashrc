@@ -25,6 +25,7 @@ alias update-mirrors="$HOME/.config/network/update-mirrors.sh"
 alias vifm="$HOME/.config/vifm/scripts/vifm-run.sh"
 alias change-theme="$HOME/.config/themes/change-theme.sh"
 alias mirror-display="$HOME/.config/display/mirror-display.sh"
+alias use-single-display="$HOME/.config/display/use-single-display.sh"
 alias screen-detector="$HOME/.config/display/screen-detector.sh"
 alias update-polybar-network-interface="$HOME/.config/themes/update-polybar-network-interface.sh"
 

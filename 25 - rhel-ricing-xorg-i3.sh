@@ -1020,6 +1020,7 @@ Inherits=Breeze
         cp $(pwd)/scripts/brightness-manager.sh               $HOME/.config/display/brightness-manager.sh
         cp $(pwd)/scripts/lockscreen.sh                       $HOME/.config/display/lockscreen.sh
         cp $(pwd)/scripts/mirror-display.sh                   $HOME/.config/display/mirror-display.sh
+        cp $(pwd)/scripts/use-single-display.sh               $HOME/.config/display/use-single-display.sh
         cp $(pwd)/scripts/generate-conky-config.sh            $HOME/.config/conky/generate-conky-config.sh
         cp $(pwd)/scripts/generate-conky-helper.sh            $HOME/.config/conky/generate-conky-helper.sh
         cp $(pwd)/scripts/keyboard-disabler.sh                $HOME/.config/keyboard/keyboard-disabler.sh
@@ -1047,6 +1048,7 @@ Inherits=Breeze
         sudo chmod +x $HOME/.config/display/brightness-manager.sh
         sudo chmod +x $HOME/.config/display/lockscreen.sh
         sudo chmod +x $HOME/.config/display/mirror-display.sh
+        sudo chmod +x $HOME/.config/display/use-single-display.sh
         sudo chmod +x $HOME/.config/conky/generate-conky-config.sh
         sudo chmod +x $HOME/.config/conky/generate-conky-helper.sh
         sudo chmod +x $HOME/.config/keyboard/keyboard-disabler.sh
