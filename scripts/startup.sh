@@ -4,10 +4,6 @@
 # set startup volume
 pactl set-sink-volume 0 25%
 
-killall -q conky
-conky --config ~/.config/conky/conky.conf
-conky --config ~/.config/conky/helper.conf
-
 # set startup brightness
 xrandr | grep connected | grep -v disconnected | while read -r line ; do
     # get device id
