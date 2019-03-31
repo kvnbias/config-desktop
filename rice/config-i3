@@ -449,5 +449,6 @@ exec_always --no-startup-id compton --config ~/.config/compton/config.conf
 exec_always --no-startup-id xrdb ~/.Xresources
 exec_always --no-startup-id feh --bg-scale ~/Pictures/wallpapers/wallpaper.jpg
 exec_always --no-startup-id bash ~/.config/i3/polybar.sh &
+exec_always --no-startup-id "killall -q conky && conky --config ~/.config/conky/conky.conf && conky --config ~/.config/conky/helper.conf"
 
 exec_always --no-startup-id numlockx
