@@ -54,7 +54,7 @@ tsetting=materia
 # done
 
 mkdir -p $HOME/Pictures/wallpapers
-rm -rf $hHOME/Pictures/wallpapers/*
+rm -rf $HOME/Pictures/wallpapers/*
 cp -rf $(pwd)/rice/images/wallpapers/compressed/* $HOME/Pictures/wallpapers
 
 sudo mkdir -p /usr/share/backgrounds/wallpapers
