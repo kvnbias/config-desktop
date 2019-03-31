@@ -185,7 +185,7 @@ Enter theme:   " theme
       set_git_branch_colors "cyan bold" "white bold" "magenta bold"
       set_git_diff_colors "magenta bold" "magenta bold" "white bold" "cyan bold"
       set_git_status_colors "cyan bold" "magenta bold" "white bold"
-      set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
+      set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
 
       reload_i3
       break;;
@@ -197,7 +197,7 @@ Enter theme:   " theme
       set_git_branch_colors "red bold" "green bold" "yellow bold"
       set_git_diff_colors "blue bold" "blue bold" "yellow bold" "red bold"
       set_git_status_colors "red bold" "green bold" "yellow bold"
-      set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
+      set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
 
       reload_i3
       break;;
@@ -209,7 +209,7 @@ Enter theme:   " theme
       set_git_branch_colors "black bold" "magenta bold" "white bold"
       set_git_diff_colors "magenta bold" "magenta bold" "green bold" "black bold"
       set_git_status_colors "black bold" "red bold" "green bold"
-      set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
+      set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
 
       reload_i3
       break;;
