@@ -96,14 +96,7 @@ reload_i3() {
 
 use_solarized() {
   gen_conky_conf "#2d8bcb" "#2d8bcb"
-
-  if [ ! -f "$HOME/Pictures/wallpapers/linux-solarized-wallpaper-$1.jpg" ]; then
-    cp_settings "Linux-Solarized" "linux-solarized-wallpaper-root.jpg" "#2d8bcb"
-  else
-    cp_settings "Linux-Solarized" "linux-solarized-wallpaper-$1.jpg" "#2d8bcb"
-  fi
-
-  set_i3_colors "#2d8bcb" "#0d68a6" "#0e3642" "#0e3642"
+  cp_settings "Solarized" "$1" "#2d8bcb"
 
   set_git_branch_colors "black bold" "green bold" "red bold"
   set_git_diff_colors "yellow bold" "yellow bold" "red bold" "black bold"
@@ -113,138 +106,200 @@ use_solarized() {
   reload_i3
 }
 
+themeID=1
 while true; do
   read -p "What theme to use?
 [a]  Bloodborne        [f]  TLOU
 [b]  Horizon Zero Dawn [g]  Deer
-[c]  Lara Croft        [h]  Solarized Root
-[d]  2B                [i]  Solarized Arch
-[e]  Paint Splatter    [j]  Solarized Fedora
+[c]  Lara Croft        [h]  Linux Distro
+[d]  Nier
+[e]  Paint Splatter
 
-[k]  Solarized Kali    [*]  Default
-[l]  Solarized Debian
-[m]  Solarized Manjaro
-[n]  Solarized Ubuntu
+Enter theme:   " category
+  case $category in
+    a )
+      while true; do
+        read -p "What theme to use?
+[a]  Cleric Beast
 
+Enter theme:   " subcategory
+        case $subcategory in
+          a ) themeID=1; break 2;;
+          * ) echo "Invalid input";;
+        esac
+      done;;
+    b )
+      while true; do
+        read -p "What theme to use?
+[a]  Aloy by hage_2013
 
-Enter theme:   " theme
-  case $theme in
-    [a] )
-      gen_conky_conf "#ffffff" "#ffffff"
-      cp_settings "Bloodborne-Cleric-Beast" "bloodborne-cleric-beast.jpg" "#362130"
-      set_i3_colors "#f2e5dc" "#a1894e" "#2d1b27" "#92082A"
+Enter theme:   " subcategory
+        case $subcategory in
+          a ) themeID=2; break 2;;
+          * ) echo "Invalid input";;
+        esac
+      done;;
+    c ) themeID=3; break;;
+    d )
+      while true; do
+        read -p "What theme to use?
+[a]  2B's sword
+[b]  2B by 23i2ko
+[c]  A2 by hage_2013
 
-      set_git_branch_colors "blue bold" "cyan bold" "black bold"
-      set_git_diff_colors "white bold" "cyan bold" "black bold" "blue bold"
-      set_git_status_colors "blue bold" "black bold" "cyan bold"
-      set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
+Enter theme:   " subcategory
+        case $subcategory in
+          a ) themeID=4; break 2;;
+          b ) themeID=5; break 2;;
+          c ) themeID=6; break 2;;
+          * ) echo "Invalid input";;
+        esac
+      done;;
+    e ) themeID=7; break;;
+    f )
+      while true; do
+        read -p "What theme to use?
+[a]  Pale Blue by BrandonMeier
 
-      reload_i3
-      break;;
-    [b] )
-      gen_conky_conf "#661a24" "#ffffff"
-      cp_settings "Horizon-Zero-Dawn-Aloy" "horizon-zero-dawn-aloy-by-hage_2013.jpg" "#5f242a"
-      set_i3_colors "#fdeddd" "#6c837b" "#5f242a" "#92082A"
+Enter theme:   " subcategory
+        case $subcategory in
+          a ) themeID=8; break 2;;
+          * ) echo "Invalid input";;
+        esac
+      done;;
+    g ) themeID=9; break;;
+    h )
+      while true; do
+        read -p "What theme to use?
+[a]  Solarized Root
+[b]  Solarized Arch
+[c]  Solarized Fedora
+[d]  Solarized Kali
+[e]  Solarized Debian
+[f]  Solarized Manjaro
+[g]  Solarized Ubuntu
 
-      set_git_branch_colors "white bold" "blue bold" "black bold"
-      set_git_diff_colors "red bold" "green bold" "cyan bold" "white bold"
-      set_git_status_colors "white bold" "black bold" "cyan bold"
-      set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
-
-      reload_i3
-      break;;
-    [c] )
-      gen_conky_conf "#ad6334" "#ad6334"
-      cp_settings "Lara-Croft" "lara-croft.jpg" "#281d2e"
-      set_i3_colors "#241b2e" "#ebf4f1" "#ad6334" "#ad6334"
-
-      set_git_branch_colors "black bold" "red bold" "green bold"
-      set_git_diff_colors "red bold" "yellow bold" "white bold" "black bold"
-      set_git_status_colors "black bold" "green bold" "red bold"
-      set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
-
-      reload_i3
-      break;;
-    [d] )
-      gen_conky_conf "#e44742" "#e44742"
-      cp_settings "Nier-2B" "nier-2b-by-23i2ko.jpg" "#1e1e21"
-      set_i3_colors "#dad3cd" "#050a0e" "#e44742" "#e44742"
-
-      set_git_branch_colors "yellow bold" "green bold" "black bold"
-      set_git_diff_colors "black bold" "black bold" "green bold" "yellow bold"
-      set_git_status_colors "yellow bold" "black bold" "green bold"
-      set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
-
-      reload_i3
-      break;;
-    [e] )
-      gen_conky_conf "#060d29" "#ffffff"
-      cp_settings "Paint-Splatter" "paint-splatter.jpg" "#9c7a3"
-      set_i3_colors "#D6C4A0" "#A89267" "#29253c" "#29253c"
-
-      set_git_branch_colors "cyan bold" "white bold" "magenta bold"
-      set_git_diff_colors "magenta bold" "magenta bold" "white bold" "cyan bold"
-      set_git_status_colors "cyan bold" "magenta bold" "white bold"
-      set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
-
-      reload_i3
-      break;;
-    [f] )
-      gen_conky_conf "#acbed4" "#acbed4"
-      cp_settings "TLOU-Pale-Blue" "the-last-of-us-pale-blue-by-BrandonMeier.jpg" "#374d5b"
-      set_i3_colors "#c0c3c6" "#667c8b" "#374d5b" "#374d5b"
-
-      set_git_branch_colors "red bold" "green bold" "yellow bold"
-      set_git_diff_colors "blue bold" "blue bold" "yellow bold" "red bold"
-      set_git_status_colors "red bold" "green bold" "yellow bold"
-      set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
-
-      reload_i3
-      break;;
-    [g] )
-      gen_conky_conf "#2b343b" "#2b343b"
-      cp_settings "Dark-Deer" "dark-deer.jpg" "#2b343b"
-      set_i3_colors "#C44741" "#9C3531" "#2B343B" "#2B343B"
-
-      set_git_branch_colors "black bold" "magenta bold" "white bold"
-      set_git_diff_colors "magenta bold" "magenta bold" "green bold" "black bold"
-      set_git_status_colors "black bold" "red bold" "green bold"
-      set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
-
-      reload_i3
-      break;;
-    [h] )
-      use_solarized "root"
-      break;;
-    [i] )
-      use_solarized "arch"
-      break;;
-    [j] )
-      use_solarized "fedora"
-      break;;
-    [k] )
-      use_solarized "kali"
-      break;;
-    [l] )
-      use_solarized "debian"
-      break;;
-    [m] )
-      use_solarized "manjaro"
-      break;;
-    [n] )
-      use_solarized "ubuntu"
-      break;;
-    * )
-      gen_conky_conf "#ffffff" "#ffffff"
-      cp_settings "Nier-Sword" "nier-sword.jpg" "#1e1e21"
-      set_i3_colors "#111320" "#534e54" "#ffffff" "#ffffff"
-
-      set_git_branch_colors "green bold" "blue bold" "red bold"
-      set_git_diff_colors "blue bold" "yellow bold" "red bold" "green bold"
-      set_git_status_colors "green bold" "red bold" "yellow bold"
-      set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
-
-      reload_i3
-      break;;
+Enter theme:   " subcategory
+        case $subcategory in
+          a ) themeID=10; break 2;;
+          b ) themeID=11; break 2;;
+          c ) themeID=12; break 2;;
+          d ) themeID=13; break 2;;
+          e ) themeID=14; break 2;;
+          f ) themeID=15; break 2;;
+          g ) themeID=16; break 2;;
+          * ) echo "Invalid input";;
+        esac
+      done;;
+    * ) echo "Invalid input";;
   esac
 done
+
+case $themeID in
+  1 )
+    gen_conky_conf "#ffffff" "#ffffff"
+    cp_settings "Bloodborne-Cleric-Beast" "bloodborne-cleric-beast.jpg" "#362130"
+
+    set_git_branch_colors "blue bold" "cyan bold" "black bold"
+    set_git_diff_colors "white bold" "cyan bold" "black bold" "blue bold"
+    set_git_status_colors "blue bold" "black bold" "cyan bold"
+    set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
+
+    reload_i3;;
+  2 )
+    gen_conky_conf "#661a24" "#ffffff"
+    cp_settings "Horizon-Zero-Dawn-Aloy-by-hage_2013" "horizon-zero-dawn-aloy-by-hage_2013.jpg" "#5f242a"
+
+    set_git_branch_colors "white bold" "blue bold" "black bold"
+    set_git_diff_colors "red bold" "green bold" "cyan bold" "white bold"
+    set_git_status_colors "white bold" "black bold" "cyan bold"
+    set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
+
+    reload_i3;;
+  3 )
+    gen_conky_conf "#ad6334" "#ad6334"
+    cp_settings "Lara-Croft" "lara-croft.jpg" "#281d2e"
+
+    set_git_branch_colors "black bold" "red bold" "green bold"
+    set_git_diff_colors "red bold" "yellow bold" "white bold" "black bold"
+    set_git_status_colors "black bold" "green bold" "red bold"
+    set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
+
+    reload_i3;;
+  4 )
+    gen_conky_conf "#ffffff" "#ffffff"
+    cp_settings "Nier-Sword" "nier-sword.jpg" "#1e1e21"
+
+    set_git_branch_colors "green bold" "blue bold" "red bold"
+    set_git_diff_colors "blue bold" "yellow bold" "red bold" "green bold"
+    set_git_status_colors "green bold" "red bold" "yellow bold"
+    set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
+
+    reload_i3;;
+  5 )
+    gen_conky_conf "#e44742" "#e44742"
+    cp_settings "Nier-2B-by-23i2ko" "nier-2b-by-23i2ko.jpg" "#1e1e21"
+
+    set_git_branch_colors "yellow bold" "green bold" "black bold"
+    set_git_diff_colors "black bold" "black bold" "green bold" "yellow bold"
+    set_git_status_colors "yellow bold" "black bold" "green bold"
+    set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
+
+    reload_i3;;
+  6 )
+    gen_conky_conf "#070705" "#070705"
+    cp_settings "Nier-A2-by-hage_2013" "nier-a2-by-hage_2013.jpg" "#070705"
+
+    set_git_branch_colors "yellow bold" "green bold" "black bold"
+    set_git_diff_colors "black bold" "black bold" "green bold" "yellow bold"
+    set_git_status_colors "yellow bold" "black bold" "green bold"
+    set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
+
+    reload_i3;;
+  7 )
+    gen_conky_conf "#060d29" "#ffffff"
+    cp_settings "Paint-Splatter" "paint-splatter.jpg" "#9c7a3"
+
+    set_git_branch_colors "cyan bold" "white bold" "magenta bold"
+    set_git_diff_colors "magenta bold" "magenta bold" "white bold" "cyan bold"
+    set_git_status_colors "cyan bold" "magenta bold" "white bold"
+    set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
+
+    reload_i3;;
+  8 )
+    gen_conky_conf "#acbed4" "#acbed4"
+    cp_settings "TLOU-Pale-Blue-by-BrandonMeier" "the-last-of-us-pale-blue-by-BrandonMeier.jpg" "#374d5b"
+
+    set_git_branch_colors "red bold" "green bold" "yellow bold"
+    set_git_diff_colors "blue bold" "blue bold" "yellow bold" "red bold"
+    set_git_status_colors "red bold" "green bold" "yellow bold"
+    set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
+
+    reload_i3;;
+  9 )
+    gen_conky_conf "#2b343b" "#2b343b"
+    cp_settings "Dark-Deer" "dark-deer.jpg" "#2b343b"
+
+    set_git_branch_colors "black bold" "magenta bold" "white bold"
+    set_git_diff_colors "magenta bold" "magenta bold" "green bold" "black bold"
+    set_git_status_colors "black bold" "red bold" "green bold"
+    set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
+
+    reload_i3;;
+  10 )
+    use_solarized "linux-solarized-wallpaper-root.jpg";;
+  11 )
+    use_solarized "linux-solarized-wallpaper-arch.jpg";;
+  12 )
+    use_solarized "linux-solarized-wallpaper-fedora.jpg";;
+  13 )
+    use_solarized "linux-solarized-wallpaper-kali.jpg";;
+  14 )
+    use_solarized "linux-solarized-wallpaper-debian.jpg";;
+  15 )
+    use_solarized "linux-solarized-wallpaper-manjaro.jpg";;
+  16 )
+    use_solarized "linux-solarized-wallpaper-ubuntu.jpg";;
+esac
+
+
