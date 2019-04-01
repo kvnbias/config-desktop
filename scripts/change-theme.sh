@@ -195,10 +195,12 @@ Enter theme:   " subcategory
       while true; do
         read -p "What theme to use?
 [a]  Abyss Watcher
+[b]  Astorias
 
 Enter theme:   " subcategory
         case $subcategory in
           a ) themeID=17; break 2;;
+          b ) themeID=18; break 2;;
           * ) echo "Invalid input";;
         esac
       done;;
@@ -319,6 +321,16 @@ case $themeID in
     set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
     set_git_status_colors "green bold" "yellow bold" "red bold"
     set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
+
+    reload_i3;;
+  18 )
+    gen_conky_conf "#284d81" "#284d81"
+    cp_settings "DS-Astorias-by-nahamut" "dark-souls-astorias-low-poly-by-nahamut.jpg" "#284d81"
+
+    set_git_branch_colors "green bold" "yellow bold" "blue bold"
+    set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+    set_git_status_colors "green bold" "yellow bold" "red bold"
+    set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
 
     reload_i3;;
 esac
