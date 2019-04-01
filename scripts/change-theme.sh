@@ -315,7 +315,7 @@ case $themeID in
     use_solarized "linux-solarized-wallpaper-ubuntu.jpg";;
   17 )
     gen_conky_conf "#4a0e0e" "#4a0e0e"
-    cp_settings "DS-Abyss-Watcher-by-nahamut" "dark-souls-abyss-watcher-low-poly-by-nahamut.jpg" "#ae9996"
+    cp_settings "Dark-Souls-Abyss-Watcher-by-nahamut" "dark-souls-abyss-watcher-low-poly-by-nahamut.jpg" "#ae9996"
 
     set_git_branch_colors "green bold" "yellow bold" "blue bold"
     set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
@@ -325,7 +325,7 @@ case $themeID in
     reload_i3;;
   18 )
     gen_conky_conf "#284d81" "#284d81"
-    cp_settings "DS-Astorias-by-nahamut" "dark-souls-astorias-low-poly-by-nahamut.jpg" "#284d81"
+    cp_settings "Dark-Souls-Astorias-by-nahamut" "dark-souls-astorias-low-poly-by-nahamut.jpg" "#284d81"
 
     set_git_branch_colors "green bold" "yellow bold" "blue bold"
     set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
