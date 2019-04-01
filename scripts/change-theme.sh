@@ -98,9 +98,9 @@ use_solarized() {
   gen_conky_conf "#2d8bcb" "#2d8bcb"
   cp_settings "Solarized" "$1" "#2d8bcb"
 
-  set_git_branch_colors "black bold" "green bold" "red bold"
-  set_git_diff_colors "yellow bold" "yellow bold" "red bold" "black bold"
-  set_git_status_colors "black bold" "yellow bold" "red bold"
+  set_git_branch_colors "green bold" "yellow bold" "blue bold"
+  set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+  set_git_status_colors "green bold" "yellow bold" "red bold"
   set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
 
   reload_i3
@@ -200,9 +200,9 @@ case $themeID in
     gen_conky_conf "#ffffff" "#ffffff"
     cp_settings "Bloodborne-Cleric-Beast" "bloodborne-cleric-beast.jpg" "#362130"
 
-    set_git_branch_colors "blue bold" "cyan bold" "black bold"
-    set_git_diff_colors "white bold" "cyan bold" "black bold" "blue bold"
-    set_git_status_colors "blue bold" "black bold" "cyan bold"
+    set_git_branch_colors "green bold" "yellow bold" "blue bold"
+    set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+    set_git_status_colors "green bold" "yellow bold" "red bold"
     set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
 
     reload_i3;;
@@ -210,9 +210,9 @@ case $themeID in
     gen_conky_conf "#661a24" "#ffffff"
     cp_settings "Horizon-Zero-Dawn-Aloy-by-hage_2013" "horizon-zero-dawn-aloy-by-hage_2013.jpg" "#5f242a"
 
-    set_git_branch_colors "white bold" "blue bold" "black bold"
-    set_git_diff_colors "red bold" "green bold" "cyan bold" "white bold"
-    set_git_status_colors "white bold" "black bold" "cyan bold"
+    set_git_branch_colors "green bold" "yellow bold" "blue bold"
+    set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+    set_git_status_colors "green bold" "yellow bold" "red bold"
     set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
 
     reload_i3;;
@@ -220,9 +220,9 @@ case $themeID in
     gen_conky_conf "#ad6334" "#ad6334"
     cp_settings "Lara-Croft" "lara-croft.jpg" "#281d2e"
 
-    set_git_branch_colors "black bold" "red bold" "green bold"
-    set_git_diff_colors "red bold" "yellow bold" "white bold" "black bold"
-    set_git_status_colors "black bold" "green bold" "red bold"
+    set_git_branch_colors "green bold" "yellow bold" "blue bold"
+    set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+    set_git_status_colors "green bold" "yellow bold" "red bold"
     set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
 
     reload_i3;;
@@ -230,9 +230,9 @@ case $themeID in
     gen_conky_conf "#ffffff" "#ffffff"
     cp_settings "Nier-Sword" "nier-sword.jpg" "#1e1e21"
 
-    set_git_branch_colors "green bold" "blue bold" "red bold"
-    set_git_diff_colors "blue bold" "yellow bold" "red bold" "green bold"
-    set_git_status_colors "green bold" "red bold" "yellow bold"
+    set_git_branch_colors "green bold" "yellow bold" "blue bold"
+    set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+    set_git_status_colors "green bold" "yellow bold" "red bold"
     set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
 
     reload_i3;;
@@ -240,9 +240,9 @@ case $themeID in
     gen_conky_conf "#e44742" "#e44742"
     cp_settings "Nier-2B-by-23i2ko" "nier-2b-by-23i2ko.jpg" "#1e1e21"
 
-    set_git_branch_colors "yellow bold" "green bold" "black bold"
-    set_git_diff_colors "black bold" "black bold" "green bold" "yellow bold"
-    set_git_status_colors "yellow bold" "black bold" "green bold"
+    set_git_branch_colors "green bold" "yellow bold" "blue bold"
+    set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+    set_git_status_colors "green bold" "yellow bold" "red bold"
     set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
 
     reload_i3;;
@@ -250,9 +250,9 @@ case $themeID in
     gen_conky_conf "#070705" "#070705"
     cp_settings "Nier-A2-by-hage_2013" "nier-a2-by-hage_2013.jpg" "#070705"
 
-    set_git_branch_colors "yellow bold" "green bold" "black bold"
-    set_git_diff_colors "black bold" "black bold" "green bold" "yellow bold"
-    set_git_status_colors "yellow bold" "black bold" "green bold"
+    set_git_branch_colors "green bold" "yellow bold" "blue bold"
+    set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+    set_git_status_colors "green bold" "yellow bold" "red bold"
     set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
 
     reload_i3;;
@@ -260,9 +260,9 @@ case $themeID in
     gen_conky_conf "#060d29" "#ffffff"
     cp_settings "Paint-Splatter" "paint-splatter.jpg" "#9c7a3"
 
-    set_git_branch_colors "cyan bold" "white bold" "magenta bold"
-    set_git_diff_colors "magenta bold" "magenta bold" "white bold" "cyan bold"
-    set_git_status_colors "cyan bold" "magenta bold" "white bold"
+    set_git_branch_colors "green bold" "yellow bold" "blue bold"
+    set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+    set_git_status_colors "green bold" "yellow bold" "red bold"
     set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
 
     reload_i3;;
@@ -270,9 +270,9 @@ case $themeID in
     gen_conky_conf "#acbed4" "#acbed4"
     cp_settings "TLOU-Pale-Blue-by-BrandonMeier" "the-last-of-us-pale-blue-by-BrandonMeier.jpg" "#374d5b"
 
-    set_git_branch_colors "red bold" "green bold" "yellow bold"
-    set_git_diff_colors "blue bold" "blue bold" "yellow bold" "red bold"
-    set_git_status_colors "red bold" "green bold" "yellow bold"
+    set_git_branch_colors "green bold" "yellow bold" "blue bold"
+    set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+    set_git_status_colors "green bold" "yellow bold" "red bold"
     set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
 
     reload_i3;;
@@ -280,9 +280,9 @@ case $themeID in
     gen_conky_conf "#2b343b" "#2b343b"
     cp_settings "Dark-Deer" "dark-deer.jpg" "#2b343b"
 
-    set_git_branch_colors "black bold" "magenta bold" "white bold"
-    set_git_diff_colors "magenta bold" "magenta bold" "green bold" "black bold"
-    set_git_status_colors "black bold" "red bold" "green bold"
+    set_git_branch_colors "green bold" "yellow bold" "blue bold"
+    set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+    set_git_status_colors "green bold" "yellow bold" "red bold"
     set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
 
     reload_i3;;

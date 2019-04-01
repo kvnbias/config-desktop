@@ -965,18 +965,18 @@ Inherits=Breeze
 [color]
   ui = auto
 [color \"branch\"]
-  current = yellow reverse
-  local = yellow
-  remote = green
+  current = green bold
+  local = yellow bold
+  remote = blue bold
 [color \"diff\"]
-  meta = yellow bold
-  frag = magenta bold
+  meta = blue bold
+  frag = blue bold
   old = red bold
   new = green bold
 [color \"status\"]
-  added = yellow
-  changed = green
-  untracked = cyan
+  added = green bold
+  changed = yellow bold
+  untracked = red bold
 " | tee $HOME/.gitconfig;
 
                                 break 4;;
