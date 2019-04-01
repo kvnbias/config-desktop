@@ -112,7 +112,7 @@ while true; do
 [a]  Bloodborne        [f]  TLOU
 [b]  Horizon Zero Dawn [g]  Deer
 [c]  Lara Croft        [h]  Linux Distro
-[d]  Nier
+[d]  Nier              [i]  Dark Souls
 [e]  Paint Splatter
 
 Enter theme:   " category
@@ -188,6 +188,17 @@ Enter theme:   " subcategory
           e ) themeID=14; break 2;;
           f ) themeID=15; break 2;;
           g ) themeID=16; break 2;;
+          * ) echo "Invalid input";;
+        esac
+      done;;
+    i )
+      while true; do
+        read -p "What theme to use?
+[a]  Abyss Watcher
+
+Enter theme:   " subcategory
+        case $subcategory in
+          a ) themeID=17; break 2;;
           * ) echo "Invalid input";;
         esac
       done;;
@@ -300,6 +311,16 @@ case $themeID in
     use_solarized "linux-solarized-wallpaper-manjaro.jpg";;
   16 )
     use_solarized "linux-solarized-wallpaper-ubuntu.jpg";;
+  17 )
+    gen_conky_conf "#4a0e0e" "#4a0e0e"
+    cp_settings "DS-Abyss-Watcher-by-nahamut" "dark-souls-abyss-watcher-low-poly-by-nahamut.jpg" "#ae9996"
+
+    set_git_branch_colors "green bold" "yellow bold" "blue bold"
+    set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+    set_git_status_colors "green bold" "yellow bold" "red bold"
+    set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
+
+    reload_i3;;
 esac
 
 
