@@ -34,7 +34,7 @@ done
 
 compton --config $HOME/.config/compton/config.conf
 xrdb $HOME/.Xresources
-feh --bg-scale $HOME/Pictures/wallpapers/wallpaper.jpg
+feh --bg-fill $HOME/Pictures/wallpapers/wallpaper.jpg
 bash $HOME/.config/i3/polybar.sh &
 bash $HOME/.config/conky/reinitialize-conky.sh
 
