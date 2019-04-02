@@ -27,6 +27,7 @@ alias change-theme="$HOME/.config/themes/change-theme.sh"
 alias mirror-display="$HOME/.config/display/mirror-display.sh"
 alias use-single-display="$HOME/.config/display/use-single-display.sh"
 alias screen-detector="$HOME/.config/display/screen-detector.sh"
+alias check-space="$HOME/.config/system/check-space.sh"
 alias update-polybar-network-interface="$HOME/.config/themes/update-polybar-network-interface.sh"
 
 PATH="$HOME/.local/bin:$HOME/bin:$PATH"

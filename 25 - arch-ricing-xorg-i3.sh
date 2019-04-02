@@ -812,6 +812,7 @@ Inherits=Breeze
         mkdir -p $HOME/.config/network
         mkdir -p $HOME/.config/touchpad
         mkdir -p $HOME/.config/polybar
+        mkdir -p $HOME/.config/system
         mkdir -p $HOME/.config/themes
         mkdir -p $HOME/.config/vifm
         mkdir -p $HOME/.config/vifm/scripts
@@ -848,6 +849,7 @@ Inherits=Breeze
         cp $(pwd)/scripts/toggle-touchpad.sh                  $HOME/.config/touchpad/toggle-touchpad.sh
         cp $(pwd)/scripts/popup-calendar.sh                   $HOME/.config/polybar/popup-calendar.sh
         cp $(pwd)/scripts/update-checker.sh                   $HOME/.config/polybar/update-checker.sh
+        cp $(pwd)/scripts/check-space.sh                      $HOME/.config/system/check-space.sh
         cp $(pwd)/scripts/change-theme.sh                     $HOME/.config/themes/change-theme.sh
         cp $(pwd)/scripts/update-polybar-network-interface.sh $HOME/.config/themes/update-polybar-network-interface.sh
         cp $(pwd)/scripts/vifm-run.sh                         $HOME/.config/vifm/scripts/vifm-run.sh
@@ -876,6 +878,7 @@ Inherits=Breeze
         sudo chmod +x $HOME/.config/touchpad/toggle-touchpad.sh
         sudo chmod +x $HOME/.config/polybar/popup-calendar.sh
         sudo chmod +x $HOME/.config/polybar/update-checker.sh
+        sudo chmod +x $HOME/.config/system/check-space.sh
         sudo chmod +x $HOME/.config/themes/change-theme.sh
         sudo chmod +x $HOME/.config/themes/update-polybar-network-interface.sh
         sudo chmod +x $HOME/.config/vifm/scripts/vifm-run.sh
