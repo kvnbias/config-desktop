@@ -47,6 +47,21 @@ sudo dnf install -y firefox --releasever=$fedver
 # extra
 sudo dnf install -y libreoffice vlc transmission-gtk mupdf xarchiver p7zip --releasever=$fedver
 
+# for vifm
+sudo dnf install -y poppler-utils
+sudo dnf install -y evince
+sudo dnf install -y mediainfo
+sudo dnf install -y transmission-cli
+sudo dnf install -y transmission-common
+sudo dnf install -y zip
+sudo dnf install -y unzip
+sudo dnf install -y tar
+sudo dnf install -y xz-libs
+sudo dnf install -y unrar
+sudo dnf install -y catdoc
+sudo dnf install -y odt2txt
+sudo dnf install -y docx2txt
+
 while true; do
   read -p "
 

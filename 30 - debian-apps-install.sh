@@ -41,6 +41,13 @@ sudo ln -sf /opt/firefox/firefox/firefox /usr/bin/firefox
 # extra
 sudo apt install -y --no-install-recommends libreoffice vlc transmission-gtk mupdf xarchiver p7zip
 
+# for vifm
+sudo apt install -y --no-install-recommends poppler-utils evince
+sudo apt install -y --no-install-recommends mediainfo
+sudo apt install -y --no-install-recommends transmission-cli transmission-common
+sudo apt install -y --no-install-recommends zip unzip tar xz-utils unrar
+sudo apt install -y --no-install-recommends catdoc docx2txt
+
 while true; do
   read -p "
 
