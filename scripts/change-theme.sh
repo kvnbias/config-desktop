@@ -127,10 +127,12 @@ Enter theme:   " category
       while true; do
         read -p "What theme to use?
 [a]  Cleric Beast
+[b]  Eileen by dastardlyapparel
 
 Enter theme:   " subcategory
         case $subcategory in
           a ) themeID=1; break 2;;
+          b ) themeID=19; break 2;;
           * ) echo "Invalid input";;
         esac
       done;;
@@ -332,6 +334,16 @@ case $themeID in
   18 )
     gen_conky_conf "#284d81" "#284d81"
     cp_settings "Dark-Souls-Astorias-by-nahamut" "dark-souls-astorias-low-poly-by-nahamut.jpg" "#284d81"
+
+    set_git_branch_colors "green bold" "yellow bold" "blue bold"
+    set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+    set_git_status_colors "green bold" "yellow bold" "red bold"
+    set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
+
+    reload_i3;;
+  19 )
+    gen_conky_conf "#A39065" "#A39065"
+    cp_settings "Bloodborne-Eileen-Minimal-by-dastardlyapparel" "bloodborne-eileen-minimal-by-dastardlyapparel.jpg" "#191919"
 
     set_git_branch_colors "green bold" "yellow bold" "blue bold"
     set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
