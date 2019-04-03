@@ -85,6 +85,39 @@ Section "Files"
 EndSection
 ' | sudo tee /etc/X11/xorg.conf
 
+isManjaro=false
+while true; do
+  read -p "Using manjaro [yN]?   " p
+  case $p in
+    [Yy]* )
+      isManjaro=true;
+      break;;
+    * ) break;;
+  esac
+done
+
+if [ "$isManjaro" = true ]; then
+  major=$(uname -r | cut -f 1 -d .);
+  minor=$(uname -r | cut -f 2 -d .);
+  version=$(echo $major$minor);
+  yes | sudo pacman -S linux$version linux$version-headers;
+else
+  while true; do
+    read -p "
+
+Install LTS kernel? [y]es | [n]o   " ilts
+    case $ilts in
+      [Yy]* )
+        yes | sudo pacman -S linux-lts linux-lts-headers
+        break;;
+      [Nn]* )
+        yes | sudo pacman -S linux linux-headers
+        break;;
+      * ) echo Invalid input
+    esac
+  done;
+fi
+
 # install AUR helper: yay
 git clone https://aur.archlinux.org/yay.git
 cd yay
@@ -631,7 +664,8 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       # https://pillow.readthedocs.io/en/stable/installation.html
       # yes | sudo pacman -S python-pip
       # sudo pip3 install ueberzug
-      yay -S python-ueberzug --noconfirm --overwrite
+      yes | sudo pacman -S libimagequant
+      yay -S python-ueberzug --overwrite
 
       # better desktop locker
       yes | yay -S i3lock-color-git

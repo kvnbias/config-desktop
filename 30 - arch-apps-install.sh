@@ -5,7 +5,7 @@
 sudo pacman -Syu
 
 yes | sudo pacman -S curl wget vim httpie git tmux gedit
-yes | sudo pacman -S lsof bash-completion gamin polkit-gnome
+yes | sudo pacman -S lsof bash-completion polkit-gnome
 yes | yay -S downgrade
 # yes | yay -S gksu --noconfirm
 
@@ -154,7 +154,7 @@ load-module module-bluetooth-discover
 " | sudo tee -a /etc/pulse/system.pa
 
       sed -i 's/# exec --no-startup-id blueman-applet/exec --no-startup-id blueman-applet/g' $HOME/.config/i3/config
-      sed -i 's/# for_window [class="Blueman-manager"] floating enable normal/for_window [class="Blueman-manager"] floating enable normal/g' $HOME/.config/i3/config
+      sed -i "s/# for_window \[class=\"Blueman-manager\"\] floating enable normal/for_window \[class=\"Blueman-manager\"\] floating enable normal/g' $HOME/.config/i3/config
 
       sudo systemctl enable bluetooth
       sudo systemctl start bluetooth
