@@ -696,9 +696,6 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       ./autogen.sh && ./configure && make && sudo make install
       cd /tmp
 
-      sudo apt remove -y libglib2.0-dev libgtk-3-dev libnotify-dev
-      sudo apt remove -y libpulse-dev libx11-dev
-
       sudo sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf
       sudo sed -i 's/; autospawn = yes/autospawn = yes/g' /etc/pulse/client.conf
 
@@ -749,13 +746,6 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
 
       sudo apt install -y --no-install-recommends python3-dev libturbojpeg0-dev zlib1g-dev libxext-dev python3-setuptools
       sudo pip3 install ueberzug
-      sudo apt remove -y python3-dev libturbojpeg0-dev zlib1g-dev libxext-dev python3-setuptools
-
-      if [ "$os" != "debian" ]; then
-        sudo apt remove -y libjpeg62-dev
-      else
-        sudo apt remove -y libjpeg62-turbo-dev
-      fi
 
       # MANUAL: i3lock-color. Some are already installed
       sudo apt remove -y i3lock
@@ -793,15 +783,6 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       echo "auth include login" | sudo tee /etc/pam.d/i3lock
       cd /tmp
 
-      sudo apt remove -y libcairo2-dev libev-dev libturbojpeg0-dev libxcb-composite0-dev libxkbcommon-x11-dev libxcb-randr0-dev
-      sudo apt remove -y libpam0g-dev libxcb-util0-dev libxcb-image0-dev libxcb-xrm-dev libxcb-xinerama0-dev
-
-      if [ "$os" != "debian" ]; then
-        sudo apt remove -y libjpeg62-dev
-      else
-        sudo apt remove -y libjpeg62-turbo-dev
-      fi
-
       # terminal-based file viewer
       sudo apt install -y --no-install-recommends ranger
       sudo apt install -y --no-install-recommends vifm
@@ -838,9 +819,6 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       ../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers
       make && sudo make install
 
-      sudo apt remove -y libxcb-util0-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libxcb-icccm4-dev libpango1.0-dev
-      sudo apt remove -y libxcb-xrm-dev libyajl-dev libxrandr-dev libstartup-notification0-dev libpcre3-dev
-      sudo apt remove -y libev-dev libxcb-cursor-dev libxinerama-dev libxkbcommon-dev libxkbcommon-x11-dev libxcb-randr0-dev
       cd /tmp
 
       # MANUAL: polybar
@@ -876,9 +854,6 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       rm -rf build/ && mkdir -p build && cd build/
       cmake .. && make -j$(nproc) && sudo make install
 
-      sudo apt remove -y libasound2-dev libcairo2-dev xcb-proto libxcb-util0-dev libxcb-cursor-dev libxcb-image0-dev libxcb-xrm-dev
-      sudo apt remove -y libcurl4-openssl-dev libjsoncpp-dev libmpdclient-dev libpulse-dev libnl-3-dev libiw-dev
-      sudo apt remove -y libxcb-composite0-dev libxcb-icccm4-dev libxcb-ewmh-dev libxcb-randr0-dev
       cd /tmp
 
       # popup calendar
@@ -887,6 +862,24 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo apt install -y --no-install-recommends scrot
 
       sudo apt install -y --no-install-recommends accountsservice
+
+      sudo apt remove -y i3 i3lock libasound2-dev libcairo2-dev libcurl4-openssl-dev \
+        libev-dev libglib2.0-dev libgtk-3-dev libiw-dev libjsoncpp-dev libmpdclient-dev \
+        libnl-3-dev libnotify-dev libpam0g-dev libpango1.0-dev libpcre3-dev libpulse-dev \
+        libstartup-notification0-dev libturbojpeg0-dev libx11-dev libxcb-composite0-dev \
+        libxcb-cursor-dev libxcb-ewmh-dev libxcb-icccm4-dev libxcb-image0-dev \
+        libxcb-keysyms1-dev libxcb-randr0-dev libxcb-util0-dev libxcb-xinerama0-dev \
+        libxcb-xrm-dev libxext-dev libxinerama-dev libxkbcommon-dev libxkbcommon-x11-dev \
+        libxrandr-dev libyajl-dev python3-dev python3-setuptools xcb-proto zlib1g-dev
+
+        if [ "$os" != "debian" ]; then
+          sudo apt remove -y libjpeg62-dev
+        else
+          sudo apt remove -y libjpeg62-turbo-dev
+        fi
+
+        sudo apt autoremove -y
+
       user=$(whoami)
 
       echo "
@@ -1212,7 +1205,6 @@ Inherits=Breeze
 
       bash $(pwd)/scripts/update-screen-detector.sh
       bash $(pwd)/scripts/update-themes.sh
-      sudo apt autoremove -y
 
       echo '
 
