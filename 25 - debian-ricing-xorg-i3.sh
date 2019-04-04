@@ -388,24 +388,29 @@ What driver to use?
         esac
       done;;
     [Nn]* )
-      sudo apt install -y --no-install-recommends xserver-xorg-video-nvidia nvidia-detect nvidia-xconfig
+      if [ "$os" != "debian" ]; then
+        sudo apt install -y nvidia-driver-390
+      else
+        sudo apt install -y --no-install-recommends xserver-xorg-video-nvidia nvidia-detect nvidia-xconfig
 
-      sudo apt install -y nvidia-driver:amd64
-      sudo apt install -y libgl1-nvidia-glx:amd64
+        sudo apt install -y nvidia-driver:amd64
+        sudo apt install -y libgl1-nvidia-glx:amd64
 
-      sudo apt install -y nvidia-driver:i386
-      sudo apt install -y libgl1-nvidia-glx:i386
+        sudo apt install -y nvidia-driver:i386
+        sudo apt install -y libgl1-nvidia-glx:i386
 
-      sudo apt install -y --no-install-recommends libvulkan1:amd64
-      sudo apt install -y --no-install-recommends libva-glx2:amd64
+        sudo apt install -y --no-install-recommends libvulkan1:amd64
+        sudo apt install -y --no-install-recommends libva-glx2:amd64
 
-      sudo apt install -y --no-install-recommends libvulkan1:i386
-      sudo apt install -y --no-install-recommends libva-glx2:i386
+        sudo apt install -y --no-install-recommends libvulkan1:i386
+        sudo apt install -y --no-install-recommends libva-glx2:i386
 
-      sudo apt install -y --no-install-recommends vulkan-utils
+        sudo apt install -y --no-install-recommends vulkan-utils
 
-      generate_nvidia_gpu_config
-      sudo nvidia-xconfig
+        generate_nvidia_gpu_config
+        sudo nvidia-xconfig
+      fi
+
       echo NVIDIA drivers installed;
       break;;
   esac
