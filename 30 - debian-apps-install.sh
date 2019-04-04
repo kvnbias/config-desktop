@@ -7,7 +7,7 @@ os=$(echo -n $(cat /etc/*-release | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g')
 
 sudo apt -y upgrade
 
-sudo apt install -y --no-install-recommends curl vim-enhanced wget httpie git tmux gedit
+sudo apt install -y --no-install-recommends vim curl wget httpie git tmux gedit
 sudo apt install -y --no-install-recommends lsof bash-completion gamin policykit-1-gnome
 
 while true; do
@@ -44,14 +44,7 @@ else
 fi
 
 # extra
-sudo apt install -y --no-install-recommends libreoffice vlc transmission-gtk mupdf xarchiver p7zip
-
-# for vifm
-sudo apt install -y --no-install-recommends poppler-utils evince
-sudo apt install -y --no-install-recommends mediainfo
-sudo apt install -y --no-install-recommends transmission-cli transmission-common
-sudo apt install -y --no-install-recommends zip unzip tar xz-utils unrar
-sudo apt install -y --no-install-recommends catdoc docx2txt
+sudo apt install -y --no-install-recommends libreoffice vlc transmission-gtk mupdf xarchiver p7zip evince
 
 while true; do
   read -p "
@@ -86,7 +79,15 @@ while true; do
 Install Timeshift [yN]?  " its
   case $its in
     [Yy]* )
-      sudo apt install -y --no-install-recommends timeshift
+      if [ "$os" != "debian" ]; then
+        sudo add-apt-repository ppa:teejee2008/ppa
+        sudo apt update
+        sudo apt install -y --no-install-recommends timeshift
+      else
+        sudo apt install -y --no-install-recommends timeshift
+      fi
+
+
       break;;
     * ) break;;
   esac
@@ -243,8 +244,8 @@ ports=137:138/udp|139/tcp|445/tcp
         sudo ufw allow Samba
       fi
 
-      sudo systemctl enable smb
-      sudo systemctl restart smb
+      sudo systemctl enable smbd
+      sudo systemctl restart smbd
       break;;
     * ) break;;
   esac
@@ -406,7 +407,7 @@ Install Skype [yN]?   " is
   case $is in
     [Yy]* )
       sudo apt install -y --no-install-recommends gnome-keyring gnome-keyring-pkcs11
-      sudo apt install -y --no-install-recommends gconf-service gconf2-common gcr libgconf-2-4 libgcrui-3-1
+      sudo apt install -y --no-install-recommends gconf-service gconf2-common gcr libgconf-2-4
       sudo apt install -y --no-install-recommends libpam-gnome-keyring p11-kit p11-kit-modules pinentry-gnome3
 
       cd /tmp

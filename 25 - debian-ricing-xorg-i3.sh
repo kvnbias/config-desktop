@@ -738,6 +738,8 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       # for vifm
       # https://pillow.readthedocs.io/en/stable/installation.html
       sudo apt install -y --no-install-recommends python3-pip
+      sudo apt install -y --no-install-recommends poppler-utils mediainfo transmission-cli transmission-common
+      sudo apt install -y --no-install-recommends zip unzip tar xz-utils unrar catdoc docx2txt
 
       if [ "$os" != "debian" ]; then
         sudo apt install -y --no-install-recommends libjpeg62-dev
