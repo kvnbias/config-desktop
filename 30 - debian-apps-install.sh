@@ -32,11 +32,16 @@ sudo apt install -y --no-install-recommends exfat-utils exfat-fuse ntfs-3g
 sudo apt install -y --no-install-recommends eog
 
 # firefox
-wget -O /tmp/FirefoxSetup.tar.bz2 "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US"
-sudo mkdir -p /opt/firefox
-sudo tar xjf /tmp/FirefoxSetup.tar.bz2 -C /opt/firefox/
-sudo ln -sf /opt/firefox/firefox/firefox /usr/bin/firefox
-# sudo apt install -y --no-install-recommends firefox-esr
+
+if [ "$os" != "debian" ]; then
+  sudo apt install -y --no-install-recommends firefox
+else
+  wget -O /tmp/FirefoxSetup.tar.bz2 "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US"
+  sudo mkdir -p /opt/firefox
+  sudo tar xjf /tmp/FirefoxSetup.tar.bz2 -C /opt/firefox/
+  sudo ln -sf /opt/firefox/firefox/firefox /usr/bin/firefox
+  # sudo apt install -y --no-install-recommends firefox-esr
+fi
 
 # extra
 sudo apt install -y --no-install-recommends libreoffice vlc transmission-gtk mupdf xarchiver p7zip
