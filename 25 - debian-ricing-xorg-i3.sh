@@ -72,6 +72,8 @@ chown -R $(whoami):wheel /home/$(whoami)
   esac
 done
 
+os=$(echo -n $(cat /etc/*-release | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
+
 while true; do
   read -p "Enter full name or [s]kip?   " fn
   case $fn in
@@ -121,7 +123,9 @@ sudo apt update
 sudo apt -y upgrade
 
 # non-free kernel drivers for debian
-sudo apt install -y --no-install-recommends firmware-linux-nonfree
+if [ "$os" = "debian" ]; then
+  sudo apt install -y --no-install-recommends firmware-linux-nonfree
+fi
 
 sudo apt install -y build-essential linux-headers-$(uname -r) git
 sudo apt install -y --no-install-recommends autoconf automake cmake make dkms pkgconf man-db psmisc
@@ -300,7 +304,7 @@ install_mesa_vulkan_drivers() {
   sudo apt install -y --no-install-recommends libglapi-mesa:amd64
   sudo apt install -y --no-install-recommends libglu1-mesa:amd64
   sudo apt install -y --no-install-recommends libglw1-mesa:amd64
-  sudo apt install -y --no-install-recommends libglx0-mesa:amd64
+  sudo apt install -y --no-install-recommends libglx-mesa0:amd64
   sudo apt install -y --no-install-recommends libosmesa6:amd64
   sudo apt install -y --no-install-recommends mesa-opencl-icd:amd64
   sudo apt install -y --no-install-recommends mesa-utils:amd64
@@ -313,7 +317,7 @@ install_mesa_vulkan_drivers() {
   sudo apt install -y --no-install-recommends libglapi-mesa:i386
   sudo apt install -y --no-install-recommends libglu1-mesa:i386
   sudo apt install -y --no-install-recommends libglw1-mesa:i386
-  sudo apt install -y --no-install-recommends libglx0-mesa:i386
+  sudo apt install -y --no-install-recommends libglx-mesa0:i386
   sudo apt install -y --no-install-recommends libosmesa6:i386
   sudo apt install -y --no-install-recommends mesa-opencl-icd:i386
   sudo apt install -y --no-install-recommends mesa-utils:i386
@@ -729,22 +733,42 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       # for vifm
       # https://pillow.readthedocs.io/en/stable/installation.html
       sudo apt install -y --no-install-recommends python3-pip
-      sudo apt install -y --no-install-recommends python3-dev libturbojpeg0-dev zlib1g-dev libxext-dev python3-setuptools libjpeg62-turbo-dev
+
+      if [ "$os" != "debian" ]; then
+        sudo apt install -y --no-install-recommends libjpeg62-dev
+      else
+        sudo apt install -y --no-install-recommends libjpeg62-turbo-dev
+      fi
+
+      sudo apt install -y --no-install-recommends python3-dev libturbojpeg0-dev zlib1g-dev libxext-dev python3-setuptools
       sudo pip3 install ueberzug
-      sudo apt remove -y python3-dev python3-dev libturbojpeg0-dev zlib1g-dev libxext-dev python3-setuptools libjpeg62-turbo-dev
+      sudo apt remove -y python3-dev libturbojpeg0-dev zlib1g-dev libxext-dev python3-setuptools
+
+      if [ "$os" != "debian" ]; then
+        sudo apt remove -y libjpeg62-dev
+      else
+        sudo apt remove -y libjpeg62-turbo-dev
+      fi
 
       # MANUAL: i3lock-color. Some are already installed
       sudo apt remove -y i3lock
-      sudo apt install -y --no-install-recommends libcairo2-dev libev-dev libturbojpeg0-dev libxcb-composite0-dev libxkbcommon-x11-dev
-      sudo apt install -y --no-install-recommends libxcb-randr0-dev libjpeg62-turbo-dev
+      if [ "$os" != "debian" ]; then
+        sudo apt install --no-install-recommends libjpeg62-dev
+      else
+        sudo apt install --no-install-recommends libjpeg62-turbo-dev
+      fi
+
+      sudo apt install -y --no-install-recommends libcairo2-dev libev-dev libturbojpeg0-dev libxcb-composite0-dev libxkbcommon-x11-dev libxcb-randr0-dev
       sudo apt install -y --no-install-recommends libpam0g-dev libxcb-util0-dev libxcb-image0-dev libxcb-xrm-dev libxcb-xinerama0-dev
       sudo apt install -y --no-install-recommends autoconf automake
 
-      sudo apt install -y --no-install-recommends libturbojpeg  #elementary
-      sudo apt install -y --no-install-recommends libturbojpeg0 # debian
+      if [ "$os" != "debian" ]; then
+        sudo apt install -y --no-install-recommends libturbojpeg libjpeg62
+      else
+        sudo apt install -y --no-install-recommends libturbojpeg0 libjpeg62-turbo
+      fi
 
-      sudo apt install -y --no-install-recommends libxcb-randr0 libjpeg62-turbo
-      sudo apt install -y --no-install-recommends libcairo2 libev4 libxcb-composite0 libxkbcommon-x11-0
+      sudo apt install -y --no-install-recommends libcairo2 libev4 libxcb-composite0 libxkbcommon-x11-0 libxcb-randr0
       sudo apt install -y --no-install-recommends libxkbcommon0 libxcb1 libxcb-image0 libxcb-xinerama0
 
       git clone --recurse-submodules https://github.com/PandorasFox/i3lock-color.git
@@ -762,9 +786,14 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       echo "auth include login" | sudo tee /etc/pam.d/i3lock
       cd /tmp
 
-      sudo apt remove -y libcairo2-dev libev-dev libturbojpeg0-dev libxcb-composite0-dev libxkbcommon-x11-dev
-      sudo apt remove -y libxcb-randr0-dev libjpeg62-turbo-dev
+      sudo apt remove -y libcairo2-dev libev-dev libturbojpeg0-dev libxcb-composite0-dev libxkbcommon-x11-dev libxcb-randr0-dev
       sudo apt remove -y libpam0g-dev libxcb-util0-dev libxcb-image0-dev libxcb-xrm-dev libxcb-xinerama0-dev
+
+      if [ "$os" != "debian" ]; then
+        sudo apt remove -y libjpeg62-dev
+      else
+        sudo apt remove -y libjpeg62-turbo-dev
+      fi
 
       # terminal-based file viewer
       sudo apt install -y --no-install-recommends ranger
@@ -782,10 +811,10 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo apt install -y --no-install-recommends libxcb-util0-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libxcb-icccm4-dev
       sudo apt install -y --no-install-recommends libxcb-xrm-dev libyajl-dev libxrandr-dev libstartup-notification0-dev
       sudo apt install -y --no-install-recommends libev-dev libxcb-cursor-dev libxinerama-dev libxkbcommon-dev libxkbcommon-x11-dev
-      sudo apt install -y --no-install-recommends libpcre3-dev libpango1.0-dev automake git gcc
+      sudo apt install -y --no-install-recommends libxcb-randr0-dev libpcre3-dev libpango1.0-dev automake git gcc
 
       sudo apt install -y --no-install-recommends libev4 libxkbcommon-x11-0 perl libpango1.0-0 libstartup-notification0 libxcb-icccm4
-      sudo apt install -y --no-install-recommends libxcb-cursor0 libxcb-keysyms1 libxcb-xrm0 libyajl2 libxcb-xinerama0
+      sudo apt install -y --no-install-recommends libxcb-randr0 libxcb-cursor0 libxcb-keysyms1 libxcb-xrm0 libyajl2 libxcb-xinerama0
 
       git clone --recurse-submodules https://github.com/Airblader/i3.git i3-gaps
       cd i3-gaps
@@ -804,17 +833,17 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
 
       sudo apt remove -y libxcb-util0-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libxcb-icccm4-dev libpango1.0-dev
       sudo apt remove -y libxcb-xrm-dev libyajl-dev libxrandr-dev libstartup-notification0-dev libpcre3-dev
-      sudo apt remove -y libev-dev libxcb-cursor-dev libxinerama-dev libxkbcommon-dev libxkbcommon-x11-dev
+      sudo apt remove -y libev-dev libxcb-cursor-dev libxinerama-dev libxkbcommon-dev libxkbcommon-x11-dev libxcb-randr0-dev
       cd /tmp
 
       # MANUAL: polybar
       sudo apt install -y --no-install-recommends libasound2-dev libcairo2-dev xcb-proto libxcb-util0-dev libxcb-cursor-dev libxcb-image0-dev libxcb-xrm-dev
       sudo apt install -y --no-install-recommends libcurl4-openssl-dev libjsoncpp-dev libmpdclient-dev libpulse-dev libnl-3-dev libiw-dev
-      sudo apt install -y --no-install-recommends libxcb-composite0-dev libxcb-icccm4-dev libxcb-ewmh-dev 
+      sudo apt install -y --no-install-recommends libxcb-composite0-dev libxcb-icccm4-dev libxcb-ewmh-dev libxcb-randr0-dev
       sudo apt install -y --no-install-recommends g++ gcc python git pkgconf cmake
 
       sudo apt install -y --no-install-recommends libasound2 libasound2 alsa-tools libcairo2 libxcb-cursor0 libxcb-image0 libxcb-xrm0 libxcb-icccm4 libxcb-ewmh2 libxcb-composite0
-      sudo apt install -y --no-install-recommends curl libjsoncpp1 libmpdclient2 libpulse0 libnl-3-200 wireless-tools python-xcbgen
+      sudo apt install -y --no-install-recommends curl libjsoncpp1 libmpdclient2 libpulse0 libnl-3-200 wireless-tools python-xcbgen libxcb-randr0
 
       # ncmpcpp playlist
       # 1) go to browse
@@ -842,7 +871,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
 
       sudo apt remove -y libasound2-dev libcairo2-dev xcb-proto libxcb-util0-dev libxcb-cursor-dev libxcb-image0-dev libxcb-xrm-dev
       sudo apt remove -y libcurl4-openssl-dev libjsoncpp-dev libmpdclient-dev libpulse-dev libnl-3-dev libiw-dev
-      sudo apt remove -y libxcb-composite0-dev libxcb-icccm4-dev libxcb-ewmh-dev
+      sudo apt remove -y libxcb-composite0-dev libxcb-icccm4-dev libxcb-ewmh-dev libxcb-randr0-dev
       cd /tmp
 
       # popup calendar
