@@ -113,7 +113,6 @@ while true; do
         libev-dev
         libgbm1
         libgl1-mesa-dri
-        libgl1-nvidia-glx
         libglapi-mesa
         libglib2.0-dev
         libglu1-mesa
@@ -201,9 +200,6 @@ while true; do
         neofetch
         network-manager
         network-manager-gnome
-        nvidia-detect
-        nvidia-driver
-        nvidia-xconfig
         odt2txt
         openjdk-11-jdk
         pavucontrol
@@ -238,7 +234,6 @@ while true; do
         xserver-xorg-video-amdgpu
         xserver-xorg-video-ati
         xserver-xorg-video-intel
-        xserver-xorg-video-nvidia
         zlib1g-dev
         dummy-package-to-cancel-install
       "
@@ -246,7 +241,18 @@ while true; do
       if [ "$os" != "debian" ]; then
         check_packages "libjpeg62 libjpeg62-dev libturbojpeg dummy-package-to-cancel-install"
       else
-        check_packages "firmware-linux-nonfree libjpeg62-turbo libjpeg62-turbo-dev libturbojpeg0 dummy-package-to-cancel-install"
+        check_packages "
+          firmware-linux-nonfree
+          libjpeg62-turbo
+          libjpeg62-turbo-dev
+          libturbojpeg0
+          libgl1-nvidia-glx
+          nvidia-detect
+          nvidia-driver
+          nvidia-xconfig
+          xserver-xorg-video-nvidia
+          dummy-package-to-cancel-install
+         "
       fi
 
       break;;
