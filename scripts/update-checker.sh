@@ -1,5 +1,5 @@
 #!/bin/sh
-os=$(echo -n $(cat /etc/*-release | grep ^ID= | sed -e "s/ID=//"))
+os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//"))
 updates=0
 
 if [ -f /usr/bin/pacman ]; then

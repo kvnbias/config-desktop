@@ -3,7 +3,7 @@
 
 mainCWD=$(pwd)
 
-os=$(echo -n $(cat /etc/*-release | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
+os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
 
 sudo apt -y upgrade
 

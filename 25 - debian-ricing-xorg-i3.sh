@@ -72,7 +72,7 @@ chown -R $(whoami):wheel /home/$(whoami)
   esac
 done
 
-os=$(echo -n $(cat /etc/*-release | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
+os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
 
 while true; do
   read -p "Enter full name or [s]kip?   " fn
@@ -107,7 +107,7 @@ Section "Files"
 EndSection
 ' | sudo tee /etc/X11/xorg.conf
 
-os=$(echo -n $(cat /etc/*-release | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
+os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
 
 sudo dpkg --add-architecture i386
 if [ "$os" = "debian" ]; then
@@ -1187,7 +1187,7 @@ Enter device ID:   " did
 
       cd $mainCWD
 
-      os=$(echo -n $(cat /etc/*-release | grep ^ID= | sed -e "s/ID=//"))
+      os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//"))
       mkdir -p "$HOME/.config/neofetch"
       cp -rf $(pwd)/rice/neofetch.conf $HOME/.config/neofetch/$os.conf
 

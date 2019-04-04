@@ -5,7 +5,7 @@ isHiDPI=false
 dpi=DPI_VALUE
 owner=$(whoami)
 dir="$HOME/.theme-settings"
-os=$(echo -n $(cat /etc/*-release | grep ^ID= | sed -e "s/ID=//"))
+os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//"))
 
 gen_conky_conf() {
   bash $HOME/.config/conky/generate-conky-config.sh $1
