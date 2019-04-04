@@ -863,7 +863,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
 
       sudo apt install -y --no-install-recommends accountsservice
 
-      sudo apt remove -y i3 i3lock libasound2-dev libcairo2-dev libcurl4-openssl-dev \
+      sudo apt remove -y libasound2-dev libcairo2-dev libcurl4-openssl-dev \
         libev-dev libglib2.0-dev libgtk-3-dev libiw-dev libjsoncpp-dev libmpdclient-dev \
         libnl-3-dev libnotify-dev libpam0g-dev libpango1.0-dev libpcre3-dev libpulse-dev \
         libstartup-notification0-dev libturbojpeg0-dev libx11-dev libxcb-composite0-dev \
