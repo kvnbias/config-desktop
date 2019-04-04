@@ -1,5 +1,6 @@
 
 os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
+sudo apt update
 
 check_packages() {
   sudo apt install --no-install-recommends $1
