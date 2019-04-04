@@ -69,12 +69,14 @@ while true; do
         broadcom-sta-dkms
         browser-plugin-freshplayer-pepperflash
         build-essential
+        catdoc
         cmake
         compton
         conky
         curl
         dbus-x11
         dkms
+        docx2txt
         dunst
         feh
         ffmpegthumbnailer
@@ -205,6 +207,7 @@ while true; do
         pavucontrol
         perl
         pkgconf
+        poppler-utils
         psmisc
         pulseaudio
         pulseaudio-utils
@@ -219,9 +222,12 @@ while true; do
         rofi
         rxvt-unicode
         scrot
+        tar
         tmux
         transmission-cli
+        transmission-common
         unrar
+        unzip
         vifm
         vim
         vulkan-utils
@@ -234,6 +240,8 @@ while true; do
         xserver-xorg-video-amdgpu
         xserver-xorg-video-ati
         xserver-xorg-video-intel
+        xz-utils
+        zip
         zlib1g-dev
         dummy-package-to-cancel-install
       "
@@ -258,3 +266,100 @@ while true; do
       break;;
   esac
 done
+
+while true; do
+  read -p "Check packages for script 30 [Yn]?   " c10
+  case $c10 in
+    [n]* ) break;;
+    * )
+      check_packages "
+        avahi-daemon
+        bash-completion
+        binutils
+        blueman
+        bluez
+        bluez-cups
+        bzip2
+        cmake
+        cups
+        curl
+        dkms
+        eog
+        evince
+        exfat-fuse
+        exfat-utils
+        flatpak
+        fuse
+        g++
+        gamin
+        gcc
+        gconf2-common
+        gconf-service
+        gcr
+        gdebi
+        geary
+        gedit
+        gimp
+        git
+        gnome-calculator
+        gnome-calendar
+        gnome-keyring
+        gnome-keyring-pkcs11
+        gparted
+        gufw
+        hfsplus
+        hfsprogs
+        hfsutils
+        httpie
+        libattr1
+        libattr1-dev
+        libbz2-dev
+        libfuse-dev
+        libgconf-2-4
+        libgomp1
+        libnss-mdns
+        libpam-gnome-keyring
+        libreoffice
+        libxkbcommon0
+        linux-headers-$(uname -r)
+        lsof
+        make
+        mupdf
+        ntfs-3g
+        os-prober
+        p7zip
+        p11-kit
+        p11-kit-modules
+        patch
+        perl
+        pinentry-gnome3
+        policykit-1-gnome
+        printer-driver-cups-pdf
+        pulseaudio-module-bluetooth
+        samba
+        simplescreenrecorder
+        tmux
+        transmission-gtk
+        ufw
+        vim
+        virtualbox
+        virtualbox-guest-additions-iso
+        virtualbox-qt
+        vlc
+        wget
+        xarchiver
+        zlib1g
+        zlib1g-dev
+        dummy-package-to-cancel-install
+      "
+
+      if [ "$os" != "debian" ]; then
+        check_packages "firefox dummy-package-to-cancel-install"
+      else
+        check_packages "timeshift firefox-esr dummy-package-to-cancel-install"
+      fi
+
+      break;;
+  esac
+done
+
