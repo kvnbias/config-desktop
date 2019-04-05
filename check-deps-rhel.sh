@@ -297,6 +297,7 @@ while true; do
   case $c10 in
     [n]* ) break;;
     * )
+      sudo dnf install -y wget
       if [ "$os" = "fedora" ]; then
         wget http://download.virtualbox.org/virtualbox/rpm/fedora/virtualbox.repo
       else
