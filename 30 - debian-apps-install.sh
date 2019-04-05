@@ -36,11 +36,30 @@ sudo apt install -y --no-install-recommends eog
 if [ "$os" != "debian" ]; then
   sudo apt install -y --no-install-recommends firefox
 else
+  # sudo apt install -y --no-install-recommends firefox-esr
   wget -O /tmp/FirefoxSetup.tar.bz2 "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US"
   sudo mkdir -p /opt/firefox
   sudo tar xjf /tmp/FirefoxSetup.tar.bz2 -C /opt/firefox/
   sudo ln -sf /opt/firefox/firefox/firefox /usr/bin/firefox
-  # sudo apt install -y --no-install-recommends firefox-esr
+
+  echo "
+[Desktop Entry]
+Name=Firefox
+Comment=Manually downloaded firefox
+Exec=firefox
+Terminal=false
+Type=Application
+Icon=" | tee /home/kev/.local/share/applications/firefox.desktop
+
+  echo "
+[Desktop Entry]
+Name=Firefox Update
+Comment=Manually downloaded firefox
+Exec=/bin/bash -c \"notify-send -i /home/$(whoami)/.config/firefox/noicon -t 5000 'Firefox' 'Downloading firefox'; wget -O /tmp/FirefoxSetup.tar.bz2 'https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US'; notify-send -i /home/$(whoami)/.config/firefox/noicon -t 5000 'Firefox' 'Updating firefox';tar xjf /tmp/FirefoxSetup.tar.bz2 -C /opt/firefox/; notify-send -i /home/$(whoami)/.config/firefox/noicon -t 5000 'Firefox' 'Firefox updated'\"
+Terminal=false
+Type=Application
+Icon=
+" | tee /home/kev/.local/share/applications/firefox-update.desktop
 fi
 
 # extra
