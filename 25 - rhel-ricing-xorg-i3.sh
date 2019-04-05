@@ -680,9 +680,6 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       ./autogen.sh && ./configure && make && sudo make install
       cd /tmp
 
-      sudo dnf remove -y glib2-devel gtk3-devel libnotify-devel
-      sudo dnf remove -y pulseaudio-libs-devel libX11-devel
-
       sudo sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf
       sudo sed -i 's/; autospawn = yes/autospawn = yes/g' /etc/pulse/client.conf
 
@@ -725,7 +722,6 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       # https://pillow.readthedocs.io/en/stable/installation.html
       sudo dnf install -y python3-devel libjpeg-turbo-devel zlib-devel libXext-devel --releasever=$fedver
       sudo pip3 install ueberzug
-      sudo dnf remove -y python3-devel libjpeg-turbo-devel zlib-devel libXext-devel --releasever=$fedver
       sudo dnf install -y poppler-utils
       sudo dnf install -y mediainfo
       sudo dnf install -y transmission-cli transmission-common
@@ -756,9 +752,6 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       autoreconf -fi && ./configure && make && sudo make install
       echo "auth include system-auth" | sudo tee /etc/pam.d/i3lock
       cd /tmp
-
-      sudo dnf remove -y cairo-devel libev-devel libjpeg-devel libxkbcommon-x11-devel
-      sudo dnf remove -y pam-devel xcb-util-devel xcb-util-image-devel xcb-util-xrm-devel
 
       # terminal-based file viewer
       sudo dnf install -y ranger --releasever=$fedver
@@ -798,10 +791,6 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       ../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers
       make && sudo make install
 
-      sudo dnf remove -y libxcb-devel xcb-util-keysyms-devel xcb-util-devel xcb-util-wm-devel
-      sudo dnf remove -y xcb-util-xrm-devel yajl-devel libXrandr-devel startup-notification-devel
-      sudo dnf remove -y libev-devel xcb-util-cursor-devel libXinerama-devel libxkbcommon-devel
-      sudo dnf remove -y libxkbcommon-x11-devel pcre-devel pango-devel
       cd /tmp
 
       # MANUAL: polybar
@@ -840,8 +829,6 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       rm -rf build/ && mkdir -p build && cd build/
       cmake .. && make -j$(nproc) && sudo make install
 
-      sudo dnf remove -y cairo-devel xcb-proto xcb-util-devel xcb-util-cursor-devel xcb-util-image-devel xcb-util-wm-devel xcb-util-xrm-devel
-      sudo dnf remove -y alsa-lib-devel libcurl-devel jsoncpp-devel libmpdclient-devel pulseaudio-libs-devel libnl3-devel wireless-tools-devel
       cd /tmp
 
       # popup calendar
@@ -850,6 +837,16 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo dnf install -y scrot --releasever=$fedver
 
       sudo dnf install -y accountsservice --releasever=$fedver
+
+      sudo dnf remove -y alsa-lib-devel cairo-devel glib2-devel gtk3-devel jsoncpp-devel \
+        libcurl-devel libev-devel libjpeg-devel libjpeg-turbo-devel libmpdclient-devel \
+        libnl3-devel libnotify-devel libX11-devel libxcb-devel libXext-devel libXinerama-devel \
+        libxkbcommon-devel libxkbcommon-x11-devel libXrandr-devel pam-devel pango-devel pcre-devel \
+        pulseaudio-libs-devel python3-devel startup-notification-devel wireless-tools-devel xcb-proto \
+        xcb-util-cursor-devel xcb-util-devel xcb-util-image-devel xcb-util-keysyms-devel xcb-util-wm-devel \
+        xcb-util-xrm-devel yajl-devel zlib-devel
+      sudo dnf -y autoremove
+
       user=$(whoami)
 
       echo "
@@ -1175,7 +1172,6 @@ Inherits=Breeze
 
       bash $(pwd)/scripts/update-screen-detector.sh
       bash $(pwd)/scripts/update-themes.sh
-      sudo dnf -y autoremove
 
       echo '
 
