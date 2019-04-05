@@ -651,10 +651,10 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
 
       # for vifm
       # https://pillow.readthedocs.io/en/stable/installation.html
-      # yes | sudo pacman -S python-pip
-      # sudo pip3 install ueberzug
-      yes | sudo pacman -S libimagequant
-      yay -S python-ueberzug --overwrite
+      yes | sudo pacman -S python-pip
+      sudo pip3 install ueberzug
+      # yes | sudo pacman -S libimagequant
+      # yay -S python-ueberzug --overwrite
       yes | sudo pacman -S poppler
       yes | sudo pacman -S mediainfo
       yes | sudo pacman -S transmission-cli
