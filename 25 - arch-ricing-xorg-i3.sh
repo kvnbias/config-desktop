@@ -584,7 +584,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       yes | sudo pacman -S papirus-icon-theme
 
       # display
-      yes | sudo pacman -S feh arandr lxappearance xorg-xbacklight xorg-xrandr
+      yes | sudo pacman -S feh arandr lxappearance-gtk3 xorg-xbacklight xorg-xrandr
 
       # package manager - arch
       # yes | yay -S pamac-tray-appindicator pamac-aur --noconfirm
