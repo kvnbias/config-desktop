@@ -85,27 +85,11 @@ Section "Files"
 EndSection
 ' | sudo tee /etc/X11/xorg.conf
 
-isManjaro=false
-while true; do
-  read -p "Using manjaro [yN]?   " p
-  case $p in
-    [Yy]* )
-      isManjaro=true;
-      break;;
-    * ) break;;
-  esac
-done
+os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
 
-if [ "$isManjaro" = true ]; then
-  major=$(uname -r | cut -f 1 -d .);
-  minor=$(uname -r | cut -f 2 -d .);
-  version=$(echo $major$minor);
-  yes | sudo pacman -S linux$version linux$version-headers;
-else
+if [ "$os" != "manjaro" ]; then
   while true; do
-    read -p "
-
-Install LTS kernel? [y]es | [n]o   " ilts
+    read -p "Install LTS kernel? [y]es | [n]o   " ilts
     case $ilts in
       [Yy]* )
         yes | sudo pacman -S linux-lts linux-lts-headers
@@ -116,6 +100,11 @@ Install LTS kernel? [y]es | [n]o   " ilts
       * ) echo Invalid input
     esac
   done;
+else
+  major=$(uname -r | cut -f 1 -d .);
+  minor=$(uname -r | cut -f 2 -d .);
+  version=$(echo $major$minor);
+  yes | sudo pacman -S linux$version linux$version-headers;
 fi
 
 # install AUR helper: yay
