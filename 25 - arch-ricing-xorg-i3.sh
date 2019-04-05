@@ -655,6 +655,11 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       # sudo pip3 install ueberzug
       yes | sudo pacman -S libimagequant
       yay -S python-ueberzug --overwrite
+      yes | sudo pacman -S poppler
+      yes | sudo pacman -S mediainfo
+      yes | sudo pacman -S transmission-cli
+      yes | sudo pacman -S zip unzip tar xz unrar
+      yes | sudo pacman -S catdoc odt2txt docx2txt
 
       # better desktop locker
       yes | yay -S i3lock-color-git

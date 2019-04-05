@@ -38,14 +38,7 @@ yes | sudo pacman -S libreoffice-fresh vlc
 yes | sudo pacman -S transmission-gtk --noconfirm
 
 # extra
-yes | sudo pacman -S xarchiver p7zip
-
-# for vifm
-yes | sudo pacman -S poppler evince
-yes | sudo pacman -S mediainfo
-yes | sudo pacman -S transmission-cli
-yes | sudo pacman -S zip unzip tar xz unrar
-yes | sudo pacman -S catdoc odt2txt docx2txt
+yes | sudo pacman -S xarchiver p7zip evince
 
 while true; do
   read -p "
