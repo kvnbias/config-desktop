@@ -617,20 +617,18 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo apt install -y --no-install-recommends curl wget vim httpie lsof git tmux gedit
 
       # theme icon
-      git clone --recurse-submodules https://github.com/daniruiz/flat-remix.git
-      cd flat-remix
-
-      git fetch --tags
-      tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-
-      if [ ${#tag} -ge 1 ]; then
-        git checkout $tag
-      fi
-
-      git tag -f "git-$(git rev-parse --short HEAD)"
-      sudo mkdir -p /usr/share/icons && sudo cp -raf Flat-Remix* /usr/share/icons/
-      sudo ln -sf /usr/share/icons/Flat-Remix-Blue /usr/share/icons/Flat-Remix
-      cd /tmp
+      # git clone --recurse-submodules https://github.com/daniruiz/flat-remix.git
+      # cd flat-remix
+      # git fetch --tags
+      # tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+      # if [ ${#tag} -ge 1 ]; then
+      #   git checkout $tag
+      # fi
+      # git tag -f "git-$(git rev-parse --short HEAD)"
+      # sudo mkdir -p /usr/share/icons && sudo cp -raf Flat-Remix* /usr/share/icons/
+      # sudo ln -sf /usr/share/icons/Flat-Remix-Blue /usr/share/icons/Flat-Remix
+      # cd /tmp
+      sudo apt install -y --no-install-recommends papirus-icon-theme
 
       # display
       sudo apt install -y --no-install-recommends feh arandr lxappearance xbacklight x11-xserver-utils

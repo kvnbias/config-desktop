@@ -579,8 +579,9 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo pacman -Syu
 
       # theme icon
-      yes | yay -S flat-remix-git
-      sudo ln -sf /usr/share/icons/Flat-Remix-Blue /usr/share/icons/Flat-Remix
+      # yes | yay -S flat-remix-git
+      # sudo ln -sf /usr/share/icons/Flat-Remix-Blue /usr/share/icons/Flat-Remix
+      yes | sudo pacman -S papirus-icon-theme
 
       # display
       yes | sudo pacman -S feh arandr lxappearance xorg-xbacklight xorg-xrandr

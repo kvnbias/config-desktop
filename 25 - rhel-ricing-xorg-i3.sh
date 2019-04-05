@@ -597,20 +597,18 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo dnf install -y curl wget vim-minimal vim-enhanced httpie lsof git tmux gedit --releasever=$fedver
 
       # theme icon
-      git clone --recurse-submodules https://github.com/daniruiz/flat-remix.git
-      cd flat-remix
-
-      git fetch --tags
-      tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-
-      if [ ${#tag} -ge 1 ]; then
-        git checkout $tag
-      fi
-
-      git tag -f "git-$(git rev-parse --short HEAD)"
-      sudo mkdir -p /usr/share/icons && sudo cp -raf Flat-Remix* /usr/share/icons/
-      sudo ln -sf /usr/share/icons/Flat-Remix-Blue /usr/share/icons/Flat-Remix
-      cd /tmp
+      # git clone --recurse-submodules https://github.com/daniruiz/flat-remix.git
+      # cd flat-remix
+      # git fetch --tags
+      # tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+      # if [ ${#tag} -ge 1 ]; then
+      #   git checkout $tag
+      # fi
+      # git tag -f "git-$(git rev-parse --short HEAD)"
+      # sudo mkdir -p /usr/share/icons && sudo cp -raf Flat-Remix* /usr/share/icons/
+      # sudo ln -sf /usr/share/icons/Flat-Remix-Blue /usr/share/icons/Flat-Remix
+      # cd /tmp
+      sudo dnf install -y papirus-icon-theme
 
       # display
       sudo dnf install -y feh arandr lxappearance xbacklight xorg-x11-server-utils --releasever=$fedver
