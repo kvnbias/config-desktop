@@ -29,6 +29,7 @@ while true; do
       else
         sudo dnf install -y https://download1.rpmfusion.org/free/el/rpmfusion-free-release-$fedver.noarch.rpm https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-$fedver.noarch.rpm
       fi
+      sudo dnf update
 
       check_packages "
         acpid
@@ -63,6 +64,7 @@ while true; do
       else
         sudo dnf install -y https://download1.rpmfusion.org/free/el/rpmfusion-free-release-$fedver.noarch.rpm https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-$fedver.noarch.rpm
       fi
+      sudo dnf update
 
       check_packages "
         libinput
@@ -95,6 +97,7 @@ while true; do
         sudo dnf install -y https://download1.rpmfusion.org/free/el/rpmfusion-free-release-$fedver.noarch.rpm https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-$fedver.noarch.rpm
       fi
       sudo dnf install -y http://linuxdownload.adobe.com/adobe-release/adobe-release-x86_64-1.0-1.noarch.rpm
+      sudo dnf update
 
       check_packages "
         accountsservice
