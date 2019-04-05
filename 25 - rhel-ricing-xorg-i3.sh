@@ -726,6 +726,11 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo dnf install -y python3-devel libjpeg-turbo-devel zlib-devel libXext-devel --releasever=$fedver
       sudo pip3 install ueberzug
       sudo dnf remove -y python3-devel libjpeg-turbo-devel zlib-devel libXext-devel --releasever=$fedver
+      sudo dnf install -y poppler-utils
+      sudo dnf install -y mediainfo
+      sudo dnf install -y transmission-cli transmission-common
+      sudo dnf install -y zip unzip tar xz-libs unrar
+      sudo dnf install -y catdoc odt2txt
 
       # MANUAL: i3lock-color. Some are already installed
       sudo dnf remove -y i3lock
