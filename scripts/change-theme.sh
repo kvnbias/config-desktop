@@ -117,17 +117,17 @@ while true; do
   read -p "What theme to use?
 [a]  Bloodborne        [f]  TLOU
 [b]  Horizon Zero Dawn [g]  Deer
-[c]  Lara Croft        [h]  Linux Distro
+[c]  Tomb Raider       [h]  Linux Distro
 [d]  Nier              [i]  Dark Souls
-[e]  Paint Splatter
+[e]  Paint
 
 Enter theme:   " category
   case $category in
     a )
       while true; do
         read -p "What theme to use?
-[a]  Cleric Beast
-[b]  Eileen by dastardlyapparel
+[a]  Cleric Beast (Purple)
+[b]  Eileen Minimal (Black/Gold)
 
 Enter theme:   " subcategory
         case $subcategory in
@@ -139,7 +139,7 @@ Enter theme:   " subcategory
     b )
       while true; do
         read -p "What theme to use?
-[a]  Aloy by hage_2013
+[a]  Aloy (Red)
 
 Enter theme:   " subcategory
         case $subcategory in
@@ -151,9 +151,9 @@ Enter theme:   " subcategory
     d )
       while true; do
         read -p "What theme to use?
-[a]  2B's sword
-[b]  2B by 23i2ko
-[c]  A2 by hage_2013
+[a]  2B's sword (Dark Blue)
+[b]  2B (Black/Orange)
+[c]  A2 (Beige/Black)
 
 Enter theme:   " subcategory
         case $subcategory in
@@ -167,7 +167,7 @@ Enter theme:   " subcategory
     f )
       while true; do
         read -p "What theme to use?
-[a]  Pale Blue by BrandonMeier
+[a]  Ellie (Pale Blue)
 
 Enter theme:   " subcategory
         case $subcategory in
@@ -202,8 +202,8 @@ Enter theme:   " subcategory
     i )
       while true; do
         read -p "What theme to use?
-[a]  Abyss Watcher
-[b]  Astorias
+[a]  Abyss Watcher (Red/Grey)
+[b]  Astorias (Blue/Grey)
 
 Enter theme:   " subcategory
         case $subcategory in
@@ -219,7 +219,7 @@ done
 case $themeID in
   1 )
     gen_conky_conf "#ffffff" "#ffffff"
-    cp_settings "Bloodborne-Cleric-Beast" "bloodborne-cleric-beast.jpg" "#362130"
+    cp_settings "BB-Purple" "bloodborne-cleric-beast-by-gelsgels.jpg" "#362130"
 
     set_git_branch_colors "green bold" "yellow bold" "blue bold"
     set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
@@ -229,7 +229,7 @@ case $themeID in
     reload_i3;;
   2 )
     gen_conky_conf "#661a24" "#ffffff"
-    cp_settings "Horizon-Zero-Dawn-Aloy-by-hage_2013" "horizon-zero-dawn-aloy-by-hage_2013.jpg" "#5f242a"
+    cp_settings "HZD-Red" "horizon-zero-dawn-aloy-by-hage_2013.jpg" "#5f242a"
 
     set_git_branch_colors "green bold" "yellow bold" "blue bold"
     set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
@@ -239,7 +239,7 @@ case $themeID in
     reload_i3;;
   3 )
     gen_conky_conf "#ad6334" "#ad6334"
-    cp_settings "Lara-Croft" "lara-croft.jpg" "#281d2e"
+    cp_settings "TR-Purple-Orange" "lara-croft.jpg" "#281d2e"
 
     set_git_branch_colors "green bold" "yellow bold" "blue bold"
     set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
@@ -249,7 +249,7 @@ case $themeID in
     reload_i3;;
   4 )
     gen_conky_conf "#ffffff" "#ffffff"
-    cp_settings "Nier-Sword" "nier-sword.jpg" "#1e1e21"
+    cp_settings "N-Dark-Blue" "nier-sword.jpg" "#1e1e21"
 
     set_git_branch_colors "green bold" "yellow bold" "blue bold"
     set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
@@ -259,7 +259,7 @@ case $themeID in
     reload_i3;;
   5 )
     gen_conky_conf "#e44742" "#e44742"
-    cp_settings "Nier-2B-by-23i2ko" "nier-2b-by-23i2ko.jpg" "#1e1e21"
+    cp_settings "N-Black-Orange" "nier-2b-by-23i2ko.jpg" "#1e1e21"
 
     set_git_branch_colors "green bold" "yellow bold" "blue bold"
     set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
@@ -269,7 +269,7 @@ case $themeID in
     reload_i3;;
   6 )
     gen_conky_conf "#070705" "#070705"
-    cp_settings "Nier-A2-by-hage_2013" "nier-a2-by-hage_2013.jpg" "#070705"
+    cp_settings "N-Beige-Black" "nier-a2-by-hage_2013.jpg" "#070705"
 
     set_git_branch_colors "green bold" "yellow bold" "blue bold"
     set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
@@ -279,7 +279,7 @@ case $themeID in
     reload_i3;;
   7 )
     gen_conky_conf "#060d29" "#ffffff"
-    cp_settings "Paint-Splatter" "paint-splatter.jpg" "#9c7a3"
+    cp_settings "P-Beige-Blue" "paint-splatter.jpg" "#9c7a3"
 
     set_git_branch_colors "green bold" "yellow bold" "blue bold"
     set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
@@ -289,7 +289,7 @@ case $themeID in
     reload_i3;;
   8 )
     gen_conky_conf "#acbed4" "#acbed4"
-    cp_settings "TLOU-Pale-Blue-by-BrandonMeier" "the-last-of-us-pale-blue-by-BrandonMeier.jpg" "#374d5b"
+    cp_settings "TLOU-Pale-Blue" "the-last-of-us-pale-blue-by-BrandonMeier.jpg" "#374d5b"
 
     set_git_branch_colors "green bold" "yellow bold" "blue bold"
     set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
@@ -299,7 +299,7 @@ case $themeID in
     reload_i3;;
   9 )
     gen_conky_conf "#2b343b" "#2b343b"
-    cp_settings "Dark-Deer" "dark-deer.jpg" "#2b343b"
+    cp_settings "D-Red-Black" "dark-deer.jpg" "#2b343b"
 
     set_git_branch_colors "green bold" "yellow bold" "blue bold"
     set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
@@ -323,7 +323,7 @@ case $themeID in
     use_solarized "linux-solarized-wallpaper-ubuntu.jpg";;
   17 )
     gen_conky_conf "#4a0e0e" "#4a0e0e"
-    cp_settings "Dark-Souls-Abyss-Watcher-by-nahamut" "dark-souls-abyss-watcher-low-poly-by-nahamut.jpg" "#ae9996"
+    cp_settings "DS-Red-Grey" "dark-souls-abyss-watcher-low-poly-by-nahamut.jpg" "#ae9996"
 
     set_git_branch_colors "green bold" "yellow bold" "blue bold"
     set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
@@ -333,7 +333,7 @@ case $themeID in
     reload_i3;;
   18 )
     gen_conky_conf "#284d81" "#284d81"
-    cp_settings "Dark-Souls-Astorias-by-nahamut" "dark-souls-astorias-low-poly-by-nahamut.jpg" "#284d81"
+    cp_settings "DS-Blue-Grey" "dark-souls-astorias-low-poly-by-nahamut.jpg" "#284d81"
 
     set_git_branch_colors "green bold" "yellow bold" "blue bold"
     set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
@@ -343,7 +343,7 @@ case $themeID in
     reload_i3;;
   19 )
     gen_conky_conf "#A39065" "#A39065"
-    cp_settings "Bloodborne-Eileen-Minimal-by-dastardlyapparel" "bloodborne-eileen-minimal-by-dastardlyapparel.jpg" "#191919"
+    cp_settings "BB-Black-Gold" "bloodborne-eileen-minimal-by-dastardlyapparel.jpg" "#191919"
 
     set_git_branch_colors "green bold" "yellow bold" "blue bold"
     set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
