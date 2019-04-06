@@ -49,5 +49,6 @@ $ bash 25\ -\ arch-ricing-xorg-i3.sh
 * [hage_2013](https://twitter.com/hage_2013/)
 * [BrandonMeier](https://www.behance.net/BrandonMeier)
 * [dastardlyapparel](https://www.instagram.com/dastardlyapparel/)
+* [gelsgels](https://www.deviantart.com/gelsgels/)
 
 
