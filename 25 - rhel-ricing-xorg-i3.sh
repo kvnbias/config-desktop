@@ -32,6 +32,7 @@ This UID will also be used on the other distro installations
 
 Logout this user account and execute the commands below as a root user on tty2:
 
+groupadd wheel
 usermod -u $uid $(whoami)
 groupmod -g $guid wheel
 usermod -g wheel $(whoami)
@@ -87,21 +88,7 @@ if [ ! -f /etc/X11/xorg.conf ];then
 fi
 
 # Font DIRS for X.org
-echo '
-Section "Files"
-  FontPath    "/usr/share/fonts/100dpi"
-  FontPath    "/usr/share/fonts/75dpi"
-  FontPath    "/usr/share/fonts/cantarell"
-  FontPath    "/usr/share/fonts/cyrillic"
-  FontPath    "/usr/share/fonts/encodings"
-  FontPath    "/usr/share/fonts/misc"
-  FontPath    "/usr/share/fonts/truetype"
-  FontPath    "/usr/share/fonts/TTF"
-  FontPath    "/usr/share/fonts/util"
-  FontPath    "/usr/share/fonts/nerd-fonts-complete/ttf"
-  FontPath    "/usr/share/fonts/nerd-fonts-complete/otf"
-EndSection
-' | sudo tee /etc/X11/xorg.conf
+sudo cp -raf "$(pwd)/system-confs/xorg.conf" "/etc/X11/xorg.conf"
 
 os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
 
@@ -152,150 +139,6 @@ sudo dnf install -y java-openjdk flash-plugin flash-player-ppapi --releasever=$f
 sudo dnf install -y dnf-plugin-system-upgrade
 
 ## GPU DRIVERS
-generate_intel_gpu_config() {
-  if [ ! -f /etc/X11/xorg.conf.d/20-intel.conf ];then
-    sudo touch /etc/X11/xorg.conf.d/20-intel.conf;
-  fi
-
-  echo '
-Section "Device"
-  Identifier  "Intel Graphics"
-  Driver      "intel"
-EndSection
-
-Section "Device"
-  Identifier  "Intel Graphics"
-  Driver      "intel"
-  Option      "TearFree" "true"
-  Option      "DRI"    "3"
-EndSection
-  ' | sudo tee /etc/X11/xorg.conf.d/20-intel.conf;
-
-
-  if [ -f /etc/default/grub ]; then
-    while true; do
-      read -p "Update GRUB [Yn]?   " updgr
-      case $updgr in
-        [Nn]* ) break;;
-        * )
-          while true; do
-            read -p "Using UEFI [Yn]?   " yn
-            case $yn in
-              [Nn]* )
-                sudo grub2-mkconfig -o /boot/grub2/grub.cfg;
-                break 2;;
-              * )
-                sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg;
-                break 2;;
-            esac
-          done;;
-      esac
-    done
-  fi
-}
-
-generate_ati_gpu_config() {
-  if [ ! -f /etc/X11/xorg.conf.d/20-radeon.conf ];then
-    sudo touch /etc/X11/xorg.conf.d/20-radeon.conf;
-  fi
-
-  echo '
-Section "Device"
-  Identifier "Radeon"
-  Driver "radeon"
-EndSection
-
-Section "Device"
-  Identifier  "Radeon"
-  Driver "radeon"
-  Option "AccelMethod" "glamor"
-  Option "DRI" "3"
-  Option "TearFree" "on"
-  Option "ColorTiling" "on"
-  Option "ColorTiling2D" "on"
-  Option "SWCursor" "True"
-EndSection
-  ' | sudo tee /etc/X11/xorg.conf.d/20-radeon.conf;
-
-  if [ -f /etc/default/grub ]; then
-    while true; do
-      read -p "Update GRUB [Yn]?   " updgr
-      case $updgr in
-        [Nn]* ) break;;
-        * )
-          while true; do
-            read -p "Using UEFI [Yn]?   " yn
-            case $yn in
-              [Nn]* )
-                sudo grub2-mkconfig -o /boot/grub2/grub.cfg;
-                break 2;;
-              * )
-                sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg;
-                break 2;;
-            esac
-          done;;
-      esac
-    done
-  fi
-}
-
-generate_amd_gpu_config() {
-  if [ ! -f /etc/X11/xorg.conf.d/10-screen.conf ];then
-    sudo touch /etc/X11/xorg.conf.d/10-screen.conf;
-  fi
-
-  if [ ! -f /etc/X11/xorg.conf.d/20-radeon.conf ];then
-    sudo touch /etc/X11/xorg.conf.d/20-radeon.conf;
-  fi
-
-  echo '
-Section "Screen"
-  Identifier     "Screen"
-  DefaultDepth    24
-  SubSection      "Display"
-    Depth         24
-  EndSubSection
-EndSection
-  ' | sudo tee /etc/X11/xorg.conf.d/10-screen.conf;
-
-  echo '
-Section "Device"
-  Identifier "AMD"
-  Driver "amdgpu"
-EndSection
-
-Section "Device"
-  Identifier  "AMD"
-  Driver "amdgpu"
-  Option "DRI" "3"
-  Option "TearFree" "on"
-  Option "SWCursor" "True"
-EndSection
-  ' | sudo tee /etc/X11/xorg.conf.d/20-radeon.conf;
-
-
-  if [ -f /etc/default/grub ]; then
-    while true; do
-      read -p "Update GRUB [Yn]?   " updgr
-      case $updgr in
-        [Nn]* ) break;;
-        * )
-          while true; do
-            read -p "Using UEFI [Yn]?   " yn
-            case $yn in
-              [Nn]* )
-                sudo grub2-mkconfig -o /boot/grub2/grub.cfg;
-                break 2;;
-              * )
-                sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg;
-                break 2;;
-            esac
-          done;;
-      esac
-    done
-  fi
-}
-
 generate_nvidia_gpu_config() {
   if [ -f /etc/default/grub ]; then
     sudo sed -i 's/GRUB_CMDLINE_LINUX="/GRUB_CMDLINE_LINUX="nvidia-drm.modeset=1 /g' /etc/default/grub;
@@ -378,7 +221,7 @@ Enter GPU   " gpui
       sudo dnf install -y xorg-x11-drv-intel --releasever=$fedver
       install_mesa_vulkan_drivers
 
-      generate_intel_gpu_config
+      sudo cp -raf "$(pwd)/system-confs/20-intel.conf" "/etc/X11/xorg.conf.d/20-intel.conf"
       echo Intel drivers installed;
       break;;
     [Aa]* )
@@ -397,14 +240,15 @@ What driver to use?
             sudo dnf install -y xorg-x11-drv-amdgpu --releasever=$fedver
             install_mesa_vulkan_drivers
 
-            generate_amd_gpu_config
+            sudo cp -raf "$(pwd)/system-confs/20-radeon-ati.conf" "/etc/X11/xorg.conf.d/20-radeon.conf"
+            sudo cp -raf "$(pwd)/system-confs/10-screen.conf"     "/etc/X11/xorg.conf.d/10-screen.conf"
             echo AMDGPU drivers installed;
             break 2;;
           [2]* )
             sudo dnf install -y xorg-x11-drv-ati --releasever=$fedver
             install_mesa_vulkan_drivers
 
-            generate_ati_gpu_config
+            sudo cp -raf "$(pwd)/system-confs/20-radeon-ati.conf" "/etc/X11/xorg.conf.d/20-radeon.conf"
             echo ATI drivers installed;
             break 2;;
           [Ee]* ) break 2;;
@@ -426,18 +270,24 @@ done
 
 # Adding intel backlight
 if ls /sys/class/backlight | grep -q "^intel_backlight$"; then
+  if [ ! -d /etc/X11/xorg.conf.d ];then
+    sudo mkdir -p /etc/X11/xorg.conf.d
+  fi
+
   if [ !$(ls /etc/X11/xorg.conf.d | grep -q ^20-intel.conf$) ];then
     sudo touch /etc/X11/xorg.conf.d/20-intel.conf;
   fi
 
-  echo '
+  if ! cat /etc/X11/xorg.conf.d/20-intel.conf | grep -q "backligaht"; then
+    echo '
 Section "Device"
   Identifier  "Card0"
   Driver      "intel"
   Option      "Backlight"  "intel_backlight"
 EndSection
-  ' | sudo tee /etc/X11/xorg.conf.d/20-intel.conf;
+' | sudo tee -a /etc/X11/xorg.conf.d/20-intel.conf;
     echo Added intel_backlight;
+  fi
 fi
 
 ## Hardware acceleration drivers installation
@@ -555,32 +405,9 @@ if [ ! -f "$HOME/.riced" ];then
   sudo sed -i 's/dmenu_run/dmenu/g' /etc/i3/config
 
   cp -raf $(pwd)/rice/xinitrc $HOME/.xinitrc
-
-  echo '
-*.foreground:   #c5c8c6
-*.background:   #1d1f21
-*.cursorColor:  #c5c8c6
-*.color0:       #282a2e
-*.color8:       #373b41
-*.color1:       #a54242
-*.color9:       #cc6666
-*.color2:       #8c9440
-*.color10:      #b5bd68
-*.color3:       #de935f
-*.color11:      #f0c674
-*.color4:       #5f819d
-*.color12:      #81a2be
-*.color5:       #85678f
-*.color13:      #b294bb
-*.color6:       #5e8d87
-*.color14:      #8abeb7
-*.color7:       #707880
-*.color15:      #c5c8c6
-
-  ' | tee $HOME/.Xresources
+  cp -raf "$(pwd)/rice/config-i3-base" "$HOME/.Xresources"
+  sudo cp $HOME/.Xresources /root/.Xresources
 fi
-
-sudo cp $HOME/.Xresources /root/.Xresources
 
 mainCWD=$(pwd)
 while true; do
@@ -657,7 +484,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       amixer sset "Mic" 100%
       amixer sset "Mic Boost" 100%
 
-      # MANUAL: PulseAudio Applet. Some are already installed
+      # MANUAL 3b4f8b3: PulseAudio Applet. Some are already installed
       sudo dnf install -y glib2-devel gtk3-devel libnotify-devel --releasever=$fedver
       sudo dnf install -y pulseaudio-libs-devel libX11-devel --releasever=$fedver
       sudo dnf install -y autoconf automake pkgconf --releasever=$fedver
@@ -726,7 +553,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo dnf install -y zip unzip tar xz-libs unrar
       sudo dnf install -y catdoc odt2txt
 
-      # MANUAL: i3lock-color. Some are already installed
+      # MANUAL 2.12.c: i3lock-color. Some are already installed
       sudo dnf remove -y i3lock
       sudo dnf install -y cairo-devel libev-devel libjpeg-devel libxkbcommon-x11-devel --releasever=$fedver
       sudo dnf install -y pam-devel xcb-util-devel xcb-util-image-devel xcb-util-xrm-devel autoconf automake --releasever=$fedver
@@ -762,7 +589,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       # i3wm customization, dmenu replacement, i3status replacement
       sudo dnf install -y rofi --releasever=$fedver
 
-      # MANUAL: i3-gaps
+      # MANUAL 4.16.1: i3-gaps
       sudo dnf remove -y i3
       sudo dnf install -y libxcb-devel xcb-util-keysyms-devel xcb-util-devel xcb-util-wm-devel --releasever=$fedver
       sudo dnf install -y xcb-util-xrm-devel yajl-devel libXrandr-devel startup-notification-devel --releasever=$fedver
@@ -791,7 +618,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
 
       cd /tmp
 
-      # MANUAL: polybar
+      # MANUAL 3.3.1: polybar
       sudo dnf install -y cairo-devel xcb-proto xcb-util-devel xcb-util-cursor-devel xcb-util-image-devel xcb-util-wm-devel xcb-util-xrm-devel --releasever=$fedver
       sudo dnf install -y alsa-lib-devel libcurl-devel jsoncpp-devel libmpdclient-devel pulseaudio-libs-devel libnl3-devel cmake wireless-tools-devel --releasever=$fedver
       sudo dnf install -y gcc-c++ gcc python python2 git pkgconf --releasever=$fedver
@@ -844,6 +671,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
         xcb-util-cursor-devel xcb-util-devel xcb-util-image-devel xcb-util-keysyms-devel xcb-util-wm-devel \
         xcb-util-xrm-devel yajl-devel zlib-devel
       sudo dnf -y autoremove
+      cd $mainCWD
 
       user=$(whoami)
 
@@ -854,7 +682,6 @@ XSession=i3
 SystemAccount=false
 " | sudo tee /var/lib/AccountsService/users/$user
 
-      cd $mainCWD
       sudo cp $(pwd)/rice/images/avatar/default-user.png /var/lib/AccountsService/icons/$user.png
       sudo cp $(pwd)/rice/images/avatar/default-user.png /usr/share/pixmaps/default-user.png
       sudo chown root:root /var/lib/AccountsService/users/$user
@@ -863,230 +690,14 @@ SystemAccount=false
       sudo chmod 644 /var/lib/AccountsService/users/$user
       sudo chmod 644 /var/lib/AccountsService/icons/$user.png
 
-      if [ ! -f /usr/share/X11/xorg.conf.d/40-libinput.conf ];then
-        sudo touch /usr/share/X11/xorg.conf.d/40-libinput.conf;
-      fi
-
       # For more advance gestures, install: https://github.com/bulletmark/libinput-gestures
-      echo '
-# Match on all types of devices but joysticks
-Section "InputClass"
-  Identifier "libinput pointer catchall"
-  MatchIsPointer "on"
-  MatchDevicePath "/dev/input/event*"
-  Driver "libinput"
+      bash $(pwd)/scripts/update-libinput.sh
 
-  Option "NaturalScrolling" "true"
-EndSection
-
-Section "InputClass"
-  Identifier "libinput keyboard catchall"
-  MatchIsKeyboard "on"
-  MatchDevicePath "/dev/input/event*"
-  Driver "libinput"
-EndSection
-
-Section "InputClass"
-  Identifier "libinput touchpad catchall"
-  MatchIsTouchpad "on"
-  MatchDevicePath "/dev/input/event*"
-  Driver "libinput"
-
-  Option "Tapping" "true"
-  Option "ScrollMethod" "twofinger"
-  Option "NaturalScrolling" "true"
-  Option "ClickMethod" "clickfinger"
-  Option "TappingDrag" "true"
-EndSection
-
-Section "InputClass"
-  Identifier "libinput touchscreen catchall"
-  MatchIsTouchscreen "on"
-  MatchDevicePath "/dev/input/event*"
-  Driver "libinput"
-EndSection
-
-Section "InputClass"
-  Identifier "libinput tablet catchall"
-  MatchIsTablet "on"
-  MatchDevicePath "/dev/input/event*"
-  Driver "libinput"
-EndSection
-      ' | sudo tee /usr/share/X11/xorg.conf.d/40-libinput.conf
-
-      sudo groupadd wheel
-      sudo usermod -aG wheel $(whoami)
-      sudo usermod -g wheel $(whoami)
       echo "$(whoami) ALL=(ALL) NOPASSWD: /usr/bin/dnf" | sudo tee -a "/etc/sudoers"
 
       if [ ! -f $HOME/.riced ];then
-        mkdir -p $HOME/.icons/default
-        echo "
-[Icon Theme]
-Inherits=Breeze
-        " | tee $HOME/.icons/default/index.theme
-      fi
-
-      sudo mkdir -p /usr/share/icons/default
-      echo "
-[Icon Theme]
-Inherits=Breeze
-      " | sudo tee /usr/share/icons/default/index.theme
-
-      if [ ! -f $HOME/.riced ];then
-        while true; do
-          read -p "Do you want to configure git [Yn]?   " yn
-          case $yn in
-            [Nn]* ) break;;
-            * )
-              while true; do
-                read -p "Enter email or [e]xit:   " email
-                case $email in
-                  [Ee] ) break;;
-                  * )
-                    while true; do
-                      read -p "Enter name or [e]xit:   " name
-                      case $name in
-                        [Ee] ) break 2;;
-                        * )
-                          while true; do
-                            read -p "Enter username or [e]xit:   " username
-                            case $username in
-                              [Ee] ) break 3;;
-                              * ) echo "
-[user]
-  email = $email
-  name = $name
-  username = $username
-[diff]
-  tool = vimdiff
-[difftool]
-  prompt = false
-[color]
-  ui = auto
-[color \"branch\"]
-  current = green bold
-  local = yellow bold
-  remote = blue bold
-[color \"diff\"]
-  meta = blue bold
-  frag = blue bold
-  old = red bold
-  new = green bold
-[color \"status\"]
-  added = green bold
-  changed = yellow bold
-  untracked = red bold
-" | tee $HOME/.gitconfig;
-
-                                break 4;;
-                            esac
-                          done;;
-                      esac
-                    done;;
-                esac
-              done;;
-          esac
-        done
-
-        # create folders for executables
-        mkdir -p $HOME/.config/audio
-        mkdir -p $HOME/.config/display
-        mkdir -p $HOME/.config/conky
-        mkdir -p $HOME/.config/keyboard
-        mkdir -p $HOME/.config/i3
-        mkdir -p $HOME/.config/kali
-        mkdir -p $HOME/.config/mpd
-        mkdir -p $HOME/.config/network
-        mkdir -p $HOME/.config/polybar
-        mkdir -p $HOME/.config/touchpad
-        mkdir -p $HOME/.config/system
-        mkdir -p $HOME/.config/themes
-        mkdir -p $HOME/.config/vifm
-        mkdir -p $HOME/.config/vifm/scripts
-
-        # create folders for configs
-        mkdir -p  "$HOME/.config/Code"
-        mkdir -p  "$HOME/.config/Code/User"
-        mkdir -p  "$HOME/.config/Code - OSS"
-        mkdir -p  "$HOME/.config/Code - OSS/User"
-        mkdir -p  "$HOME/.config/gtk-3.0"
-
-        # copy vscode user settings
-        cp $(pwd)/rice/vscode/keybindings.json "$HOME/.config/Code/User/keybindings.json"
-        cp $(pwd)/rice/vscode/keybindings.json "$HOME/.config/Code - OSS/User/keybindings.json"
-
-        cp -rf $(pwd)/rice/bashrc      $HOME/.bashrc
-
-        # vifm
-        cp -raf $(pwd)/rice/vifmrc  $HOME/.config/vifm/vifmrc
-
-        # copy vim colors
-        mkdir -p $HOME/.vim
-        cp -raf $(pwd)/rice/vim/*  $HOME/.vim
-        cp -raf $(pwd)/rice/vimrc  $HOME/.vimrc
-
-        git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
-
-        # copy ranger configs
-        mkdir -p $HOME/.config/ranger
-        cp -rf $(pwd)/rice/ranger/* $HOME/.config/ranger
-
-        # copy i3 config
-        mkdir -p $HOME/.config/i3
-        cp -rf $(pwd)/rice/config-i3      $HOME/.config/i3/config
-        cp -rf $(pwd)/rice/i3status.conf  $HOME/.config/i3/i3status.conf
-
-        sed -i 's/# exec --no-startup-id pa-applet/exec --no-startup-id pa-applet/g' $HOME/.config/i3/config
-
-        # copy ncmpcpp config
-        mkdir -p $HOME/.ncmpcpp
-        cp -rf $(pwd)/rice/config-ncmpcpp $HOME/.ncmpcpp/config
-
-        # copy polybar config
-        mkdir -p $HOME/.config/polybar
-        cp -rf $(pwd)/rice/config-polybar $HOME/.config/polybar/config
-        bash $(pwd)/scripts/update-polybar-network-interface.sh
-
-        # copy i3status config
-        sudo cp -rf $(pwd)/rice/i3status.conf /etc/i3status.conf
-
-        # copy mpd config
-        mkdir -p $HOME/.config/mpd
-        mkdir -p $HOME/.config/mpd/playlists
-        cp -rf $(pwd)/rice/mpd.conf $HOME/.config/mpd/mpd.conf
-
-        # copy neofetch config
-        mkdir -p $HOME/.config/neofetch
-        cp -rf $(pwd)/rice/neofetch.conf $HOME/.config/neofetch/config.conf
-
-        # copy compton config
-        mkdir -p $HOME/.config/compton
-        cp -rf $(pwd)/rice/compton.conf $HOME/.config/compton/config.conf
-
-        # copy dunst config
-        mkdir -p $HOME/.config/dunst
-        cp -rf $(pwd)/rice/dunstrc $HOME/.config/dunst/dunstrc
-
-        while true; do
-          read -p "Do you want to activate keyboard disabler [yN]?   " yn
-          case $yn in
-            [Yy]* )
-              while true; do
-                xinput
-                read -p "
-
-Enter device ID:   " did
-                case $did in
-                  * )
-                    echo "exec --no-startup-id ~/.config/keyboard/keyboard-disabler.sh $did" | tee -a $HOME/.config/i3/config
-                    break 2;;
-                esac
-              done;;
-            * ) break;;
-          esac
-        done
-
+        bash $(pwd)/scripts/setup-user-configs.sh
+        bash $(pwd)/scripts/update-scripts.sh
         touch $HOME/.riced
       fi
 
@@ -1095,7 +706,6 @@ Enter device ID:   " did
       # sed -i "s/# exec --no-startup-id dnfdragora-updater/exec --no-startup-id dnfdragora-updater/g" $HOME/.config/i3/config
       # sed -i "s/# for_window \[class=\"Dnfdragora-updater\"\]/for_window [class=\"Dnfdragora-updater\"]/g" $HOME/.config/i3/config
 
-      os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//"))
       mkdir -p "$HOME/.config/neofetch"
       cp -rf $(pwd)/rice/neofetch.conf $HOME/.config/neofetch/$os.conf
 
