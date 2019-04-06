@@ -149,12 +149,14 @@ while true; do
         nvidia-lts
         nvidia-utils
         odt2txt
+        papirus-icon-theme
         pavucontrol
         pepper-flash
         poppler
         pulseaudio
         pygmentize
         python-chardet
+        python-pip
         ranger
         rofi
         rxvt-unicode

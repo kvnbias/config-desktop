@@ -225,6 +225,7 @@ while true; do
         pam-devel
         pango
         pango-devel
+        papirus-icon-theme
         pavucontrol
         pcre-devel
         perl

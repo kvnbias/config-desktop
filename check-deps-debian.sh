@@ -331,6 +331,7 @@ while true; do
         p7zip
         p11-kit
         p11-kit-modules
+        papirus-icon-theme
         patch
         perl
         pinentry-gnome3
