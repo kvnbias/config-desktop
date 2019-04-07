@@ -98,7 +98,7 @@ fi
 git clone https://aur.archlinux.org/yay.git
 cd yay
 yes | makepkg --syncdeps --install
-yes | yay -Syu
+yes | yay -Syyu
 cd ..
 rm -rf yay
 
@@ -487,7 +487,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
     * ) 
 
       # update all
-      sudo pacman -Syu
+      sudo pacman -Syyu
 
       # theme icon
       # yes | yay -S flat-remix-git

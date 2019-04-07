@@ -2,7 +2,7 @@
 #!/bin/bash
 
 # update all
-sudo pacman -Syu
+sudo pacman -Syyu
 
 yes | sudo pacman -S curl wget vim httpie git tmux gedit
 yes | sudo pacman -S lsof bash-completion polkit-gnome

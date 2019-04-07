@@ -2,7 +2,7 @@
 #!/bin/bash
 
 # update all
-sudo pacman -Syu
+sudo pacman -Syyu
 
 # extra
 yes | sudo pacman -S htop
