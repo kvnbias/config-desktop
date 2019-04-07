@@ -71,17 +71,6 @@ while true; do
   esac
 done
 
-while true; do
-  read -p "Enter full name or [s]kip?   " fn
-  case $fn in
-    [Ss]* )
-      break;;
-    * )
-      sudo chfn -f "$fn" $(whoami)
-      break;;
-  esac
-done
-
 # fonts
 if [ ! -f /etc/X11/xorg.conf ];then
   sudo touch /etc/X11/xorg.conf;
@@ -104,7 +93,18 @@ fi
 
 # selinux utils
 sudo dnf install -y checkpolicy policycoreutils-python-utils --releasever=$fedver
-sudo dnf install -y gcc gcc-c++ autoconf automake cmake make dkms pkgconfig bzip2 --releasever=$fedver
+sudo dnf install -y libuser gcc gcc-c++ autoconf automake cmake make dkms pkgconfig bzip2 --releasever=$fedver
+
+while true; do
+  read -p "Enter full name or [s]kip?   " fn
+  case $fn in
+    [Ss]* )
+      break;;
+    * )
+      sudo chfn -f "$fn" $(whoami)
+      break;;
+  esac
+done
 
 sudo dnf install -y at
 sudo systemctl enable atd
