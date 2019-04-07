@@ -574,7 +574,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       yes | sudo pacman -S catdoc odt2txt docx2txt
 
       # better desktop locker
-      yes 1 | yay -S i3lock-color
+      yes 1 | yay -S i3lock-color --noconfirm
 
       # terminal-based file viewer
       yes | sudo pacman -S ranger
