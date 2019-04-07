@@ -121,14 +121,6 @@ while true; do
   esac
 done
 
-# install AUR helper: yay
-git clone https://aur.archlinux.org/yay.git
-cd yay
-yes | makepkg --syncdeps --install
-yes | yay -Syu
-cd ..
-rm -rf yay
-
 # Remove orphan packages from yay
 yes | sudo pacman -Rns $(pacman -Qtdq)
 
