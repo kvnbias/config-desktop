@@ -6,8 +6,6 @@ sudo pacman -Syyu
 
 yes | sudo pacman -S curl wget vim httpie git tmux gedit
 yes | sudo pacman -S lsof bash-completion polkit-gnome
-yes | yay -S downgrade
-# yes | yay -S gksu --noconfirm
 
 while true; do
   read -p "Enable vi mode on bash [yN]?   " ebvi
@@ -432,9 +430,8 @@ Install Calendar [yN]?   " ic
     [Yy]* )
       # Currently tightly coupled with evolution and cheese:
       # yes | sudo pacman -S gnome-calendar
-      # tightly coupled with cheese
-      # yes | yay -S gnome-calendar-no-evolution
-      yes | yay -S gnome-calendar-linuxmint
+      yes | sudo pacman -S geoclue
+      yes | yay -S gnome-calendar-no-evolution
       break;;
     * ) break;;
   esac

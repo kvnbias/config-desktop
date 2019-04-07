@@ -574,7 +574,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       yes | sudo pacman -S catdoc odt2txt docx2txt
 
       # better desktop locker
-      yes | yay -S i3lock-color-git
+      yes 1 | yay -S i3lock-color
 
       # terminal-based file viewer
       yes | sudo pacman -S ranger
@@ -602,7 +602,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
 
       # i3wm customization, dmenu replacement, i3status replacement
       yes | sudo pacman -S i3-gaps rofi
-      yes | yay -S polybar --noconfirm
+      yes 1 | yay -S polybar --noconfirm
 
       # popup calendar
       # sudo pacman -S xdotool
