@@ -589,9 +589,9 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       # MANUAL 2.12.c: i3lock-color. Some are already installed
       sudo apt remove -y i3lock
       if [ "$os" != "debian" ]; then
-        sudo apt install --no-install-recommends libjpeg62-dev
+        sudo apt install -y --no-install-recommends libjpeg62-dev
       else
-        sudo apt install --no-install-recommends libjpeg62-turbo-dev
+        sudo apt install -y --no-install-recommends libjpeg62-turbo-dev
       fi
 
       sudo apt install -y --no-install-recommends libcairo2-dev libev-dev libturbojpeg0-dev libxcb-composite0-dev libxkbcommon-x11-dev libxcb-randr0-dev
