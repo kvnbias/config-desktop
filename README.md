@@ -29,6 +29,9 @@ $ bash 25\ -\ arch-ricing-xorg-i3.sh
 * For RHEL-based distros using anaconda installer you can remove bootloader on full disk summary.
 * If GRUB is installed, use `os-prober` to detect other OS.
 
+## Why some packages are compiled from source?
+Some packages in doesn't exists in PPA and COPR, and if the package exist, it might be unmaintaned, failing builds, or not updated. I will only include packages from those repos if it is maintained by the author of the software. While the AUR is not perfect, the quality of software from those repos just doesn't make the cut compared to the AUR.
+
 ## As of 04/06/2019
 
 ##### Arch scripts are tested on:
@@ -50,5 +53,3 @@ $ bash 25\ -\ arch-ricing-xorg-i3.sh
 * [BrandonMeier](https://www.behance.net/BrandonMeier)
 * [dastardlyapparel](https://www.instagram.com/dastardlyapparel/)
 * [gelsgels](https://www.deviantart.com/gelsgels/)
-
-
