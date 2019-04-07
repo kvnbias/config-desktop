@@ -2,23 +2,78 @@
 # NOTE this script is only tested in my machines
 
 os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
-user=$(whoami)
 
-while true; do
-  read -p "
-If sudo is not enabled during installation (Debian). Login as root on tty2 (Ctrl + Alt + F2)
-then execute the commands below before proceeding.
+if [ "$os" = "debian" ]; then
+  while true; do
+    echo "
+If sudo is not enabled during installation (Debian). Logout this user, login as root on
+tty2 (Ctrl + Alt + F2) then execute the commands below before proceeding.
 
 apt install -y sudo libuser
 groupadd wheel
-usermod -aG wheel $user
-usermod -aG sudo $user
-usermod -g wheel $user
+usermod -aG wheel $(whoami)
+usermod -aG sudo $(whoami)
+usermod -g wheel $(whoami)
 echo '%wheel ALL=(ALL) ALL' | tee -a /etc/sudoers
+"
+  read -p "Choose action: [l]ogout | [s]kip   " isu
+  case $isu in
+      [Ss]* ) break;;
+      [Ll]* ) sudo pkill -KILL -u $(whoami);;
+      * ) echo "Invalid input";;
+    esac
+  done
+fi
 
-Changes will reflect on the next login. Proceed [Yn]?   " yn
-  case $yn in
-    [Nn]* ) echo "";;
+while true; do
+  read -p "Will boot with other linux distros and share a partitions [yN]?   " wdb
+  case $wdb in
+    [Yy]* )
+      while true; do
+        echo "
+
+NOTE: Use a UID that will less likely be used as an ID by other distros (e.g. 1106).
+This UID will also be used on the other distro installations
+
+"
+        read -p "Enter UID or [e]xit:   " uid
+        case $uid in
+          [Ee]* ) break;;
+          * )
+            while true; do
+              echo "
+
+NOTE: Use a GUID that will less likely be used as an ID by other distros (e.g. 1106).
+This GUID will also be used on the other distro installations
+
+"
+              read -p "Enter GUID or [e]xit:   " guid
+              case $guid in
+                [Ee]* ) break 2;;
+                * )
+                  while true; do
+                    echo "
+
+Logout this user account and execute the commands below as a root user on tty2 (Ctrl + Alt + F2):
+
+groupadd wheel
+usermod -u $uid $(whoami)
+groupmod -g $guid wheel
+usermod -g wheel $(whoami)
+chown -R $(whoami):wheel /home/$(whoami)
+
+"
+                    read -p "Choose action: [l]ogout | [s]kip   " wultp
+                    case $wultp in
+                      [Ss]* ) break 4;;
+                      [Ll]* ) sudo pkill -KILL -u $(whoami);;
+                      * ) echo "Invalid input";;
+                    esac
+                  done;;
+              esac
+            done;;
+        esac
+      done;;
     * ) break;;
   esac
 done
@@ -107,8 +162,6 @@ sudo apt install -y --no-install-recommends acpid
 sudo systemctl enable acpid
 
 sudo apt install -y --no-install-recommends pciutils usbutils
-
-sudo chown -R $user:wheel /home/$user
 
 echo '
 
