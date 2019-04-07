@@ -161,15 +161,12 @@ while true; do
 done
 
 generate_nvidia_gpu_config() {
-  if [ -f /etc/default/grub ]; then
-    sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="/GRUB_CMDLINE_LINUX_DEFAULT="nvidia-drm.modeset=1 /g' /etc/default/grub;
-    sudo mkdir -p /etc/pacman.d/hooks
+  sudo mkdir -p /etc/pacman.d/hooks
+  if [ ! -f /etc/pacman.d/hooks/nvidia.hook ];then
+    sudo touch /etc/pacman.d/hooks/nvidia.hook;
+  fi
 
-    if [ ! -f /etc/pacman.d/hooks/nvidia.hook ];then
-      sudo touch /etc/pacman.d/hooks/nvidia.hook;
-    fi
-
-    echo "
+  echo "
 [Trigger]
 Operation=Install
 Operation=Upgrade
@@ -186,6 +183,9 @@ NeedsTargets
 Exec=/bin/sh -c 'while read -r trg; do case \$trg in linux) exit 0; esac; done; /usr/bin/mkinitcpio -P'
 " | sudo tee /etc/pacman.d/hooks/nvidia.hook;
 
+  if [ -f /etc/default/grub ]; then
+    sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="/GRUB_CMDLINE_LINUX_DEFAULT="nvidia-drm.modeset=1 /g' /etc/default/grub;
+
     while true; do
       read -p "Update GRUB [Yn]?   " updgr
       case $updgr in
@@ -193,6 +193,8 @@ Exec=/bin/sh -c 'while read -r trg; do case \$trg in linux) exit 0; esac; done; 
         * ) sudo grub-mkconfig -o /boot/grub/grub.cfg; break;;
       esac
     done
+  else
+    sudo mkinitcpio -P
   fi
 }
 

@@ -142,18 +142,7 @@ if [ -f /etc/default/grub ]; then
       read -p "Update GRUB [Yn]?   " updgr
       case $updgr in
         [Nn]* ) break;;
-        * )
-          while true; do
-            read -p "Using UEFI [Yn]?   " yn
-            case $yn in
-              [Nn]* )
-                sudo grub2-mkconfig -o /boot/grub2/grub.cfg;
-                break 2;;
-              * )
-                sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg;
-                break 2;;
-            esac
-          done;;
+        * ) sudo grub2-mkconfig -o /boot/grub2/grub.cfg; break;;
       esac
     done
   fi
