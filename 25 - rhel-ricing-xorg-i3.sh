@@ -215,6 +215,8 @@ What GPU are you using?
 
 Enter GPU   " gpui
   case $gpui in
+    [Ee]* )
+      break;;
     [Vv]* )
       break;;
     [Ii]* )
