@@ -29,11 +29,11 @@ http://packman.links2linux.org/mirrors
 [7] Germany: http://ftp.gwdg.de/pub/linux/misc/packman/suse/
 [8] Taiwan: http://ftp.yzu.edu.tw/linux/packman/suse/
 [t] test download speed
-[s] skip
+[d] done
 
 Action:   " pr
   case $pr in
-    [Ss]* ) break;;
+    [Dd]* ) break;;
     [Tt]* )
       sudo zypper -n install -R flash-player-ppapi freshlpayerplugin;
       sudo zypper -n remove -u flash-player-ppapi freshlpayerplugin;

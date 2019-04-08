@@ -84,7 +84,6 @@ sudo zypper -n update
 # Sound
 sudo zypper -n install --no-recommends alsa-utils
 
-
 bash $(pwd)/scripts/change-packman-mirror.sh
 
 # Gstreamer
