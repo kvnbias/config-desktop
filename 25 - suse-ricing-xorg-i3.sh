@@ -63,13 +63,7 @@ os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | 
 # selinux utils
 sudo zypper -n install --no-recommends libuser
 sudo zypper -n install --no-recommends gcc gcc-c++ autoconf automake cmake make dkms bzip2
-
-if echo "$os" | grep -q 'tumbleweed'; then
-  sudo zypper -n install --no-recommends pkgconf
-else
-  sudo zypper -n install --no-recommends pkg-config
-  sudo zypper -n install --no-recommends pkgconf
-fi
+sudo zypper -n install --no-recommends pkgconf
 
 while true; do
   read -p "Enter full name or [s]kip?   " fn
