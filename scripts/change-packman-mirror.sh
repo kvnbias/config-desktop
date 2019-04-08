@@ -1,4 +1,6 @@
 
+#!/bin/bash
+os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
 add_packman_mirror() {
   if echo "$os" | grep -q 'tumbleweed'; then
     sudo zypper rr packman-essentials
