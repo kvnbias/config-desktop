@@ -99,12 +99,8 @@ sudo zypper -n install --no-recommends gstreamer-plugins-good-gtk
 
 if [ "$hasPackman" = true ]; then
 
-  if echo "$os" | grep -q 'tumbleweed'; then
-    sudo zypper -n install --no-recommends libwebpmux3 libHalf24 libIex-2_3-24 libIlmImf-2_3-24 libSoundTouch1 libaom0
-    sudo zypper -n install --no-recommends libsrt1 libmysofa0 libdav1d1 libSvtAv1Enc-suse0 libcodec2-0_8
-  else
-    sudo zypper -n install --no-recommends libwebpmux2 libHalf23 libIex-2_2-23 libIlmImf-2_2-23 libSoundTouch0
-  fi
+  sudo zypper -n install --no-recommends libwebpmux3 libHalf24 libIex-2_3-24 libIlmImf-2_3-24 libSoundTouch1 libaom0
+  sudo zypper -n install --no-recommends libsrt1 libmysofa0 libdav1d1 libSvtAv1Enc-suse0 libcodec2-0_8
 
   sudo zypper -n install --no-recommends libtwolame0 libass9 libmp3lame0 libdc1394-22 libzimg2 libdvdread4
   sudo zypper -n install --no-recommends libgsm1 liba52-0 libzvbi0 libmpeg2-0 libschroedinger-1_0-0 libcelt0-2
@@ -122,11 +118,7 @@ fi
 
 ## Flash Repo
 sudo zypper -n install --no-recommends freshplayerplugin
-if echo "$os" | grep -q 'tumbleweed'; then
-  sudo zypper -n install --no-recommends java-12-openjdk
-else
-  sudo zypper -n install --no-recommends java-11-openjdk
-fi
+sudo zypper -n install --no-recommends java-12-openjdk
 
 if [ "$hasPackman" = true ]; then
   sudo zypper -n install --no-recommends -r packman-essentials flash-player-ppapi
