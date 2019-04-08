@@ -84,51 +84,10 @@ sudo zypper -n update
 # Sound
 sudo zypper -n install --no-recommends alsa-utils
 
-# TODO
-add_packman_mirror() {
-  if echo "$os" | grep -q 'tumbleweed'; then
-    sudo zypper rr pacman-essentials
-    sudo zypper ar -cfp 90 $1/openSUSE_Tumbleweed/Essentials packman-essentials
-  else
-    sudo zypper rr pacman-essentials
-    version=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^VERSION_ID= | sed -e "s/VERSION_ID=//" | sed 's/"//g'))
-    sudo zypper ar -cfp 90 $1/openSUSE_Leap_$version/Essentials packman-essentials
-  fi
-  sudo zypper dup --from packman --allow-vendor-change;;
-}
 
-while true; do
-  read -p "
-Choose the closest packman repository to install. If the repository install failed,
-Try other repositories or skip this step.
-http://packman.links2linux.org/mirrors
+bash $(pwd)/scripts/change-packman-mirror.sh
 
-[1] Austria: http://packman.inode.at/suse/
-[2] China: http://mirrors.hust.edu.cn/packman/suse/
-[3] Czech Republic: http://mirror.karneval.cz/pub/linux/packman/suse/
-[4] Germany: http://packman.jacobs-university.de/suse/
-[5] Germany: http://ftp.fau.de/packman/suse/
-[6] Germany: http://ftp.halifax.rwth-aachen.de/packman/suse/
-[7] Germany: http://ftp.gwdg.de/pub/linux/misc/packman/suse/
-[8] Taiwan: http://ftp.yzu.edu.tw/linux/packman/suse/
-[e] exit
-
-Action:   " pr
-  case $pr in
-    [Ee]* ) break;;
-    [1] ) add_packman_mirror "http://packman.inode.at/suse/";;
-    [2] ) add_packman_mirror "http://mirrors.hust.edu.cn/packman/suse/";;
-    [3] ) add_packman_mirror "http://mirror.karneval.cz/pub/linux/packman/suse/";;
-    [4] ) add_packman_mirror "http://packman.jacobs-university.de/suse/";;
-    [5] ) add_packman_mirror "http://ftp.fau.de/packman/suse/";;
-    [6] ) add_packman_mirror "http://ftp.halifax.rwth-aachen.de/packman/suse/";;
-    [7] ) add_packman_mirror "http://ftp.gwdg.de/pub/linux/misc/packman/suse/";;
-    [8] ) add_packman_mirror "http://ftp.yzu.edu.tw/linux/packman/suse/";;
-    * ) echo "Invalid input"
-  esac
-done
-#
-## Gstreamer
+# Gstreamer
 #sudo zypper -n install --no-recommends gstreamer gstreamer-plugins-libav gstreamer1-vaapi
 #sudo zypper -n install --no-recommends gstreamer1-plugins-bad-free gstreamer1-plugins-base gstreamer1-plugins-good-gtk gstreamer1-plugins-good
 #sudo zypper -n install --no-recommends gstreamer1-plugins-bad-nonfree gstreamer1-plugins-good-extras gstreamer1-plugins-bad-free-extras

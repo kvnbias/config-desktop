@@ -67,7 +67,7 @@ if [ "$os" = "debian" ]; then
 fi
 
 sudo zypper refresh
-sudo zypper -n install --no-recommends update
+sudo zypper -n update
 
 sudo zypper -n install --no-recommends kernel-devel
 
