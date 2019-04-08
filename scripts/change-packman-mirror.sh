@@ -1,10 +1,10 @@
 
 add_packman_mirror() {
   if echo "$os" | grep -q 'tumbleweed'; then
-    sudo zypper rr pacman-essentials
+    sudo zypper rr packman-essentials
     sudo zypper ar -cfp 90 $1/openSUSE_Tumbleweed/Essentials packman-essentials
   else
-    sudo zypper rr pacman-essentials
+    sudo zypper rr packman-essentials
     version=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^VERSION_ID= | sed -e "s/VERSION_ID=//" | sed 's/"//g'))
     sudo zypper ar -cfp 90 $1/openSUSE_Leap_$version/Essentials packman-essentials
   fi
