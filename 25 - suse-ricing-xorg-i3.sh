@@ -63,7 +63,7 @@ os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | 
 # selinux utils
 sudo zypper -n install --no-recommends libuser
 sudo zypper -n install --no-recommends gcc gcc-c++ autoconf automake cmake make dkms bzip2
-sudo zypper -n install --no-recommends pkgconf #note
+sudo zypper -n install --no-recommends pkgconf
 
 while true; do
   read -p "Enter full name or [s]kip?   " fn
@@ -95,12 +95,13 @@ fi
 # Gstreamer
 sudo zypper -n install --no-recommends gstreamer gstreamer-plugins-vaapi
 sudo zypper -n install --no-recommends gstreamer-plugins-base gstreamer-plugins-good gstreamer-plugins-good-extra
-sudo zypper -n install --no-recommends gstreamer-plugins-good-gtk #note
+sudo zypper -n install --no-recommends gstreamer-plugins-good-gtk
 
 if [ "$hasPackman" = true ]; then
 
   if echo "$os" | grep -q 'tumbleweed'; then
     sudo zypper -n install --no-recommends libwebpmux3 libHalf24 libIex-2_3-24 libIlmImf-2_3-24 libSoundTouch1 libaom0
+    sudo zypper -n install --no-recommends libsrt1 libmysofa0 libdav1d1 libSvtAv1Enc-suse0 libcodec2-0_8
   else
     sudo zypper -n install --no-recommends libwebpmux2 libHalf23 libIex-2_2-23 libIlmImf-2_2-23 libSoundTouch0
   fi
@@ -110,7 +111,8 @@ if [ "$hasPackman" = true ]; then
   sudo zypper -n install --no-recommends libmpg123-0 libbs2b0 libgme0 libopenjpeg1 libkate1 libvdpau1
   sudo zypper -n install --no-recommends libmpcdec5 libopenal1 libgraphene-1_0-0 liblilv-0-0 liblrdf2 libmjpegutils-2_0-0
   sudo zypper -n install --no-recommends libmms0 libmpeg2encpp-2_0-0 libmplex2-2_0-0 libneon27 libofa0 libsbc1 libspandsp2
-  sudo zypper -n install --no-recommends libsrtp1 libwebrtc_audio_processing1 libzbar0 libvidstab1_1
+  sudo zypper -n install --no-recommends libsrtp1 libwebrtc_audio_processing1 libzbar0 libvidstab1_1 libopenmpt0
+  sudo zypper -n install --no-recommends librubberband2 libnice10 libzmq5 libsrtp2-1
 
   sudo zypper -n install --no-recommends -r packman-essentials gstreamer-plugins-bad gstreamer-plugins-ugly
   sudo zypper -n install --no-recommends -r packman-essentials gstreamer-plugins-libav
@@ -120,15 +122,16 @@ fi
 
 ## Flash Repo
 sudo zypper -n install --no-recommends freshplayerplugin
-#sudo zypper -n install --no-recommends http://linuxdownload.adobe.com/adobe-release/adobe-release-x86_64-1.0-1.noarch.rpm
-#
-#sudo zypper -n install --no-recommends java-openjdk flash-plugin flash-player-ppapi
-#
-## upgrading:
-## sudo dnf system-upgrade download
-## sudo dnf system-upgrade reboot
-#sudo zypper -n install --no-recommends dnf-plugin-system-upgrade
-#
+if echo "$os" | grep -q 'tumbleweed'; then
+  sudo zypper -n install --no-recommends java-12-openjdk
+else
+  sudo zypper -n install --no-recommends java-11-openjdk
+fi
+
+if [ "$hasPackman" = true ]; then
+  sudo zypper -n install --no-recommends -r packman-essentials flash-player-ppapi
+fi
+
 ### GPU DRIVERS
 #generate_nvidia_gpu_config() {
 #  if [ -f /etc/default/grub ]; then
