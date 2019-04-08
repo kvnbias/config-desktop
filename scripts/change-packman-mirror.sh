@@ -35,9 +35,9 @@ Action:   " pr
   case $pr in
     [Ss]* ) break;;
     [Tt]* )
-      sudo zypper -n install flash-player-ppapi freshlpayerplugin;
-      sudo remove flash-player-ppapi freshlpayerplugin;
-      break;;
+      sudo zypper -n install -R flash-player-ppapi freshlpayerplugin;
+      sudo zypper -n remove -u flash-player-ppapi freshlpayerplugin;
+      ;;
     [1] ) add_packman_mirror "http://packman.inode.at/suse/";;
     [2] ) add_packman_mirror "http://mirrors.hust.edu.cn/packman/suse/";;
     [3] ) add_packman_mirror "http://mirror.karneval.cz/pub/linux/packman/suse/";;
