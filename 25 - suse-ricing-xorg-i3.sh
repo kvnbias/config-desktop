@@ -63,7 +63,7 @@ os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | 
 # selinux utils
 sudo zypper -n install --no-recommends libuser
 sudo zypper -n install --no-recommends gcc gcc-c++ autoconf automake cmake make dkms bzip2
-sudo zypper -n install --no-recommends pkgconf
+sudo zypper -n install --no-recommends pkgconf #note
 
 while true; do
   read -p "Enter full name or [s]kip?   " fn
@@ -95,7 +95,7 @@ fi
 # Gstreamer
 sudo zypper -n install --no-recommends gstreamer gstreamer-plugins-vaapi
 sudo zypper -n install --no-recommends gstreamer-plugins-base gstreamer-plugins-good gstreamer-plugins-good-extra
-sudo zypper -n install --no-recommends gstreamer-plugins-good-gtk
+sudo zypper -n install --no-recommends gstreamer-plugins-good-gtk #note
 
 if [ "$hasPackman" = true ]; then
   sudo zypper -n install --no-recommends gstreamer-plugins-bad gstreamer-plugins-ugly
@@ -104,11 +104,6 @@ else
   sudo zypper -n install --no-recommends gstreamer-plugins-bad gstreamer-plugins-libav gstreamer-plugins-ugly
 fi
 
-#sudo zypper -n install --no-recommends gstreamer gstreamer-plugins-libav gstreamer1-vaapi
-#sudo zypper -n install --no-recommends gstreamer1-plugins-bad-free gstreamer1-plugins-base gstreamer1-plugins-good-gtk gstreamer1-plugins-good
-#sudo zypper -n install --no-recommends gstreamer1-plugins-bad-nonfree gstreamer1-plugins-good-extras gstreamer1-plugins-bad-free-extras
-#sudo zypper -n install --no-recommends gstreamer1-plugins-ugly-free gstreamer1-plugins-bad-freeworld gstreamer1-plugins-base-tools
-#
 ## Flash Repo
 #sudo zypper -n install --no-recommends http://linuxdownload.adobe.com/adobe-release/adobe-release-x86_64-1.0-1.noarch.rpm
 #sudo dnf update
