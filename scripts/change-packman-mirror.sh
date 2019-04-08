@@ -37,8 +37,8 @@ Action:   " pr
   case $pr in
     [Dd]* ) break;;
     [Tt]* )
-      sudo zypper -n install -r packman-essentials --no-recommends flash-player-ppapi freshplayerplugin;
-      sudo zypper -n remove -u flash-player-ppapi freshplayerplugin;
+      sudo zypper -n install -r packman-essentials --no-recommends flash-player-ppapi;
+      sudo zypper -n remove -u flash-player-ppapi;
       ;;
     [1] ) add_packman_mirror "http://packman.inode.at/suse/";;
     [2] ) add_packman_mirror "http://mirrors.hust.edu.cn/packman/suse/";;
