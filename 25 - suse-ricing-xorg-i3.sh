@@ -98,12 +98,18 @@ sudo zypper -n install --no-recommends gstreamer-plugins-base gstreamer-plugins-
 sudo zypper -n install --no-recommends gstreamer-plugins-good-gtk #note
 
 if [ "$hasPackman" = true ]; then
+
+  if echo "$os" | grep -q 'tumbleweed'; then
+    sudo zypper -n install --no-recommends libwebpmux2 libHalf23 libIex-2_2-23 libIlmImf-2_2-23  libSoundTouch0
+  else
+    sudo zypper -n install --no-recommends libwebpmux3 libHalf24 libIex-2_2-24 libIlmImf-2_2-24  libSoundTouch1
+  fi
+
   sudo zypper -n install --no-recommends libtwolame0 libass9 libmp3lame0 libdc1394-22 libzimg2 libdvdread4
   sudo zypper -n install --no-recommends libgsm1 liba52-0 libzvbi0 libmpeg2-0 libschroedinger-1_0-0 libcelt0-2
-  sudo zypper -n install --no-recommends libmpg123-0 libbs2b0 libwebpmux2 libgme0 libopenjpeg1 libkate1 libvdpau1
-  sudo zypper -n install --no-recommends libmpcdec5 libopenal1 libHalf23 libIex-2_2-23 libIlmImf-2_2-23 libSoundTouch0
-  sudo zypper -n install --no-recommends libgraphene-1_0-0 liblilv-0-0 liblrdf2 libmjpegutils-2_0-0 libmms0
-  sudo zypper -n install --no-recommends libmpeg2encpp-2_0-0 libmplex2-2_0-0 libneon27 libofa0 libsbc1 libspandsp2
+  sudo zypper -n install --no-recommends libmpg123-0 libbs2b0 libgme0 libopenjpeg1 libkate1 libvdpau1
+  sudo zypper -n install --no-recommends libmpcdec5 libopenal1 libgraphene-1_0-0 liblilv-0-0 liblrdf2 libmjpegutils-2_0-0
+  sudo zypper -n install --no-recommends libmms0 libmpeg2encpp-2_0-0 libmplex2-2_0-0 libneon27 libofa0 libsbc1 libspandsp2
   sudo zypper -n install --no-recommends libsrtp1 libwebrtc_audio_processing1 libzbar0
 
   sudo zypper -n install --no-recommends -r packman-essentials gstreamer-plugins-bad gstreamer-plugins-ugly
