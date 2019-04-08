@@ -86,7 +86,23 @@ sudo zypper -n install --no-recommends alsa-utils
 
 bash $(pwd)/scripts/change-packman-mirror.sh
 
+hasPackman=false
+if zypper ls | grep -q 'packman-essentials'; then
+  hasPackman=true
+fi
+
 # Gstreamer
+sudo zypper -n install --no-recommends gstreamer gstreamer-plugins-vaapi
+sudo zypper -n install --no-recommends gstreamer-plugins-base gstreamer-plugins-good gstreamer-plugins-good-extra
+sudo zypper -n install --no-recommends gstreamer-plugins-good-gtk
+
+if [ "$hasPackman" = true ]; then
+  sudo zypper -n install --no-recommends gstreamer-plugins-bad gstreamer-plugins-ugly
+  sudo zypper -n install --no-recommends gstreamer-plugins-libav
+else
+  sudo zypper -n install --no-recommends gstreamer-plugins-bad gstreamer-plugins-libav gstreamer-plugins-ugly
+fi
+
 #sudo zypper -n install --no-recommends gstreamer gstreamer-plugins-libav gstreamer1-vaapi
 #sudo zypper -n install --no-recommends gstreamer1-plugins-bad-free gstreamer1-plugins-base gstreamer1-plugins-good-gtk gstreamer1-plugins-good
 #sudo zypper -n install --no-recommends gstreamer1-plugins-bad-nonfree gstreamer1-plugins-good-extras gstreamer1-plugins-bad-free-extras
