@@ -100,9 +100,9 @@ sudo zypper -n install --no-recommends gstreamer-plugins-good-gtk #note
 if [ "$hasPackman" = true ]; then
 
   if echo "$os" | grep -q 'tumbleweed'; then
-    sudo zypper -n install --no-recommends libwebpmux2 libHalf23 libIex-2_2-23 libIlmImf-2_2-23  libSoundTouch0
-  else
     sudo zypper -n install --no-recommends libwebpmux3 libHalf24 libIex-2_2-24 libIlmImf-2_2-24  libSoundTouch1
+  else
+    sudo zypper -n install --no-recommends libwebpmux2 libHalf23 libIex-2_2-23 libIlmImf-2_2-23  libSoundTouch0
   fi
 
   sudo zypper -n install --no-recommends libtwolame0 libass9 libmp3lame0 libdc1394-22 libzimg2 libdvdread4
