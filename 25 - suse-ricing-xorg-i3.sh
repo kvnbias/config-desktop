@@ -97,23 +97,13 @@ sudo zypper -n install --no-recommends gstreamer gstreamer-plugins-vaapi
 sudo zypper -n install --no-recommends gstreamer-plugins-base gstreamer-plugins-good gstreamer-plugins-good-extra
 sudo zypper -n install --no-recommends gstreamer-plugins-good-gtk
 
+sudo zypper -n install --no-recommends gstreamer-plugins-bad gstreamer-plugins-libav gstreamer-plugins-ugly
 if [ "$hasPackman" = true ]; then
-
-  sudo zypper -n install --no-recommends libwebpmux3 libHalf24 libIex-2_3-24 libIlmImf-2_3-24 libSoundTouch1 libaom0
-  sudo zypper -n install --no-recommends libsrt1 libmysofa0 libdav1d1 libSvtAv1Enc-suse0 libcodec2-0_8
-
-  sudo zypper -n install --no-recommends libtwolame0 libass9 libmp3lame0 libdc1394-22 libzimg2 libdvdread4
-  sudo zypper -n install --no-recommends libgsm1 liba52-0 libzvbi0 libmpeg2-0 libschroedinger-1_0-0 libcelt0-2
-  sudo zypper -n install --no-recommends libmpg123-0 libbs2b0 libgme0 libopenjpeg1 libkate1 libvdpau1
-  sudo zypper -n install --no-recommends libmpcdec5 libopenal1 libgraphene-1_0-0 liblilv-0-0 liblrdf2 libmjpegutils-2_0-0
-  sudo zypper -n install --no-recommends libmms0 libmpeg2encpp-2_0-0 libmplex2-2_0-0 libneon27 libofa0 libsbc1 libspandsp2
-  sudo zypper -n install --no-recommends libsrtp1 libwebrtc_audio_processing1 libzbar0 libvidstab1_1 libopenmpt0
-  sudo zypper -n install --no-recommends librubberband2 libnice10 libzmq5 libsrtp2-1
+  # remove to replace then use it's dependencies
+  sudo zypper -n remove gstreamer-plugins-bad gstreamer-plugins-libav gstreamer-plugins-ugly
 
   sudo zypper -n install --no-recommends -r packman-essentials gstreamer-plugins-bad gstreamer-plugins-ugly
   sudo zypper -n install --no-recommends -r packman-essentials gstreamer-plugins-libav
-else
-  sudo zypper -n install --no-recommends gstreamer-plugins-bad gstreamer-plugins-libav gstreamer-plugins-ugly
 fi
 
 ## Flash Repo
