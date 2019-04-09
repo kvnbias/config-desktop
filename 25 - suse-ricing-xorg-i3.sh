@@ -503,7 +503,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo zypper -n install --no-recommends gtk2-engines gtk2-engine-murrine gtk2-branding-openSUSE gtk3-branding-openSUSE
 
       # mouse cursor theme
-      sudo zypper -n install --no-recommends breeze-cursor-theme
+      sudo zypper -n install --no-recommends breeze5-cursors
       sudo ln -s /usr/share/icons/breeze_cursors /usr/share/icons/Breeze
 
       # notification, system monitor, compositor, image on terminal
@@ -563,7 +563,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo zypper -n install --no-recommends i3-gaps-devel python-xml gcc-c++ gcc python git pkgconf
 
       sudo zypper -n install --no-recommends libcairo2 libxcb-cursor0 libxcb-image0 libxcb-ewmh2 libxcb-xrm0
-      sudo zypper -n install --no-recommends alsa curl jsoncpp libmpdclient2 libpulse0 libnl3-200 wireless-tools
+      sudo zypper -n install --no-recommends alsa curl libjsoncpp19 libmpdclient2 libpulse0 libnl3-200 wireless-tools
 
       # ncmpcpp playlist
       # 1) go to browse
