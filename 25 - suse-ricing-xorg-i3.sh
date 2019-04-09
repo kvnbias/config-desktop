@@ -455,11 +455,11 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       amixer sset "Mic Boost" 100%
 
       # MANUAL 3b4f8b3: PulseAudio Applet. Some are already installed
+      sudo zypper -n install --no-recommends gtk3-branding-openSUSE libnotify4 libpulse0
+
       sudo zypper -n install --no-recommends glib2-devel gtk3-devel libnotify-devel
       sudo zypper -n install --no-recommends libpulse-devel libX11-devel
       sudo zypper -n install --no-recommends autoconf automake pkgconf
-
-      sudo zypper -n install --no-recommends gtk3-branding-openSUSE libnotify4 libpulse0
 
       git clone --recurse-submodules https://github.com/fernandotcl/pa-applet.git
       cd pa-applet
@@ -514,6 +514,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo zypper -n install --no-recommends python3-pip
 
       # https://pillow.readthedocs.io/en/stable/installation.html
+      sudo zypper -n install --no-recommends libjpeg62
       sudo zypper -n install --no-recommends python3-devel libjpeg62-devel zlib-devel libXext-devel
       sudo pip3 install ueberzug
       sudo zypper -n install --no-recommends poppler-tools
@@ -524,11 +525,11 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
 
       # MANUAL 2.12.c: i3lock-color. Some are already installed
       sudo zypper -n remove i3lock
-      sudo zypper -n install --no-recommends cairo-devel libev-devel libjpeg62-devel libxkbcommon-x11-devel
-      sudo zypper -n install --no-recommends pam-devel xcb-util-devel xcb-util-image-devel xcb-util-xrm-devel autoconf automake
-
       sudo zypper -n install --no-recommends libcairo2 libev4 libjpeg-turbo libxcb1 libxkbcommon0
       sudo zypper -n install --no-recommends libxkbcommon-x11-0 libxcb-image0 pkgconf
+
+      sudo zypper -n install --no-recommends cairo-devel libev-devel libjpeg62-devel libxkbcommon-x11-devel
+      sudo zypper -n install --no-recommends pam-devel xcb-util-devel xcb-util-image-devel xcb-util-xrm-devel autoconf automake
 
       git clone --recurse-submodules https://github.com/PandorasFox/i3lock-color.git
       cd i3lock-color
@@ -559,12 +560,12 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo zypper -n install --no-recommends i3-gaps
 
       # MANUAL 3.3.1: polybar
+      sudo zypper -n install --no-recommends libcairo2 libxcb-cursor0 libxcb-image0 libxcb-ewmh2 libxcb-xrm0
+      sudo zypper -n install --no-recommends alsa curl libjsoncpp19 libmpdclient2 libpulse0 libnl3-200 wireless-tools
+
       sudo zypper -n install --no-recommends cairo-devel xcb-proto-devel xcb-util-devel xcb-util-cursor-devel xcb-util-image-devel xcb-util-wm-devel xcb-util-xrm-devel
       sudo zypper -n install --no-recommends alsa-devel libcurl-devel jsoncpp-devel libmpdclient-devel libpulse-devel libnl3-devel cmake libiw-devel
       sudo zypper -n install --no-recommends i3-gaps-devel python-xml gcc-c++ gcc python git pkgconf
-
-      sudo zypper -n install --no-recommends libcairo2 libxcb-cursor0 libxcb-image0 libxcb-ewmh2 libxcb-xrm0
-      sudo zypper -n install --no-recommends alsa curl libjsoncpp19 libmpdclient2 libpulse0 libnl3-200 wireless-tools
 
       # ncmpcpp playlist
       # 1) go to browse
@@ -596,7 +597,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
 
       sudo zypper -n install --no-recommends accountsservice
 
-      sudo zypper -n remove -u alsa-devel cairo-devel cmake i3-gaps-devel jsoncpp-devel libcurl-devel \
+      sudo zypper -n remove alsa-devel cairo-devel cmake i3-gaps-devel jsoncpp-devel libcurl-devel \
         libev-devel libiw-devel libjpeg62-devel libmpdclient-devel libnl3-devel libpulse-devel \
         libxkbcommon-x11-devel pam-devel python-xml xcb-proto-devel xcb-util-cursor-devel xcb-util-devel \
         xcb-util-image-devel xcb-util-wm-devel xcb-util-xrm-devel
@@ -631,7 +632,7 @@ SystemAccount=false
         touch $HOME/.riced
       fi
 
-      sudo ln -sf /usr/bin/urxvt /usr/bin/urxvt256c-ml
+      sudo ln -sf /usr/bin/urxvt-256color /usr/bin/urxvt256c-ml
 
       cd $mainCWD
 
