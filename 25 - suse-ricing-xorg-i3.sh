@@ -267,44 +267,46 @@ if [ "$hasPackman" = true ]; then
 fi
 
 ## Network
-#sudo zypper -n install --no-recommends kernel-devel
-#sudo dnf mark install kernel-devel
-#while true; do
-#  lspci -nnk | grep 0280 -A3
-#  read -p "
-#
-#
-#Wireless drivers installation:
-#If your driver is not listed, check:
-#https://wiki.archlinux.org/index.php/Wireless_network_configuration
-#
-#[1] Show Network Controller
-#[2] Broadcom
-#[m] Modprobe a module
-#[e] Exit
-#
-#Enter action:   " wd
-#  case $wd in
-#    [Ee]* ) break;;
-#    [Mm]* )
-#      while true; do
-#        read -p "Enter module:   " m
-#        case $m in
-#          * ) sudo modprobe -a $m; break;;
-#        esac
-#      done;;
-#    [1] ) lspci | grep Network;;
-#    [2] )
-#      sudo zypper -n install --no-recommends NetworkManager-wifi broadcom-wl kmod-wl kernel-devel;
-#      sudo akmods --force --kernel `uname -r` --akmod wl
-#      sudo modprobe -r b44 b43 b43legacy ssb brcmsmac bcma
-#      sudo modprobe wl
-#      echo "
-#Installation done...
-#";;
-#  esac
-#done
-#
+sudo zypper -n install --no-recommends kernel-devel
+while true; do
+  sudo lspci -nnk | grep 0280 -A3
+  read -p "
+
+
+Wireless drivers installation:
+If your driver is not listed, check:
+https://wiki.archlinux.org/index.php/Wireless_network_configuration
+
+[1] Show Network Controller
+[2] Broadcom
+[m] Modprobe a module
+[e] Exit
+
+Enter action:   " wd
+  case $wd in
+    [Ee]* ) break;;
+    [Mm]* )
+      while true; do
+        read -p "Enter module:   " m
+        case $m in
+          * ) sudo modprobe -a $m; break;;
+        esac
+      done;;
+    [1] ) sudo lspci | grep Network;;
+    [2] )
+      if [ "$hasPackman" = true ]; then
+        sudo zypper -n install --no-recommends -r packman-essentials broadcom-wl;
+        sudo modprobe -r b44 b43 b43legacy ssb brcmsmac bcma
+        sudo modprobe wl
+      else
+        sudo modprobe b43
+      fi
+      echo "
+Installation done...
+";;
+  esac
+done
+
 ## TRRS
 #while true; do
 #  read -p "
