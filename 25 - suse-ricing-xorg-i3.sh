@@ -235,27 +235,27 @@ What driver to use?
 done
 
 ## Adding intel backlight
-#if ls /sys/class/backlight | grep -q "^intel_backlight$"; then
-#  if [ ! -d /etc/X11/xorg.conf.d ];then
-#    sudo mkdir -p /etc/X11/xorg.conf.d
-#  fi
-#
-#  if [ !$(ls /etc/X11/xorg.conf.d | grep -q ^20-intel.conf$) ];then
-#    sudo touch /etc/X11/xorg.conf.d/20-intel.conf;
-#  fi
-#
-#  if ! cat /etc/X11/xorg.conf.d/20-intel.conf | grep -q "backligaht"; then
-#    echo '
-#Section "Device"
-#  Identifier  "Card0"
-#  Driver      "intel"
-#  Option      "Backlight"  "intel_backlight"
-#EndSection
-#' | sudo tee -a /etc/X11/xorg.conf.d/20-intel.conf;
-#    echo Added intel_backlight;
-#  fi
-#fi
-#
+if ls /sys/class/backlight | grep -q "^intel_backlight$"; then
+  if [ ! -d /etc/X11/xorg.conf.d ];then
+    sudo mkdir -p /etc/X11/xorg.conf.d
+  fi
+
+  if [ !$(ls /etc/X11/xorg.conf.d | grep -q ^20-intel.conf$) ];then
+    sudo touch /etc/X11/xorg.conf.d/20-intel.conf;
+  fi
+
+  if ! cat /etc/X11/xorg.conf.d/20-intel.conf | grep -q "backligaht"; then
+    echo '
+Section "Device"
+  Identifier  "Card0"
+  Driver      "intel"
+  Option      "Backlight"  "intel_backlight"
+EndSection
+' | sudo tee -a /etc/X11/xorg.conf.d/20-intel.conf;
+    echo Added intel_backlight;
+  fi
+fi
+
 ### Hardware acceleration drivers installation
 #sudo zypper -n install --no-recommends mesa-vdpau-drivers
 #sudo zypper -n install --no-recommends libva-vdpau-driver
