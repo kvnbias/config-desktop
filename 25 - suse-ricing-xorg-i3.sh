@@ -341,21 +341,20 @@ options snd_hda_intel model=$hdam" | sudo tee /etc/modprobe.d/alsa-base.conf
 done
 
 
-#if [ -d /etc/gdm ]; then
-#  # use lightdm instead
-#  sudo systemctl disable gdm
-#fi
-#
-## Greeter
-## sudo zypper -n install --no-recommends lightdm
-#sudo zypper -n install --no-recommends google-noto-sans-fonts google-noto-fonts-common
-#sudo zypper -n install --no-recommends lightdm-gtk
-#sudo zypper -n install --no-recommends lightdm-gtk-greeter-settings
-#sudo sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-gtk-greeter/g' /etc/lightdm/lightdm.conf
-#
-#sudo systemctl enable lightdm
-#sudo systemctl set-default graphical.target
-#
+if [ -d /etc/gdm ]; then
+  # use lightdm instead
+  sudo systemctl disable gdm
+fi
+
+# Greeter
+# sudo zypper -n install --no-recommends lightdm
+sudo zypper -n install --no-recommends noto-mono-fonts noto-sans-fonts
+sudo zypper -n install --no-recommends lightdm-gtk-greeter-branding-upstream
+
+# sudo sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-gtk-greeter/g' /etc/lightdm/lightdm.conf
+# sudo systemctl enable lightdm
+sudo systemctl set-default graphical.target
+
 ## Install window tiling manager
 #sudo zypper -n install --no-recommends dmenu i3 i3status i3lock rxvt-unicode-256color-ml
 #
