@@ -114,138 +114,126 @@ if [ "$hasPackman" = true ]; then
   sudo zypper -n install --no-recommends -r packman-essentials flash-player-ppapi
 fi
 
-### GPU DRIVERS
-#generate_nvidia_gpu_config() {
-#  if [ -f /etc/default/grub ]; then
-#    sudo sed -i 's/GRUB_CMDLINE_LINUX="/GRUB_CMDLINE_LINUX="nvidia-drm.modeset=1 /g' /etc/default/grub;
-#
-#    while true; do
-#      read -p "Update GRUB [Yn]?   " updgr
-#      case $updgr in
-#        [Nn]* ) break;;
-#        * )
-#          while true; do
-#            read -p "Using UEFI [Yn]?   " yn
-#            case $yn in
-#              [Nn]* )
-#                sudo grub2-mkconfig -o /boot/grub2/grub.cfg;
-#                break 2;;
-#              * )
-#                sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg;
-#                break 2;;
-#            esac
-#          done;;
-#      esac
-#    done
-#  fi
-#}
-#
-#install_mesa_vulkan_drivers() {
-#
-#  sudo zypper -n install --no-recommends mesa-dri-drivers.x86_64
-#  sudo zypper -n install --no-recommends mesa-filesystem.x86_64
-#  sudo zypper -n install --no-recommends mesa-libd3d.x86_64
-#  sudo zypper -n install --no-recommends mesa-libEGL.x86_64
-#  sudo zypper -n install --no-recommends mesa-libgbm.x86_64
-#  sudo zypper -n install --no-recommends mesa-libGL.x86_64
-#  sudo zypper -n install --no-recommends mesa-libglapi.x86_64
-#  sudo zypper -n install --no-recommends mesa-libGLES.x86_64
-#  sudo zypper -n install --no-recommends mesa-libGLU.x86_64
-#  sudo zypper -n install --no-recommends mesa-libGLw.x86_64
-#  sudo zypper -n install --no-recommends mesa-libOpenCL.x86_64
-#  sudo zypper -n install --no-recommends mesa-libOSMesa.x86_64
-#  sudo zypper -n install --no-recommends mesa-libxatracker.x86_64
-#
-#  sudo zypper -n install --no-recommends mesa-dri-drivers.i686
-#  sudo zypper -n install --no-recommends mesa-filesystem.i686
-#  sudo zypper -n install --no-recommends mesa-libd3d.i686
-#  sudo zypper -n install --no-recommends mesa-libEGL.i686
-#  sudo zypper -n install --no-recommends mesa-libgbm.i686
-#  sudo zypper -n install --no-recommends mesa-libGL.i686
-#  sudo zypper -n install --no-recommends mesa-libglapi.i686
-#  sudo zypper -n install --no-recommends mesa-libGLES.i686
-#  sudo zypper -n install --no-recommends mesa-libGLU.i686
-#  sudo zypper -n install --no-recommends mesa-libGLw.i686
-#  sudo zypper -n install --no-recommends mesa-libOpenCL.i686
-#  sudo zypper -n install --no-recommends mesa-libOSMesa.i686
-#  sudo zypper -n install --no-recommends mesa-libxatracker.i686
-#
-#  sudo zypper -n install --no-recommends vulkan-loader.x86_64
-#  sudo zypper -n install --no-recommends mesa-vulkan-drivers.x86_64
-#
-#  sudo zypper -n install --no-recommends vulkan-loader.i686
-#  sudo zypper -n install --no-recommends mesa-vulkan-drivers.i686
-#  
-#  sudo zypper -n install --no-recommends vulkan-tools.x86_64
-#}
-#
-#while true; do
-#  read -p "
-#
-#What GPU are you using?
-#  [i]ntel
-#  [a]md
-#  [n]vidia
-#  [v]m
-#  [e]xit
-#
-#Enter GPU   " gpui
-#  case $gpui in
-#    [Ee]* )
-#      break;;
-#    [Vv]* )
-#      break;;
-#    [Ii]* )
-#      sudo zypper -n install --no-recommends xorg-x11-drv-intel
-#      install_mesa_vulkan_drivers
-#
-#      sudo cp -raf "$(pwd)/system-confs/20-intel.conf" "/etc/X11/xorg.conf.d/20-intel.conf"
-#      echo Intel drivers installed;
-#      break;;
-#    [Aa]* )
-#      while true; do
-#        read -p "
-#
-#
-#What driver to use?
-#  Check: https://en.wikipedia.org/wiki/Template:AMD_graphics_API_support
-#  [1] AMDGPU    - GCN 3, GCN 4 and newer
-#  [2] ATI       - TeraScale 1, TeraScale 2, TeraScale 3, GCN 1, GCN 2
-#  [e]xit
-#  " amdd
-#        case $amdd in
-#          [1]* )
-#            sudo zypper -n install --no-recommends xorg-x11-drv-amdgpu
-#            install_mesa_vulkan_drivers
-#
-#            sudo cp -raf "$(pwd)/system-confs/20-radeon-ati.conf" "/etc/X11/xorg.conf.d/20-radeon.conf"
-#            sudo cp -raf "$(pwd)/system-confs/10-screen.conf"     "/etc/X11/xorg.conf.d/10-screen.conf"
-#            echo AMDGPU drivers installed;
-#            break 2;;
-#          [2]* )
-#            sudo zypper -n install --no-recommends xorg-x11-drv-ati
-#            install_mesa_vulkan_drivers
-#
-#            sudo cp -raf "$(pwd)/system-confs/20-radeon-ati.conf" "/etc/X11/xorg.conf.d/20-radeon.conf"
-#            echo ATI drivers installed;
-#            break 2;;
-#          [Ee]* ) break 2;;
-#          * ) echo Invalid input
-#        esac
-#      done;;
-#    [Nn]* )
-#      sudo zypper -n install --no-recommends xorg-x11-drv-nvidia akmod-nvidia nvidia-xconfig
-#
-#      sudo zypper -n install --no-recommends vulkan-loader.x86_64 vulkan-tools.x86_64
-#      sudo zypper -n install --no-recommends vulkan-loader.i686 vulkan-tools.i686
-#
-#      generate_nvidia_gpu_config
-#      sudo nvidia-xconfig
-#      echo NVIDIA drivers installed;
-#      break;;
-#  esac
-#done
-#
+## GPU DRIVERS
+generate_nvidia_gpu_config() {
+  if [ -f /etc/default/grub ]; then
+    sudo sed -i 's/GRUB_CMDLINE_LINUX="/GRUB_CMDLINE_LINUX="nvidia-drm.modeset=1 /g' /etc/default/grub;
+
+    while true; do
+      read -p "Update GRUB [Yn]?   " updgr
+      case $updgr in
+        [Nn]* ) break;;
+        * ) sudo grub2-mkconfig -o /boot/grub2/grub.cfg; break;;
+      esac
+    done
+  fi
+}
+
+install_mesa_vulkan_drivers() {
+
+  sudo zypper -n install --no-recommends Mesa
+  sudo zypper -n install --no-recommends Mesa-dri
+  sudo zypper -n install --no-recommends Mesa-libEGL1
+  sudo zypper -n install --no-recommends Mesa-libGL1
+  sudo zypper -n install --no-recommends Mesa-libd3d
+  sudo zypper -n install --no-recommends Mesa-libglapi0
+  sudo zypper -n install --no-recommends Mesa-libOSMesa8
+
+  sudo zypper -n install --no-recommends Mesa-32bit
+  sudo zypper -n install --no-recommends Mesa-dri-32bit
+  sudo zypper -n install --no-recommends Mesa-libEGL1-32bit
+  sudo zypper -n install --no-recommends Mesa-libGL1-32bit
+  sudo zypper -n install --no-recommends Mesa-libd3d-32bit
+  sudo zypper -n install --no-recommends Mesa-libglapi0-32bit
+  sudo zypper -n install --no-recommends Mesa-libOSMesa8-32bit
+
+  sudo zypper -n install --no-recommends Mesa-libGLESv1_CM1 Mesa-libGLESv2-2 Mesa-libOpenCL
+
+  sudo zypper -n install --no-recommends libvulkan1
+  sudo zypper -n install --no-recommends libvulkan1-32bit
+
+  sudo zypper -n install --no-recommends vulkan-headers vulkan-tools
+  sudo zypper -n install --no-recommends Mesa-libVulkan-devel
+}
+
+while true; do
+  read -p "
+
+What GPU are you using?
+  [i]ntel
+  [a]md
+  [n]vidia
+  [v]m
+  [e]xit
+
+Enter GPU   " gpui
+  case $gpui in
+    [Ee]* )
+      break;;
+    [Vv]* )
+      break;;
+    [Ii]* )
+      sudo zypper -n install --no-recommends xf86-video-intel
+      install_mesa_vulkan_drivers
+      sudo zypper -n install --no-recommends libvulkan_intel
+      sudo zypper -n install --no-recommends libvulkan_intel-32bit
+
+      sudo cp -raf "$(pwd)/system-confs/20-intel.conf" "/etc/X11/xorg.conf.d/20-intel.conf"
+      echo Intel drivers installed;
+      break;;
+    [Aa]* )
+      while true; do
+        read -p "
+
+
+What driver to use?
+  Check: https://en.wikipedia.org/wiki/Template:AMD_graphics_API_support
+  [1] AMDGPU    - GCN 3, GCN 4 and newer
+  [2] ATI       - TeraScale 1, TeraScale 2, TeraScale 3, GCN 1, GCN 2
+  [e]xit
+  " amdd
+        case $amdd in
+          [1]* )
+            sudo zypper -n install --no-recommends xf86-video-amdgpu
+            install_mesa_vulkan_drivers
+            sudo zypper -n install --no-recommends libvulkan_radeon
+            sudo zypper -n install --no-recommends libvulkan_radeon-32bit
+
+            sudo cp -raf "$(pwd)/system-confs/20-radeon-ati.conf" "/etc/X11/xorg.conf.d/20-radeon.conf"
+            sudo cp -raf "$(pwd)/system-confs/10-screen.conf"     "/etc/X11/xorg.conf.d/10-screen.conf"
+            echo AMDGPU drivers installed;
+            break 2;;
+          [2]* )
+            sudo zypper -n install --no-recommends xf86-video-ati
+            install_mesa_vulkan_drivers
+            sudo zypper -n install --no-recommends libvulkan_radeon
+            sudo zypper -n install --no-recommends libvulkan_radeon-32bit
+
+            sudo cp -raf "$(pwd)/system-confs/20-radeon-ati.conf" "/etc/X11/xorg.conf.d/20-radeon.conf"
+            echo ATI drivers installed;
+            break 2;;
+          [Ee]* ) break 2;;
+          * ) echo Invalid input
+        esac
+      done;;
+    [Nn]* )
+      sudo zypper -n install --no-recommends xf86-video-nv
+
+      sudo zypper ar -cfp 90 https://download.nvidia.com/opensuse/tumbleweed nvidia
+      sudo zypper inr -r nvidia
+
+      sudo zypper -n install --no-recommends x11-video-nvidiaG05 nvidia-glG05 nvidia-gfxG05-kmp-default nvidia-computeG05
+
+      sudo zypper -n install --no-recommends libvulkan1
+      sudo zypper -n install --no-recommends libvulkan1-32bit
+      sudo zypper -n install --no-recommends vulkan-headers vulkan-tools
+
+      generate_nvidia_gpu_config
+      echo NVIDIA drivers installed;
+      break;;
+  esac
+done
+
 ## Adding intel backlight
 #if ls /sys/class/backlight | grep -q "^intel_backlight$"; then
 #  if [ ! -d /etc/X11/xorg.conf.d ];then
