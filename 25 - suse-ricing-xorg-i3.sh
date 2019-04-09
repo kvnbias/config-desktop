@@ -596,11 +596,11 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
 
       sudo zypper -n install --no-recommends accountsservice
 
-      sudo zypper -n remove alsa-devel cairo-devel cmake i3-gaps-devel jsoncpp-devel libcurl-devel \
+      sudo zypper -n remove -u alsa-devel cairo-devel cmake i3-gaps-devel jsoncpp-devel libcurl-devel \
         libev-devel libiw-devel libjpeg62-devel libmpdclient-devel libnl3-devel libpulse-devel \
         libxkbcommon-x11-devel pam-devel python-xml xcb-proto-devel xcb-util-cursor-devel xcb-util-devel \
         xcb-util-image-devel xcb-util-wm-devel xcb-util-xrm-devel
-      sudo zypper -n remove $(zypper packages --unneeded | grep -v '+=' | grep -v '\.\.\.' | grep -v 'Version' | cut -f 3 -d '|')
+      sudo zypper -n remove -u $(zypper packages --unneeded | grep -v '+=' | grep -v '\.\.\.' | grep -v 'Version' | cut -f 3 -d '|')
       cd $mainCWD
 
       user=$(whoami)
@@ -630,6 +630,8 @@ SystemAccount=false
         bash $(pwd)/scripts/update-scripts.sh
         touch $HOME/.riced
       fi
+
+      sudo ln -sf /usr/bin/urxvt /usr/bin/urxvt256c-ml
 
       cd $mainCWD
 
