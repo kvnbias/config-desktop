@@ -256,10 +256,16 @@ EndSection
   fi
 fi
 
-### Hardware acceleration drivers installation
-#sudo zypper -n install --no-recommends mesa-vdpau-drivers
-#sudo zypper -n install --no-recommends libva-vdpau-driver
-#
+## Hardware acceleration drivers installation
+sudo zypper -n install --no-recommends Mesa-libva libvdpau_va_gl1 libvdpau_va_gl1-32bit
+sudo zypper -n install --no-recommends libgstvdpau
+sudo zypper -n install --no-recommends libgstvdpau libva-vdpau-driver libvdpau1
+if [ "$hasPackman" = true ]; then
+  # remove to replace then use it's dependencies
+  sudo zypper -n remove libgstvdpau
+  sudo zypper -n install --no-recommends -r packman-essentials libgstvdpau
+fi
+
 ## Network
 #sudo zypper -n install --no-recommends kernel-devel
 #sudo dnf mark install kernel-devel
