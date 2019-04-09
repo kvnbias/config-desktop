@@ -382,260 +382,219 @@ if [ ! -f "$HOME/.riced" ];then
   sudo cp $HOME/.Xresources /root/.Xresources
 fi
 
-#mainCWD=$(pwd)
-#while true; do
-#  read -p "
-#
-#Minimal installation done. Would you like to proceed [Yn]?   " yn
-#  case $yn in
-#    [Nn]* ) break;;
-#    * )
-#
-#      # will use for manually installed packages, /tmp has limited space
-#      cd /tmp
-#
-#      sudo zypper -n install --no-recommends curl wget vim-minimal vim-enhanced httpie lsof git tmux gedit
-#
-#      # theme icon
-#      # git clone --recurse-submodules https://github.com/daniruiz/flat-remix.git
-#      # cd flat-remix
-#      # git fetch --tags
-#      # tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-#      # if [ ${#tag} -ge 1 ]; then
-#      #   git checkout $tag
-#      # fi
-#      # git tag -f "git-$(git rev-parse --short HEAD)"
-#      # sudo mkdir -p /usr/share/icons && sudo cp -raf Flat-Remix* /usr/share/icons/
-#      # sudo ln -sf /usr/share/icons/Flat-Remix-Blue /usr/share/icons/Flat-Remix
-#      # cd /tmp
-#      sudo zypper -n install --no-recommends papirus-icon-theme
-#
-#      # display
-#      sudo zypper -n install --no-recommends feh arandr lxappearance xbacklight xorg-x11-server-utils
-#
-#      # package manager
-#      # sudo zypper -n install --no-recommends dnfdragora dnfdragora-updater
-#      sudo zypper -n install --no-recommends notification-daemon
-#
-#      # Generic notification
-#      # echo "
-#      # [D-BUS Service]
-#      # Name=org.freedesktop.Notifications
-#      # Exec=/usr/libexec/notification-daemon
-#      # " | sudo tee /usr/share/dbus-1/services/org.freedesktop.Notifications.service
-#
-#      # # Xfce notification
-#      # echo "
-#      # [D-BUS Service]
-#      # Name=org.freedesktop.Notifications
-#      # Exec=/usr/lib/x86_64-linux-gnu/xfce4/notifyd/xfce4-notifyd
-#      # SystemdService=xfce4-notifyd.service
-#      # " | sudo tee /usr/share/dbus-1/services/org.xfce.xfce4-notifyd.Notifications.service
-#
-#      # Make sure other notification service exists to give way to dunst
-#      if [ -f /usr/share/dbus-1/services/org.freedesktop.Notifications.service ]; then
-#        sudo rm /usr/share/dbus-1/services/org.freedesktop.Notifications.service
-#      fi
-#
-#      if [ -f /usr/share/dbus-1/services/org.xfce.xfce4-notifyd.Notifications.service ]; then
-#        sudo rm /usr/share/dbus-1/services/org.xfce.xfce4-notifyd.Notifications.service
-#      fi
-#
-#      # audio
-#      sudo zypper -n install --no-recommends alsa-utils
-#      sudo zypper -n install --no-recommends pulseaudio pulseaudio-utils pavucontrol
-#
-#      amixer sset "Master" unmute
-#      amixer sset "Speaker" unmute
-#      amixer sset "Headphone" unmute
-#      amixer sset "Mic" unmute
-#      amixer sset "Mic Boost" unmute
-#
-#      amixer sset "Master" 100%
-#      amixer sset "Speaker" 100%
-#      amixer sset "Headphone" 100%
-#      amixer sset "Mic" 100%
-#      amixer sset "Mic Boost" 100%
-#
-#      # MANUAL 3b4f8b3: PulseAudio Applet. Some are already installed
-#      sudo zypper -n install --no-recommends glib2-devel gtk3-devel libnotify-devel
-#      sudo zypper -n install --no-recommends pulseaudio-libs-devel libX11-devel
-#      sudo zypper -n install --no-recommends autoconf automake pkgconf
-#
-#      sudo dnf mark install gtk3 libnotify pulseaudio-libs
-#
-#      git clone --recurse-submodules https://github.com/fernandotcl/pa-applet.git
-#      cd pa-applet
-#
-#      git fetch --tags
-#      tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-#
-#      if [ ${#tag} -ge 1 ]; then
-#        git checkout $tag
-#      fi
-#
-#      git tag -f "git-$(git rev-parse --short HEAD)"
-#      ./autogen.sh && ./configure && make && sudo make install
-#      cd /tmp
-#
-#      sudo sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf
-#      sudo sed -i 's/; autospawn = yes/autospawn = yes/g' /etc/pulse/client.conf
-#
-#      # network manager
-#      sudo zypper -n install --no-recommends NetworkManager network-manager-applet
-#      sudo systemctl enable NetworkManager
-#
-#      # fonts - fc-list
-#      # git clone https://github.com/ryanoasis/nerd-fonts.git
-#      # ./install
-#      wget https://github.com/ryanoasis/nerd-fonts/raw/v2.0.0/patched-fonts/UbuntuMono/Regular/complete/Ubuntu%20Mono%20Nerd%20Font%20Complete%20Mono.ttf
-#      wget https://github.com/ryanoasis/nerd-fonts/raw/v2.0.0/patched-fonts/RobotoMono/Regular/complete/Roboto%20Mono%20Nerd%20Font%20Complete%20Mono.ttf
-#      wget https://github.com/ryanoasis/nerd-fonts/raw/v2.0.0/patched-fonts/RobotoMono/Bold/complete/Roboto%20Mono%20Bold%20Nerd%20Font%20Complete%20Mono.ttf
-#      wget https://github.com/ryanoasis/nerd-fonts/raw/v2.0.0/patched-fonts/SourceCodePro/Regular/complete/Sauce%20Code%20Pro%20Nerd%20Font%20Complete%20Mono.ttf
-#
-#      sudo mkdir -p /usr/share/fonts/nerd-fonts-complete/ttf
-#      sudo mv "Ubuntu Mono Nerd Font Complete Mono.ttf"       "/usr/share/fonts/nerd-fonts-complete/ttf/Ubuntu Mono Nerd Font Complete Mono.ttf"
-#      sudo mv "Roboto Mono Nerd Font Complete Mono.ttf"       "/usr/share/fonts/nerd-fonts-complete/ttf/Roboto Mono Nerd Font Complete Mono.ttf"
-#      sudo mv "Roboto Mono Bold Nerd Font Complete Mono.ttf"  "/usr/share/fonts/nerd-fonts-complete/ttf/Roboto Mono Bold Nerd Font Complete Mono.ttf"
-#      sudo mv "Sauce Code Pro Nerd Font Complete Mono.ttf"    "/usr/share/fonts/nerd-fonts-complete/ttf/Sauce Code Pro Nerd Font Complete Mono.ttf"
-#
-#      # terminal
-#      sudo zypper -n install --no-recommends neofetch
-#
-#      # gtk theme change
-#      sudo zypper -n install --no-recommends gtk2-engines gtk-murrine-engine gtk2 gtk3
-#
-#      # mouse cursor theme
-#      sudo zypper -n install --no-recommends breeze-cursor-theme
-#      sudo ln -s /usr/share/icons/breeze_cursors /usr/share/icons/Breeze
-#
-#      # notification, system monitor, compositor, image on terminal
-#      sudo zypper -n install --no-recommends dunst conky compton w3m
-#      sudo zypper -n install --no-recommends ffmpegthumbnailer
-#
-#      # for vifm
-#      sudo zypper -n install --no-recommends python3-pip
-#      sudo zypper -n install --no-recommends redhat-rpm-config
-#
-#      # https://pillow.readthedocs.io/en/stable/installation.html
-#      sudo zypper -n install --no-recommends python3-devel libjpeg-turbo-devel zlib-devel libXext-devel
-#      sudo pip3 install ueberzug
-#      sudo zypper -n install --no-recommends poppler-utils
-#      sudo zypper -n install --no-recommends mediainfo
-#      sudo zypper -n install --no-recommends transmission-cli transmission-common
-#      sudo zypper -n install --no-recommends zip unzip tar xz-libs unrar
-#      sudo zypper -n install --no-recommends catdoc odt2txt
-#
-#      # MANUAL 2.12.c: i3lock-color. Some are already installed
-#      sudo dnf remove -y i3lock
-#      sudo zypper -n install --no-recommends cairo-devel libev-devel libjpeg-devel libxkbcommon-x11-devel
-#      sudo zypper -n install --no-recommends pam-devel xcb-util-devel xcb-util-image-devel xcb-util-xrm-devel autoconf automake
-#
-#      sudo zypper -n install --no-recommends cairo libev libjpeg-turbo libxcb libxkbcommon
-#      sudo zypper -n install --no-recommends libxkbcommon-x11 xcb-util-image pkgconf
-#
-#      sudo dnf mark install cairo libev libjpeg-turbo libxcb libxkbcommon libxkbcommon-x11 xcb-util-image
-#
-#      git clone --recurse-submodules https://github.com/PandorasFox/i3lock-color.git
-#      cd i3lock-color
-#
-#      git fetch --tags
-#      tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-#
-#      if [ ${#tag} -ge 1 ]; then
-#        git checkout $tag
-#      fi
-#
-#      git tag -f "git-$(git rev-parse --short HEAD)"
-#      autoreconf -fi && ./configure && make && sudo make install
-#      echo "auth include system-auth" | sudo tee /etc/pam.d/i3lock
-#      cd /tmp
-#
-#      # terminal-based file viewer
-#      sudo zypper -n install --no-recommends ranger
-#      sudo zypper -n install --no-recommends vifm
-#
-#      # requirements for ranger [scope.sh]
-#      sudo zypper -n install --no-recommends file libcaca python3-pygments atool libarchive unrar lynx
-#      sudo zypper -n install --no-recommends mupdf transmission-cli mediainfo odt2txt python3-chardet
-#
-#      # i3wm customization, dmenu replacement, i3status replacement
-#      sudo zypper -n install --no-recommends rofi
-#
-#      # MANUAL 4.16.1: i3-gaps
-#      sudo dnf remove -y i3
-#      sudo zypper -n install --no-recommends libxcb-devel xcb-util-keysyms-devel xcb-util-devel xcb-util-wm-devel
-#      sudo zypper -n install --no-recommends xcb-util-xrm-devel yajl-devel libXrandr-devel startup-notification-devel
-#      sudo zypper -n install --no-recommends libev-devel xcb-util-cursor-devel libXinerama-devel libxkbcommon-devel libxkbcommon-x11-devel
-#      sudo zypper -n install --no-recommends pcre-devel pango-devel automake git gcc
-#
-#      sudo zypper -n install --no-recommends libev libxkbcommon-x11 perl pango startup-notification
-#      sudo zypper -n install --no-recommends xcb-util-cursor xcb-util-keysyms xcb-util-wm xcb-util-xrm yajl
-#
-#      sudo dnf mark install libev libxkbcommon-x11 perl pango startup-notification xcb-util-cursor xcb-util-keysyms xcb-util-wm xcb-util-xrm yajl
-#
-#      git clone --recurse-submodules https://github.com/Airblader/i3.git i3-gaps
-#      cd i3-gaps
-#
-#      git fetch --tags
-#      tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-#
-#      if [ ${#tag} -ge 1 ]; then
-#        git checkout $tag
-#      fi
-#
-#      git tag -f "git-$(git rev-parse --short HEAD)"
-#      autoreconf -fi && rm -rf build/ && mkdir -p build && cd build/
-#      ../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers
-#      make && sudo make install
-#
-#      cd /tmp
-#
-#      # MANUAL 3.3.1: polybar
-#      sudo zypper -n install --no-recommends cairo-devel xcb-proto xcb-util-devel xcb-util-cursor-devel xcb-util-image-devel xcb-util-wm-devel xcb-util-xrm-devel
-#      sudo zypper -n install --no-recommends alsa-lib-devel libcurl-devel jsoncpp-devel libmpdclient-devel pulseaudio-libs-devel libnl3-devel cmake wireless-tools-devel
-#      sudo zypper -n install --no-recommends gcc-c++ gcc python python2 git pkgconf
-#
-#      sudo zypper -n install --no-recommends cairo xcb-util-cursor xcb-util-image xcb-util-wm xcb-util-xrm
-#      sudo zypper -n install --no-recommends alsa-lib curl jsoncpp libmpdclient pulseaudio-libs libnl3 wireless-tools
-#
-#      # ncmpcpp playlist
-#      # 1) go to browse
-#      # 2) press "v" (it reverse selection, so when you have nothing selected, it selects all)
-#      # 3) press "A"
-#      #
-#      # r: repeat, z: shuffle, y: repeat one
-#      sudo zypper -n install --no-recommends mpd mpc ncmpcpp
-#      sudo systemctl disable mpd
-#      sudo systemctl stop mpd
-#
-#      sudo dnf mark install cairo xcb-util-cursor xcb-util-image xcb-util-wm xcb-util-xrm
-#      sudo dnf mark install alsa-lib curl jsoncpp libmpdclient pulseaudio-libs libnl3 wireless-tools
-#      sudo dnf mark install mpd mpc ncmpcpp
-#
-#      git clone --recurse-submodules https://github.com/jaagr/polybar.git
-#      cd polybar
-#
-#      git fetch --tags
-#      tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-#
-#      if [ ${#tag} -ge 1 ]; then
-#        git checkout $tag
-#      fi
-#
-#      git tag -f "git-$(git rev-parse --short HEAD)"
-#      rm -rf build/ && mkdir -p build && cd build/
-#      cmake .. && make -j$(nproc) && sudo make install
-#
-#      cd /tmp
-#
-#      # popup calendar
-#      # sudo zypper -n install --no-recommends xdotool yad
-#
-#      sudo zypper -n install --no-recommends scrot
-#
-#      sudo zypper -n install --no-recommends accountsservice
-#
+mainCWD=$(pwd)
+while true; do
+  read -p "
+
+Minimal installation done. Would you like to proceed [Yn]?   " yn
+  case $yn in
+    [Nn]* ) break;;
+    * )
+      # will use for manually installed packages, /tmp has limited space
+      cd /tmp
+
+      sudo zypper -n install --no-recommends curl wget vim python3-httpie lsof git tmux gedit
+
+      # theme icon
+      # git clone --recurse-submodules https://github.com/daniruiz/flat-remix.git
+      # cd flat-remix
+      # git fetch --tags
+      # tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+      # if [ ${#tag} -ge 1 ]; then
+      #   git checkout $tag
+      # fi
+      # git tag -f "git-$(git rev-parse --short HEAD)"
+      # sudo mkdir -p /usr/share/icons && sudo cp -raf Flat-Remix* /usr/share/icons/
+      # sudo ln -sf /usr/share/icons/Flat-Remix-Blue /usr/share/icons/Flat-Remix
+      # cd /tmp
+      sudo zypper -n install --no-recommends papirus-icon-theme
+
+      # display
+      sudo zypper -n install --no-recommends feh lxappearance xbacklight xrandr xrdb xinput
+
+      sudo zypper -n install --no-recommends notification-daemon
+
+      # Generic notification
+      # echo "
+      # [D-BUS Service]
+      # Name=org.freedesktop.Notifications
+      # Exec=/usr/libexec/notification-daemon
+      # " | sudo tee /usr/share/dbus-1/services/org.freedesktop.Notifications.service
+
+      # # Xfce notification
+      # echo "
+      # [D-BUS Service]
+      # Name=org.freedesktop.Notifications
+      # Exec=/usr/lib/x86_64-linux-gnu/xfce4/notifyd/xfce4-notifyd
+      # SystemdService=xfce4-notifyd.service
+      # " | sudo tee /usr/share/dbus-1/services/org.xfce.xfce4-notifyd.Notifications.service
+
+      # Make sure other notification service exists to give way to dunst
+      if [ -f /usr/share/dbus-1/services/org.freedesktop.Notifications.service ]; then
+        sudo rm /usr/share/dbus-1/services/org.freedesktop.Notifications.service
+      fi
+
+      if [ -f /usr/share/dbus-1/services/org.xfce.xfce4-notifyd.Notifications.service ]; then
+        sudo rm /usr/share/dbus-1/services/org.xfce.xfce4-notifyd.Notifications.service
+      fi
+
+      # audio
+      sudo zypper -n install --no-recommends alsa-utils
+      sudo zypper -n install --no-recommends pulseaudio pulseaudio-utils pavucontrol
+
+      amixer sset "Master" unmute
+      amixer sset "Speaker" unmute
+      amixer sset "Headphone" unmute
+      amixer sset "Mic" unmute
+      amixer sset "Mic Boost" unmute
+
+      amixer sset "Master" 100%
+      amixer sset "Speaker" 100%
+      amixer sset "Headphone" 100%
+      amixer sset "Mic" 100%
+      amixer sset "Mic Boost" 100%
+
+      # MANUAL 3b4f8b3: PulseAudio Applet. Some are already installed
+      sudo zypper -n install --no-recommends glib2-devel gtk3-devel libnotify-devel
+      sudo zypper -n install --no-recommends libpulse-devel libX11-devel
+      sudo zypper -n install --no-recommends autoconf automake pkgconf
+
+      sudo zypper -n install --no-recommends gtk3-branding-openSUSE libnotify4 libpulse0
+
+      git clone --recurse-submodules https://github.com/fernandotcl/pa-applet.git
+      cd pa-applet
+
+      git fetch --tags
+      tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+
+      if [ ${#tag} -ge 1 ]; then
+        git checkout $tag
+      fi
+
+      git tag -f "git-$(git rev-parse --short HEAD)"
+      ./autogen.sh && ./configure && make && sudo make install
+      cd /tmp
+
+      sudo sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf
+      sudo sed -i 's/; autospawn = yes/autospawn = yes/g' /etc/pulse/client.conf
+
+      # network manager
+      sudo zypper -n install --no-recommends NetworkManager-branding-openSUSE NetworkManager-applet
+      sudo systemctl enable NetworkManager
+
+      # fonts - fc-list
+      # git clone https://github.com/ryanoasis/nerd-fonts.git
+      # ./install
+      wget https://github.com/ryanoasis/nerd-fonts/raw/v2.0.0/patched-fonts/UbuntuMono/Regular/complete/Ubuntu%20Mono%20Nerd%20Font%20Complete%20Mono.ttf
+      wget https://github.com/ryanoasis/nerd-fonts/raw/v2.0.0/patched-fonts/RobotoMono/Regular/complete/Roboto%20Mono%20Nerd%20Font%20Complete%20Mono.ttf
+      wget https://github.com/ryanoasis/nerd-fonts/raw/v2.0.0/patched-fonts/RobotoMono/Bold/complete/Roboto%20Mono%20Bold%20Nerd%20Font%20Complete%20Mono.ttf
+      wget https://github.com/ryanoasis/nerd-fonts/raw/v2.0.0/patched-fonts/SourceCodePro/Regular/complete/Sauce%20Code%20Pro%20Nerd%20Font%20Complete%20Mono.ttf
+
+      sudo mkdir -p /usr/share/fonts/nerd-fonts-complete/ttf
+      sudo mv "Ubuntu Mono Nerd Font Complete Mono.ttf"       "/usr/share/fonts/nerd-fonts-complete/ttf/Ubuntu Mono Nerd Font Complete Mono.ttf"
+      sudo mv "Roboto Mono Nerd Font Complete Mono.ttf"       "/usr/share/fonts/nerd-fonts-complete/ttf/Roboto Mono Nerd Font Complete Mono.ttf"
+      sudo mv "Roboto Mono Bold Nerd Font Complete Mono.ttf"  "/usr/share/fonts/nerd-fonts-complete/ttf/Roboto Mono Bold Nerd Font Complete Mono.ttf"
+      sudo mv "Sauce Code Pro Nerd Font Complete Mono.ttf"    "/usr/share/fonts/nerd-fonts-complete/ttf/Sauce Code Pro Nerd Font Complete Mono.ttf"
+
+      # terminal
+      sudo zypper -n install --no-recommends neofetch
+
+      # gtk theme change
+      sudo zypper -n install --no-recommends gtk2-engines gtk2-engine-murrine gtk2-branding-openSUSE gtk3-branding-openSUSE
+
+      # mouse cursor theme
+      sudo zypper -n install --no-recommends breeze-cursor-theme
+      sudo ln -s /usr/share/icons/breeze_cursors /usr/share/icons/Breeze
+
+      # notification, system monitor, compositor, image on terminal
+      sudo zypper -n install --no-recommends dbus-1-x11 dunst conky compton w3m
+      sudo zypper -n install --no-recommends ffmpegthumbnailer
+
+      # for vifm
+      sudo zypper -n install --no-recommends python3-pip
+
+      # https://pillow.readthedocs.io/en/stable/installation.html
+      sudo zypper -n install --no-recommends python3-devel libjpeg62-devel zlib-devel libXext-devel
+      sudo pip3 install ueberzug
+      sudo zypper -n install --no-recommends poppler-tools
+      sudo zypper -n install --no-recommends mediainfo
+      sudo zypper -n install --no-recommends transmission transmission-common
+      sudo zypper -n install --no-recommends zip unzip tar xz unrar
+      sudo zypper -n install --no-recommends odt2txt
+
+      # MANUAL 2.12.c: i3lock-color. Some are already installed
+      sudo dnf remove -y i3lock
+      sudo zypper -n install --no-recommends cairo-devel libev-devel libjpeg62-devel libxkbcommon-x11-devel
+      sudo zypper -n install --no-recommends pam-devel xcb-util-devel xcb-util-image-devel xcb-util-xrm-devel autoconf automake
+
+      sudo zypper -n install --no-recommends libcairo2 libev4 libjpeg-turbo libxcb1 libxkbcommon0
+      sudo zypper -n install --no-recommends libxkbcommon-x11-0 libxcb-image0 pkgconf
+
+      git clone --recurse-submodules https://github.com/PandorasFox/i3lock-color.git
+      cd i3lock-color
+
+      git fetch --tags
+      tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+
+      if [ ${#tag} -ge 1 ]; then
+        git checkout $tag
+      fi
+
+      git tag -f "git-$(git rev-parse --short HEAD)"
+      autoreconf -fi && ./configure && make && sudo make install
+      echo "auth include system-auth" | sudo tee /etc/pam.d/i3lock
+      cd /tmp
+
+      # terminal-based file viewer
+      sudo zypper -n install --no-recommends ranger
+      sudo zypper -n install --no-recommends vifm
+
+      # requirements for ranger [scope.sh]
+      sudo zypper -n install --no-recommends file libcaca0 python3-Pygments atool libarchive13 unrar lynx
+      sudo zypper -n install --no-recommends mupdf transmission transmission-common mediainfo odt2txt python3-chardet
+
+      # i3wm customization, dmenu replacement, i3status replacement
+      sudo zypper -n install --no-recommends rofi
+      sudo zypper -n install --no-recommends i3-gaps
+
+      # MANUAL 3.3.1: polybar
+      sudo zypper -n install --no-recommends cairo-devel xcb-proto-devel xcb-util-devel xcb-util-cursor-devel xcb-util-image-devel xcb-util-wm-devel xcb-util-xrm-devel
+      sudo zypper -n install --no-recommends alsa-devel libcurl-devel jsoncpp-devel libmpdclient-devel libpulse-devel libnl3-devel cmake libiw-devel
+      sudo zypper -n install --no-recommends i3-gaps-devel python-xml gcc-c++ gcc python git pkgconf
+
+      sudo zypper -n install --no-recommends libcairo2 libxcb-cursor0 libxcb-image0 libxcb-ewmh2 libxcb-xrm0
+      sudo zypper -n install --no-recommends alsa curl jsoncpp libmpdclient2 libpulse0 libnl3-200 wireless-tools
+
+      # ncmpcpp playlist
+      # 1) go to browse
+      # 2) press "v" (it reverse selection, so when you have nothing selected, it selects all)
+      # 3) press
+      #
+      # r: repeat, z: shuffle, y: repeat one
+      sudo zypper -n install --no-recommends mpd mpclient ncmpcpp
+      sudo systemctl disable mpd
+      sudo systemctl stop mpd
+
+      git clone --recurse-submodules https://github.com/jaagr/polybar.git
+      cd polybar
+
+      git fetch --tags
+      tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+
+      if [ ${#tag} -ge 1 ]; then
+        git checkout $tag
+      fi
+
+      git tag -f "git-$(git rev-parse --short HEAD)"
+      rm -rf build/ && mkdir -p build && cd build/
+      cmake .. && make -j$(nproc) && sudo make install
+
+      cd /tmp
+
+      sudo zypper -n install --no-recommends scrot
+
+      sudo zypper -n install --no-recommends accountsservice
+
 #      sudo dnf remove -y alsa-lib-devel cairo-devel glib2-devel gtk3-devel jsoncpp-devel \
 #        libcurl-devel libev-devel libjpeg-devel libjpeg-turbo-devel libmpdclient-devel \
 #        libnl3-devel libnotify-devel libX11-devel libxcb-devel libXext-devel libXinerama-devel \
@@ -644,62 +603,59 @@ fi
 #        xcb-util-cursor-devel xcb-util-devel xcb-util-image-devel xcb-util-keysyms-devel xcb-util-wm-devel \
 #        xcb-util-xrm-devel yajl-devel zlib-devel
 #      sudo dnf -y autoremove
-#      cd $mainCWD
-#
-#      user=$(whoami)
-#
-#      echo "
-#[User]
-#Icon=/var/lib/AccountsService/icons/$user.png
-#XSession=i3
-#SystemAccount=false
-#" | sudo tee /var/lib/AccountsService/users/$user
-#
-#      sudo cp $(pwd)/rice/images/avatar/default-user.png /var/lib/AccountsService/icons/$user.png
-#      sudo cp $(pwd)/rice/images/avatar/default-user.png /usr/share/pixmaps/default-user.png
-#      sudo chown root:root /var/lib/AccountsService/users/$user
-#      sudo chown root:root /var/lib/AccountsService/icons/$user.png
-#
-#      sudo chmod 644 /var/lib/AccountsService/users/$user
-#      sudo chmod 644 /var/lib/AccountsService/icons/$user.png
-#
-#      # For more advance gestures, install: https://github.com/bulletmark/libinput-gestures
-#      bash $(pwd)/scripts/update-libinput.sh
-#
-#      echo "$(whoami) ALL=(ALL) NOPASSWD: /usr/bin/dnf" | sudo tee -a "/etc/sudoers"
-#
-#      if [ ! -f $HOME/.riced ];then
-#        bash $(pwd)/scripts/setup-user-configs.sh
-#        bash $(pwd)/scripts/update-scripts.sh
-#        touch $HOME/.riced
-#      fi
-#
-#      cd $mainCWD
-#
-#      # sed -i "s/# exec --no-startup-id dnfdragora-updater/exec --no-startup-id dnfdragora-updater/g" $HOME/.config/i3/config
-#      # sed -i "s/# for_window \[class=\"Dnfdragora-updater\"\]/for_window [class=\"Dnfdragora-updater\"]/g" $HOME/.config/i3/config
-#
-#      mkdir -p "$HOME/.config/neofetch"
-#      cp -rf $(pwd)/rice/neofetch.conf $HOME/.config/neofetch/$os.conf
-#
-#      sudo mkdir -p /usr/share/icons/default
-#      echo "
-#[Icon Theme]
-#Inherits=Breeze
-#      " | sudo tee /usr/share/icons/default/index.theme
-#
-#      sudo mkdir -p /root/.vim
-#      sudo cp -raf $HOME/.vim/* /root/.vim
-#      sudo cp -raf $HOME/.vimrc /root/.vimrc
-#
-#      sudo cp -rf $(pwd)/rice/lightdm-gtk-greeter.conf /etc/lightdm/lightdm-gtk-greeter.conf
-#
-#      bash $(pwd)/scripts/update-scripts.sh
-#      bash $(pwd)/scripts/update-screen-detector.sh
-#      bash $(pwd)/scripts/update-themes.sh
-#
-#      echo '
-#
+      cd $mainCWD
+
+      user=$(whoami)
+
+      echo "
+[User]
+Icon=/var/lib/AccountsService/icons/$user.png
+XSession=i3
+SystemAccount=false
+" | sudo tee /var/lib/AccountsService/users/$user
+
+      sudo cp $(pwd)/rice/images/avatar/default-user.png /var/lib/AccountsService/icons/$user.png
+      sudo cp $(pwd)/rice/images/avatar/default-user.png /usr/share/pixmaps/default-user.png
+      sudo chown root:root /var/lib/AccountsService/users/$user
+      sudo chown root:root /var/lib/AccountsService/icons/$user.png
+
+      sudo chmod 644 /var/lib/AccountsService/users/$user
+      sudo chmod 644 /var/lib/AccountsService/icons/$user.png
+
+      # For more advance gestures, install: https://github.com/bulletmark/libinput-gestures
+      bash $(pwd)/scripts/update-libinput.sh
+
+      echo "$(whoami) ALL=(ALL) NOPASSWD: /usr/bin/zypper" | sudo tee -a "/etc/sudoers"
+
+      if [ ! -f $HOME/.riced ];then
+        bash $(pwd)/scripts/setup-user-configs.sh
+        bash $(pwd)/scripts/update-scripts.sh
+        touch $HOME/.riced
+      fi
+
+      cd $mainCWD
+
+      mkdir -p "$HOME/.config/neofetch"
+      cp -rf $(pwd)/rice/neofetch.conf $HOME/.config/neofetch/$os.conf
+
+      sudo mkdir -p /usr/share/icons/default
+      echo "
+[Icon Theme]
+Inherits=Breeze
+      " | sudo tee /usr/share/icons/default/index.theme
+
+      sudo mkdir -p /root/.vim
+      sudo cp -raf $HOME/.vim/* /root/.vim
+      sudo cp -raf $HOME/.vimrc /root/.vimrc
+
+      sudo cp -rf $(pwd)/rice/lightdm-gtk-greeter.conf /etc/lightdm/lightdm-gtk-greeter.conf
+
+      bash $(pwd)/scripts/update-scripts.sh
+      bash $(pwd)/scripts/update-screen-detector.sh
+      bash $(pwd)/scripts/update-themes.sh
+
+      echo '
+
 #####################################
 #####################################
 ####                              ###
@@ -707,12 +663,11 @@ fi
 ####                              ###
 #####################################
 #####################################
-#
-#'
-#
-#      break;;
-#  esac
-#done
-#
-#
-#
+
+'
+
+      break;;
+  esac
+done
+
+
