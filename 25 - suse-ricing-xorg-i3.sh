@@ -523,7 +523,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo zypper -n install --no-recommends odt2txt
 
       # MANUAL 2.12.c: i3lock-color. Some are already installed
-      sudo dnf remove -y i3lock
+      sudo zypper -n remove i3lock
       sudo zypper -n install --no-recommends cairo-devel libev-devel libjpeg62-devel libxkbcommon-x11-devel
       sudo zypper -n install --no-recommends pam-devel xcb-util-devel xcb-util-image-devel xcb-util-xrm-devel autoconf automake
 
@@ -555,6 +555,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
 
       # i3wm customization, dmenu replacement, i3status replacement
       sudo zypper -n install --no-recommends rofi
+      sudo zypper -n remove i3
       sudo zypper -n install --no-recommends i3-gaps
 
       # MANUAL 3.3.1: polybar
