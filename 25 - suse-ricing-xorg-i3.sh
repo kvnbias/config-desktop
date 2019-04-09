@@ -355,33 +355,33 @@ sudo zypper -n install --no-recommends lightdm-gtk-greeter-branding-upstream
 # sudo systemctl enable lightdm
 sudo systemctl set-default graphical.target
 
-## Install window tiling manager
-#sudo zypper -n install --no-recommends dmenu i3 i3status i3lock rxvt-unicode-256color-ml
-#
-## File manager
-#sudo zypper -n install --no-recommends nautilus
-#
-#if [ ! -f "$HOME/.riced" ];then
-#  mkdir -p $HOME/.config
-#  mkdir -p $HOME/.config/i3
-#
-#  # Fix default i3 config
-#  sudo cp /etc/i3/config $HOME/.config/i3/config
-#  sudo chown $(whoami):$(whoami) $HOME/.config/i3/config
-#
-#  sed -i 's/Mod1/Mod4/g' $HOME/.config/i3/config
-#  sed -i 's/i3-sensible-terminal/urxvt/g' $HOME/.config/i3/config
-#  sed -i 's/dmenu_run/dmenu/g' $HOME/.config/i3/config
-#
-#  sudo sed -i 's/Mod1/Mod4/g' /etc/i3/config
-#  sudo sed -i 's/i3-sensible-terminal/urxvt/g' /etc/i3/config
-#  sudo sed -i 's/dmenu_run/dmenu/g' /etc/i3/config
-#
-#  cp -raf $(pwd)/rice/xinitrc $HOME/.xinitrc
-#  cp -raf "$(pwd)/rice/config-i3-base" "$HOME/.Xresources"
-#  sudo cp $HOME/.Xresources /root/.Xresources
-#fi
-#
+# Install window tiling manager
+sudo zypper -n install --no-recommends dmenu i3 i3status i3lock rxvt-unicode
+
+# File manager
+sudo zypper -n install --no-recommends nautilus
+
+if [ ! -f "$HOME/.riced" ];then
+  mkdir -p $HOME/.config
+  mkdir -p $HOME/.config/i3
+
+  # Fix default i3 config
+  sudo cp /etc/i3/config $HOME/.config/i3/config
+  sudo chown $(whoami):users $HOME/.config/i3/config
+
+  sed -i 's/Mod1/Mod4/g' $HOME/.config/i3/config
+  sed -i 's/i3-sensible-terminal/urxvt/g' $HOME/.config/i3/config
+  sed -i 's/dmenu_run/dmenu/g' $HOME/.config/i3/config
+
+  sudo sed -i 's/Mod1/Mod4/g' /etc/i3/config
+  sudo sed -i 's/i3-sensible-terminal/urxvt/g' /etc/i3/config
+  sudo sed -i 's/dmenu_run/dmenu/g' /etc/i3/config
+
+  cp -raf $(pwd)/rice/xinitrc $HOME/.xinitrc
+  cp -raf "$(pwd)/rice/config-i3-base" "$HOME/.Xresources"
+  sudo cp $HOME/.Xresources /root/.Xresources
+fi
+
 #mainCWD=$(pwd)
 #while true; do
 #  read -p "
