@@ -595,14 +595,11 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
 
       sudo zypper -n install --no-recommends accountsservice
 
-#      sudo dnf remove -y alsa-lib-devel cairo-devel glib2-devel gtk3-devel jsoncpp-devel \
-#        libcurl-devel libev-devel libjpeg-devel libjpeg-turbo-devel libmpdclient-devel \
-#        libnl3-devel libnotify-devel libX11-devel libxcb-devel libXext-devel libXinerama-devel \
-#        libxkbcommon-devel libxkbcommon-x11-devel libXrandr-devel pam-devel pango-devel pcre-devel \
-#        pulseaudio-libs-devel python3-devel startup-notification-devel wireless-tools-devel xcb-proto \
-#        xcb-util-cursor-devel xcb-util-devel xcb-util-image-devel xcb-util-keysyms-devel xcb-util-wm-devel \
-#        xcb-util-xrm-devel yajl-devel zlib-devel
-#      sudo dnf -y autoremove
+      sudo zypper -n remove alsa-devel cairo-devel cmake i3-gaps-devel jsoncpp-devel libcurl-devel \
+        libev-devel libiw-devel libjpeg62-devel libmpdclient-devel libnl3-devel libpulse-devel \
+        libxkbcommon-x11-devel pam-devel python-xml xcb-proto-devel xcb-util-cursor-devel xcb-util-devel \
+        xcb-util-image-devel xcb-util-wm-devel xcb-util-xrm-devel
+      sudo zypper -n remove $(zypper packages --unneeded | grep -v '+=' | grep -v '\.\.\.' | grep -v 'Version' | cut -f 3 -d '|')
       cd $mainCWD
 
       user=$(whoami)
