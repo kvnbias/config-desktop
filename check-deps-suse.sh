@@ -4,7 +4,7 @@ os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | 
 sudo zypper -n update
 
 check_packages() {
-  sudo zypper install --no-recommends $1 | grep 'No provider|not found'
+  sudo zypper install --no-recommends $1 | grep --color=always 'not found'
 }
 
 while true; do
