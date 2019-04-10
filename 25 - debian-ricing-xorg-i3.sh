@@ -476,7 +476,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo apt install -y --no-install-recommends papirus-icon-theme
 
       # display
-      sudo apt install -y --no-install-recommends feh arandr lxappearance xbacklight x11-xserver-utils
+      sudo apt install -y --no-install-recommends feh arandr lxappearance xbacklight x11-xserver-utils xinput
 
       # Generic notification
       # echo "

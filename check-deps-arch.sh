@@ -174,7 +174,9 @@ while true; do
         xf86-video-ati
         xf86-video-intel
         xorg-xbacklight
+        xorg-xinput
         xorg-xrandr
+        xorg-xrdb
         xz
         zip
         dummy-package-to-cancel-install
