@@ -1,6 +1,6 @@
 
 #!/bin/bash
-os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
+os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed -e 's/"//g'))
 add_packman_mirror() {
   sudo zypper rr packman-essentials
   sudo zypper ar -cfp 90 $1/openSUSE_Tumbleweed/Essentials packman-essentials
