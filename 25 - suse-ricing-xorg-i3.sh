@@ -439,7 +439,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       fi
 
       # audio
-      sudo zypper -n install --no-recommends alsa-utils
+      sudo zypper -n install --no-recommends alsa-utils libnotify-tools
       sudo zypper -n install --no-recommends pulseaudio pulseaudio-utils pavucontrol
 
       amixer sset "Master" unmute
