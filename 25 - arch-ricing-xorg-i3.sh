@@ -120,6 +120,8 @@ while true; do
   esac
 done
 
+yes | sudo pacman -S polkit-gnome
+
 # Sound
 yes | sudo pacman -S alsa-utils
 
