@@ -62,7 +62,7 @@ os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | 
 
 # selinux utils
 sudo zypper -n install --no-recommends libuser
-sudo zypper -n install --no-recommends gcc gcc-c++ autoconf automake cmake make dkms bzip2
+sudo zypper -n install --no-recommends bc gcc gcc-c++ autoconf automake cmake make dkms bzip2
 sudo zypper -n install --no-recommends pkgconf
 
 while true; do
@@ -137,7 +137,7 @@ install_mesa_vulkan_drivers() {
   sudo zypper -n install --no-recommends Mesa-libGL1
   sudo zypper -n install --no-recommends Mesa-libd3d
   sudo zypper -n install --no-recommends Mesa-libglapi0
-  sudo zypper -n install --no-recommends Mesa-libOSMesa8
+  sudo zypper -n install --no-recommends libOSMesa8
 
   sudo zypper -n install --no-recommends Mesa-32bit
   sudo zypper -n install --no-recommends Mesa-dri-32bit
@@ -145,7 +145,7 @@ install_mesa_vulkan_drivers() {
   sudo zypper -n install --no-recommends Mesa-libGL1-32bit
   sudo zypper -n install --no-recommends Mesa-libd3d-32bit
   sudo zypper -n install --no-recommends Mesa-libglapi0-32bit
-  sudo zypper -n install --no-recommends Mesa-libOSMesa8-32bit
+  sudo zypper -n install --no-recommends libOSMesa8-32bit
 
   sudo zypper -n install --no-recommends Mesa-libGLESv1_CM1 Mesa-libGLESv2-2 Mesa-libOpenCL
 
