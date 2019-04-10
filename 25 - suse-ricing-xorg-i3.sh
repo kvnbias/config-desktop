@@ -624,7 +624,10 @@ SystemAccount=false
       # For more advance gestures, install: https://github.com/bulletmark/libinput-gestures
       bash $(pwd)/scripts/update-libinput.sh
 
-      echo "$(whoami) ALL=(ALL) NOPASSWD: /usr/bin/zypper" | sudo tee -a "/etc/sudoers"
+      echo "
+$(whoami) ALL=(ALL) NOPASSWD: /usr/bin/zypper
+$(whoami) ALL=(ALL) NOPASSWD: /usr/bin/yast
+" | sudo tee -a "/etc/sudoers"
 
       if [ ! -f $HOME/.riced ];then
         bash $(pwd)/scripts/setup-user-configs.sh
