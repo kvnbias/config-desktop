@@ -68,7 +68,6 @@ set_neofetch_colors() {
 
   files=$(ls $HOME/.config/neofetch/*)
   for f in $files; do
-    sed -i "s/^ascii_distro=.*/ascii_distro=auto/g" "$f"
     sed -i "s/^colors=.*/colors=$1/g" "$f"
 
     case $f in
