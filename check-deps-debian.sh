@@ -238,6 +238,7 @@ while true; do
         x11-xserver-utils
         xbacklight
         xcb-proto
+        xinput
         xserver-xorg-video-amdgpu
         xserver-xorg-video-ati
         xserver-xorg-video-intel
