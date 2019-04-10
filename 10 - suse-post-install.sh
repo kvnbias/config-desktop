@@ -2,7 +2,7 @@
 #!/bin/bash
 # NOTE this script is only tested in my machines
 
-os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
+os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed -e 's/"//g'))
 
 while true; do
   read -p "Will boot with other linux distros and share a partitions [yN]?   " wdb
