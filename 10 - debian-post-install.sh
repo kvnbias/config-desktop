@@ -1,7 +1,7 @@
 #!/bin/bash
 # NOTE this script is only tested in my machines
 
-os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
+os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed -e 's/"//g'))
 
 if [ "$os" = "debian" ]; then
   while true; do

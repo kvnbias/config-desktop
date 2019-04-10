@@ -72,7 +72,7 @@ fi
 # Font DIRS for X.org
 sudo cp -raf "$(pwd)/system-confs/xorg.conf" "/etc/X11/xorg.conf"
 
-os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
+os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed -e 's/"//g'))
 
 if [ "$os" != "manjaro" ]; then
   while true; do
@@ -495,7 +495,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       yes | sudo pacman -S papirus-icon-theme
 
       # display
-      yes | sudo pacman -S feh arandr lxappearance-gtk3 xorg-xbacklight xorg-xrandr
+      yes | sudo pacman -S feh arandr lxappearance-gtk3 xorg-xbacklight xorg-xrandr xorg-xrdb xorg-xinput
 
       # package manager - arch
       # yes | yay -S pamac-tray-appindicator pamac-aur --noconfirm

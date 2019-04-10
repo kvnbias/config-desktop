@@ -34,7 +34,7 @@ PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 export PATH;
 
 # execute neofetch depending on cols and lines in .bashrc
-os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//"))
+os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed -e 's/"//g'))
 cols=$(tput cols)
 lines=$(tput lines)
 if [ "$cols" -gt 67 ] && [ "$lines" -gt 34 ];
