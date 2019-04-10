@@ -638,6 +638,7 @@ SystemAccount=false
 
       mkdir -p "$HOME/.config/neofetch"
       cp -rf $(pwd)/rice/neofetch.conf $HOME/.config/neofetch/$os.conf
+      sed -i "s/ascii_distro=.*/ascii_distro=\"opensuse\"/g" $HOME/.config/neofetch/$os.conf
 
       sudo mkdir -p /usr/share/icons/default
       echo "
