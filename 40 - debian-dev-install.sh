@@ -10,13 +10,6 @@ sudo apt -y upgrade
 # extra
 sudo apt install -y --no-install-recommends htop
 
-sudo groupadd wheel
-sudo usermod -aG wheel $(whoami)
-sudo usermod -g wheel $(whoami)
-
-sudo mkdir /var/www/workspace
-sudo chown -R $(whoami):wheel /var/www/workspace
-
 # vscode
 cd /tmp
 curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
