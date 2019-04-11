@@ -1,5 +1,6 @@
 
 outputs="KNAME,FSTYPE,TYPE,SIZE,UUID,LABEL,MOUNTPOINT"
+outuuid="UUID,KNAME,FSTYPE,TYPE,SIZE,LABEL,MOUNTPOINT"
 entryname=
 icon=
 volume=
@@ -130,7 +131,7 @@ add_kernel_params(){
             [Ee]* ) break;;
             * )
               if lsblk -i -o $outputs | grep 'part' | grep 'swap' | grep -q "$sprtn "; then
-                swapuuid=$(lsblk -i -o $outputs | grep 'part' | grep 'swap' | grep "$sprtn "  | head -1 | cut -f 12 -d ' ')
+                swapuuid=$(lsblk -i -o $outuuid | grep 'part' | grep 'swap' | grep "$sprtn "  | head -1 | cut -f 1 -d ' ')
                 options+=" resume=$swapuuid"
                 echo "'$swapuuid' added..."
                 break 2
@@ -272,7 +273,7 @@ Choose action   " blcstmztn
                           declare_icon
                           declare_loader_initrd '/mnt-refind/boot'
 
-                          uuid=$(lsblk -i -o $outputs | grep 'part' | grep 'ext4' | grep -v -e 'swap' | grep "$prttn " 2> /dev/null | head -1 | cut -f 11 -d ' ')
+                          uuid=$(lsblk -i -o $outuuid | grep 'part' | grep 'ext4' | grep -v -e 'swap' | grep "$prttn " 2> /dev/null | head -1 | cut -f 1 -d ' ')
                           options+="rw root=UUID=$uuid"
 
                           add_kernel_params
