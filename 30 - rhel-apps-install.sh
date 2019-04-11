@@ -45,7 +45,8 @@ sudo dnf install -y eog --releasever=$fedver
 sudo dnf install -y firefox --releasever=$fedver
 
 # extra
-sudo dnf install -y libreoffice vlc transmission-gtk mupdf xarchiver p7zip evince --releasever=$fedver
+sudo dnf install -y libreoffice libreoffice-gtk3 --releasever=$fedver
+sudo dnf install -y vlc transmission-gtk mupdf xarchiver p7zip evince --releasever=$fedver
 
 while true; do
   read -p "

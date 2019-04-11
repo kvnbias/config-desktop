@@ -117,6 +117,7 @@ else
 fi
 
 sudo dnf -y upgrade
+sudo dnf install -y polkit-gnome --releasever=$fedver
 
 # Sound
 sudo dnf install -y alsa-utils --releasever=$fedver

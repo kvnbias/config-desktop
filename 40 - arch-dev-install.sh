@@ -7,13 +7,6 @@ sudo pacman -Syyu
 # extra
 yes | sudo pacman -S htop
 
-sudo groupadd wheel
-sudo usermod -aG wheel $(whoami)
-sudo usermod -g wheel $(whoami)
-
-sudo mkdir /var/www/workspace
-sudo chown -R $(whoami):wheel /var/www/workspace
-
 # vscode
 yes | sudo pacman -S code
 

@@ -63,7 +63,8 @@ Icon=
 fi
 
 # extra
-sudo apt install -y --no-install-recommends libreoffice vlc transmission-gtk mupdf xarchiver p7zip evince
+sudo apt install -y --no-install-recommends libreoffice libreoffice-gtk3 libreoffice-style-breeze
+sudo apt install -y --no-install-recommends vlc transmission-gtk mupdf xarchiver p7zip evince
 
 while true; do
   read -p "
