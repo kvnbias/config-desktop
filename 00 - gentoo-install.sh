@@ -24,6 +24,14 @@ while true; do
   esac
 done
 
+while true; do
+  read -p "This script is meant to install Gentoo with systemd. Do you want to proceed [Yn]?   " p
+  case $p in
+    [Nn]* ) echo "Quit";;
+    * ) break;;
+  esac
+done
+
 ## Start partition management
 echo '
 
@@ -544,7 +552,7 @@ mount --types proc /proc /mnt/gentoo/proc
 mount --rbind /sys /mnt/gentoo/sys
 mount --make-rslave /mnt/gentoo/sys
 mount --rbind /dev /mnt/gentoo/dev
-mount --make-rslave /mnt/gentoo/dev 
+mount --make-rslave /mnt/gentoo/dev
 
 
 echo "
@@ -556,8 +564,8 @@ execute_additional_commands() {
     read -p \"
 You might want to execute commands like:
 
-eselect news read
-emerge --oneshot portage
+  eselect news read
+  emerge --oneshot portage
 
 You can execute it here or just enter \"e\" to exit. Only execute commands
 you need.
@@ -584,14 +592,18 @@ while true; do
     [Nn]* ) break;;
     * )
       while true; do
-        eselect profile list
+        eselect profile list | grep systemd | grep stable | grep '\[.*\]'
         read -p \"Profile to set:   \" pts
         case \$pts in
           * )
             if [[ \$pts =~ ^[0-9]+$ ]]; then
-              eselect profile set \$pts
-              echo \"Profile \$pts selected\"
-              break;
+              if eselect profile list | grep systemd | grep stable | grep -q \"\[\$pts\]\"; then
+                eselect profile set \$pts
+                echo \"Profile \$pts selected\"
+                break;
+              else
+                echo \"Invalid number\"
+              fi
             else
               echo \"Invalid number\";
             fi;;
@@ -603,122 +615,6 @@ done
 emerge --ask --verbose --update --deep --newuse @world
 execute_additional_commands
 
-while true; do
-  read -p \"Set timezone (e.g. America/Chicago)   \" tz
-  case \$tz in
-    * )
-      if [[ \$tz =~ ^[a-zA-Z]+/[a-zA-Z]+$ ]]; then
-        if ls /usr/share/zoneinfo/\$tz 2> /dev/null; then
-          echo \$tz > /etc/timezone
-          emerge --config sys-libs/timezone-data
-          break;
-        else
-          echo Timezone doesnt exist
-        fi
-      else
-        echo Invalid input
-      fi
-  esac
-done
-
-while true; do
-  read -p \"Actions: [a]ctivate locales | [d]eactivate locales | [g]enerate locales | [e]xit   \" a
-  case \$a in
-    [Aa] )
-      while true; do
-        read -p \"Activate locale (e.g. 'en_US.UTF-8 UTF-8') or [e]xit   \" al
-        case \$al in
-          [Ee] ) break;;
-          * ) sed -i \"s/^#\$al/\$al/g\" /etc/locale.gen
-            echo Activated \$al;
-            break;;
-        esac
-      done;;
-    [Dd] )
-      while true; do
-        read -p \"Deactivate locale (e.g. 'en_US.UTF-8 UTF-8') or [e]xit   \" dl
-        case \$dl in
-          [Ee] ) break;;
-          * ) sed -i \"s/^\$dl/#\$dl/g\" /etc/locale.gen
-            echo Dectivated \$dl;
-            break;;
-        esac
-      done;;
-    [Gg] ) locale-gen;;
-    [Ee] ) break;;
-    * ) echo Invalid input
-  esac
-done
-
-while true; do
-  read -p \"Set LANG (e.g. 'en_US.UTF-8') or [e]xit   \" l
-  case \$l in
-    [Ee] ) break;;
-    * )
-      echo \"LANG=\$l\" | tee /etc/locale.conf
-      echo \"LANG=\$l\" | tee /etc/env.d/02locale
-      ;;
-  esac
-done
-
-###### VERIF
-hwclock --systohc
-while true; do
-  read -p \"Set KEYMAP (e.g. us, de-latin1) or [e]xit   \" k
-  case \$k in
-    [Ee] ) break;;
-    * ) echo \"KEYMAP=\$k\" | tee /etc/vconsole.conf;;
-  esac
-done
-
-while true; do
-  read -p \"Enter hostname or [e]xit   \" hn
-  case \$hn in
-    [Ee] ) break;;
-    * )
-      if test -z \"\$hn\"; then
-        echo Invalid input
-      else
-        echo \$hn | tee /etc/hostname && echo \"
-
-127.0.0.1    localhost
-::1          localhost
-127.0.1.1    \$hn.localdomain \$hn
-
-\" | tee /etc/hosts;
-      fi
-  esac
-done
-##### VERIFEND
-
-env-update
-source /etc/profile
-
-emerge --ask sys-kernel/gentoo-sources
-emerge --ask sys-apps/pciutils
-
-
-while true; do
-  read -p \"Auto generate your kernel [Yn]?   \" agk
-  case \$agk in
-    [Nn]* )
-      cd /usr/src/linux
-      make menuconfig
-
-      make
-      make modules_install
-      make install
-      etc-update
-
-      emerge --ask sys-kernel/genkernel
-      genkernel --install initramfs
-      break;;
-    * )
-      emerge --ask sys-kernel/genkernel
-      // TODO: update fstab
-      genkernel all
-  esac
-done
 
 echo '
 
