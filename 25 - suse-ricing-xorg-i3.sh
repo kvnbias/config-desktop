@@ -114,6 +114,19 @@ if [ "$hasPackman" = true ]; then
   sudo zypper -n install --no-recommends -r packman-essentials flash-player-ppapi
 fi
 
+while true; do
+  read -p "What CPU are you using? [i]ntel | [a]md   " cpui
+  case $cpui in
+    [Ii]* )
+      sudo zypper -n install --no-recommends ucode-intel;
+      break;;
+    [Aa]* )
+      sudo zypper -n install --no-recommends ucode-amd;
+      break;;
+    * ) echo Invalid input
+  esac
+done
+
 ## GPU DRIVERS
 generate_nvidia_gpu_config() {
   if [ -f /etc/default/grub ]; then
