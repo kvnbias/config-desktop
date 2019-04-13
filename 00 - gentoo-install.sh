@@ -418,12 +418,12 @@ while true; do
   read -p "
 Download the Stage 3 tarball. Follow the steps bellow:
 
-1. Open tty2 terminal (Ctrl + Alt + F2)
+1. Open tty2 terminal (Ctrl + Alt + F2), you can go back here (tty1) by pressing (Ctrl + Alt + F1)
 2. Execute 'cd /mnt/gentoo && links https://www.gentoo.org/downloads/mirrors/'
 3. Go to a mirror link (Preferably you country)
-4. Navigate to: releases > amd64 > autobuilds > current-stage3-amd64
-5. Save stage3-amd64-<build-id>.tar.xz
-6. Go back to tty1 (Ctrl + Alt + F1) and proceed
+4. Navigate to: releases > amd64 > autobuilds > current-stage3-amd64-systemd
+5. Save stage3-amd64-systemd-<build-id>.tar.bz2
+6. Go back to tty1 (Ctrl + Alt + F1) after downloading and proceed
 
 Proceed [yN]   " tbd
   case $tbd in
@@ -554,10 +554,14 @@ mount --make-rslave /mnt/gentoo/sys
 mount --rbind /dev /mnt/gentoo/dev
 mount --make-rslave /mnt/gentoo/dev
 
-
 echo "
 
 #!/bin/bash
+
+create_fstab() {
+  # @TODO
+  echo HELLLLLLOOOOO
+}
 
 execute_additional_commands() {
   while true; do
@@ -614,6 +618,370 @@ done
 
 emerge --ask --verbose --update --deep --newuse @world
 execute_additional_commands
+
+while true; do
+  read -p \"Set timezone (e.g. America/Chicago)   \" tz
+  case \$tz in
+    * )
+      if [[ \$tz =~ ^[a-zA-Z]+/[a-zA-Z]+$ ]]; then
+        if ls /usr/share/zoneinfo/\$tz 2>/dev/null; then
+          echo \$tz > /etc/timezone
+          ln -sf /usr/share/zoneinfo/\$tz /etc/localtime;
+          emerge --config sys-libs/timezone-data
+          break;
+        else
+          echo Timezone doesnt exist
+        fi
+      else
+        echo Invalid input
+      fi
+  esac
+done
+
+while true; do
+  read -p \"Actions: [a]ctivate locales | [d]eactivate locales | [g]enerate locales | [e]xit   \" a
+  case \$a in
+    [Aa] )
+      while true; do
+        read -p \"Activate locale (e.g. 'en_US.UTF-8 UTF-8') or [e]xit   \" al
+        case \$al in
+          [Ee] ) break;;
+          * )
+            sed -i \"s/^#\$al/\$al/g\" /etc/locale.gen
+            echo Activated \$al;
+            break;;
+        esac
+      done;;
+    [Dd] )
+      while true; do
+        read -p \"Deactivate locale (e.g. 'en_US.UTF-8 UTF-8') or [e]xit   \" dl
+        case \$dl in
+          [Ee] ) break;;
+          * ) sed -i \"s/^\$dl/#\$dl/g\" /etc/locale.gen
+            echo Dectivated \$dl;
+            break;;
+        esac
+      done;;
+    [Gg] ) locale-gen;;
+    [Ee] ) break;;
+    * ) echo Invalid input
+  esac
+done
+
+while true; do
+  read -p \"Set LANG (e.g. 'en_US.UTF-8') or [e]xit   \" l
+  case \$l in
+    [Ee] ) break;;
+    * )
+      echo \"LANG=\$l\" | tee /etc/locale.conf
+      echo \"LANG=\$l\" | tee /etc/env.d/02locale
+      ;;
+  esac
+done
+
+hwclock --systohc
+
+while true; do
+  read -p \"Set KEYMAP (e.g. us, de-latin1) or [e]xit   \" k
+  case \$k in
+    [Ee] ) break;;
+    * ) echo \"KEYMAP=\$k\" | tee /etc/vconsole.conf;;
+  esac
+done
+
+while true; do
+  read -p \"Enter hostname or [e]xit   \" hn
+  case \$hn in
+    [Ee] ) break;;
+    * )
+      if test -z \"\$hn\"; then
+        echo Invalid input
+      else
+        echo \$hn | tee /etc/hostname && echo \"
+
+127.0.0.1    localhost
+::1          localhost
+127.0.1.1    \$hn.localdomain \$hn
+
+\" | tee /etc/hosts;
+      fi
+  esac
+done
+
+env-update && source /etc/profile
+
+emerge sys-kernel/gentoo-sources
+emerge sys-kernel/dracut
+emerge sys-kernel/genkernel-next
+emerge sys-kernel/linux-firmware
+emerge sys-apps/pciutils
+emerge sys-apps/usbutils
+
+ln -sf /proc/self/mounts /etc/mtab
+echo 'add_dracutmodules+=\"usrmount\"' | tee /etc/dracut.conf.d/usrmount.conf
+
+if cat /etc/genkernel.conf | grep 'UDEV='; then
+  sed -i 's/#UDEV=/UDEV=/g' /etc/genkernel.conf
+  sed -i 's/UDEV=.*/UDEV=\"yes\"/g' /etc/genkernel.conf
+else
+  echo 'UDEV=\"yes\"' | tee -a /etc/genkernel.conf
+fi
+
+create_fstab
+while true; do
+  read -p \"Auto generate kernel settings [yN]?    \" agks
+  case \$agks in
+    [Yy]* )
+      genkernel all;;
+    * )
+      while true; do
+        read -p \"
+Next step is configuring the kernel. Follow the instructions below:
+
+1. Open tty2 terminal (Ctrl + Alt + F2), you can go back here (tty1) by pressing (Ctrl + Alt + F1)
+2. If not on chroot, execute: chroot /mnt/gentoo /bin/bash
+3. Execute: lspci
+4. Take note about the output in lspci. Those devices should be enabled on kernel settings.
+5. Execute: lsusb
+6. Take note about the output in lsusb. Those devices should be enabled on kernel settings.
+7. Execute: genkernel --menuconfig all
+8. Go back here in tty1 (Ctrl + Alt + F1) then proceed
+
+Proceed [yN]   \" initk
+        case \$initk in
+          [Yy]* )
+            while true; do
+              read -p \"
+Enable and disable the following settings under General setup:
+
+  General setup
+    [*] Namespaces support
+      [*] Network namespace
+    [*] Checkpoint/restore support
+    [ ] Enable deprecated sysfs...
+    [*] Configure standard kernel features
+      [*] open by fhandle syscalls
+      [*] Enable eventpoll support
+      [*] Enable signalfd() system call
+      [*] Enable timerfd() system call
+    [*] Enable bpf() system call
+    [*] Control Group support
+      [*] Support for eBPF programs...
+
+Action: [p]roceed | [e]xit   \" gsk
+              case \$gsk in
+                [Pp]* ) break;;
+                [Ee]* ) break 2;;
+                * ) echo \"Invalid input\"
+              esac
+            done
+
+            while true; do
+              read -p \"
+Enable the following settings under Firmware Drivers:
+
+  Firmware Drivers
+    [*] Export DMI identification via sysfs to userspace
+
+Action: [p]roceed | [e]xit   \" fwd
+              case \$fwd in
+                [Pp]* ) break;;
+                [Ee]* ) break 2;;
+                * ) echo \"Invalid input\"
+              esac
+            done
+
+            while true; do
+              read -p \"
+Enable the following settings under Power management and ACPI options:
+
+  Power management and ACPI options
+    [*] Suspend to RAM and standby
+    [*] Hibernation
+    [*] ACPI Support
+
+Action: [p]roceed | [e]xit   \" mpao
+              case \$mpao in
+                [Pp]* ) break;;
+                [Ee]* ) break 2;;
+                * ) echo \"Invalid input\"
+              esac
+            done
+
+            while true; do
+              read -p \"
+Enable the following settings under Binary Emulations:
+
+  Binary Emulations
+    [*] IA32 Emulation
+
+Action: [p]roceed | [e]xit   \" bie
+              case \$bie in
+                [Pp]* ) break;;
+                [Ee]* ) break 2;;
+                * ) echo \"Invalid input\"
+              esac
+            done
+
+            while true; do
+              read -p \"
+Enable the following settings under Processor type and features:
+
+  Processor type and features
+    [*] Symmetric multi-processing support
+    [ ] Machine Check / overheating reporting
+    [*] Enable seccomp to safely compute untrusted bytecode
+
+Action: [p]roceed | [e]xit   \" ptaf
+              case \$ptaf in
+                [Pp]* ) break;;
+                [Ee]* ) break 2;;
+                * ) echo \"Invalid input\"
+              esac
+            done
+
+            while true; do
+              read -p \"
+Enable the following settings under Enable block layer:
+
+  [*] Enable the block layer
+    [*] Block layer SG support v4
+
+Action: [p]roceed | [e]xit   \" ell
+              case \$ell in
+                [Pp]* ) break;;
+                [Ee]* ) break 2;;
+                * ) echo \"Invalid input\"
+              esac
+            done
+
+            while true; do
+              read -p \"
+Enable the following settings under Networking support:
+
+  [*] Networking support
+    Networking options
+      [M] The IPv6 protocol
+
+Action: [p]roceed | [e]xit   \" ns
+              case \$ptaf in
+                [Pp]* ) break;;
+                [Ee]* ) break 2;;
+                * ) echo \"Invalid input\"
+              esac
+            done
+
+            while true; do
+              read -p \"
+Enable & disable the following settings under Device Drivers:
+
+  Device Drivers
+    Generic Driver Options
+      [*] Maintain a devtmpfs filesystem to mount at /dev
+      [*] Automount devtmpfs at /dev, after the kernel mounted the rootfs
+    SCSI device support
+      [*] SCSI disk support
+    [*] Network device support
+      [*] Ethernet driver support
+    HID support
+      [*] HID bus support
+      [*] Generic HID driver
+      [*] Battery level reporting for HID devices
+      USB HID support
+        [M] USB HID transport layer
+    [*] USB support
+      [M] xHCI HCD (USB 3.0) support
+      [M] Generic xHCI driver for platform device
+      [M] EHCI HCD (USB 2.0) support
+      [M] OHCI HCD (USB 1.1) support
+
+Action: [p]roceed | [e]xit   \" dd
+              case \$dd in
+                [Pp]* ) break;;
+                [Ee]* ) break 2;;
+                * ) echo \"Invalid input\"
+              esac
+            done
+
+            while true; do
+              read -p \"
+Enable the following settings under File systems:
+
+  File systems
+    [*] Inotify support for userspace
+    [M] Kernel automounter version 4 support
+    Pseudo filesystems
+      [*] /proc file system support
+      [*] sysfs file system support
+      [*] Tmpfs virtual memory file system support (former shm fs)
+      [*] Tmpfs POSIX Access Control Lists
+      [*] Tmpfs extended attributes
+
+Action: [p]roceed | [e]xit   \" fs
+              case \$fs in
+                [Pp]* ) break;;
+                [Ee]* ) break 2;;
+                * ) echo \"Invalid input\"
+              esac
+            done
+
+            while true; do
+              read -p \"
+Enable the following settings under Gentoo Linux:
+
+  Gentoo Linux
+    Support for init systems...
+      [*] OpenRC
+      [*] systemd
+
+Action: [p]roceed | [e]xit   \" gl
+              case \$gl in
+                [Pp]* ) break;;
+                [Ee]* ) break 2;;
+                * ) echo \"Invalid input\"
+              esac
+            done
+
+            while true; do
+              read -p \"
+If using UEFI enable these settings:
+
+  Processor type and features
+    [*] EFI runtime service support
+    [*] EFI stub support
+    [*] EFI mixed-mode support
+  Firmware Drivers
+    EFI (Extensible Firmware Interface) Support
+      [M] EFI Variable Support via sysfs
+  [*] Enable the block layer
+    Partition Types
+      [*] Advanced partition selection
+      [*] EFI GUID Partition support
+
+Action: [p]roceed | [e]xit   \" gl
+              case \$gl in
+                [Pp]* ) break;;
+                [Ee]* ) break 2;;
+                * ) echo \"Invalid input\"
+              esac
+            done
+
+            while true; do
+              read -p \"
+Save and exit to generate the customized kernel. Proceed after compilation
+Action: [p]roceed | [e]xit   \" ckgp
+              case \$ckgp in
+                [Pp]* )
+                  break 3;;
+                [Ee]* ) break 2;;
+                * ) echo \"Invalid input\"
+              esac
+            done;;
+          * ) break;;
+        esac
+      done;;
+  esac
+done
 
 
 echo '
