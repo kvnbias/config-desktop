@@ -107,7 +107,12 @@ if [ "$hasPackman" = true ]; then
 fi
 
 ## Flash Repo
-sudo zypper -n install --no-recommends freshplayerplugin
+sudo zypper ar -cfp 90 http://linuxdownload.adobe.com/linux/x86_64/ adobe
+sudo zypper inr -r adobe
+sudo zypper install -r adobe adobe-release-x86_64
+sudo rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-adobe-linux
+sudo zypper -n install --no-recommends flash-plugin
+
 sudo zypper -n install --no-recommends java-12-openjdk
 
 if [ "$hasPackman" = true ]; then
