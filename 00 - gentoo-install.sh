@@ -775,7 +775,6 @@ while true; do
         echo Invalid input
       else
         echo \$hn | tee /etc/hostname
-        echo \"hostname=\\\"\$hn\\\"\" | tee /etc/hostname
         echo \"
 127.0.0.1    localhost
 ::1          localhost
@@ -1159,7 +1158,7 @@ exit' | tee \$ed/startup.nsh
                       if cat /etc/default/grub | grep '^GRUB_CMDLINE_LINUX='; then
                         sed -i \"s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\\\"init=/lib/systemd/systemd rootfstype=\$rootfstyp\\\"/g\" /etc/default/grub
                       else
-                        echo \"GRUB_CMDLINE_LINUX=\\\"init=/lib/systemd/systemd rootfstype=\$rootfstyp\\\"\" | tee /etc/default/grub
+                        echo \"GRUB_CMDLINE_LINUX=\\\"init=/lib/systemd/systemd rootfstype=\$rootfstyp\\\"\" | tee -a /etc/default/grub
                       fi
 
                       grub-mkconfig -o /boot/grub/grub.cfg
@@ -1200,7 +1199,7 @@ exit' | tee \$ed/startup.nsh
               if cat /etc/default/grub | grep '^GRUB_CMDLINE_LINUX='; then
                 sed -i \"s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\\\"init=/lib/systemd/systemd rootfstype=\$rootfstyp\\\"/g\" /etc/default/grub
               else
-                echo \"GRUB_CMDLINE_LINUX=\\\"init=/lib/systemd/systemd rootfstype=\$rootfstyp\\\"\" | tee /etc/default/grub
+                echo \"GRUB_CMDLINE_LINUX=\\\"init=/lib/systemd/systemd rootfstype=\$rootfstyp\\\"\" | tee -a /etc/default/grub
               fi
 
               grub-mkconfig -o /boot/grub/grub.cfg
