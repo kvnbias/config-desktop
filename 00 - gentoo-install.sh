@@ -783,6 +783,7 @@ while true; do
   esac
 done
 
+systemd-machine-id-setup
 env-update && source /etc/profile
 
 emerge sys-kernel/gentoo-sources
