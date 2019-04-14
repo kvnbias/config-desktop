@@ -558,6 +558,7 @@ echo "
 
 #!/bin/bash
 
+rootfst=
 create_fstab() {
   # @TODO
   echo HELLLLLLOOOOO
@@ -697,12 +698,12 @@ while true; do
       if test -z \"\$hn\"; then
         echo Invalid input
       else
-        echo \$hn | tee /etc/hostname && echo \"
-
+        echo \$hn | tee /etc/hostname
+        echo 'hostname=\"\$hn\"' | tee /etc/hostname
+        echo \"
 127.0.0.1    localhost
 ::1          localhost
 127.0.1.1    \$hn.localdomain \$hn
-
 \" | tee /etc/hosts;
       fi
   esac
@@ -982,6 +983,157 @@ Action: [p]roceed | [e]xit   \" ckgp
       done;;
   esac
 done
+
+echo '
+
+###################################
+###################################
+###                             ###
+###        SET PASSWORD         ###
+###                             ###
+###################################
+###################################
+
+'
+
+passwd
+
+emerge net-misc/dhcpcd
+
+installBootLoader=true
+while true; do
+  read -p \"Do you want to install a bootloader [Yn]?    \" ibl
+  case \$ibl in
+    [Nn] ) installBootLoader=false; break;;
+    * ) installBootLoader=true; break;;
+  esac
+done
+
+if [[ \"\$installBootLoader\" = \"true\" ]]; then
+  while true; do
+    read -p \"Are you using UEFI + GPT partition? [y]es | [n]o   \" yn
+    case \$yn in
+      [Yy]* )
+        while true; do
+          read -p \"EFI directory (e.g. /boot/efi) or [e]xit   \" ed
+          case \$ed in
+            [Ee] ) break;;
+            * )
+              if [ -d \$ed ]; then
+                while true; do
+                  read -p \"
+
+Choose bootloader
+
+[a] rEFInd
+[*] GRUB
+
+Enter bootloader [default=GRUB]:   \" bl
+                  case \$bl in
+                    [Aa] )
+                      emerge sys-boot/refind
+                      refind-install
+
+                      mkdir -p \$ed/EFI/BOOT
+                      cp -a \$ed/EFI/refind/refind_x64.efi \$ed/EFI/BOOT/BOOTX64.EFI
+                      echo '
+bcf boot add 1 fs0:\EFI\refind\refind_x64.efi \"Fallback Bootloader\"
+exit' | tee \$ed/startup.nsh
+
+                      root=\$(mount -v | grep 'on / ' | cut -f 1 -d ' ')
+                      uuid=\$(blkid | grep \$root | cut -f 2 -d ' ')
+
+                      if [[ \$uuid == *\"LABEL\"* ]]; then
+                        uuid=\$(blkid | grep \$root | cut -f 3 -d ' ')
+                      fi
+
+                      if [[ \$uuid != *\"UUID\"* ]]; then
+                        uuid=\$root
+                      fi
+
+                      uuid=\$(echo \$uuid | sed 's/\"//g')
+
+                      echo \"
+\\\"Boot with standard options\\\"  \\\"root=\$uuid rw\\\"
+\\\"Boot to single-user mode\\\"    \\\"root=\$uuid rw single\\\"
+\\\"Boot with minimal options\\\"   \\\"ro root=\$uuid\\\"
+\" | tee /boot/refind_linux.conf
+
+                      while true; do
+                        read -p \"Would you like to rice rEFInd [Yn]?   \" rrfnd
+                        case \$rrfnd in
+                          [Nn] ) break 4;;
+                          * )
+                            emerge dev-vcs/git
+                            git clone https://github.com/EvanPurkhiser/rEFInd-minimal.git /tmp/refind-minimal
+                            sudo mkdir -p \$ed/EFI/refind/themes/rEFInd-minimal
+                            sudo cp -raf --no-preserve=mode,ownership /tmp/refind-minimal/* \$ed/EFI/refind/themes/rEFInd-minimal
+                            echo 'include themes/rEFInd-minimal/theme.conf' | sudo tee -a \$ed/EFI/refind/refind.conf
+                            break 4;;
+                        esac
+                      done;;
+                    * )
+                      echo 'GRUB_PLATFORMS=\"efi-64\"' >> /etc/portage/make.conf
+                      emerge --ask --update --newuse --verbose sys-boot/grub:2
+                      mount -o remount,rw /sys/firmware/efi/efivars
+                      grub-install --target=x86_64-efi --efi-directory=\$ed --bootloader-id=GRUB;
+
+                      if cat /etc/default/grub | grep '^GRUB_CMDLINE_LINUX='; then
+                        sed -i \"s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\\\"init=/lib/systemd/systemd rootfstype=\$rootfst\\\"/g\" /etc/default/grub
+                      else
+                        echo \"GRUB_CMDLINE_LINUX=\\\"init=/lib/systemd/systemd rootfstype=\$rootfst\\\"\" | tee /etc/default/grub
+                      fi
+
+                      grub-mkconfig -o /boot/grub/grub.cfg
+
+                      mkdir -p \$ed/EFI/BOOT
+                      cp -a \$ed/EFI/gentoo/grubx64.efi \$ed/EFI/BOOT/BOOTX64.EFI
+                      echo '
+bcf boot add 1 fs0:\EFI\gentoo\grubx64.efi \"Fallback Bootloader\"
+exit' | tee \$ed/startup.nsh
+
+                      echo Installed GRUB in UEFI mode;
+                      break 3;;
+                  esac
+                done;
+              else
+                echo EFI Directory doesnt exist;
+                break;
+              fi
+          esac
+        done;;
+      [Nn]* )
+        while true; do
+          echo '
+
+          '
+          fdisk -l
+          echo '
+
+          '
+          read -p \"Target device (e.g. /dev/sdX) or [e]xit   \" td
+          case \$td in
+            [Ee] ) break;;
+            * )
+              echo 'GRUB_PLATFORMS=\"efi-64\"' >> /etc/portage/make.conf
+              emerge --ask --update --newuse --verbose sys-boot/grub:2
+              grub-install --target=i386-pc \$td;
+
+              if cat /etc/default/grub | grep '^GRUB_CMDLINE_LINUX='; then
+                sed -i \"s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\\\"init=/lib/systemd/systemd rootfstype=\$rootfst\\\"/g\" /etc/default/grub
+              else
+                echo \"GRUB_CMDLINE_LINUX=\\\"init=/lib/systemd/systemd rootfstype=\$rootfst\\\"\" | tee /etc/default/grub
+              fi
+
+              grub-mkconfig -o /boot/grub/grub.cfg
+              echo Installed GRUB in LEGACY mode;
+              break 2;;
+          esac
+        done;;
+      * ) echo Invalid input;;
+    esac
+  done
+fi
 
 
 echo '
