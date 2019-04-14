@@ -149,7 +149,7 @@ add_kernel_params(){
     case $akparams in
       [Yy]* )
         while true; do
-          read -p "Enter kernel params. Use <space> as delimiter (e.g. 'security=selinux selinux=1 quiet')   " akparamsval
+          read -p "Enter kernel params. Use <space> as delimiter (e.g. 'security=selinux selinux=1 quiet rootfstype=ext4')   " akparamsval
           case $akparamsval in
             * )
               if [ ! -z "$akparamsval" ]; then
