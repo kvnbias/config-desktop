@@ -558,10 +558,84 @@ echo "
 
 #!/bin/bash
 
-rootfst=
+rootfstmp=
+rootfstyp=
 create_fstab() {
-  # @TODO
-  echo HELLLLLLOOOOO
+  fsv=''
+  while true; do
+    read -p 'Regenerate /etc/fstab [Yn]?   ' rfst
+    case \$rfst in
+      [Nn]* ) break;;
+      * )
+        while true; do
+          read -p '
+[1] Backup current /etc/fstab
+[2] Clean /etc/fstab
+[3] Add device
+[4] Commit /etc/fstab
+[5] Exit
+
+Action:   ' fsta
+          case \$fsta in
+            1 )
+              cp -raf hello /etc/fstab.bup
+              echo 'Backup created: /etc/fstab'
+              ;;
+            2 ) fsv='';;
+            3 )
+              while true; do
+                sudo blkid
+                read -p 'Enter device (e.g. /dev/sdXn):   ' td
+                case \$td in
+                  * )
+                    if sudo blkid | grep -q \"\$td: \"; then
+                      type=\$(sudo blkid | grep \"\$td\" | head -1 | awk -F ' TYPE=\"' '{print \$2}' | cut -f 1 -d '\"')
+                      uuid=\$(sudo blkid | grep \"\$td\" | head -1 | awk -F ' UUID=\"' '{print \$2}' | cut -f 1 -d '\"')
+                      if [ \"\$type\" == \"swap\" ]; then
+
+                        fsv+=\"UUID=\$uuid    none    \$type    sw    0 0 \n\"
+                        break
+                      else
+                        pass=2
+                        while true; do
+                          read -p 'Is this a root partition [yN]?   ' itrp
+                          case \$itrp in
+                            [Yy]* ) pass=1; break;;
+                            * ) pass=2; break;;
+                          esac
+                        done
+
+                        mountpoint=
+                        while true; do
+                          read -p 'Enter mountpoint (e.g. /boot/efi)    ' mp
+                          case \$mp in
+                            * )
+                              if [ ! -z \"\$mp\" ]; then
+                                mountpoint=\"\$mp\"
+                                break
+                              else
+                                echo 'Mountpoint is required'
+                              fi
+                              ;;
+                          esac
+                        done
+
+                        fsv+=\"UUID=\$uuid    \$mountpoint    \$type    rw,noatime    0 \$pass \n\"
+                        break
+                      fi
+                    else
+                      break
+                    fi
+                    ;;
+                esac
+              done;;
+            4 ) printf \"\$fsv\" | tee /etc/fstab;;
+            5 ) break;;
+            * ) echo 'Invalid action';;
+          esac
+        done;;
+    esac
+  done
 }
 
 execute_additional_commands() {
@@ -999,6 +1073,7 @@ echo '
 passwd
 
 emerge net-misc/dhcpcd
+emerge --deselect sys-fs/udev
 
 installBootLoader=true
 while true; do
@@ -1079,9 +1154,9 @@ exit' | tee \$ed/startup.nsh
                       grub-install --target=x86_64-efi --efi-directory=\$ed --bootloader-id=GRUB;
 
                       if cat /etc/default/grub | grep '^GRUB_CMDLINE_LINUX='; then
-                        sed -i \"s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\\\"init=/lib/systemd/systemd rootfstype=\$rootfst\\\"/g\" /etc/default/grub
+                        sed -i \"s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\\\"init=/lib/systemd/systemd rootfstype=\$rootfstyp\\\"/g\" /etc/default/grub
                       else
-                        echo \"GRUB_CMDLINE_LINUX=\\\"init=/lib/systemd/systemd rootfstype=\$rootfst\\\"\" | tee /etc/default/grub
+                        echo \"GRUB_CMDLINE_LINUX=\\\"init=/lib/systemd/systemd rootfstype=\$rootfstyp\\\"\" | tee /etc/default/grub
                       fi
 
                       grub-mkconfig -o /boot/grub/grub.cfg
@@ -1120,9 +1195,9 @@ exit' | tee \$ed/startup.nsh
               grub-install --target=i386-pc \$td;
 
               if cat /etc/default/grub | grep '^GRUB_CMDLINE_LINUX='; then
-                sed -i \"s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\\\"init=/lib/systemd/systemd rootfstype=\$rootfst\\\"/g\" /etc/default/grub
+                sed -i \"s/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX=\\\"init=/lib/systemd/systemd rootfstype=\$rootfstyp\\\"/g\" /etc/default/grub
               else
-                echo \"GRUB_CMDLINE_LINUX=\\\"init=/lib/systemd/systemd rootfstype=\$rootfst\\\"\" | tee /etc/default/grub
+                echo \"GRUB_CMDLINE_LINUX=\\\"init=/lib/systemd/systemd rootfstype=\$rootfstyp\\\"\" | tee /etc/default/grub
               fi
 
               grub-mkconfig -o /boot/grub/grub.cfg
