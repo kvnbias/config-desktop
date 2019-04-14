@@ -149,7 +149,8 @@ add_kernel_params(){
     case $akparams in
       [Yy]* )
         while true; do
-          read -p "Enter kernel params. Use <space> as delimiter (e.g. 'security=selinux selinux=1 quiet rootfstype=ext4')   " akparamsval
+          echo "For gentoo, you might need these parameters: init=/lib/systemd/systemd rootfstype=ext4"
+          read -p "Enter kernel params. Use <space> as delimiter (e.g. 'security=selinux selinux=1 quiet')   " akparamsval
           case $akparamsval in
             * )
               if [ ! -z "$akparamsval" ]; then
