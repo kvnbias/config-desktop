@@ -584,13 +584,13 @@ Action:   ' fsta
             2 ) fsv='';;
             3 )
               while true; do
-                sudo blkid
+                blkid
                 read -p 'Enter device (e.g. /dev/sdXn):   ' td
                 case \$td in
                   * )
-                    if sudo blkid | grep -q \"\$td: \"; then
-                      type=\$(sudo blkid | grep \"\$td\" | head -1 | awk -F ' TYPE=\"' '{print \$2}' | cut -f 1 -d '\"')
-                      uuid=\$(sudo blkid | grep \"\$td\" | head -1 | awk -F ' UUID=\"' '{print \$2}' | cut -f 1 -d '\"')
+                    if blkid | grep -q \"\$td: \"; then
+                      type=\$(blkid | grep \"\$td\" | head -1 | awk -F ' TYPE=\"' '{print \$2}' | cut -f 1 -d '\"')
+                      uuid=\$(blkid | grep \"\$td\" | head -1 | awk -F ' UUID=\"' '{print \$2}' | cut -f 1 -d '\"')
                       if [ \"\$type\" == \"swap\" ]; then
 
                         fsv+=\"UUID=\$uuid    none    \$type    sw    0 0 \n\"
@@ -600,7 +600,7 @@ Action:   ' fsta
                         while true; do
                           read -p 'Is this a root partition [yN]?   ' itrp
                           case \$itrp in
-                            [Yy]* ) pass=1; break;;
+                            [Yy]* ) rootfstmp=\"\$type\"; pass=1; break;;
                             * ) pass=2; break;;
                           esac
                         done
@@ -629,7 +629,7 @@ Action:   ' fsta
                     ;;
                 esac
               done;;
-            4 ) printf \"\$fsv\" | tee /etc/fstab;;
+            4 ) rootfstyp=\"\$rootfstmp\"; printf \"\$fsv\" | tee /etc/fstab;;
             5 ) break;;
             * ) echo 'Invalid action';;
           esac
@@ -645,6 +645,8 @@ You might want to execute commands like:
 
   eselect news read
   emerge --oneshot portage
+  emerge --depclean
+  emerge @preserved-rebuild
 
 You can execute it here or just enter \"e\" to exit. Only execute commands
 you need.
@@ -773,7 +775,7 @@ while true; do
         echo Invalid input
       else
         echo \$hn | tee /etc/hostname
-        echo 'hostname=\"\$hn\"' | tee /etc/hostname
+        echo \"hostname=\\\"\$hn\\\"\" | tee /etc/hostname
         echo \"
 127.0.0.1    localhost
 ::1          localhost
@@ -1142,9 +1144,9 @@ exit' | tee \$ed/startup.nsh
                           * )
                             emerge dev-vcs/git
                             git clone https://github.com/EvanPurkhiser/rEFInd-minimal.git /tmp/refind-minimal
-                            sudo mkdir -p \$ed/EFI/refind/themes/rEFInd-minimal
-                            sudo cp -raf --no-preserve=mode,ownership /tmp/refind-minimal/* \$ed/EFI/refind/themes/rEFInd-minimal
-                            echo 'include themes/rEFInd-minimal/theme.conf' | sudo tee -a \$ed/EFI/refind/refind.conf
+                            mkdir -p \$ed/EFI/refind/themes/rEFInd-minimal
+                            cp -raf --no-preserve=mode,ownership /tmp/refind-minimal/* \$ed/EFI/refind/themes/rEFInd-minimal
+                            echo 'include themes/rEFInd-minimal/theme.conf' | tee -a \$ed/EFI/refind/refind.conf
                             break 4;;
                         esac
                       done;;
