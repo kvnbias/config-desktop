@@ -1110,10 +1110,20 @@ if [[ \"\$installBootLoader\" = \"true\" ]]; then
 
                 grub-mkconfig -o /boot/grub/grub.cfg
 
+                grubdir='gentoo'
+                if [ -f \$ed/EFI/gentoo/grubx64.efi ]; then
+                  grubdir='gentoo'
+                elif [ -f \$ed/EFI/GRUB/grubx64.efi ]; then
+                  grubdir='GRUB'
+                elif [ -f \$ed/EFI/grub/grubx64.efi ]; then
+                  grubdir='grub'
+                fi
+
                 mkdir -p \$ed/EFI/BOOT
-                cp -a \$ed/EFI/gentoo/grubx64.efi \$ed/EFI/BOOT/BOOTX64.EFI
+                cp -a \$ed/EFI/\$grubdir/grubx64.efi \$ed/EFI/BOOT/bootx64.efi
+
                 echo '
-bcf boot add 1 fs0:\EFI\gentoo\grubx64.efi \"Fallback Bootloader\"
+bcf boot add 1 fs0:\EFI\BOOT\grubx64.efi \"Fallback Bootloader\"
 exit' | tee \$ed/startup.nsh
 
                 echo Installed GRUB in UEFI mode;
