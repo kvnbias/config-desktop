@@ -115,7 +115,7 @@ declare_volume(){
 }
 
 declare_loader_initrd() {
-  loader=$(echo -n /boot/$(ls "$1" | grep 'vmlinuz' | grep -v -e 'rescue' -e 'fallback' | tail -1))
+  loader=$(echo -n /boot/$(ls "$1" | grep -e "vmlinuz" -e "genkernel" | grep -v -e 'rescue' -e 'fallback' | tail -1))
   initrd=$(echo -n /boot/$(ls "$1" | grep 'init' | grep -v -e 'rescue' -e 'fallback' | tail -1))
 }
 
