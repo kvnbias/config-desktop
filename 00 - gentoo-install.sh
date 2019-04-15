@@ -1168,6 +1168,33 @@ exit' | tee \$ed/startup.nsh
   done
 fi
 
+emerge app-admin/sudo
+sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/g' /etc/sudoers
+
+while true; do
+  read -p \"Would you like to create a new user [yN]?   \" yn
+  case \$yn in
+    [Yy]* )
+      while true; do
+        read -p \"Enter username or [e]xit   \" un
+        case \$un in
+          [Ee] ) break;;
+          * )
+            if [[ \$un =~ ^[a-z]+$ ]]; then
+              useradd -m -G users,wheel,audio,video,portage,usb -s /bin/bash \$un
+              usermod -g wheel \$un
+              passwd \$un;
+              echo Added \$un
+              break;
+            else
+              echo Invalid input. Lowercase letters only.
+            fi
+        esac
+      done;;
+    * ) break;;
+  esac
+done
+
 
 echo '
 
