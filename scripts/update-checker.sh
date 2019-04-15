@@ -22,7 +22,9 @@ elif [ -f /usr/bin/dnf ]; then
   updates=$(( upgrade + install ))
 
 elif [ -f /usr/bin/zypper ]; then
-  updates=$(sudo zypper refresh | zypper list-updates | grep -v "+-" | grep -v "Available Version" | grep -v "..." | grep -v "No updates found." | wc -l 2> /dev/null);
+  sudo zypper refresh > /dev/null
+  updates=$(sudo zypper list-updates | grep -v "+-" | grep -v "Available Version" | grep -v "\.\.\." | grep -v "No updates found." | wc -l 2> /dev/null);
+
   if echo "$updates" | grep "No updates found."; then
     updates=0
   fi
