@@ -76,50 +76,63 @@ fi
 # Font DIRS for X.org
 sudo cp -raf "$(pwd)/system-confs/xorg.conf" "/etc/X11/xorg.conf"
 
-sudo dpkg --add-architecture i386
-if [ "$os" = "debian" ]; then
-  if cat /etc/apt/sources.list | grep -q "main contrib non-free"; then
-    echo "Non-free repos already added."
-  else
-    sudo sed -i "s/main.*/main contrib non-free/g" /etc/apt/sources.list
-    echo "Non-free repos added."
-  fi
-fi
+install_packages() {
+  while true; do
+    read -p "
+NOTE: Sometimes you need to merge the configs before the packages get installed
 
-sudo apt update
-sudo apt -y upgrade
+[1] Install
+[2] Sync
+[3] Update world
+[4] Auto merge configs
+[5] Execute command
+[6] Exit
 
-# non-free kernel drivers for debian
-if [ "$os" = "debian" ]; then
-  sudo apt install -y --no-install-recommends firmware-linux-nonfree
-fi
+Action:   " ipa
+    case $ipa in
+      1 ) sudo emerge --ask $1;;
+      2 ) sudo emerge --sync;;
+      3 ) sudo emerge --ask --verbose --update --deep --newuse @world;;
+      4 ) yes | sudo etc-update --automode -3;;
+      5 )
+        while true; do
+          read -p "Command to execute or [e]xit:   " cmd
+          case $cmd in
+            [Ee] ) break;;
+            * ) $cmd;;
+          esac
+        done;;
+      6 ) break;;
+    esac
+  done
+}
 
-sudo apt install -y build-essential linux-headers-$(uname -r) git
-sudo apt install -y --no-install-recommends autoconf automake cmake make dkms pkgconf man-db psmisc
-sudo apt install -y --no-install-recommends policykit-1-gnome
+install_packages "sys-kernel/linux-firmware sys-kernel/linux-headers"
+install_packages "gnome-extra/polkit-gnome"
 
-sudo apt install -y --no-install-recommends at
+
+install_packages "sys-process/at"
 sudo systemctl enable atd
 sudo systemctl start atd
 
 # Sound
-sudo apt install -y --no-install-recommends alsa-utils
+install_packages "media-sound/alsa-utils"
 
 # Gstreamer
-sudo apt install -y --no-install-recommends gstreamer1.0-x gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-vaapi
-sudo apt install -y --no-install-recommends gstreamer1.0-plugins-bad gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-ugly
+install_packages "media-libs/gstreamer media-plugins/gst-plugins-libav media-plugins/gst-plugins-vaapi media-plugins/gst-plugins-x"
+install_packages "media-libs/gst-plugins-base media-libs/gst-plugins-bad media-libs/gst-plugins-good media-libs/gst-plugins-ugly"
 
-sudo apt install -y --no-install-recommends openjdk-11-jdk
-sudo apt install -y browser-plugin-freshplayer-pepperflash
+install_packages "dev-java/openjdk-bin"
+install_packages "www-plugins/freshplayerplugin"
 
 while true; do
   read -p "What CPU are you using? [i]ntel | [a]md   " cpui
   case $cpui in
     [Ii]* )
-      sudo apt install -y --no-install-recommends intel-microcode
+      install_packages "sys-firmware/intel-microcode"
       break;;
     [Aa]* )
-      sudo apt install -y --no-install-recommends amd64-microcode
+      install_packages "sys-firmware/amd64-microcode"
       break;;
     * ) echo Invalid input
   esac
@@ -140,45 +153,6 @@ generate_nvidia_gpu_config() {
   fi
 }
 
-install_mesa_vulkan_drivers() {
-
-  sudo apt install -y --no-install-recommends libd3dadapter9-mesa:amd64
-  sudo apt install -y --no-install-recommends libegl-mesa0:amd64
-  sudo apt install -y --no-install-recommends libgbm1:amd64
-  sudo apt install -y --no-install-recommends libgl1-mesa-dri:amd64
-  sudo apt install -y --no-install-recommends libglapi-mesa:amd64
-  sudo apt install -y --no-install-recommends libglu1-mesa:amd64
-  sudo apt install -y --no-install-recommends libglw1-mesa:amd64
-  sudo apt install -y --no-install-recommends libglx-mesa0:amd64
-  sudo apt install -y --no-install-recommends libosmesa6:amd64
-  sudo apt install -y --no-install-recommends mesa-opencl-icd:amd64
-  sudo apt install -y --no-install-recommends mesa-utils:amd64
-  sudo apt install -y --no-install-recommends mesa-utils-extra:amd64
-
-  sudo apt install -y --no-install-recommends libd3dadapter9-mesa:i386
-  sudo apt install -y --no-install-recommends libegl-mesa0:i386
-  sudo apt install -y --no-install-recommends libgbm1:i386
-  sudo apt install -y --no-install-recommends libgl1-mesa-dri:i386
-  sudo apt install -y --no-install-recommends libglapi-mesa:i386
-  sudo apt install -y --no-install-recommends libglu1-mesa:i386
-  sudo apt install -y --no-install-recommends libglw1-mesa:i386
-  sudo apt install -y --no-install-recommends libglx-mesa0:i386
-  sudo apt install -y --no-install-recommends libosmesa6:i386
-  sudo apt install -y --no-install-recommends mesa-opencl-icd:i386
-  sudo apt install -y --no-install-recommends mesa-utils:i386
-  sudo apt install -y --no-install-recommends mesa-utils-extra:i386
-
-  sudo apt install -y --no-install-recommends mesa-vulkan-drivers:amd64
-  sudo apt install -y --no-install-recommends libvulkan1:amd64
-  sudo apt install -y --no-install-recommends libva-glx2:amd64
-
-  sudo apt install -y --no-install-recommends mesa-vulkan-drivers:i386
-  sudo apt install -y --no-install-recommends libvulkan1:i386
-  sudo apt install -y --no-install-recommends libva-glx2:i386
-
-  sudo apt install -y --no-install-recommends vulkan-utils
-}
-
 while true; do
   read -p "
 
@@ -196,8 +170,8 @@ Enter GPU:   " gpui
     [Vv]* )
       break;;
     [Ii]* )
-      sudo apt install -y --no-install-recommends xserver-xorg-video-intel
-      install_mesa_vulkan_drivers
+      install_packages "x11-drivers/xf86-video-intel"
+      install_packages "media-libs/mesa media-libs/vulkan-loader dev-util/vulkan-tools"
 
       sudo cp -raf "$(pwd)/system-confs/20-intel.conf" "/etc/X11/xorg.conf.d/20-intel.conf"
       echo Intel drivers installed;
@@ -215,16 +189,16 @@ What driver to use?
   " amdd
         case $amdd in
           [1]* )
-            sudo apt install -y --no-install-recommends xserver-xorg-video-amdgpu
-            install_mesa_vulkan_drivers
+            install_packages "x11-drivers/xf86-video-amdgpu"
+            install_packages "media-libs/mesa media-libs/vulkan-loader dev-util/vulkan-tools"
 
             sudo cp -raf "$(pwd)/system-confs/20-radeon-ati.conf" "/etc/X11/xorg.conf.d/20-radeon.conf"
             sudo cp -raf "$(pwd)/system-confs/10-screen.conf"     "/etc/X11/xorg.conf.d/10-screen.conf"
             echo AMDGPU drivers installed;
             break 2;;
           [2]* )
-            sudo apt install -y --no-install-recommends xserver-xorg-video-ati
-            install_mesa_vulkan_drivers
+            install_packages "x11-drivers/xf86-video-ati"
+            install_packages "media-libs/mesa media-libs/vulkan-loader dev-util/vulkan-tools"
 
             sudo cp -raf "$(pwd)/system-confs/20-radeon-ati.conf" "/etc/X11/xorg.conf.d/20-radeon.conf"
             echo ATI drivers installed;
@@ -234,28 +208,11 @@ What driver to use?
         esac
       done;;
     [Nn]* )
-      if [ "$os" != "debian" ]; then
-        sudo apt install -y nvidia-driver-390
-      else
-        sudo apt install -y --no-install-recommends xserver-xorg-video-nvidia nvidia-detect nvidia-xconfig
+      install_packages "x11-drivers/xf86-video-nv"
+      install_packages "x11-drivers/nvidia-drivers media-libs/vulkan-loader dev-util/vulkan-tools"
 
-        sudo apt install -y nvidia-driver:amd64
-        sudo apt install -y libgl1-nvidia-glx:amd64
-
-        sudo apt install -y nvidia-driver:i386
-        sudo apt install -y libgl1-nvidia-glx:i386
-
-        sudo apt install -y --no-install-recommends libvulkan1:amd64
-        sudo apt install -y --no-install-recommends libva-glx2:amd64
-
-        sudo apt install -y --no-install-recommends libvulkan1:i386
-        sudo apt install -y --no-install-recommends libva-glx2:i386
-
-        sudo apt install -y --no-install-recommends vulkan-utils
-
-        generate_nvidia_gpu_config
-        sudo nvidia-xconfig
-      fi
+      generate_nvidia_gpu_config
+      sudo nvidia-xconfig
 
       echo NVIDIA drivers installed;
       break;;
@@ -285,8 +242,7 @@ EndSection
 fi
 
 ## Hardware acceleration drivers installation
-sudo apt install -y --no-install-recommends mesa-va-drivers mesa-vdpau-drivers
-sudo apt install -y --no-install-recommends libvdpau1 libvdpau-va-gl1
+install_packages "x11-libs/libva-vdpau-driver x11-libs/libvdpau x11-misc/vdpauinfo"
 
 # Network
 while true; do
@@ -315,9 +271,8 @@ Enter action:   " wd
       done;;
     [1] ) lspci | grep Network;;
     [2] )
-      sudo apt install -y --no-install-recommends linux-headers-$(uname -r) linux-image-$(uname -r);
-      sudo apt install -y --no-install-recommends broadcom-sta-dkms wireless-tools;
-      sudo modprobe -r b44 b43 b43legacy ssb brcmsmac bcma
+      install_packages "net-wireless/broadcom-sta net-wireless/wireless-tools"
+      sudo modprobe -r b44 b43 b43legacy ssb bcma
       sudo modprobe wl
       echo "
 Installation done...
@@ -365,46 +320,17 @@ if [ -d /etc/gdm ]; then
 fi
 
 # Greeter
-sudo apt install -y --no-install-recommends lightdm
-sudo apt install -y --no-install-recommends fonts-noto
-sudo apt install -y --no-install-recommends lightdm-gtk-greeter
-sudo apt install -y --no-install-recommends lightdm-gtk-greeter-settings
+install_packages "x11-misc/lightdm x11-misc/lightdm-gtk-greeter media-fonts/noto"
 sudo sed -i 's/#greeter-session=example-gtk-gnome/greeter-session=lightdm-gtk-greeter/g' /etc/lightdm/lightdm.conf
-
-lightdmUnit='/usr/lib/systemd/system/lightdm.service'
-if [ -f /usr/lib/systemd/system/lightdm.service ]; then
-  lightdmUnit='/usr/lib/systemd/system/lightdm.service'
-else
-  if [ -f /etc/systemd/system/lightdm.service ]; then
-    lightdmUnit='/etc/systemd/system/lightdm.service'
-  fi
-fi
-
-# If lightdm unit doesnt exists it may be manage by other unit.
-# In ubuntu, ubuntu lets you pick your default display manager when lightdm is installed,
-# instead of settings a daemon
-if [ -f $lightdmUnit ]; then
-  if cat $lightdmUnit | grep -q 'Alias=display-manager.service'; then
-    echo 'Alias already exists'
-  else
-    if cat $lightdmUnit | grep -q '\[Install\]'; then
-      echo 'Install already exists'
-    else
-      echo '[Install]' | sudo tee -a $lightdmUnit
-    fi
-
-    echo 'Alias=display-manager.service' | sudo tee -a $lightdmUnit
-  fi
-fi
 
 sudo systemctl enable lightdm
 sudo systemctl set-default graphical.target
 
 # Install window tiling manager
-sudo apt install -y --no-install-recommends i3 i3status i3lock rxvt-unicode
+install_packages "x11-wm/i3 x11-misc/i3status x11-misc/i3lock x11-misc/dmenu x11-terms/rxvt-unicode"
 
 # File manager
-sudo apt install -y --no-install-recommends nautilus
+install_packages "gnome-base/nautilus"
 
 if [ ! -f "$HOME/.riced" ];then
   mkdir -p $HOME/.config
@@ -412,7 +338,7 @@ if [ ! -f "$HOME/.riced" ];then
 
   # Fix default i3 config
   sudo cp /etc/i3/config $HOME/.config/i3/config
-  sudo chown $(whoami):$(whoami) $HOME/.config/i3/config
+  sudo chown $(whoami):wheel $HOME/.config/i3/config
 
   sed -i 's/Mod1/Mod4/g' $HOME/.config/i3/config
   sed -i 's/i3-sensible-terminal/urxvt/g' $HOME/.config/i3/config
@@ -439,7 +365,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       # will use for manually installed packages, /tmp has limited space
       cd /tmp
 
-      sudo apt install -y --no-install-recommends curl wget vim httpie lsof git tmux gedit
+      install_packages "net-misc/curl net-misc/wget net-misc/httpie sys-process/lsof dev-vcs/git app-misc/tmux app-editors/vim app-editors/gedit"
 
       # theme icon
       # git clone --recurse-submodules https://github.com/daniruiz/flat-remix.git
@@ -453,10 +379,11 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       # sudo mkdir -p /usr/share/icons && sudo cp -raf Flat-Remix* /usr/share/icons/
       # sudo ln -sf /usr/share/icons/Flat-Remix-Blue /usr/share/icons/Flat-Remix
       # cd /tmp
-      sudo apt install -y --no-install-recommends papirus-icon-theme
+      wget -qO- https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/install.sh | sh
 
       # display
-      sudo apt install -y --no-install-recommends feh arandr lxappearance xbacklight x11-xserver-utils xinput
+      install_packages "media-gfx/feh x11-misc/arandr lxde-base/lxappearance"
+      install_packages "x11-apps/xbacklight x11-apps/xrandr x11-apps/xrdb x11-apps/xinput"
 
       # Generic notification
       # echo "
@@ -483,8 +410,8 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       fi
 
       # audio
-      sudo apt install -y --no-install-recommends alsa-utils
-      sudo apt install -y --no-install-recommends pulseaudio pulseaudio-utils pavucontrol
+      install_packages "media-sound/alsa-utils media-sound/alsa-tools media-libs/alsa-lib"
+      install_packages "media-sound/pulseaudio media-sound/pavucontrol"
 
       amixer sset "Master" unmute
       amixer sset "Speaker" unmute
@@ -499,11 +426,11 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       amixer sset "Mic Boost" 100%
 
       # MANUAL 3b4f8b3: PulseAudio Applet. Some are already installed
-      sudo apt install -y --no-install-recommends libglib2.0-dev libgtk-3-dev libnotify-dev
-      sudo apt install -y --no-install-recommends libpulse-dev libx11-dev
-      sudo apt install -y --no-install-recommends autoconf automake pkgconf
+      install_packages "dev-libs/glib libgtk-3-dev libnotify-dev" ###
+      install_packages "libpulse-dev x11-libs/libX11" ###
+      install_packages "sys-devel/autoconf sys-devel/automake dev-util/pkgconf" ###
 
-      sudo apt install -y --no-install-recommends libgtk-3-0 libnotify-bin libpulse0
+      install_packages "libgtk-3-0 x11-libs/libnotify-bin libpulse0" ###
 
       git clone --recurse-submodules https://github.com/fernandotcl/pa-applet.git
       cd pa-applet
@@ -523,7 +450,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo sed -i 's/; autospawn = yes/autospawn = yes/g' /etc/pulse/client.conf
 
       # network manager
-      sudo apt install -y --no-install-recommends network-manager network-manager-gnome
+      install_packages "net-misc/networkmanager"
       sudo sed -i 's/managed=false/managed=true/g' /etc/NetworkManager/NetworkManager.conf
       sudo systemctl enable NetworkManager
 
@@ -542,54 +469,40 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo mv "Sauce Code Pro Nerd Font Complete Mono.ttf"    "/usr/share/fonts/nerd-fonts-complete/ttf/Sauce Code Pro Nerd Font Complete Mono.ttf"
 
       # terminal
-      sudo apt install -y --no-install-recommends neofetch
+      install_packages "app-misc/neofetch"
 
       # gtk theme change
-      sudo apt install -y --no-install-recommends gtk2-engines gtk2-engines-murrine libgtk2.0-0 libgtk-3-0
+      install_packages "x11-themes/gtk-engines x11-themes/gtk-engines-murrine libgtk2.0-0 libgtk-3-0" ###
 
       # mouse cursor theme
-      sudo apt install -y --no-install-recommends breeze-cursor-theme
+      install_packages "breeze-cursor-theme" ###
       sudo ln -s /usr/share/icons/breeze_cursors /usr/share/icons/Breeze
 
-      # notification, system monitor, compositor, image on terminal
-      sudo apt install -y --no-install-recommends dbus-x11 dunst conky compton w3m
-      sudo apt install -y --no-install-recommends ffmpegthumbnailer
+      # system monitor, compositor, image on terminal
+      install_packages "x11-misc/dunst app-admin/conky x11-misc/compton www-client/w3m"
+      install_packages "media-video/ffmpegthumbnailer"
 
       # for vifm
       # https://pillow.readthedocs.io/en/stable/installation.html
-      sudo apt install -y --no-install-recommends python3-pip
-      sudo apt install -y --no-install-recommends poppler-utils mediainfo transmission-cli transmission-common
-      sudo apt install -y --no-install-recommends zip unzip tar xz-utils unrar catdoc docx2txt
+      install_packages "dev-python/pip"
+      install_packages "app-text/poppler media-video/mediainfo net-p2p/transmission"
+      install_packages "app-arch/zip app-arch/unzip app-arch/tar app-arch/xz-utils app-arch/unrar"
+      install_packages "app-text/catdoc app-text/docx2txt"
 
-      if [ "$os" != "debian" ]; then
-        sudo apt install -y --no-install-recommends libjpeg62-dev
-      else
-        sudo apt install -y --no-install-recommends libjpeg62-turbo-dev
-      fi
-
-      sudo apt install -y --no-install-recommends python3-dev libturbojpeg0-dev zlib1g-dev libxext-dev python3-setuptools
+      install_packages "media-libs/libjpeg-turbo python3-dev libturbojpeg0-dev sys-libs/zilb" ###
+      install_packages "x11-libs/libXext dev-python/setuptools" ###
       sudo pip3 install ueberzug
 
       # MANUAL 2.12.c: i3lock-color. Some are already installed
-      sudo apt remove -y i3lock
-      if [ "$os" != "debian" ]; then
-        sudo apt install -y --no-install-recommends libjpeg62-dev
-      else
-        sudo apt install -y --no-install-recommends libjpeg62-turbo-dev
-      fi
+      sudo emerge --ask --verbose --depclean x11-misc/i3lock
 
-      sudo apt install -y --no-install-recommends libcairo2-dev libev-dev libturbojpeg0-dev libxcb-composite0-dev libxkbcommon-x11-dev libxcb-randr0-dev
-      sudo apt install -y --no-install-recommends libpam0g-dev libxcb-util0-dev libxcb-image0-dev libxcb-xrm-dev libxcb-xinerama0-dev
-      sudo apt install -y --no-install-recommends autoconf automake
+      install_packages "media-libs/libjpeg-turbo x11-libs/cairo dev-libs/libev libturbojpeg0-dev" ###
+      install_packages "libxcb-composite0-dev x11-libs/libxkbcommon libxcb-randr0-dev" ###
+      install_packages "libpam0g-dev x11-libs/xcb-util x11-libs/xcb-util-image x11-libs/xcb-util-xrm libxcb-xinerama0-dev" ###
+      install_packages "sys-devel/autoconf sys-devel/automake"
 
-      if [ "$os" != "debian" ]; then
-        sudo apt install -y --no-install-recommends libturbojpeg libjpeg62
-      else
-        sudo apt install -y --no-install-recommends libturbojpeg0 libjpeg62-turbo
-      fi
-
-      sudo apt install -y --no-install-recommends libcairo2 libev4 libxcb-composite0 libxkbcommon-x11-0 libxcb-randr0
-      sudo apt install -y --no-install-recommends libxkbcommon0 libxcb1 libxcb-image0 libxcb-xinerama0
+      install_packages "libcairo2 libev4 libxcb-composite0 libxkbcommon-x11-0 libxcb-randr0" ###
+      install_packages "libxkbcommon0 libxcb1 libxcb-image0 libxcb-xinerama0" ###
 
       git clone --recurse-submodules https://github.com/PandorasFox/i3lock-color.git
       cd i3lock-color
@@ -607,51 +520,15 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       cd /tmp
 
       # terminal-based file viewer
-      sudo apt install -y --no-install-recommends ranger
-      sudo apt install -y --no-install-recommends vifm
+      install_packages "app-misc/ranger app-misc/vifm"
 
       # requirements for ranger [scope.sh]
-      sudo apt install -y --no-install-recommends file libcaca0 python3-pygments atool libarchive13 unrar lynx
-      sudo apt install -y --no-install-recommends mupdf transmission-cli mediainfo odt2txt python3-chardet
+      install_packages "sys-apps/file media-libs/libcaca dev-python/pygments app-arch/atool app-arch/libarchive app-arch/unrar www-client/lynx"
+      install_packages "app-text/mupdf net-p2p/transmission media-video/mediainfo app-text/odt2txt dev-python/chardet"
 
       # i3wm customization, dmenu replacement, i3status replacement
-      sudo apt install -y --no-install-recommends rofi
-
-      # MANUAL 4.16.1: i3-gaps
-      sudo apt remove -y i3
-      sudo apt install -y --no-install-recommends libxcb-util0-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libxcb-icccm4-dev
-      sudo apt install -y --no-install-recommends libxcb-xrm-dev libyajl-dev libxrandr-dev libstartup-notification0-dev
-      sudo apt install -y --no-install-recommends libev-dev libxcb-cursor-dev libxinerama-dev libxkbcommon-dev libxkbcommon-x11-dev
-      sudo apt install -y --no-install-recommends libxcb-randr0-dev libpcre3-dev libpango1.0-dev automake git gcc
-
-      sudo apt install -y --no-install-recommends libev4 libxkbcommon-x11-0 perl libpango1.0-0 libstartup-notification0 libxcb-icccm4
-      sudo apt install -y --no-install-recommends libxcb-randr0 libxcb-cursor0 libxcb-keysyms1 libxcb-xrm0 libyajl2 libxcb-xinerama0
-
-      git clone --recurse-submodules https://github.com/Airblader/i3.git i3-gaps
-      cd i3-gaps
-
-      git fetch --tags
-      tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-
-      if [ ${#tag} -ge 1 ]; then
-        git checkout $tag
-      fi
-
-      git tag -f "git-$(git rev-parse --short HEAD)"
-      autoreconf -fi && rm -rf build/ && mkdir -p build && cd build/
-      ../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers
-      make && sudo make install
-
-      cd /tmp
-
-      # MANUAL 3.3.1: polybar
-      sudo apt install -y --no-install-recommends libasound2-dev libcairo2-dev xcb-proto libxcb-util0-dev libxcb-cursor-dev libxcb-image0-dev libxcb-xrm-dev
-      sudo apt install -y --no-install-recommends libcurl4-openssl-dev libjsoncpp-dev libmpdclient-dev libpulse-dev libnl-3-dev libiw-dev
-      sudo apt install -y --no-install-recommends libxcb-composite0-dev libxcb-icccm4-dev libxcb-ewmh-dev libxcb-randr0-dev
-      sudo apt install -y --no-install-recommends g++ gcc python git pkgconf cmake
-
-      sudo apt install -y --no-install-recommends libasound2 libasound2 alsa-tools libcairo2 libxcb-cursor0 libxcb-image0 libxcb-xrm0 libxcb-icccm4 libxcb-ewmh2 libxcb-composite0
-      sudo apt install -y --no-install-recommends curl libjsoncpp1 libmpdclient2 libpulse0 libnl-3-200 wireless-tools python-xcbgen libxcb-randr0
+      sudo emerge --ask --verbose --depclean x11-wm/i3
+      install_packages "x11-misc/rofi x11-wm/i3-gaps x11-misc/polybar"
 
       # ncmpcpp playlist
       # 1) go to browse
@@ -659,49 +536,13 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       # 3) press "A"
       #
       # r: repeat, z: shuffle, y: repeat one
-      sudo apt install -y --no-install-recommends mpd mpc ncmpcpp
+      install_packages "media-sound/mpd media-sound/mpc media-sound/ncmpcpp"
       sudo systemctl disable mpd
       sudo systemctl stop mpd
 
-      git clone --recurse-submodules https://github.com/jaagr/polybar.git
-      cd polybar
+      install_packages "media-gfx/scrot sys-apps/accountsservice"
 
-      git fetch --tags
-      tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-
-      if [ ${#tag} -ge 1 ]; then
-        git checkout $tag
-      fi
-
-      git tag -f "git-$(git rev-parse --short HEAD)"
-      rm -rf build/ && mkdir -p build && cd build/
-      cmake .. && make -j$(nproc) && sudo make install
-
-      cd /tmp
-
-      # popup calendar
-      # sudo apt install -y --no-install-recommends xdotool yad
-
-      sudo apt install -y --no-install-recommends scrot
-
-      sudo apt install -y --no-install-recommends accountsservice
-
-      sudo apt remove -y libasound2-dev libcairo2-dev libcurl4-openssl-dev \
-        libev-dev libglib2.0-dev libgtk-3-dev libiw-dev libjsoncpp-dev libmpdclient-dev \
-        libnl-3-dev libnotify-dev libpam0g-dev libpango1.0-dev libpcre3-dev libpulse-dev \
-        libstartup-notification0-dev libturbojpeg0-dev libx11-dev libxcb-composite0-dev \
-        libxcb-cursor-dev libxcb-ewmh-dev libxcb-icccm4-dev libxcb-image0-dev \
-        libxcb-keysyms1-dev libxcb-randr0-dev libxcb-util0-dev libxcb-xinerama0-dev \
-        libxcb-xrm-dev libxext-dev libxinerama-dev libxkbcommon-dev libxkbcommon-x11-dev \
-        libxrandr-dev libyajl-dev python3-dev python3-setuptools xcb-proto zlib1g-dev
-
-      if [ "$os" != "debian" ]; then
-        sudo apt remove -y libjpeg62-dev
-      else
-        sudo apt remove -y libjpeg62-turbo-dev
-      fi
-
-      sudo apt autoremove -y
+      sudo emerge --ask --depclean
       cd $mainCWD
 
       user=$(whoami)
