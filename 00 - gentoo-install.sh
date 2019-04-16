@@ -494,7 +494,7 @@ Update CPU Flags [yN]?   " ucpuf
       while true; do
         read -p "Add my custom USE flags [yN]?   " acuf
         case $acuf in
-          [Yy] ) useflg="systemd"
+          [Yy] ) useflg="systemd"; break;;
           * ) break;;
         esac
       done
@@ -530,7 +530,11 @@ Commit [yN]?   " cmtchng
             fi
 
             if [ ! -z "$useflg" ]; then
-              echo "USE=\"$useflg\"" | tee -a /mnt/gentoo/etc/portage/make.conf;
+              if cat /mnt/gentoo/etc/portage/make.conf | grep -q "^USE="; then
+                sed -i "s/USE=.*/USE=\"$useflg\"/g" /mnt/gentoo/etc/portage/make.conf
+              else
+                echo "USE=\"$useflg\"" | tee -a /mnt/gentoo/etc/portage/make.conf;
+              fi
             fi
 
             break;;
