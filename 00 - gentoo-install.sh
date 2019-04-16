@@ -643,6 +643,7 @@ execute_additional_commands() {
     read -p \"
 You might want to execute commands like:
 
+  yes | sudo etc-update --automode -3
   eselect news read
   emerge --oneshot portage
   emerge --depclean
@@ -907,6 +908,9 @@ Enable the following settings under Processor type and features:
   Processor type and features
     [*] Symmetric multi-processing support
     [ ] Machine Check / overheating reporting
+    [*] CPU microcode loading support
+    [*] <YOUR_CPU> microcode loading support
+    [*] MTRR (Memory Type Range Register) support
     [*] Enable seccomp to safely compute untrusted bytecode
 
 Action: [p]roceed | [e]xit   \" ptaf
@@ -960,6 +964,11 @@ Enable & disable the following settings under Device Drivers:
       [*] SCSI disk support
     [*] Network device support
       [*] Ethernet driver support
+    Graphics support
+      [M] /dev/agpgart (AGP Support)
+        [M] <YOUR_CHIPSET> support
+      [M] Direct Rendering Manager
+      [M] <YOU_GPU_FAMILY>
     HID support
       [*] HID bus support
       [*] Generic HID driver
@@ -1169,6 +1178,7 @@ exit' | tee \$ed/startup.nsh
 fi
 
 emerge app-admin/sudo
+emerge dev-vcs/git app-editors/vim
 sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/g' /etc/sudoers
 
 while true; do
