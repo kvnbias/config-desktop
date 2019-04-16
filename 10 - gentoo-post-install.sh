@@ -56,6 +56,7 @@ chown -R $(whoami):wheel /home/$(whoami)
   esac
 done
 
+sudo sed -i "s/USE=\"/USE=\"X udisks /g" /etc/portage/make.conf
 sudo emerge sys-kernel/linux-firmware sys-kernel/linux-headers
 
 ## Start swap initialization

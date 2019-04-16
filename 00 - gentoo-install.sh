@@ -445,6 +445,7 @@ Update CPU Flags [yN]?   " ucpuf
       chost=
       cflags=
       mkopts=
+      useflg=
 
       while true; do
         if cat /mnt/gentoo/etc/portage/make.conf | grep -q "CHOST"; then
@@ -491,12 +492,21 @@ Update CPU Flags [yN]?   " ucpuf
       done
 
       while true; do
+        read -p "Add my custom USE flags [yN]?   " acuf
+        case $acuf in
+          [Yy] ) useflg="systemd"
+          * ) break;;
+        esac
+      done
+
+      while true; do
         read -p "
 Changes:
 
 CHOST=\"$chost\"
 COMMON_FLAGS=\"$cflags\"
 MAKEOPTS=\"$mkopts\"
+USE=\"$useflg\"
 
 Commit [yN]?   " cmtchng
         case $cmtchng in
@@ -517,6 +527,10 @@ Commit [yN]?   " cmtchng
               sed -i "s/MAKEOPTS=.*/MAKEOPTS=\"$mkopts\"/g" /mnt/gentoo/etc/portage/make.conf;
             else
               echo "MAKEOPTS=\"$mkopts\"" | tee -a /mnt/gentoo/etc/portage/make.conf;
+            fi
+
+            if [ ! -z "$useflg" ]; then
+              echo "USE=\"$useflg\"" | tee -a /mnt/gentoo/etc/portage/make.conf;
             fi
 
             break;;
