@@ -982,11 +982,17 @@ Enable & disable the following settings under Device Drivers:
       [*] SCSI disk support
     [*] Network device support
       [*] Ethernet driver support
+    Input device support
+      [*]  Event interface
     Graphics support
       [M] /dev/agpgart (AGP Support)
         [M] <YOUR_CHIPSET> support
-      [M] Direct Rendering Manager
+      [*] Direct Rendering Manager
       [M] <YOU_GPU_FAMILY>
+      Frame Buffer Devices
+        [*] Support for frame buffer devices
+      Console display driver support
+        [*] Framebuffer Console Support
     HID support
       [*] HID bus support
       [*] Generic HID driver
@@ -1072,6 +1078,14 @@ Action: [p]roceed | [e]xit   \" gl
 
             while true; do
               read -p \"
+
+NOTE: Check the links below for other kernel settings:
+
+https://wiki.gentoo.org/wiki/Xorg/Guide
+https://wiki.gentoo.org/wiki/Intel
+https://wiki.gentoo.org/wiki/AMD
+https://wiki.gentoo.org/wiki/NVIDIA
+
 Save and exit to generate the customized kernel. Proceed after compilation
 Action: [p]roceed | [e]xit   \" ckgp
               case \$ckgp in
