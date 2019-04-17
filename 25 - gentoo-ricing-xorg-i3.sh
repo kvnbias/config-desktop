@@ -57,6 +57,22 @@ chown -R $(whoami):wheel /home/$(whoami)
   esac
 done
 
+if cat /etc/portage/make.conf | grep -q 'USE='; then
+  if ! cat /etc/portage/make.conf | grep -q 'udisks'; then
+    sudo sed -i "s/USE=\"/USE=\"udisks /g" /etc/portage/make.conf
+  fi
+
+  if ! cat /etc/portage/make.conf | grep -q 'systemd'; then
+    sudo sed -i "s/USE=\"/USE=\"systemd /g" /etc/portage/make.conf
+  fi
+
+  if ! cat /etc/portage/make.conf | grep -q 'X'; then
+    sudo sed -i "s/USE=\"/USE=\"X /g" /etc/portage/make.conf
+  fi
+else
+  echo "USE=\"X udisks systemd\"" | sudo tee -a /etc/portage/make.conf
+fi
+
 while true; do
   read -p "Enter full name or [s]kip?   " fn
   case $fn in
@@ -356,7 +372,6 @@ if [ ! -f "$HOME/.riced" ];then
 
   sed -i 's/Mod1/Mod4/g' $HOME/.config/i3/config
   sed -i 's/i3-sensible-terminal/urxvt/g' $HOME/.config/i3/config
-  sed -i 's/dmenu_run/dmenu/g' $HOME/.config/i3/config
 
   sudo sed -i 's/Mod1/Mod4/g' /etc/i3/config
   sudo sed -i 's/i3-sensible-terminal/urxvt/g' /etc/i3/config
@@ -367,6 +382,13 @@ if [ ! -f "$HOME/.riced" ];then
   sudo cp $HOME/.Xresources /root/.Xresources
 fi
 
+echo "
+[User]
+Icon=/home/$(whoami)/.face
+XSession=i3
+SystemAccount=false
+" | sudo tee /var/lib/AccountsService/users/$user
+
 mainCWD=$(pwd)
 while true; do
   read -p "
@@ -375,6 +397,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
   case $yn in
     [Nn]* ) break;;
     * )
+      sudo sed -i "s/USE=\"/USE=\"alsa /g" /etc/portage/make.conf
 
       # will use for manually installed packages, /tmp has limited space
       cd /tmp
@@ -439,12 +462,9 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       amixer sset "Mic" 100%
       amixer sset "Mic Boost" 100%
 
-      # MANUAL 3b4f8b3: PulseAudio Applet. Some are already installed
-      install_packages "dev-libs/glib libgtk-3-dev libnotify-dev" ###
-      install_packages "libpulse-dev x11-libs/libX11" ###
-      install_packages "sys-devel/autoconf sys-devel/automake dev-util/pkgconf" ###
-
-      install_packages "libgtk-3-0 x11-libs/libnotify-bin libpulse0" ###
+      # MANUAL 3b4f8b3: PulseAudio Applet.
+      install_packages "dev-libs/glib x11-libs/libnotify x11-libs/libX11"
+      install_packages "sys-devel/autoconf sys-devel/automake dev-util/pkgconf"
 
       git clone --recurse-submodules https://github.com/fernandotcl/pa-applet.git
       cd pa-applet
@@ -464,8 +484,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo sed -i 's/; autospawn = yes/autospawn = yes/g' /etc/pulse/client.conf
 
       # network manager
-      install_packages "net-misc/networkmanager"
-      sudo sed -i 's/managed=false/managed=true/g' /etc/NetworkManager/NetworkManager.conf
+      install_packages "net-misc/networkmanager gnome-extra/nm-applet"
       sudo systemctl enable NetworkManager
 
       # fonts - fc-list
@@ -486,11 +505,23 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       install_packages "app-misc/neofetch"
 
       # gtk theme change
-      install_packages "x11-themes/gtk-engines x11-themes/gtk-engines-murrine libgtk2.0-0 libgtk-3-0" ###
+      install_packages "x11-themes/gtk-engines x11-themes/gtk-engines-murrine"
 
+      ### install_packages "x11-libs/libX11"
       # mouse cursor theme
-      install_packages "breeze-cursor-theme" ###
-      sudo ln -s /usr/share/icons/breeze_cursors /usr/share/icons/Breeze
+      # install_packages "media-gfx/inkscape x11-apps/xcursorgen"
+      git clone https://github.com/KDE/breeze.git /tmp/breeze
+      cd /tmp/breeze/cursors/Breeze
+
+      git fetch --tags
+      tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+
+      if [ ${#tag} -ge 1 ]; then
+        git checkout $tag
+      fi
+
+      git tag -f "git-$(git rev-parse --short HEAD)"
+      sudo cp -raf /tmp/breeze/cursors/Breeze/Breeze /usr/share/icons/Breeze
 
       # system monitor, compositor, image on terminal
       install_packages "x11-misc/dunst app-admin/conky x11-misc/compton www-client/w3m"
