@@ -168,7 +168,21 @@ Enter GPU:   " gpui
     [Ee]* )
       break;;
     [Vv]* )
-      break;;
+      while true; do
+        read -p "
+Enter virtual machine:
+
+[1] Virtualbox
+[2] VMware
+[e] Exit
+
+Action:   " vma
+        case $vma in
+          [Ee] ) break;;
+          1 ) install_packages "x11-drivers/xf86-video-vboxvideo"; break 2;;
+          2 ) install_packages "x11-drivers/xf86-video-vmware"; break 2;;
+        esac
+      done;;
     [Ii]* )
       install_packages "x11-drivers/xf86-video-intel"
       install_packages "media-libs/mesa media-libs/vulkan-loader dev-util/vulkan-tools"
