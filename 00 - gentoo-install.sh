@@ -806,12 +806,12 @@ done
 systemd-machine-id-setup
 env-update && source /etc/profile
 
-emerge sys-kernel/gentoo-sources
-emerge sys-kernel/dracut
-emerge sys-kernel/genkernel-next
-emerge sys-kernel/linux-firmware
-emerge sys-apps/pciutils
-emerge sys-apps/usbutils
+emerge --ask sys-kernel/gentoo-sources
+emerge --ask sys-kernel/dracut
+emerge --ask sys-kernel/genkernel-next
+emerge --ask sys-kernel/linux-firmware
+emerge --ask sys-apps/pciutils
+emerge --ask sys-apps/usbutils
 
 ln -sf /proc/self/mounts /etc/mtab
 echo 'add_dracutmodules+=\"usrmount\"' | tee /etc/dracut.conf.d/usrmount.conf
@@ -1115,8 +1115,8 @@ echo '
 
 passwd
 
-emerge net-misc/dhcpcd
-emerge --deselect sys-fs/udev
+emerge --ask net-misc/dhcpcd
+emerge --ask --deselect sys-fs/udev
 
 installBootLoader=true
 while true; do
@@ -1209,8 +1209,8 @@ exit' | tee \$ed/startup.nsh
   done
 fi
 
-emerge app-admin/sudo
-emerge dev-vcs/git app-editors/vim
+emerge --ask app-admin/sudo
+emerge --ask dev-vcs/git app-editors/vim
 sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/g' /etc/sudoers
 
 while true; do
