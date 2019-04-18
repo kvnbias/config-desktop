@@ -56,8 +56,41 @@ chown -R $(whoami):wheel /home/$(whoami)
   esac
 done
 
+install_packages() {
+  while true; do
+    read -p "
+NOTE: Sometimes you need to merge the configs before the packages get installed
+
+Target: $1
+
+[1] Install
+[2] Sync
+[3] Update world
+[4] Auto merge configs
+[5] Execute command
+[6] Exit
+
+Action:   " ipa
+    case $ipa in
+      1 ) sudo emerge --ask $1;;
+      2 ) sudo emerge --sync;;
+      3 ) sudo emerge --ask --verbose --update --deep --newuse @world;;
+      4 ) yes | sudo etc-update --automode -3;;
+      5 )
+        while true; do
+          read -p "Command to execute or [e]xit:   " cmd
+          case $cmd in
+            [Ee] ) break;;
+            * ) $cmd;;
+          esac
+        done;;
+      6 ) break;;
+    esac
+  done
+}
+
 sudo sed -i "s/USE=\"/USE=\"X udisks /g" /etc/portage/make.conf
-sudo emerge sys-kernel/linux-firmware sys-kernel/linux-headers
+install_packages "sys-kernel/linux-firmware sys-kernel/linux-headers"
 
 ## Start swap initialization
 while true; do
@@ -77,7 +110,7 @@ while true; do
   esac
 done
 
-sudo emerge x11-misc/numlockx x11-misc/xdg-user-dirs
+install_packages "x11-misc/numlockx x11-misc/xdg-user-dirs"
 if [ ! -d "/home/$(whoami)/Desktop" ];then
   xdg-user-dirs-update
 fi
@@ -127,10 +160,10 @@ if [ -f /etc/default/grub ]; then
   fi
 fi
 
-sudo emerge sys-power/acpid
+install_packages "sys-power/acpid"
 sudo systemctl enable acpid
 
-sudo emerge sys-apps/pciutils sys-apps/usbutils
+install_packages "sys-apps/pciutils sys-apps/usbutils"
 
 echo '
 
