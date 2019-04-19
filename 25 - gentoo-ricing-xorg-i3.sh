@@ -76,8 +76,8 @@ fi
 
 echo "
 app-text/ghostscript-gpl unicode gtk tiff
-net-print/cups usb
-net-print/cups-filters jpeg png tiff pdf zeroconf
+net-print/cups usb dbus
+net-print/cups-filters dbus jpeg png tiff pdf zeroconf
 " | sudo tee /etc/portage/package.use/cups
 echo "app-text/poppler jpeg jpeg2k cairo png" | sudo tee /etc/portage/package.use/poppler
 echo "dev-lang/python sqlite" | sudo tee /etc/portage/package.use/python
