@@ -1,6 +1,7 @@
 
 
 #!/bin/bash
+### timeshift: dev-libs/libgee dev-libs/json-glib net-misc/rsync x11-libs/vte
 
 os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed -e 's/"//g'))
 
@@ -96,6 +97,8 @@ install_packages() {
   while true; do
     read -p "
 NOTE: Sometimes you need to merge the configs before the packages get installed
+
+Target: $1
 
 [1] Install
 [2] Sync
@@ -259,7 +262,7 @@ if ls /sys/class/backlight | grep -q "^intel_backlight$"; then
     sudo touch /etc/X11/xorg.conf.d/20-intel.conf;
   fi
 
-  if ! cat /etc/X11/xorg.conf.d/20-intel.conf | grep -q "backligaht"; then
+  if ! cat /etc/X11/xorg.conf.d/20-intel.conf | grep -q "backlight"; then
     echo '
 Section "Device"
   Identifier  "Card0"
@@ -302,7 +305,6 @@ Enter action:   " wd
     [1] ) lspci | grep Network;;
     [2] )
       install_packages "net-wireless/broadcom-sta net-wireless/wireless-tools"
-      sudo modprobe -r b44 b43 b43legacy ssb bcma
       sudo modprobe wl
       echo "
 Installation done...
@@ -357,6 +359,12 @@ sudo systemctl enable lightdm
 sudo systemctl set-default graphical.target
 
 # Install window tiling manager
+if [ -d /etc/portage/package.use ]; then
+  echo 'x11-terms/rxvt-unicode 256-color pixbuf xft unicode3 fading-colors' | sudo tee /etc/portage/package.use/rxvt-unicode
+else
+  echo 'x11-terms/rxvt-unicode 256-color pixbuf xft unicode3 fading-colors' | sudo tee /etc/portage/package.use
+fi
+
 install_packages "x11-wm/i3 x11-misc/i3status x11-misc/i3lock x11-misc/dmenu x11-terms/rxvt-unicode"
 
 # File manager
@@ -375,7 +383,6 @@ if [ ! -f "$HOME/.riced" ];then
 
   sudo sed -i 's/Mod1/Mod4/g' /etc/i3/config
   sudo sed -i 's/i3-sensible-terminal/urxvt/g' /etc/i3/config
-  sudo sed -i 's/dmenu_run/dmenu/g' /etc/i3/config
 
   cp -raf $(pwd)/rice/xinitrc $HOME/.xinitrc
   cp -raf "$(pwd)/rice/config-i3-base" "$HOME/.Xresources"
@@ -507,7 +514,6 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       # gtk theme change
       install_packages "x11-themes/gtk-engines x11-themes/gtk-engines-murrine"
 
-      ### install_packages "x11-libs/libX11"
       # mouse cursor theme
       # install_packages "media-gfx/inkscape x11-apps/xcursorgen"
       git clone https://github.com/KDE/breeze.git /tmp/breeze
@@ -529,25 +535,22 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
 
       # for vifm
       # https://pillow.readthedocs.io/en/stable/installation.html
+      echo "net-p2p/transmission gtk" | sudo tee /etc/portage/package.use/transmission
       install_packages "dev-python/pip"
       install_packages "app-text/poppler media-video/mediainfo net-p2p/transmission"
       install_packages "app-arch/zip app-arch/unzip app-arch/tar app-arch/xz-utils app-arch/unrar"
       install_packages "app-text/catdoc app-text/docx2txt"
 
-      install_packages "media-libs/libjpeg-turbo python3-dev libturbojpeg0-dev sys-libs/zilb" ###
-      install_packages "x11-libs/libXext dev-python/setuptools" ###
-      sudo pip3 install ueberzug
+      install_packages "media-libs/libjpeg-turbo sys-libs/zlib"
+      install_packages "x11-libs/libXext dev-python/setuptools"
+      sudo pip3 install --user ueberzug
 
       # MANUAL 2.12.c: i3lock-color. Some are already installed
       sudo emerge --ask --verbose --depclean x11-misc/i3lock
 
-      install_packages "media-libs/libjpeg-turbo x11-libs/cairo dev-libs/libev libturbojpeg0-dev" ###
-      install_packages "libxcb-composite0-dev x11-libs/libxkbcommon libxcb-randr0-dev" ###
-      install_packages "libpam0g-dev x11-libs/xcb-util x11-libs/xcb-util-image x11-libs/xcb-util-xrm libxcb-xinerama0-dev" ###
+      install_packages "media-libs/libjpeg-turbo x11-libs/cairo dev-libs/libev x11-libs/libxkbcommon"
+      install_packages "x11-libs/xcb-util x11-libs/xcb-util-image x11-libs/xcb-util-xrm"
       install_packages "sys-devel/autoconf sys-devel/automake"
-
-      install_packages "libcairo2 libev4 libxcb-composite0 libxkbcommon-x11-0 libxcb-randr0" ###
-      install_packages "libxkbcommon0 libxcb1 libxcb-image0 libxcb-xinerama0" ###
 
       git clone --recurse-submodules https://github.com/PandorasFox/i3lock-color.git
       cd i3lock-color
@@ -573,6 +576,8 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
 
       # i3wm customization, dmenu replacement, i3status replacement
       sudo emerge --ask --verbose --depclean x11-wm/i3
+      echo "x11-misc/polybar alsa curl i3wm ipc mpd network pulseaudio" | sudo tee /etc/portage/package.use/polybar
+      echo "x11-misc/rofi windowmode" | sudo tee /etc/portage/package.use/rofi
       install_packages "x11-misc/rofi x11-wm/i3-gaps x11-misc/polybar"
 
       # ncmpcpp playlist
@@ -581,6 +586,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       # 3) press "A"
       #
       # r: repeat, z: shuffle, y: repeat one
+      echo "media-sound/mpd flac libmpdclient pulseaudio sqlite" | sudo tee /etc/portage/package.use/mpd
       install_packages "media-sound/mpd media-sound/mpc media-sound/ncmpcpp"
       sudo systemctl disable mpd
       sudo systemctl stop mpd
