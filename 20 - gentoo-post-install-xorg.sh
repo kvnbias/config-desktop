@@ -73,6 +73,7 @@ install_packages "x11-drivers/xf86-input-keyboard x11-drivers/xf86-input-mouse"
 
 # Fallback GPU 
 install_packages "x11-drivers/xf86-video-fbdev x11-drivers/xf86-video-vesa"
+install_packages "media-libs/fontconfig"
 
 echo '
 
