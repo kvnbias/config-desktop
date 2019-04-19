@@ -98,7 +98,7 @@ echo "media-video/ffmpeg alsa bluray chromium fontconfig jpeg2k libass libcaca m
 echo "net-dns/avahi gtk gtk3" | sudo tee /etc/portage/package.use/webkit-gtk
 echo "net-libs/webkit-gtk libnotify" | sudo tee /etc/portage/package.use/webkit-gtk
 echo "sys-auth/polkit gtk" | sudo tee /etc/portage/package.use/polkit-gnome
-echo "www-client/w3m unicode gdk-pixbuf imlib" | sudo tee /etc/portage/package.use/w3m
+echo "www-client/w3m unicode imlib" | sudo tee /etc/portage/package.use/w3m
 echo "www-plugins/freshplayerplugin pulseaudio v4l vaapi vdpau" | sudo tee /etc/portage/package.use/freshplayerplugin
 echo "x11-libs/cairo opengl xcb" | sudo tee /etc/portage/package.use/cairo
 echo "x11-libs/gdk-pixbuf jpeg jpeg2k tiff" | sudo tee /etc/portage/package.use/gdk-pixbuf
