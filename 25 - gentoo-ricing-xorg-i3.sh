@@ -82,16 +82,23 @@ net-print/cups-filters jpeg png tiff pdf zeroconf
 echo "app-text/poppler jpeg jpeg2k cairo png" | sudo tee /etc/portage/package.use/poppler
 echo "gnome-base/gvfs gtk policykit" | sudo tee /etc/portage/package.use/gvfs
 echo "media-libs/clutter gtk" | sudo tee /etc/portage/package.use/clutter
+echo "media-libs/flac ogg" | sudo tee /etc/portage/package.use/flac
 echo "media-libs/gst-plugins-base opengl pango" | sudo tee /etc/portage/package.use/gst-plugins-base
 echo "media-libs/gst-plugins-bad opengl gtk" | sudo tee /etc/portage/package.use/gst-plugins-base
+echo "media-libs/imlib2 jpeg png mp3" | sudo tee /etc/portage/package.use/imlib2
 echo "media-libs/jasper jpeg opengl" | sudo tee /etc/portage/package.use/jasper
+echo "media-libs/libcaca imlib opengl truetype" | sudo tee /etc/portage/package.use/libcaca
 echo "media-libs/libpng apng" | sudo tee /etc/portage/package.use/libpng
+echo "media-libs/libv4l jpeg" | sudo tee /etc/portage/package.use/libv4l
 echo "media-libs/libwebp jpg png gif opengl" | sudo tee /etc/portage/package.use/libwebp
 echo "media-libs/tiff jpeg" | sudo tee /etc/portage/package.use/tiff
+echo "media-plugins/alsa-plugins ffmpeg libsamplerate oss" | sudo tee /etc/portage/package.use/alsa-plugins
+echo "media-sound/pulseaudio bluetooth dbus gtk sox equalizer libsamplerate native-headset" | sudo tee /etc/portage/package.use/pulseaudio
 echo "media-video/ffmpeg alsa bluray chromium fontconfig jpeg2k libass libcaca mp3 libv4l mp3 opengl pulseaudio svg truetype v4l vaapi vdpau wavpack webp x264 x265 xcb" | sudo tee /etc/portage/package.use/ffmpeg
+echo "net-dns/avahi gtk gtk3" | sudo tee /etc/portage/package.use/webkit-gtk
 echo "net-libs/webkit-gtk libnotify" | sudo tee /etc/portage/package.use/webkit-gtk
 echo "sys-auth/polkit gtk" | sudo tee /etc/portage/package.use/polkit-gnome
-echo "www-client/w3m unicode gdk-pixbuf" | sudo tee /etc/portage/package.use/w3m
+echo "www-client/w3m unicode gdk-pixbuf imlib" | sudo tee /etc/portage/package.use/w3m
 echo "www-plugins/freshplayerplugin pulseaudio v4l vaapi vdpau" | sudo tee /etc/portage/package.use/freshplayerplugin
 echo "x11-libs/cairo opengl xcb" | sudo tee /etc/portage/package.use/cairo
 echo "x11-libs/gdk-pixbuf jpeg jpeg2k tiff" | sudo tee /etc/portage/package.use/gdk-pixbuf
@@ -423,21 +430,14 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
     * )
       sudo sed -i "s/USE=\"/USE=\"alsa /g" /etc/portage/make.conf
 
-      echo "
-      media-libs/imlib2 jpeg png mp3
-      media-gfk/feh xinerama curl
-      " | sudo tee /etc/portage/package.use/feh
+      echo "media-gfx/feh xinerama curl" | sudo tee /etc/portage/package.use/feh
       echo "app-admin/conky truetype wifi" | sudo tee /etc/portage/package.use/conky
       echo "app-misc/vifm gtk vim vim-syntax" | sudo tee /etc/portage/package.use/vifm
       echo "dev-libs/glib dbus" | sudo tee /etc/portage/package.use/pa-applet
       echo "lxde-base/lxappearance dbus" | sudo tee /etc/portage/package.use/lxappearance
       echo "media-gfx/imagemagick corefonts fontconfig graphviz jpeg jpeg2k pango png hdri svg tiff truetype webp xml" | sudo tee /etc/portage/package.use/imagemagick
-      echo "media-libs/flac ogg" | sudo tee /etc/portage/package.use/flac
-      echo "media-libs/libcaca imlib opengl truetype" | sudo tee /etc/portage/package.use/libcaca
-      echo "media-plugins/alsa-plugins ffmpeg libsamplerate oss" | sudo tee /etc/portage/package.use/alsa-plugins
       echo "media-sound/alsa gstreamer pulseaudio oss" | sudo tee /etc/portage/package.use/alsa
       echo "media-sound/mpd flac lame libsamplerate libmpdclient pulseaudio sqlite" | sudo tee /etc/portage/package.use/mpd
-      echo "media-sound/pulseaudio bluetooth dbus gtk sox equalizer libsamplerate native-headset" | sudo tee /etc/portage/package.use/pulseaudio
       echo "media-video/ffmpegthumbnailer gtk jpeg png" | sudo tee /etc/portage/package.use/ffmpegthumbnailer
       echo "media-video/libmediainfo curl" | sudo tee /etc/portage/package.use/libmediainfo
       echo "media-video/mediainfo curl" | sudo tee /etc/portage/package.use/mediainfo
