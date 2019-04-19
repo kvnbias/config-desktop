@@ -80,6 +80,7 @@ net-print/cups usb
 net-print/cups-filters jpeg png tiff pdf zeroconf
 " | sudo tee /etc/portage/package.use/cups
 echo "app-text/poppler jpeg jpeg2k cairo png" | sudo tee /etc/portage/package.use/poppler
+echo "dev-lang/python sqlite" | sudo tee /etc/portage/package.use/python
 echo "gnome-base/gvfs gtk fuse policykit" | sudo tee /etc/portage/package.use/gvfs
 echo "media-libs/flac ogg" | sudo tee /etc/portage/package.use/flac
 echo "media-libs/gst-plugins-base opengl pango" | sudo tee /etc/portage/package.use/gst-plugins-base
@@ -100,9 +101,10 @@ echo "net-wireless/bluez cups" | sudo tee /etc/portage/package.use/bluez
 echo "sys-auth/polkit gtk" | sudo tee /etc/portage/package.use/polkit-gnome
 echo "www-client/w3m unicode imlib" | sudo tee /etc/portage/package.use/w3m
 echo "www-plugins/freshplayerplugin pulseaudio v4l vaapi vdpau" | sudo tee /etc/portage/package.use/freshplayerplugin
-echo "x11-libs/cairo opengl" | sudo tee /etc/portage/package.use/cairo
+echo "x11-libs/cairo opengl xcb" | sudo tee /etc/portage/package.use/cairo
 echo "x11-libs/gdk-pixbuf jpeg jpeg2k tiff" | sudo tee /etc/portage/package.use/gdk-pixbuf
 echo "x11-libs/gtk+ xinerama colord" | sudo tee /etc/portage/package.use/gtk
+echo "x11-libs/libxcb xkb" | sudo tee /etc/portage/package.use/libxcb
 echo "x11-misc/lightdm-gtk-greeter branding" | sudo tee /etc/portage/package.use/libva-vdpau-driver
 echo 'x11-terms/rxvt-unicode 256-color pixbuf xft unicode3 fading-colors' | sudo tee /etc/portage/package.use/rxvt-unicode
 
