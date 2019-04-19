@@ -426,6 +426,8 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       wget -qO- https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/install.sh | sh
 
       # display
+      echo "media-libs/imlib2 jpeg png" | sudo tee /etc/portage/package.use/feh
+      install_packages "media-libs/imlib2"
       install_packages "media-gfx/feh x11-misc/arandr lxde-base/lxappearance"
       install_packages "x11-apps/xbacklight x11-apps/xrandr x11-apps/xrdb x11-apps/xinput"
 
@@ -530,6 +532,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo cp -raf /tmp/breeze/cursors/Breeze/Breeze /usr/share/icons/Breeze
 
       # system monitor, compositor, image on terminal
+      echo "app-admin/conky truetype" | sudo tee /etc/portage/package.use/polybar
       install_packages "x11-misc/dunst app-admin/conky x11-misc/compton www-client/w3m"
       install_packages "media-video/ffmpegthumbnailer"
 

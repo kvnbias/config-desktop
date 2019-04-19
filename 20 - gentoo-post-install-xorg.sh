@@ -63,6 +63,7 @@ install_packages "x11-apps/xinput"
 # xprop    - Property displayer for X.
 install_packages "x11-apps/xprop"
 # xdpyinfo - Display information utility.
+echo "x11-apps/xdpyinfo xinerama" | sudo tee /etc/portage/package.use/xdpyinfo
 install_packages "x11-apps/xdpyinfo"
 
 ## XORG-DRIVERS
