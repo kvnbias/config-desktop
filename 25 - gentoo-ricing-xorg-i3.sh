@@ -80,8 +80,7 @@ net-print/cups usb
 net-print/cups-filters jpeg png tiff pdf zeroconf
 " | sudo tee /etc/portage/package.use/cups
 echo "app-text/poppler jpeg jpeg2k cairo png" | sudo tee /etc/portage/package.use/poppler
-echo "gnome-base/gvfs gtk policykit" | sudo tee /etc/portage/package.use/gvfs
-echo "media-libs/clutter gtk" | sudo tee /etc/portage/package.use/clutter
+echo "gnome-base/gvfs gtk fuse policykit" | sudo tee /etc/portage/package.use/gvfs
 echo "media-libs/flac ogg" | sudo tee /etc/portage/package.use/flac
 echo "media-libs/gst-plugins-base opengl pango" | sudo tee /etc/portage/package.use/gst-plugins-base
 echo "media-libs/gst-plugins-bad opengl gtk" | sudo tee /etc/portage/package.use/gst-plugins-base
@@ -94,15 +93,16 @@ echo "media-libs/libwebp jpg png gif opengl" | sudo tee /etc/portage/package.use
 echo "media-libs/tiff jpeg" | sudo tee /etc/portage/package.use/tiff
 echo "media-plugins/alsa-plugins ffmpeg libsamplerate oss" | sudo tee /etc/portage/package.use/alsa-plugins
 echo "media-sound/pulseaudio bluetooth dbus gtk sox equalizer libsamplerate native-headset" | sudo tee /etc/portage/package.use/pulseaudio
-echo "media-video/ffmpeg alsa bluray chromium fontconfig jpeg2k libass libcaca mp3 libv4l mp3 opengl pulseaudio svg truetype v4l vaapi vdpau wavpack webp x264 x265 xcb" | sudo tee /etc/portage/package.use/ffmpeg
+echo "media-video/ffmpeg alsa bluray chromium fontconfig jpeg2k libass libcaca mp3 libv4l mp3 opengl pulseaudio svg truetype v4l vaapi vdpau wavpack webp x264 x265" | sudo tee /etc/portage/package.use/ffmpeg
 echo "net-dns/avahi gtk gtk3" | sudo tee /etc/portage/package.use/webkit-gtk
 echo "net-libs/webkit-gtk libnotify" | sudo tee /etc/portage/package.use/webkit-gtk
+echo "net-wireless/bluez cups" | sudo tee /etc/portage/package.use/bluez
 echo "sys-auth/polkit gtk" | sudo tee /etc/portage/package.use/polkit-gnome
 echo "www-client/w3m unicode imlib" | sudo tee /etc/portage/package.use/w3m
 echo "www-plugins/freshplayerplugin pulseaudio v4l vaapi vdpau" | sudo tee /etc/portage/package.use/freshplayerplugin
-echo "x11-libs/cairo opengl xcb" | sudo tee /etc/portage/package.use/cairo
+echo "x11-libs/cairo opengl" | sudo tee /etc/portage/package.use/cairo
 echo "x11-libs/gdk-pixbuf jpeg jpeg2k tiff" | sudo tee /etc/portage/package.use/gdk-pixbuf
-echo "x11-libs/gtk+ xinerama" | sudo tee /etc/portage/package.use/gtk
+echo "x11-libs/gtk+ xinerama colord" | sudo tee /etc/portage/package.use/gtk
 echo "x11-misc/lightdm-gtk-greeter branding" | sudo tee /etc/portage/package.use/libva-vdpau-driver
 echo 'x11-terms/rxvt-unicode 256-color pixbuf xft unicode3 fading-colors' | sudo tee /etc/portage/package.use/rxvt-unicode
 
