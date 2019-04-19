@@ -74,6 +74,31 @@ else
   echo "USE=\"X udisks systemd\"" | sudo tee -a /etc/portage/make.conf
 fi
 
+echo "
+app-text/ghostscript-gpl unicode gtk tiff
+net-print/cups usb
+net-print/cups-filters jpeg png tiff pdf zeroconf
+" | sudo tee /etc/portage/package.use/cups
+echo "app-text/poppler jpeg jpeg2k cairo png" | sudo tee /etc/portage/package.use/poppler
+echo "gnome-base/gvfs gtk policykit" | sudo tee /etc/portage/package.use/gvfs
+echo "media-libs/clutter gtk" | sudo tee /etc/portage/package.use/clutter
+echo "media-libs/gst-plugins-base opengl pango" | sudo tee /etc/portage/package.use/gst-plugins-base
+echo "media-libs/gst-plugins-bad opengl gtk" | sudo tee /etc/portage/package.use/gst-plugins-base
+echo "media-libs/jasper jpeg opengl" | sudo tee /etc/portage/package.use/jasper
+echo "media-libs/libpng apng" | sudo tee /etc/portage/package.use/libpng
+echo "media-libs/libwebp jpg png gif opengl" | sudo tee /etc/portage/package.use/libwebp
+echo "media-libs/tiff jpeg" | sudo tee /etc/portage/package.use/tiff
+echo "media-video/ffmpeg alsa bluray chromium fontconfig jpeg2k libass libcaca mp3 libv4l mp3 opengl pulseaudio svg truetype v4l vaapi vdpau wavpack webp x264 x265 xcb" | sudo tee /etc/portage/package.use/ffmpeg
+echo "net-libs/webkit-gtk libnotify" | sudo tee /etc/portage/package.use/webkit-gtk
+echo "sys-auth/polkit gtk" | sudo tee /etc/portage/package.use/polkit-gnome
+echo "www-client/w3m unicode gdk-pixbuf" | sudo tee /etc/portage/package.use/w3m
+echo "www-plugins/freshplayerplugin pulseaudio v4l vaapi vdpau" | sudo tee /etc/portage/package.use/freshplayerplugin
+echo "x11-libs/cairo opengl xcb" | sudo tee /etc/portage/package.use/cairo
+echo "x11-libs/gdk-pixbuf jpeg jpeg2k tiff" | sudo tee /etc/portage/package.use/gdk-pixbuf
+echo "x11-libs/gtk+ xinerama" | sudo tee /etc/portage/package.use/gtk
+echo "x11-misc/lightdm-gtk-greeter branding" | sudo tee /etc/portage/package.use/libva-vdpau-driver
+echo 'x11-terms/rxvt-unicode 256-color pixbuf xft unicode3 fading-colors' | sudo tee /etc/portage/package.use/rxvt-unicode
+
 while true; do
   read -p "Enter full name or [s]kip?   " fn
   case $fn in
@@ -150,9 +175,7 @@ while true; do
     [Ii]* )
       install_packages "sys-firmware/intel-microcode"
       break;;
-    [Aa]* )
-      install_packages "sys-firmware/amd64-microcode"
-      break;;
+    [Aa]* ) break;;
     * ) echo Invalid input
   esac
 done
@@ -359,12 +382,6 @@ sudo systemctl enable lightdm
 sudo systemctl set-default graphical.target
 
 # Install window tiling manager
-if [ -d /etc/portage/package.use ]; then
-  echo 'x11-terms/rxvt-unicode 256-color pixbuf xft unicode3 fading-colors' | sudo tee /etc/portage/package.use/rxvt-unicode
-else
-  echo 'x11-terms/rxvt-unicode 256-color pixbuf xft unicode3 fading-colors' | sudo tee /etc/portage/package.use
-fi
-
 install_packages "x11-wm/i3 x11-misc/i3status x11-misc/i3lock x11-misc/dmenu x11-terms/rxvt-unicode"
 
 # File manager
@@ -406,6 +423,34 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
     * )
       sudo sed -i "s/USE=\"/USE=\"alsa /g" /etc/portage/make.conf
 
+      echo "
+      media-libs/imlib2 jpeg png mp3
+      media-gfk/feh xinerama curl
+      " | sudo tee /etc/portage/package.use/feh
+      echo "app-admin/conky truetype wifi" | sudo tee /etc/portage/package.use/conky
+      echo "app-misc/vifm gtk vim vim-syntax" | sudo tee /etc/portage/package.use/vifm
+      echo "dev-libs/glib dbus" | sudo tee /etc/portage/package.use/pa-applet
+      echo "lxde-base/lxappearance dbus" | sudo tee /etc/portage/package.use/lxappearance
+      echo "media-gfx/imagemagick corefonts fontconfig graphviz jpeg jpeg2k pango png hdri svg tiff truetype webp xml" | sudo tee /etc/portage/package.use/imagemagick
+      echo "media-libs/flac ogg" | sudo tee /etc/portage/package.use/flac
+      echo "media-libs/libcaca imlib opengl truetype" | sudo tee /etc/portage/package.use/libcaca
+      echo "media-plugins/alsa-plugins ffmpeg libsamplerate oss" | sudo tee /etc/portage/package.use/alsa-plugins
+      echo "media-sound/alsa gstreamer pulseaudio oss" | sudo tee /etc/portage/package.use/alsa
+      echo "media-sound/mpd flac lame libsamplerate libmpdclient pulseaudio sqlite" | sudo tee /etc/portage/package.use/mpd
+      echo "media-sound/pulseaudio bluetooth dbus gtk sox equalizer libsamplerate native-headset" | sudo tee /etc/portage/package.use/pulseaudio
+      echo "media-video/ffmpegthumbnailer gtk jpeg png" | sudo tee /etc/portage/package.use/ffmpegthumbnailer
+      echo "media-video/libmediainfo curl" | sudo tee /etc/portage/package.use/libmediainfo
+      echo "media-video/mediainfo curl" | sudo tee /etc/portage/package.use/mediainfo
+      echo "net-misc/curl http2 ssh" | sudo tee /etc/portage/package.use/curl
+      echo "net-misc/modemmanager policykit" | sudo tee /etc/portage/package.use/modemmanager
+      echo "net-misc/networkmanager dhcpcd wifi bluetooth connection-sharing policykit resolvconf" | sudo tee /etc/portage/package.use/networkmanager
+      echo "net-p2p/transmission gtk" | sudo tee /etc/portage/package.use/transmission
+      echo "sys-process/lsof rpc" | sudo tee /etc/portage/package.use/lsof
+      echo "x11-misc/compton dbus opengl xinerama" | sudo tee /etc/portage/package.use/compton
+      echo "x11-misc/dunst dunstify" | sudo tee /etc/portage/package.use/dunst
+      echo "x11-misc/polybar alsa curl i3wm ipc mpd network pulseaudio" | sudo tee /etc/portage/package.use/polybar
+      echo "x11-misc/rofi windowmode" | sudo tee /etc/portage/package.use/rofi
+
       # will use for manually installed packages, /tmp has limited space
       cd /tmp
 
@@ -426,7 +471,6 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       wget -qO- https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/install.sh | sh
 
       # display
-      echo "media-libs/imlib2 jpeg png" | sudo tee /etc/portage/package.use/feh
       install_packages "media-libs/imlib2"
       install_packages "media-gfx/feh x11-misc/arandr lxde-base/lxappearance"
       install_packages "x11-apps/xbacklight x11-apps/xrandr x11-apps/xrdb x11-apps/xinput"
@@ -532,13 +576,11 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo cp -raf /tmp/breeze/cursors/Breeze/Breeze /usr/share/icons/Breeze
 
       # system monitor, compositor, image on terminal
-      echo "app-admin/conky truetype" | sudo tee /etc/portage/package.use/polybar
       install_packages "x11-misc/dunst app-admin/conky x11-misc/compton www-client/w3m"
       install_packages "media-video/ffmpegthumbnailer"
 
       # for vifm
       # https://pillow.readthedocs.io/en/stable/installation.html
-      echo "net-p2p/transmission gtk" | sudo tee /etc/portage/package.use/transmission
       install_packages "dev-python/pip"
       install_packages "app-text/poppler media-video/mediainfo net-p2p/transmission"
       install_packages "app-arch/zip app-arch/unzip app-arch/tar app-arch/xz-utils app-arch/unrar"
@@ -579,8 +621,6 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
 
       # i3wm customization, dmenu replacement, i3status replacement
       sudo emerge --ask --verbose --depclean x11-wm/i3
-      echo "x11-misc/polybar alsa curl i3wm ipc mpd network pulseaudio" | sudo tee /etc/portage/package.use/polybar
-      echo "x11-misc/rofi windowmode" | sudo tee /etc/portage/package.use/rofi
       install_packages "x11-misc/rofi x11-wm/i3-gaps x11-misc/polybar"
 
       # ncmpcpp playlist
@@ -589,7 +629,6 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       # 3) press "A"
       #
       # r: repeat, z: shuffle, y: repeat one
-      echo "media-sound/mpd flac libmpdclient pulseaudio sqlite" | sudo tee /etc/portage/package.use/mpd
       install_packages "media-sound/mpd media-sound/mpc media-sound/ncmpcpp"
       sudo systemctl disable mpd
       sudo systemctl stop mpd

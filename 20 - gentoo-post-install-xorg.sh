@@ -36,6 +36,45 @@ Action:   " ipa
 }
 
 # xorg
+sudo touch /etc/portage/package.use/xorg-server
+while true; do
+  read -p "
+
+What GPU are you using?
+  [i]ntel
+  [a]md
+  [n]vidia
+  [v]m
+  [e]xit
+
+Enter GPU:   " gpui
+  case $gpui in
+    [Ee]* ) break;;
+    [Vv]* )
+      echo "VIDEO_CARDS=\"virtualbox vmware vesa fbdev\"" | sudo tee -a /etc/portage/make.conf;
+      echo "media-libs/mesa classic dri3 egl gallium gbm gles2 gles1 osmesa vaapi" | sudo tee -a /etc/portage/package.use/xorg-server
+      break;;
+    [Ii]* )
+      echo "VIDEO_CARDS=\"intel i915 i965 vesa fbdev\"" | sudo tee -a /etc/portage/make.conf;
+      echo "x11-drivers/xf86-video-intel dri dri3" | sudo tee /etc/portage/package.use/xf86-video-intel;
+      echo "media-libs/mesa classic dri3 egl gallium gbm gles2 gles1 osmesa vaapi vulkan" | sudo tee -a /etc/portage/package.use/xorg-server
+      break;;
+    [Aa]* )
+      echo "VIDEO_CARDS=\"amdgpu radeon radeonsi vesa fbdev\"" | sudo tee -a /etc/portage/make.conf;
+      echo "media-libs/mesa classic dri3 egl gallium gbm gles2 d3d9 gles1 opencl osmesa vaapi vulkan" | sudo tee -a /etc/portage/package.use/xorg-server
+      break;;
+    [Nn]* )
+      echo "VIDEO_CARDS=\"nvidia nv vesa fbdev\"" | sudo tee -a /etc/portage/make.conf;
+      echo "media-libs/mesa classic dri3 egl gallium gbm gles2 gles1 opencl osmesa vaapi" | sudo tee -a /etc/portage/package.use/xorg-server
+      break;;
+  esac
+done
+
+echo "INPUT_DEVICES=\"keyboard libinput mouse joystick\"" | sudo tee -a /etc/portage/make.conf
+echo "
+x11-libs/libXfont2 truetype
+x11-libs/libva vdpau
+" | sudo tee -a /etc/portage/package.use/xorg-server
 install_packages "x11-base/xorg-server"
 
 # Executes .xinitrc file that determines what desktop environment or
