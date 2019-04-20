@@ -1,7 +1,6 @@
 
 
 #!/bin/bash
-### timeshift: dev-libs/libgee dev-libs/json-glib net-misc/rsync x11-libs/vte
 
 os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed -e 's/"//g'))
 
@@ -92,8 +91,8 @@ echo "media-libs/libpng apng" | sudo tee /etc/portage/package.use/libpng
 echo "media-libs/libv4l jpeg" | sudo tee /etc/portage/package.use/libv4l
 echo "media-libs/libwebp jpg png gif opengl" | sudo tee /etc/portage/package.use/libwebp
 echo "media-libs/tiff jpeg" | sudo tee /etc/portage/package.use/tiff
-echo "media-plugins/alsa-plugins ffmpeg libsamplerate oss" | sudo tee /etc/portage/package.use/alsa-plugins
-echo "media-sound/pulseaudio bluetooth dbus gtk sox equalizer libsamplerate native-headset" | sudo tee /etc/portage/package.use/pulseaudio
+echo "media-plugins/alsa-plugins ffmpeg oss" | sudo tee /etc/portage/package.use/alsa-plugins
+echo "media-sound/pulseaudio bluetooth dbus gtk sox equalizer native-headset" | sudo tee /etc/portage/package.use/pulseaudio
 echo "media-video/ffmpeg alsa bluray chromium fontconfig jpeg2k libass libcaca mp3 libv4l mp3 opengl pulseaudio svg truetype v4l vaapi vdpau wavpack webp x264 x265" | sudo tee /etc/portage/package.use/ffmpeg
 echo "net-dns/avahi gtk gtk3" | sudo tee /etc/portage/package.use/avahi
 echo "net-libs/webkit-gtk libnotify" | sudo tee /etc/portage/package.use/webkit-gtk
@@ -439,7 +438,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       echo "lxde-base/lxappearance dbus" | sudo tee /etc/portage/package.use/lxappearance
       echo "media-gfx/imagemagick corefonts fontconfig graphviz jpeg jpeg2k pango png hdri svg tiff truetype webp xml" | sudo tee /etc/portage/package.use/imagemagick
       echo "media-sound/alsa gstreamer pulseaudio oss" | sudo tee /etc/portage/package.use/alsa
-      echo "media-sound/mpd flac lame libsamplerate libmpdclient pulseaudio sqlite" | sudo tee /etc/portage/package.use/mpd
+      echo "media-sound/mpd flac lame libmpdclient pulseaudio sqlite" | sudo tee /etc/portage/package.use/mpd
       echo "media-video/ffmpegthumbnailer gtk jpeg png" | sudo tee /etc/portage/package.use/ffmpegthumbnailer
       echo "media-video/libmediainfo curl" | sudo tee /etc/portage/package.use/libmediainfo
       echo "media-video/mediainfo curl" | sudo tee /etc/portage/package.use/mediainfo
