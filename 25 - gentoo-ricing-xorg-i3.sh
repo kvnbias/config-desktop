@@ -84,8 +84,9 @@ echo "gnome-base/gvfs gtk fuse policykit" | sudo tee /etc/portage/package.use/gv
 echo "media-libs/flac ogg" | sudo tee /etc/portage/package.use/flac
 echo "media-libs/gst-plugins-base opengl pango" | sudo tee /etc/portage/package.use/gst-plugins-base
 echo "media-libs/gst-plugins-bad opengl gtk" | sudo tee /etc/portage/package.use/gst-plugins-bad
-echo "media-libs/imlib2 jpeg png mp3" | sudo tee /etc/portage/package.use/imlib2
+echo "media-libs/harfbuzz icu" | sudo tee /etc/portage/package.use/nautilus
 echo "media-libs/jasper jpeg opengl" | sudo tee /etc/portage/package.use/jasper
+echo "media-libs/imlib2 jpeg png mp3" | sudo tee /etc/portage/package.use/imlib2
 echo "media-libs/libcaca imlib opengl truetype" | sudo tee /etc/portage/package.use/libcaca
 echo "media-libs/libpng apng" | sudo tee /etc/portage/package.use/libpng
 echo "media-libs/libv4l jpeg" | sudo tee /etc/portage/package.use/libv4l
