@@ -559,9 +559,6 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       # terminal
       install_packages "app-misc/neofetch"
 
-      # gtk theme change
-      install_packages "x11-themes/gtk-engines x11-themes/gtk-engines-murrine"
-
       # mouse cursor theme
       # install_packages "media-gfx/inkscape x11-apps/xcursorgen"
       git clone https://github.com/KDE/breeze.git /tmp/breeze
