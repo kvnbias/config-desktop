@@ -84,7 +84,7 @@ echo "dev-lang/python sqlite" | sudo tee /etc/portage/package.use/python
 echo "gnome-base/gvfs gtk fuse policykit" | sudo tee /etc/portage/package.use/gvfs
 echo "media-libs/flac ogg" | sudo tee /etc/portage/package.use/flac
 echo "media-libs/gst-plugins-base opengl pango" | sudo tee /etc/portage/package.use/gst-plugins-base
-echo "media-libs/gst-plugins-bad opengl gtk" | sudo tee /etc/portage/package.use/gst-plugins-base
+echo "media-libs/gst-plugins-bad opengl gtk" | sudo tee /etc/portage/package.use/gst-plugins-bad
 echo "media-libs/imlib2 jpeg png mp3" | sudo tee /etc/portage/package.use/imlib2
 echo "media-libs/jasper jpeg opengl" | sudo tee /etc/portage/package.use/jasper
 echo "media-libs/libcaca imlib opengl truetype" | sudo tee /etc/portage/package.use/libcaca
@@ -95,7 +95,7 @@ echo "media-libs/tiff jpeg" | sudo tee /etc/portage/package.use/tiff
 echo "media-plugins/alsa-plugins ffmpeg libsamplerate oss" | sudo tee /etc/portage/package.use/alsa-plugins
 echo "media-sound/pulseaudio bluetooth dbus gtk sox equalizer libsamplerate native-headset" | sudo tee /etc/portage/package.use/pulseaudio
 echo "media-video/ffmpeg alsa bluray chromium fontconfig jpeg2k libass libcaca mp3 libv4l mp3 opengl pulseaudio svg truetype v4l vaapi vdpau wavpack webp x264 x265" | sudo tee /etc/portage/package.use/ffmpeg
-echo "net-dns/avahi gtk gtk3" | sudo tee /etc/portage/package.use/webkit-gtk
+echo "net-dns/avahi gtk gtk3" | sudo tee /etc/portage/package.use/avahi
 echo "net-libs/webkit-gtk libnotify" | sudo tee /etc/portage/package.use/webkit-gtk
 echo "net-wireless/bluez cups" | sudo tee /etc/portage/package.use/bluez
 echo "sys-auth/polkit gtk" | sudo tee /etc/portage/package.use/polkit-gnome
