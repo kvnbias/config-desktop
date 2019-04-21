@@ -422,7 +422,7 @@ echo "
 Icon=/home/$(whoami)/.face
 XSession=i3
 SystemAccount=false
-" | sudo tee /var/lib/AccountsService/users/$user
+" | sudo tee /var/lib/AccountsService/users/$(whoami)
 
 mainCWD=$(pwd)
 while true; do
