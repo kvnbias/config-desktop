@@ -62,6 +62,14 @@ if cat /etc/portage/make.conf | grep -q 'USE='; then
     sudo sed -i "s/USE=\"/USE=\"udisks /g" /etc/portage/make.conf
   fi
 
+  if ! cat /etc/portage/make.conf | grep -q 'alsa pulseaudio'; then
+    sudo sed -i "s/USE=\"/USE=\"alsa pulseaudio /g" /etc/portage/make.conf
+  fi
+
+  if ! cat /etc/portage/make.conf | grep -q 'ffmpeg'; then
+    sudo sed -i "s/USE=\"/USE=\"ffmpeg -libav /g" /etc/portage/make.conf
+  fi
+
   if ! cat /etc/portage/make.conf | grep -q 'systemd'; then
     sudo sed -i "s/USE=\"/USE=\"systemd /g" /etc/portage/make.conf
   fi
@@ -70,45 +78,45 @@ if cat /etc/portage/make.conf | grep -q 'USE='; then
     sudo sed -i "s/USE=\"/USE=\"X /g" /etc/portage/make.conf
   fi
 else
-  echo "USE=\"X udisks systemd\"" | sudo tee -a /etc/portage/make.conf
+  echo "USE=\"X systemd alsa pulseaudio udisks ffmpeg -libav \"" | sudo tee -a /etc/portage/make.conf
 fi
 
 echo "
 app-text/ghostscript-gpl unicode gtk tiff
+app-text/poppler jpeg jpeg2k cairo png
+dev-lang/python sqlite
+dev-libs/glib dbus
+dev-libs/libxml2 python
+gnome-base/gvfs gtk fuse policykit
+media-libs/flac ogg
+media-libs/gst-plugins-base opengl pango
+media-libs/gst-plugins-bad opengl gtk
+media-libs/harfbuzz icu
+media-libs/jasper jpeg opengl
+media-libs/imlib2 jpeg png mp3
+media-libs/libcaca imlib opengl truetype
+media-libs/libpng apng
+media-libs/libv4l jpeg
+media-libs/libwebp jpg png gif opengl
+media-libs/tiff jpeg
+media-plugins/alsa-plugins ffmpeg oss
+media-sound/pulseaudio bluetooth dbus gtk sox equalizer native-headset
+media-video/ffmpeg alsa bluray chromium fontconfig jpeg2k libass libcaca mp3 libv4l mp3 opengl pulseaudio svg truetype v4l vaapi vdpau wavpack webp x264 x265
+net-dns/avahi gtk gtk3
+net-libs/webkit-gtk libnotify
 net-print/cups usb dbus
 net-print/cups-filters dbus jpeg png tiff pdf zeroconf
-" | sudo tee /etc/portage/package.use/cups
-echo "app-text/poppler jpeg jpeg2k cairo png" | sudo tee /etc/portage/package.use/poppler
-echo "dev-lang/python sqlite" | sudo tee /etc/portage/package.use/python
-echo "dev-libs/glib dbus" | sudo tee /etc/portage/package.use/pa-applet
-echo "dev-libs/libxml2 python" | sudo tee /etc/portage/package.use/libxml2
-echo "gnome-base/gvfs gtk fuse policykit" | sudo tee /etc/portage/package.use/gvfs
-echo "media-libs/flac ogg" | sudo tee /etc/portage/package.use/flac
-echo "media-libs/gst-plugins-base opengl pango" | sudo tee /etc/portage/package.use/gst-plugins-base
-echo "media-libs/gst-plugins-bad opengl gtk" | sudo tee /etc/portage/package.use/gst-plugins-bad
-echo "media-libs/harfbuzz icu" | sudo tee /etc/portage/package.use/nautilus
-echo "media-libs/jasper jpeg opengl" | sudo tee /etc/portage/package.use/jasper
-echo "media-libs/imlib2 jpeg png mp3" | sudo tee /etc/portage/package.use/imlib2
-echo "media-libs/libcaca imlib opengl truetype" | sudo tee /etc/portage/package.use/libcaca
-echo "media-libs/libpng apng" | sudo tee /etc/portage/package.use/libpng
-echo "media-libs/libv4l jpeg" | sudo tee /etc/portage/package.use/libv4l
-echo "media-libs/libwebp jpg png gif opengl" | sudo tee /etc/portage/package.use/libwebp
-echo "media-libs/tiff jpeg" | sudo tee /etc/portage/package.use/tiff
-echo "media-plugins/alsa-plugins ffmpeg oss" | sudo tee /etc/portage/package.use/alsa-plugins
-echo "media-sound/pulseaudio bluetooth dbus gtk sox equalizer native-headset" | sudo tee /etc/portage/package.use/pulseaudio
-echo "media-video/ffmpeg alsa bluray chromium fontconfig jpeg2k libass libcaca mp3 libv4l mp3 opengl pulseaudio svg truetype v4l vaapi vdpau wavpack webp x264 x265" | sudo tee /etc/portage/package.use/ffmpeg
-echo "net-dns/avahi gtk gtk3" | sudo tee /etc/portage/package.use/avahi
-echo "net-libs/webkit-gtk libnotify" | sudo tee /etc/portage/package.use/webkit-gtk
-echo "net-wireless/bluez cups" | sudo tee /etc/portage/package.use/bluez
-echo "sys-auth/polkit gtk" | sudo tee /etc/portage/package.use/polkit-gnome
-echo "www-client/w3m unicode imlib" | sudo tee /etc/portage/package.use/w3m
-echo "www-plugins/freshplayerplugin pulseaudio v4l vaapi vdpau" | sudo tee /etc/portage/package.use/freshplayerplugin
-echo "x11-libs/cairo opengl xcb" | sudo tee /etc/portage/package.use/cairo
-echo "x11-libs/gdk-pixbuf jpeg jpeg2k tiff" | sudo tee /etc/portage/package.use/gdk-pixbuf
-echo "x11-libs/gtk+ xinerama colord" | sudo tee /etc/portage/package.use/gtk
-echo "x11-libs/libxcb xkb" | sudo tee /etc/portage/package.use/libxcb
-echo "x11-misc/lightdm-gtk-greeter branding" | sudo tee /etc/portage/package.use/libva-vdpau-driver
-echo 'x11-terms/rxvt-unicode 256-color pixbuf xft unicode3 fading-colors' | sudo tee /etc/portage/package.use/rxvt-unicode
+net-wireless/bluez cups
+sys-auth/polkit gtk
+www-client/w3m unicode imlib
+www-plugins/freshplayerplugin pulseaudio v4l vaapi vdpau
+x11-libs/cairo opengl xcb
+x11-libs/gdk-pixbuf jpeg jpeg2k tiff
+x11-libs/gtk+ xinerama colord
+x11-libs/libxcb xkb
+x11-misc/lightdm-gtk-greeter branding
+x11-terms/rxvt-unicode 256-color pixbuf xft unicode3 fading-colors
+" | sudo tee /etc/portage/package.use/flags
 
 while true; do
   read -p "Enter full name or [s]kip?   " fn
@@ -432,27 +440,27 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
   case $yn in
     [Nn]* ) break;;
     * )
-      sudo sed -i "s/USE=\"/USE=\"alsa /g" /etc/portage/make.conf
-
-      echo "media-gfx/feh xinerama curl" | sudo tee /etc/portage/package.use/feh
-      echo "app-admin/conky truetype wifi" | sudo tee /etc/portage/package.use/conky
-      echo "app-misc/vifm gtk vim vim-syntax" | sudo tee /etc/portage/package.use/vifm
-      echo "lxde-base/lxappearance dbus" | sudo tee /etc/portage/package.use/lxappearance
-      echo "media-gfx/imagemagick corefonts fontconfig graphviz jpeg jpeg2k pango png hdri svg tiff truetype webp xml" | sudo tee /etc/portage/package.use/imagemagick
-      echo "media-sound/alsa gstreamer pulseaudio oss" | sudo tee /etc/portage/package.use/alsa
-      echo "media-sound/mpd flac lame libmpdclient pulseaudio sqlite" | sudo tee /etc/portage/package.use/mpd
-      echo "media-video/ffmpegthumbnailer gtk jpeg png" | sudo tee /etc/portage/package.use/ffmpegthumbnailer
-      echo "media-video/libmediainfo curl" | sudo tee /etc/portage/package.use/libmediainfo
-      echo "media-video/mediainfo curl" | sudo tee /etc/portage/package.use/mediainfo
-      echo "net-misc/curl http2 ssh" | sudo tee /etc/portage/package.use/curl
-      echo "net-misc/modemmanager policykit" | sudo tee /etc/portage/package.use/modemmanager
-      echo "net-misc/networkmanager dhcpcd wifi bluetooth connection-sharing policykit resolvconf" | sudo tee /etc/portage/package.use/networkmanager
-      echo "net-p2p/transmission gtk" | sudo tee /etc/portage/package.use/transmission
-      echo "sys-process/lsof rpc" | sudo tee /etc/portage/package.use/lsof
-      echo "x11-misc/compton dbus opengl xinerama" | sudo tee /etc/portage/package.use/compton
-      echo "x11-misc/dunst dunstify" | sudo tee /etc/portage/package.use/dunst
-      echo "x11-misc/polybar alsa curl i3wm ipc mpd network pulseaudio" | sudo tee /etc/portage/package.use/polybar
-      echo "x11-misc/rofi windowmode" | sudo tee /etc/portage/package.use/rofi
+      echo "
+app-admin/conky truetype wifi
+app-misc/vifm gtk vim vim-syntax
+lxde-base/lxappearance dbus
+media-gfx/feh xinerama curl
+media-gfx/imagemagick corefonts fontconfig graphviz jpeg jpeg2k pango png hdri svg tiff truetype webp xml
+media-sound/alsa gstreamer pulseaudio oss
+media-sound/mpd flac lame libmpdclient pulseaudio sqlite
+media-video/ffmpegthumbnailer gtk jpeg png
+media-video/libmediainfo curl
+media-video/mediainfo curl
+net-misc/curl http2 ssh
+net-misc/modemmanager policykit
+net-misc/networkmanager dhcpcd wifi bluetooth connection-sharing policykit resolvconf
+net-p2p/transmission gtk
+sys-process/lsof rpc
+x11-misc/compton dbus opengl xinerama
+x11-misc/dunst dunstify
+x11-misc/polybar alsa curl i3wm ipc mpd network pulseaudio
+x11-misc/rofi windowmode
+" | sudo tee -a /etc/portage/package.use/flags
 
       # will use for manually installed packages, /tmp has limited space
       cd /tmp
