@@ -80,6 +80,8 @@ net-print/cups-filters dbus jpeg png tiff pdf zeroconf
 " | sudo tee /etc/portage/package.use/cups
 echo "app-text/poppler jpeg jpeg2k cairo png" | sudo tee /etc/portage/package.use/poppler
 echo "dev-lang/python sqlite" | sudo tee /etc/portage/package.use/python
+echo "dev-libs/glib dbus" | sudo tee /etc/portage/package.use/pa-applet
+echo "dev-libs/libxml2 python" | sudo tee /etc/portage/package.use/libxml2
 echo "gnome-base/gvfs gtk fuse policykit" | sudo tee /etc/portage/package.use/gvfs
 echo "media-libs/flac ogg" | sudo tee /etc/portage/package.use/flac
 echo "media-libs/gst-plugins-base opengl pango" | sudo tee /etc/portage/package.use/gst-plugins-base
@@ -435,7 +437,6 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       echo "media-gfx/feh xinerama curl" | sudo tee /etc/portage/package.use/feh
       echo "app-admin/conky truetype wifi" | sudo tee /etc/portage/package.use/conky
       echo "app-misc/vifm gtk vim vim-syntax" | sudo tee /etc/portage/package.use/vifm
-      echo "dev-libs/glib dbus" | sudo tee /etc/portage/package.use/pa-applet
       echo "lxde-base/lxappearance dbus" | sudo tee /etc/portage/package.use/lxappearance
       echo "media-gfx/imagemagick corefonts fontconfig graphviz jpeg jpeg2k pango png hdri svg tiff truetype webp xml" | sudo tee /etc/portage/package.use/imagemagick
       echo "media-sound/alsa gstreamer pulseaudio oss" | sudo tee /etc/portage/package.use/alsa
