@@ -66,6 +66,14 @@ if cat /etc/portage/make.conf | grep -q 'USE='; then
     sudo sed -i "s/USE=\"/USE=\"alsa pulseaudio /g" /etc/portage/make.conf
   fi
 
+  if ! cat /etc/portage/make.conf | grep -q 'gtk gtk3'; then
+    sudo sed -i "s/USE=\"/USE=\"gtk gtk3 /g" /etc/portage/make.conf
+  fi
+
+  if ! cat /etc/portage/make.conf | grep -q 'jpeg jpeg2k jpg png truetype'; then
+    sudo sed -i "s/USE=\"/USE=\"jpeg jpeg2k jpg png truetype /g" /etc/portage/make.conf
+  fi
+
   if ! cat /etc/portage/make.conf | grep -q 'ffmpeg'; then
     sudo sed -i "s/USE=\"/USE=\"ffmpeg -libav /g" /etc/portage/make.conf
   fi
@@ -78,40 +86,36 @@ if cat /etc/portage/make.conf | grep -q 'USE='; then
     sudo sed -i "s/USE=\"/USE=\"X /g" /etc/portage/make.conf
   fi
 else
-  echo "USE=\"X systemd alsa pulseaudio udisks ffmpeg -libav \"" | sudo tee -a /etc/portage/make.conf
+  echo "USE=\"X systemd alsa pulseaudio udisks ffmpeg -libav gtk gtk3 jpeg jpeg2k jpg png truetype\"" | sudo tee -a /etc/portage/make.conf
 fi
 
 echo "
-app-text/ghostscript-gpl unicode gtk tiff
-app-text/poppler jpeg jpeg2k cairo png
+app-text/ghostscript-gpl unicode tiff
+app-text/poppler cairo
 dev-lang/python sqlite
 dev-libs/glib dbus
 dev-libs/libxml2 python
-gnome-base/gvfs gtk fuse policykit
+gnome-base/gvfs fuse policykit
 media-libs/flac ogg
 media-libs/gst-plugins-base opengl pango
-media-libs/gst-plugins-bad opengl gtk
+media-libs/gst-plugins-bad opengl
 media-libs/harfbuzz icu
-media-libs/jasper jpeg opengl
-media-libs/imlib2 jpeg png mp3
+media-libs/jasper opengl
+media-libs/imlib2 mp3
 media-libs/libcaca imlib opengl truetype
 media-libs/libpng apng
-media-libs/libv4l jpeg
-media-libs/libwebp jpg png gif opengl
-media-libs/tiff jpeg
+media-libs/libwebp gif opengl
 media-plugins/alsa-plugins ffmpeg oss
-media-sound/pulseaudio bluetooth dbus gtk sox equalizer native-headset
-media-video/ffmpeg alsa bluray chromium fontconfig jpeg2k libass libcaca mp3 libv4l mp3 opengl pulseaudio svg truetype v4l vaapi vdpau wavpack webp x264 x265
-net-dns/avahi gtk gtk3
+media-sound/pulseaudio bluetooth dbus sox equalizer native-headset
+media-video/ffmpeg alsa bluray chromium fontconfig libass libcaca mp3 libv4l opengl svg v4l vaapi vdpau wavpack webp x264 x265
 net-libs/webkit-gtk libnotify
 net-print/cups usb dbus
-net-print/cups-filters dbus jpeg png tiff pdf zeroconf
+net-print/cups-filters dbus tiff pdf zeroconf
 net-wireless/bluez cups
-sys-auth/polkit gtk
 www-client/w3m unicode imlib
-www-plugins/freshplayerplugin pulseaudio v4l vaapi vdpau
+www-plugins/freshplayerplugin v4l vaapi vdpau
 x11-libs/cairo opengl xcb
-x11-libs/gdk-pixbuf jpeg jpeg2k tiff
+x11-libs/gdk-pixbuf tiff
 x11-libs/gtk+ xinerama colord
 x11-libs/libxcb xkb
 x11-misc/lightdm-gtk-greeter branding
@@ -441,24 +445,22 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
     [Nn]* ) break;;
     * )
       echo "
-app-admin/conky truetype wifi
-app-misc/vifm gtk vim vim-syntax
+app-admin/conky wifi
+app-misc/vifm vim vim-syntax
 lxde-base/lxappearance dbus
 media-gfx/feh xinerama curl
-media-gfx/imagemagick corefonts fontconfig graphviz jpeg jpeg2k pango png hdri svg tiff truetype webp xml
-media-sound/alsa gstreamer pulseaudio oss
+media-gfx/imagemagick corefonts fontconfig graphviz pango hdri svg tiff webp xml
+media-sound/alsa gstreamer oss
 media-sound/mpd flac lame libmpdclient pulseaudio sqlite
-media-video/ffmpegthumbnailer gtk jpeg png
 media-video/libmediainfo curl
 media-video/mediainfo curl
 net-misc/curl http2 ssh
 net-misc/modemmanager policykit
 net-misc/networkmanager dhcpcd wifi bluetooth connection-sharing policykit resolvconf
-net-p2p/transmission gtk
 sys-process/lsof rpc
 x11-misc/compton dbus opengl xinerama
 x11-misc/dunst dunstify
-x11-misc/polybar alsa curl i3wm ipc mpd network pulseaudio
+x11-misc/polybar alsa curl i3wm ipc mpd network
 x11-misc/rofi windowmode
 " | sudo tee -a /etc/portage/package.use/flags
 
