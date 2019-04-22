@@ -459,7 +459,7 @@ media-gfx/feh xinerama curl
 media-gfx/imagemagick corefonts fontconfig graphviz pango hdri svg tiff webp xml
 media-sound/alsa gstreamer oss
 media-sound/mpd flac lame libmpdclient pulseaudio sqlite
-media-sound/ncmpcpp visualizer
+media-sound/ncmpcpp visualizer outputs taglib clock icu
 media-video/libmediainfo curl
 media-video/mediainfo curl
 net-misc/curl http2 ssh
