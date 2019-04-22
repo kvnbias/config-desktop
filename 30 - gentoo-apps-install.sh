@@ -5,10 +5,78 @@ mainCWD=$(pwd)
 
 os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed -e 's/"//g'))
 
-sudo apt -y upgrade
+if cat /etc/portage/make.conf | grep -q 'USE='; then
+  if ! cat /etc/portage/make.conf | grep -q 'udisks'; then
+    sudo sed -i "s/USE=\"/USE=\"udisks /g" /etc/portage/make.conf
+  fi
 
-sudo apt install -y --no-install-recommends vim curl wget httpie git tmux gedit
-sudo apt install -y --no-install-recommends lsof bash-completion gamin policykit-1-gnome
+  if ! cat /etc/portage/make.conf | grep -q 'alsa pulseaudio'; then
+    sudo sed -i "s/USE=\"/USE=\"alsa pulseaudio /g" /etc/portage/make.conf
+  fi
+
+  if ! cat /etc/portage/make.conf | grep -q 'gtk gtk3'; then
+    sudo sed -i "s/USE=\"/USE=\"gtk gtk3 /g" /etc/portage/make.conf
+  fi
+
+  if ! cat /etc/portage/make.conf | grep -q 'jpeg jpeg2k jpg png truetype'; then
+    sudo sed -i "s/USE=\"/USE=\"jpeg jpeg2k jpg png truetype /g" /etc/portage/make.conf
+  fi
+
+  if ! cat /etc/portage/make.conf | grep -q 'ffmpeg'; then
+    sudo sed -i "s/USE=\"/USE=\"ffmpeg -libav /g" /etc/portage/make.conf
+  fi
+
+  if ! cat /etc/portage/make.conf | grep -q 'systemd'; then
+    sudo sed -i "s/USE=\"/USE=\"systemd /g" /etc/portage/make.conf
+  fi
+
+  if ! cat /etc/portage/make.conf | grep -q 'X'; then
+    sudo sed -i "s/USE=\"/USE=\"X /g" /etc/portage/make.conf
+  fi
+else
+  echo "USE=\"X systemd alsa pulseaudio udisks ffmpeg -libav gtk gtk3 jpeg jpeg2k jpg png truetype\"" | sudo tee -a /etc/portage/make.conf
+fi
+
+install_packages() {
+  while true; do
+    read -p "
+NOTE: Sometimes you need to merge the configs before the packages get installed
+
+Target: $1
+
+[1] Install
+[2] Sync
+[3] Update world
+[4] Auto merge configs
+[5] Execute command
+[6] Exit
+
+Action:   " ipa
+    case $ipa in
+      1 ) sudo emerge --ask $1;;
+      2 ) sudo emerge --sync;;
+      3 ) sudo emerge --ask --verbose --update --deep --newuse @world;;
+      4 ) yes | sudo etc-update --automode -3;;
+      5 )
+        while true; do
+          read -p "Command to execute or [e]xit:   " cmd
+          case $cmd in
+            [Ee] ) break;;
+            * ) $cmd;;
+          esac
+        done;;
+      6 ) break;;
+    esac
+  done
+}
+
+sudo touch /etc/portage/package.use/flags
+if ! sudo cat /etc/portage/package.use/flags | grep -q 'sys-auth/polkit gtk'; then
+  echo 'sys-auth/polkit gtk' | sudo tee -a /etc/portage/package.use/flags
+fi
+
+install_packages "net-misc/curl net-misc/wget net-misc/httpie sys-process/lsof dev-vcs/git app-misc/tmux app-editors/vim app-editors/gedit"
+install_packages "app-shells/bash-completion app-admin/gamin gnome-extra/polkit-gnome"
 
 while true; do
   read -p "Enable vi mode on bash [yN]?   " ebvi
@@ -25,46 +93,19 @@ while true; do
   esac
 done
 
-# exfat readable
-sudo apt install -y --no-install-recommends exfat-utils exfat-fuse ntfs-3g
+# external drives readable
+install_packages "sys-fs/exfat-utils sys-fs/fuse-exfat sys-fs/ntfs3g"
+install_packages "media-gfx/eog www-client/firefox-bin app-office/libreoffice-bin"
 
-# media
-sudo apt install -y --no-install-recommends eog
-
-# firefox
-
-if [ "$os" != "debian" ]; then
-  sudo apt install -y --no-install-recommends firefox
-else
-  # sudo apt install -y --no-install-recommends firefox-esr
-  wget -O /tmp/FirefoxSetup.tar.bz2 "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US"
-  sudo mkdir -p /opt/firefox
-  sudo tar xjf /tmp/FirefoxSetup.tar.bz2 -C /opt/firefox/
-  sudo ln -sf /opt/firefox/firefox/firefox /usr/bin/firefox
-
-  echo "
-[Desktop Entry]
-Name=Firefox
-Comment=Manually downloaded firefox
-Exec=firefox
-Terminal=false
-Type=Application
-Icon=" | tee /home/kev/.local/share/applications/firefox.desktop
-
-  echo "
-[Desktop Entry]
-Name=Firefox Update
-Comment=Manually downloaded firefox
-Exec=/bin/bash -c \"notify-send -i /home/$(whoami)/.config/firefox/noicon -t 5000 'Firefox' 'Downloading firefox'; wget -O /tmp/FirefoxSetup.tar.bz2 'https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US'; notify-send -i /home/$(whoami)/.config/firefox/noicon -t 5000 'Firefox' 'Updating firefox';tar xjf /tmp/FirefoxSetup.tar.bz2 -C /opt/firefox/; notify-send -i /home/$(whoami)/.config/firefox/noicon -t 5000 'Firefox' 'Firefox updated'\"
-Terminal=false
-Type=Application
-Icon=
-" | tee /home/kev/.local/share/applications/firefox-update.desktop
+if ! sudo cat /etc/portage/package.use/flags | grep -q 'media-video/vlc'; then
+  echo "media-video/vlc flac mp3 mpeg ogg v4l vaapi vdpau x264" | sudo tee -a /etc/portage/package.use/flags
 fi
 
-# extra
-sudo apt install -y --no-install-recommends libreoffice libreoffice-gtk3 libreoffice-style-breeze
-sudo apt install -y --no-install-recommends vlc transmission-gtk mupdf xarchiver p7zip evince
+if ! sudo cat /etc/portage/package.use/flags | grep -q 'app-arch/p7zip'; then
+  echo "app-arch/p7zip rar" | sudo tee -a /etc/portage/package.use/flags
+fi
+
+install_packages "media-video/vlc net-p2p/transmission app-text/mupdf app-arch/xarchiver app-arch/p7zip app-text/evince"
 
 while true; do
   read -p "
@@ -72,7 +113,11 @@ while true; do
 Install Screen Recorder [yN]?  " isr
   case $isr in
     [Yy]* )
-      sudo apt install -y --no-install-recommends simplescreenrecorder
+      if ! sudo cat /etc/portage/package.use/flags | grep -q 'media-video/simplescreenrecorder'; then
+        echo "media-video/simplescreenrecorder mp3 x264" | sudo tee -a /etc/portage/package.use/flags
+      fi
+
+      install_packages "media-video/simplescreenrecorder"
       break;;
     * ) break;;
   esac
@@ -85,9 +130,9 @@ done
 # Install JDownloader [yN]?  " ijd
 #   case $isr in
 #     [Yy]* )
-#       sudo apt install -y --no-install-recommends flatpak
+#       install_packages "flatpak"
 #       sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-#       flatpak install -y --no-install-recommends flathub org.jdownloader.JDownloader
+#       flatpak install -yflathub org.jdownloader.JDownloader
 #       break;;
 #     * ) break;;
 #   esac
@@ -99,16 +144,9 @@ while true; do
 Install Timeshift [yN]?  " its
   case $its in
     [Yy]* )
-      ### dev-libs/libgee dev-libs/json-glib net-misc/rsync x11-libs/vte
-      if [ "$os" != "debian" ]; then
-        sudo add-apt-repository ppa:teejee2008/ppa
-        sudo apt update
-        sudo apt install -y --no-install-recommends timeshift
-      else
-        sudo apt install -y --no-install-recommends timeshift
-      fi
-
-
+      install_packages "dev-libs/libgee dev-libs/json-glib net-misc/rsync x11-libs/vte"
+      wget -O /tmp/timeshift-v19.01-amd64.run https://github.com/teejee2008/timeshift/releases/download/v19.01/timeshift-v19.01-amd64.run
+      sudo sh /tmp/timeshift*amd64.run
       break;;
     * ) break;;
   esac
@@ -129,13 +167,9 @@ Install virtualbox [yN]?
 https://wiki.archlinux.org/index.php/VirtualBox   " ivb
   case $ivb in
     [Yy]* )
-      sudo apt install -y --no-install-recommends binutils gcc make perl patch libgomp1
-      sudo apt install -y --no-install-recommends linux-headers-$(uname -r) dkms libxkbcommon0
-
-      sudo apt install -y --no-install-recommends virtualbox
-      sudo apt install -y --no-install-recommends virtualbox-qt
-      sudo apt install -y --no-install-recommends virtualbox-guest-additions-iso
-
+      install_packages "sys-devel/binutils sys-devel/gcc sys-devel/make dev-lang/perl sys-devel/patch"
+      install_packages "sys-kernel/linux-headers"
+      install_packages "virtualbox-bin"
       break;;
     * ) break;;
   esac
@@ -148,7 +182,7 @@ Install firewall [yN]?
 https://wiki.archlinux.org/index.php/Uncomplicated_Firewall   " ifw
   case $ifw in
     [Yy]* )
-      sudo apt install -y --no-install-recommends ufw gufw
+      install_packages "net-firewall/ufw"
       sudo systemctl enable ufw
       sudo systemctl start ufw
       sudo ufw enable
@@ -164,7 +198,15 @@ Install bluetooth [yN]?
 https://wiki.archlinux.org/index.php/bluetooth   " ibt
   case $ibt in
     [Yy]* )
-      sudo apt install -y --no-install-recommends bluez blueman pulseaudio-module-bluetooth
+      if ! sudo cat /etc/portage/package.use/flags | grep -q 'net-wireless/bluez'; then
+        echo "net-wireless/bluez cups" | sudo tee -a /etc/portage/package.use/flags
+      fi
+
+      if ! sudo cat /etc/portage/package.use/flags | grep -q 'net-wireless/blueman'; then
+        echo "net-wireless/blueman pulseaudio appindicator network policykit" | sudo tee -a /etc/portage/package.use/flags
+      fi
+
+      install_packages "net-wireless/bluez net-wireless/blueman"
 
       echo "
 load-module module-bluetooth-policy
@@ -189,8 +231,12 @@ Install Samba [yN]?
 https://wiki.archlinux.org/index.php/Samba   " ismb
   case $ismb in
     [Yy]* )
+      if ! sudo cat /etc/portage/package.use/flags | grep -q 'net-fs/samba'; then
+        echo "net-fs/samba client cups syslog iprint" | sudo tee -a /etc/portage/package.use/flags
+      fi
+
       user=$(whoami)
-      sudo apt install -y --no-install-recommends samba
+      install_packages "net-fs/samba"
 
       mkdir -p "/home/$user/Share"
       sudo mv /etc/samba/smb.conf /etc/samba/smb.conf.bup
@@ -279,7 +325,18 @@ Install CUPS [yN]?
 https://wiki.archlinux.org/index.php/CUPS   " ic
   case $ic in
     [Yy]* )
-      sudo apt install -y --no-install-recommends avahi-daemon cups bluez-cups printer-driver-cups-pdf libnss-mdns
+      if ! sudo cat /etc/portage/package.use/flags | grep -q 'net-wireless/bluez'; then
+        echo "net-wireless/bluez cups" | sudo tee -a /etc/portage/package.use/flags
+      fi
+
+      if ! sudo cat /etc/portage/package.use/flags | grep -q 'net-print/cups'; then
+        echo "
+net-print/cups usb dbus
+net-print/cups-filters dbus tiff pdf zeroconf
+" | sudo tee -a /etc/portage/package.use/flags
+      fi
+
+      install_packages "net-print/cups net-print/cups-pdf"
 
       sudo systemctl enable avahi-daemon
       sudo systemctl restart avahi-daemon
@@ -300,7 +357,7 @@ done
 #       # To mount HFS+
 #       # 1. Repair: sudo fsck.hfsplus -f /dev/sda2
 #       # 2. Mount: sudo mount -t hfsplus -o force,rw /dev/sda2 /mnt
-#       sudo apt install -y --no-install-recommends hfsutils hfsplus hfsprogs
+#       install_packages "hfsutils hfsplusutils"
 #       break;;
 #     * ) break;;
 #   esac
@@ -314,16 +371,13 @@ https://github.com/sgan81/apfs-fuse   " mapfs
   case $mapfs in
     [Yy]* )
       cd /tmp
-      sudo apt install -y --no-install-recommends fuse zlib1g bzip2 libattr1
-      sudo apt install -y --no-install-recommends libfuse-dev libbz2-dev zlib1g-dev libattr1-dev
-      sudo apt install -y --no-install-recommends cmake g++ git
+      install_packages "sys-fs/fuse sys-libs/zlib app-arch/bzip2"
+      install_packages "dev-util/cmake sys-devel/gcc dev-vcs/git"
 
       git clone https://github.com/sgan81/apfs-fuse.git
       cd apfs-fuse && git submodule init && git submodule update
       rm -rf build && mkdir build && cd build && cmake .. && make
       sudo cp -raf  ./apfs-* /usr/local/bin/
-
-      sudo apt remove -y libfuse-dev libbz2-dev zlib1g-dev libattr1-dev
       cd /tmp
       break;;
     * ) break;;
@@ -338,7 +392,7 @@ https://wiki.archlinux.org/index.php/GRUB#Detecting_other_operating_systems
    " iop
   case $iop in
     [Yy]* )
-      sudo apt install -y --no-install-recommends os-prober
+      install_packages "sys-boot/os-prober"
       break;;
     * ) break;;
   esac
@@ -363,8 +417,12 @@ Would you like to rice rEFInd [yN]?   " rr
         case $rr in
           [Yy]* )
             cd /tmp
-            wget -O "refind-bin-0.11.4.zip" "http://sourceforge.net/projects/refind/files/0.11.4/refind-bin-0.11.4.zip/download"
-            unzip refind-bin-0.11.4.zip && unzip refind-bin-0.11.4.zip && sudo bash refind-bin-0.11.4/refind-install
+            if ! sudo cat /etc/portage/package.use/flags | grep -q 'sys-boot/refind'; then
+              echo "sys-booot/refind ext4 btrfs hfs ntfs" | sudo tee -a /etc/portage/package.use/flags
+            fi
+
+            install_packages "sys-boot/refind"
+            sudo refind-install
 
             git clone https://github.com/EvanPurkhiser/rEFInd-minimal.git /tmp/refind-minimal
             sudo mkdir -p /boot/efi/EFI/refind/themes/rEFInd-minimal
@@ -393,8 +451,12 @@ Would you like to rice rEFInd [yN]?   " rr
             break 2;;
           * )
             cd /tmp
-            wget -O "refind-bin-0.11.4.zip" "http://sourceforge.net/projects/refind/files/0.11.4/refind-bin-0.11.4.zip/download"
-            unzip refind-bin-0.11.4.zip && unzip refind-bin-0.11.4.zip && sudo bash refind-bin-0.11.4/refind-install
+            if ! sudo cat /etc/portage/package.use/flags | grep -q 'sys-boot/refind'; then
+              echo "sys-booot/refind ext4 btrfs hfs ntfs" | sudo tee -a /etc/portage/package.use/flags
+            fi
+
+            install_packages "sys-boot/refind"
+            sudo refind-install
             cd /tmp
 
             echo '
@@ -427,14 +489,8 @@ while true; do
 Install Skype [yN]?   " is
   case $is in
     [Yy]* )
-      sudo apt install -y --no-install-recommends gnome-keyring gnome-keyring-pkcs11
-      sudo apt install -y --no-install-recommends gconf-service gconf2-common gcr libgconf-2-4
-      sudo apt install -y --no-install-recommends libpam-gnome-keyring p11-kit p11-kit-modules pinentry-gnome3
-
-      cd /tmp
-      wget -O "skypeforlinux-64.deb" "https://go.skype.com/skypeforlinux-64.deb"
-      sudo apt install -y --no-install-recommends gdebi
-      sudo gdebi /tmp/skypeforlinux-64.deb
+      install_packages "gnome-base/gnome-keyring"
+      install_packages "net-im/skypeforlinux"
       break;;
     * ) break;;
   esac
@@ -446,7 +502,7 @@ while true; do
 Install GIMP [yN]?   " ig
   case $ig in
     [Yy]* )
-      sudo apt install -y --no-install-recommends gimp
+      install_packages "media-gfx/gimp"
       break;;
     * ) break;;
   esac
@@ -458,7 +514,7 @@ while true; do
 Install Mail Client: Geary [yN]?   " it
   case $it in
     [Yy]* )
-      sudo apt install -y --no-install-recommends geary
+      install_packages "mail-client/geary"
       break;;
     * ) break;;
   esac
@@ -470,7 +526,11 @@ while true; do
 Install Calendar [yN]?   " ic
   case $ic in
     [Yy]* )
-      sudo apt install -y --no-install-recommends gnome-calendar
+      if ! sudo cat /etc/portage/package.use/flags | grep -q 'gnome-extra/evolution-data-server'; then
+        echo "gnome-extra/evolution-data-server google" | sudo tee -a /etc/portage/package.use/flags
+      fi
+
+      install_packages "gnome-extra/gnome-calendar"
       break;;
     * ) break;;
   esac
@@ -482,7 +542,7 @@ while true; do
 Install Calculator [yN]?   " ic
   case $ic in
     [Yy]* )
-      sudo apt install -y --no-install-recommends gnome-calculator
+      install_packages "gnome-extra/gnome-calculator"
       break;;
     * ) break;;
   esac
@@ -494,13 +554,15 @@ while true; do
 Install GParted [yN]?   " igp
   case $igp in
     [Yy]* )
-      sudo apt install -y --no-install-recommends gparted
+      if ! sudo cat /etc/portage/package.use/flags | grep -q 'sys-block/gparted'; then
+        echo "sys-block/gparted btrfs fat hfs ntfs policykit" | sudo tee -a /etc/portage/package.use/flags
+      fi
+
+      install_packages "sys-block/gparted"
       break;;
     * ) break;;
   esac
 done
 
 cd $mainCWD
-
-sudo apt -y autoremove
 
