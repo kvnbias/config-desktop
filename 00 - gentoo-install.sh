@@ -959,8 +959,31 @@ Action: [p]roceed | [e]xit   \" ell
 Enable the following settings under Networking support:
 
   [*] Networking support
+    [*] Bluetooth subsystem support
+      [*]   Bluetooth Classic (BR/EDR) features
+        [*] RFCOMM protocol support
+        [*] HIDP protocol support
+        [*] Bluetooth High Speed (HS) features
+        [*] Bluetooth Low Energy (LE) features
+        Bluetooth device drivers
+          [M] HCI USB driver
+          [M] HCI UART driver
     Networking options
       [M] The IPv6 protocol
+      [*] Network packet filtering framework (Netfilter)
+        Core Netfilter Configuration
+          [M] NetBIOS name service protocol support 
+          [M]   \"HL\" hoplimit target support 
+          [M] LOG target support
+          [M]   \"addrtype\" address type match support
+          [M]   \"comment\" match support
+          [*]   \"conntrack\" connection tracking match support
+          [M]   \"hashlimit\" match support
+          [M]   \"hl\" hoplimit/TTL match support
+          [M]   \"limit\" match support
+          [M]   \"recent\" match support
+          [*]   \"state\" match support 
+    [*]   RF switch subsystem support
 
 Action: [p]roceed | [e]xit   \" ns
               case \$ptaf in
@@ -997,6 +1020,7 @@ Enable & disable the following settings under Device Drivers:
       [*] HID bus support
       [*] Generic HID driver
       [*] Battery level reporting for HID devices
+      [*] User-space I/O driver support for HID subsystem
       USB HID support
         [M] USB HID transport layer
     [*] USB support
