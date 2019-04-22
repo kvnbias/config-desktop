@@ -12,13 +12,30 @@ sudo apt install -y --no-install-recommends htop
 
 # vscode
 cd /tmp
-curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
-sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
-sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
 
-sudo apt install --no-install-recommends apt-transport-https
-sudo apt update
-sudo apt install --no-install-recommends code
+wget -O /tmp/vscode.tar.gz https://update.code.visualstudio.com/latest/linux-x64/stable
+sudo mkdir -p /opt/vscode && sudo chmod 777 /opt/vscode
+tar xzvf /tmp/vscode.tar.gz -C /opt/vscode/
+sudo ln -sf /opt/vscode/VSCode-linux-x64/bin/code /usr/bin/code
+
+echo "
+[Desktop Entry]
+Name=Visual Studio Code
+Comment=Manually downloaded vscode
+Exec=code
+Terminal=false
+Type=Application
+Icon=" | tee /home/kev/.local/share/applications/code.desktop
+
+echo "
+[Desktop Entry]
+Name=Visual Studio Code Update
+Comment=Manually downloaded firefox
+Exec=/bin/bash -c \"notify-send -i /home/$(whoami)/.config/vscode/noicon -t 5000 'Visual Studio Code' 'Downloading Visual Studio Code'; wget -O /tmp/vscode.tar.gz https://update.code.visualstudio.com/latest/linux-x64/stable; notify-send -i /home/$(whoami)/.config/vscode/noicon -t 5000 'Visual Studio Code' 'Updating Visual Studio Code';tar xzvf /tmp/vscode.tar.gz -C /opt/vscode/; notify-send -i /home/$(whoami)/.config/vscode/noicon -t 5000 'Visual Studio Code' 'Visual Studio Code updated'\"
+Terminal=false
+Type=Application
+Icon=
+" | tee /home/kev/.local/share/applications/code-update.desktop
 
 echo "fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
