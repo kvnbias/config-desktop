@@ -352,6 +352,13 @@ Enter action:   " wd
     [2] )
       install_packages "net-wireless/broadcom-sta net-wireless/wireless-tools"
       sudo modprobe wl
+
+      if [ -f /etc/modules-load.d/networking.conf ]; then
+        echo 'wl' | sudo tee /etc/modules-load.d/networking.conf
+      else
+        echo 'wl' | sudo tee -a /etc/modules-load.d/networking.conf
+      fi
+
       echo "
 Installation done...
 ";;
