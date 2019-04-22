@@ -459,11 +459,12 @@ media-gfx/feh xinerama curl
 media-gfx/imagemagick corefonts fontconfig graphviz pango hdri svg tiff webp xml
 media-sound/alsa gstreamer oss
 media-sound/mpd flac lame libmpdclient pulseaudio sqlite
+media-sound/ncmpcpp visualizer
 media-video/libmediainfo curl
 media-video/mediainfo curl
 net-misc/curl http2 ssh
 net-misc/modemmanager policykit
-net-misc/networkmanager dhcpcd wifi bluetooth connection-sharing policykit resolvconf
+net-misc/networkmanager dhcpcd wifi bluetooth connection-sharing policykit -resolvconf
 sys-process/lsof rpc
 x11-misc/compton dbus opengl xinerama
 x11-misc/dunst dunstify
