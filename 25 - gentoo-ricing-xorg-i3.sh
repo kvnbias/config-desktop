@@ -606,7 +606,7 @@ x11-misc/rofi windowmode
 
       install_packages "media-libs/libjpeg-turbo sys-libs/zlib"
       install_packages "x11-libs/libXext dev-python/setuptools"
-      sudo pip3 install --user ueberzug
+      pip3 install --user ueberzug
 
       # MANUAL 2.12.c: i3lock-color. Some are already installed
       sudo emerge --ask --verbose --depclean x11-misc/i3lock
