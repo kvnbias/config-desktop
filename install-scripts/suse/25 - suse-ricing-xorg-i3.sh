@@ -401,7 +401,6 @@ if [ ! -f "$HOME/.riced" ];then
   sudo cp $HOME/.Xresources /root/.Xresources
 fi
 
-mainCWD=$(pwd)
 while true; do
   read -p "
 
@@ -621,7 +620,6 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
         libxkbcommon-x11-devel pam-devel python-xml xcb-proto-devel xcb-util-cursor-devel xcb-util-devel \
         xcb-util-image-devel xcb-util-wm-devel xcb-util-xrm-devel
       sudo zypper remove -u $(zypper packages --unneeded | grep -v '+-' | grep -v '\.\.\.' | grep -v 'Version' | cut -f 3 -d '|')
-      cd $mainCWD
 
       user=$(whoami)
 
@@ -655,8 +653,6 @@ $(whoami) ALL=(ALL) NOPASSWD: /usr/bin/yast
       fi
 
       sudo ln -sf /usr/bin/urxvt-256color /usr/bin/urxvt256c-ml
-
-      cd $mainCWD
 
       mkdir -p "$HOME/.config/neofetch"
       cp -rf $DIR/../../rice/neofetch.conf $HOME/.config/neofetch/$os.conf

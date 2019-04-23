@@ -443,7 +443,6 @@ XSession=i3
 SystemAccount=false
 " | sudo tee /var/lib/AccountsService/users/$(whoami)
 
-mainCWD=$(pwd)
 while true; do
   read -p "
 
@@ -654,7 +653,6 @@ x11-misc/rofi windowmode
       install_packages "media-gfx/scrot sys-apps/accountsservice"
 
       sudo emerge --ask --depclean
-      cd $mainCWD
 
       user=$(whoami)
 
@@ -686,8 +684,6 @@ SystemAccount=false
 
       # NOTE: needs adjustment for the sake of fedora
       sudo ln -sf /usr/bin/urxvt /usr/bin/urxvt256c-ml
-
-      cd $mainCWD
 
       mkdir -p "$HOME/.config/neofetch"
       cp -rf $DIR/../../rice/neofetch.conf $HOME/.config/neofetch/$os.conf

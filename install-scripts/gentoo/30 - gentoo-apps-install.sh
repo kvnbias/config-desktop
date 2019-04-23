@@ -1,8 +1,6 @@
 
 #!/bin/bash
 
-mainCWD=$(pwd)
-
 os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed -e 's/"//g'))
 
 if cat /etc/portage/make.conf | grep -q 'USE='; then
@@ -603,6 +601,4 @@ Install GParted [yN]?   " igp
     * ) break;;
   esac
 done
-
-cd $mainCWD
 

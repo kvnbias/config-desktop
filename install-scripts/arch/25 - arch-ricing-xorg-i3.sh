@@ -480,7 +480,6 @@ if [ ! -f "$HOME/.riced" ];then
   sudo cp $HOME/.Xresources /root/.Xresources
 fi
 
-mainCWD=$(pwd)
 while true; do
   read -p "
 
@@ -644,8 +643,6 @@ SystemAccount=false
 
       # NOTE: needs adjustment for the sake of fedora
       sudo ln -sf /usr/bin/urxvt /usr/bin/urxvt256c-ml
-
-      cd $mainCWD
 
       # sed -i "s/# exec --no-startup-id pamac-tray/exec --no-startup-id pamac-tray/g" $HOME/.config/i3/config
       # sed -i "s/# for_window \[class=\"Pamac-manager\"\]/for_window [class=\"Pamac-manager\"]/g" $HOME/.config/i3/config

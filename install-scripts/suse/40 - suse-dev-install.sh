@@ -2,8 +2,6 @@
 
 #!/bin/bash
 
-mainCWD=$(pwd)
-
 os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed -e 's/"//g'))
 
 sudo zypper -n update
@@ -79,6 +77,5 @@ Install DBeaver [yN]?   " idbvr
   esac
 done
 
-cd $mainCWD
 sudo zypper remove -u $(zypper packages --unneeded | grep -v '+-' | grep -v '\.\.\.' | grep -v 'Version' | cut -f 3 -d '|')
 

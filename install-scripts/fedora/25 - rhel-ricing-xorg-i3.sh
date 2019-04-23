@@ -402,7 +402,6 @@ if [ ! -f "$HOME/.riced" ];then
   sudo cp $HOME/.Xresources /root/.Xresources
 fi
 
-mainCWD=$(pwd)
 while true; do
   read -p "
 
@@ -664,7 +663,6 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
         xcb-util-cursor-devel xcb-util-devel xcb-util-image-devel xcb-util-keysyms-devel xcb-util-wm-devel \
         xcb-util-xrm-devel yajl-devel zlib-devel
       sudo dnf -y autoremove
-      cd $mainCWD
 
       user=$(whoami)
 

@@ -448,7 +448,6 @@ if [ ! -f "$HOME/.riced" ];then
   sudo cp $HOME/.Xresources /root/.Xresources
 fi
 
-mainCWD=$(pwd)
 while true; do
   read -p "
 
@@ -723,7 +722,6 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       fi
 
       sudo apt autoremove -y
-      cd $mainCWD
 
       user=$(whoami)
 
@@ -755,8 +753,6 @@ SystemAccount=false
 
       # NOTE: needs adjustment for the sake of fedora
       sudo ln -sf /usr/bin/urxvt /usr/bin/urxvt256c-ml
-
-      cd $mainCWD
 
       mkdir -p "$HOME/.config/neofetch"
       cp -rf $DIR/../../rice/neofetch.conf $HOME/.config/neofetch/$os.conf

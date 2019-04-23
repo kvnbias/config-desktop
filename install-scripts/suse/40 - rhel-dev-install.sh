@@ -1,8 +1,6 @@
 
 #!/bin/bash
 
-mainCWD=$(pwd)
-
 os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed -e 's/"//g'))
 
 if [ "$1" = "" ];then
@@ -88,6 +86,5 @@ Install DBeaver [yN]?   " idbvr
   esac
 done
 
-cd $mainCWD
 sudo dnf -y autoremove
 
