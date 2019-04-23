@@ -7,8 +7,40 @@ os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | 
 
 sudo apt -y upgrade
 
+install_packages() {
+  while true; do
+    read -p "
+NOTE: Sometimes you need to merge the configs before the packages get installed
+
+Target: $1
+
+[1] Install
+[2] Sync
+[3] Update world
+[4] Auto merge configs
+[5] Execute command
+[6] Exit
+
+Action:   " ipa
+    case $ipa in
+      1 ) sudo emerge --ask $1;;
+      2 ) sudo emerge --sync;;
+      3 ) sudo emerge --ask --verbose --update --deep --newuse @world;;
+      4 ) yes | sudo etc-update --automode -3;;
+      5 )
+        while true; do
+          read -p "Command to execute or [e]xit:   " cmd
+          case $cmd in
+            [Ee] ) break;;
+            * ) $cmd;;
+          esac
+        done;;
+      6 ) break;;
+    esac
+  done
+}
 # extra
-sudo apt install -y --no-install-recommends htop
+sudo install_packages "sys-process/htop"
 
 # vscode
 cd /tmp
@@ -25,17 +57,17 @@ Comment=Manually downloaded vscode
 Exec=code
 Terminal=false
 Type=Application
-Icon=" | tee /home/kev/.local/share/applications/code.desktop
+Icon=" | tee /home/$(whoami)/.local/share/applications/code.desktop
 
 echo "
 [Desktop Entry]
 Name=Visual Studio Code Update
-Comment=Manually downloaded firefox
-Exec=/bin/bash -c \"notify-send -i /home/$(whoami)/.config/vscode/noicon -t 5000 'Visual Studio Code' 'Downloading Visual Studio Code'; wget -O /tmp/vscode.tar.gz https://update.code.visualstudio.com/latest/linux-x64/stable; notify-send -i /home/$(whoami)/.config/vscode/noicon -t 5000 'Visual Studio Code' 'Updating Visual Studio Code';tar xzvf /tmp/vscode.tar.gz -C /opt/vscode/; notify-send -i /home/$(whoami)/.config/vscode/noicon -t 5000 'Visual Studio Code' 'Visual Studio Code updated'\"
+Comment=Manually downloaded vscode
+Exec=/bin/bash -c \"notify-send -i /home/$(whoami)/.config/vscode/noicon -t 5000 'Visual Studio Code' 'Downloading Visual Studio Code'; wget -O /tmp/vscode.tar.gz https://update.code.visualstudio.com/latest/linux-x64/stable; notify-send -i /home/$(whoami)/.config/vscode/noicon -t 5000 'Visual Studio Code' 'Updating Visual Studio Code'; tar xzvf /tmp/vscode.tar.gz -C /opt/vscode/; notify-send -i /home/$(whoami)/.config/vscode/noicon -t 5000 'Visual Studio Code' 'Visual Studio Code updated'\"
 Terminal=false
 Type=Application
 Icon=
-" | tee /home/kev/.local/share/applications/code-update.desktop
+" | tee /home/$(whoami)/.local/share/applications/code-update.desktop
 
 echo "fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
@@ -67,10 +99,7 @@ while true; do
 Install Google Chrome [yN]?   " igc
   case $igc in
     [Yy]* )
-      sudo apt install -y --no-install-recommends fonts-liberation
-      cd /tmp
-      wget  -O "google-chrome-stable_current_amd64.deb"  https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-      sudo dpkg -i /tmp/google-chrome-stable_current_amd64.deb 
+      sudo install_packages "www-client/google-chrome"
       break;;
     * ) break;;
   esac
@@ -82,7 +111,15 @@ while true; do
 Install Zeal [yN]?   " iz
   case $iz in
     [Yy]* )
-      sudo apt install -y --no-install-recommends zeal
+      if ! sudo cat /etc/portage/package.use/flags | grep -q 'dev-qt/qtprintsupport'; then
+        echo "dev-qt/qtprintsupport cups" | sudo tee -a /etc/portage/package.use/flags
+      fi
+
+      if ! sudo cat /etc/portage/package.use/flags | grep -q ' dev-qt/qtnetwork'; then
+        echo "dev-qt/qtnetwork networkmanager" | sudo tee -a /etc/portage/package.use/flags
+      fi
+
+      sudo install_packages "app-doc/zeal"
       break;;
     * ) break;;
   esac
@@ -95,14 +132,33 @@ Install DBeaver [yN]?   " idbvr
   case $idbvr in
     [Yy]* )
       cd /tmp
-      wget -O - https://dbeaver.io/debs/dbeaver.gpg.key | sudo apt-key add -
-      echo "deb https://dbeaver.io/debs/dbeaver-ce /" | sudo tee /etc/apt/sources.list.d/dbeaver.list
-      sudo apt update
-      sudo apt install --no-install-recommends dbeaver-ce
+      wget -O /tmp/dbeaver-ce-latest-linux.gtk.x86_64.tar.gz https://dbeaver.io/files/dbeaver-ce-latest-linux.gtk.x86_64.tar.gz
+      sudo mkdir -p /opt/dbeaver-ce && sudo chmod 777 /opt/dbeaver-ce
+      tar xzvf /tmp/dbeaver-ce-latest-linux.gtk.x86_64.tar.gz -C /opt/dbeaver-ce/
+      sudo ln -sf /opt/dbeaver-ce/dbeaver/dbeaver /usr/bin/dbeaver
+
+      echo "
+[Desktop Entry]
+Name=Dbeaver Community Edition
+Comment=Manually downloaded dbeaver
+Exec=dbeaver
+Terminal=false
+Type=Application
+Icon=" | tee /home/$(whoami)/.local/share/applications/dbeaver.desktop
+
+      echo "
+[Desktop Entry]
+Name=Dbeaver Community Edition Update
+Comment=Manually downloaded dbeaver
+Exec=/bin/bash -c \"notify-send -i /home/$(whoami)/.config/dbeaver/noicon -t 5000 'Dbeaver Community Edition' 'Downloading Dbeaver Community Edition'; wget -O /tmp/dbeaver-ce-latest-linux.gtk.x86_64.tar.gz https://dbeaver.io/files/dbeaver-ce-latest-linux.gtk.x86_64.tar.gz; notify-send -i /home/$(whoami)/.config/dbeaver/noicon -t 5000 'Dbeaver Community Edition' 'Updating Dbeaver Community Edition'; tar xzvf /tmp/dbeaver-ce-latest-linux.gtk.x86_64.tar.gz -C /opt/dbeaver-ce/; notify-send -i /home/$(whoami)/.config/debaver/noicon -t 5000 'Dbeaver Community Edition' 'Dbeaver Community Edition updated'\"
+Terminal=false
+Type=Application
+Icon=
+" | tee /home/$(whoami)/.local/share/applications/dbeaver-update.desktop
       break;;
     * ) break;;
   esac
 done
 
 cd $mainCWD
-sudo apt -y autoremove
+sudo emerge --ask --depclean
