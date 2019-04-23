@@ -1,4 +1,6 @@
 
+DIR="$(cd "$( dirname "$0" )" && pwd)"
+
 generate_gitconfig() {
 
   echo "
@@ -97,24 +99,24 @@ mkdir -p  "$HOME/.config/Code - OSS/User"
 mkdir -p  "$HOME/.config/gtk-3.0"
 
 # copy vscode user settings
-cp $(pwd)/rice/vscode/keybindings.json "$HOME/.config/Code/User/keybindings.json"
-cp $(pwd)/rice/vscode/keybindings.json "$HOME/.config/Code - OSS/User/keybindings.json"
+cp $DIR/../rice/vscode/keybindings.json "$HOME/.config/Code/User/keybindings.json"
+cp $DIR/../rice/vscode/keybindings.json "$HOME/.config/Code - OSS/User/keybindings.json"
 
-cp -rf $(pwd)/rice/bashrc      $HOME/.bashrc
+cp -rf $DIR/../rice/bashrc      $HOME/.bashrc
 
 # vifm
-cp -raf $(pwd)/rice/vifmrc  $HOME/.config/vifm/vifmrc
+cp -raf $DIR/../rice/vifmrc  $HOME/.config/vifm/vifmrc
 
 # copy vim colors
 mkdir -p $HOME/.vim
-cp -raf $(pwd)/rice/vim/*  $HOME/.vim
-cp -raf $(pwd)/rice/vimrc  $HOME/.vimrc
+cp -raf $DIR/../rice/vim/*  $HOME/.vim
+cp -raf $DIR/../rice/vimrc  $HOME/.vimrc
 
 git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
 
 # copy ranger configs
 mkdir -p $HOME/.config/ranger
-cp -rf $(pwd)/rice/ranger/* $HOME/.config/ranger
+cp -rf $DIR/../rice/ranger/* $HOME/.config/ranger
 
 # copy i3 config
 mkdir -p $HOME/.config/i3
@@ -124,47 +126,47 @@ if [ -f $HOME/.riced ]; then
     read -p "Replaced existing i3 settings [yN]?   " ri3s
     case $ri3s in
       [Yy]* )
-        cp -rf $(pwd)/rice/config-i3      $HOME/.config/i3/config
-        cp -rf $(pwd)/rice/i3status.conf  $HOME/.config/i3/i3status.conf
+        cp -rf $DIR/../rice/config-i3      $HOME/.config/i3/config
+        cp -rf $DIR/../rice/i3status.conf  $HOME/.config/i3/i3status.conf
         break;;
       * ) break;;
     esac
   done
 else
-  cp -rf $(pwd)/rice/config-i3      $HOME/.config/i3/config
-  cp -rf $(pwd)/rice/i3status.conf  $HOME/.config/i3/i3status.conf
+  cp -rf $DIR/../rice/config-i3      $HOME/.config/i3/config
+  cp -rf $DIR/../rice/i3status.conf  $HOME/.config/i3/i3status.conf
 fi
 
 sed -i 's/# exec --no-startup-id pa-applet/exec --no-startup-id pa-applet/g' $HOME/.config/i3/config
 
 # copy ncmpcpp config
 mkdir -p $HOME/.ncmpcpp
-cp -rf $(pwd)/rice/config-ncmpcpp $HOME/.ncmpcpp/config
+cp -rf $DIR/../rice/config-ncmpcpp $HOME/.ncmpcpp/config
 
 # copy polybar config
 mkdir -p $HOME/.config/polybar
-cp -rf $(pwd)/rice/config-polybar $HOME/.config/polybar/config
-bash $(pwd)/scripts/update-polybar-network-interface.sh
+cp -rf $DIR/../rice/config-polybar $HOME/.config/polybar/config
+bash $DIR/../user-scripts/update-polybar-network-interface.sh
 
 # copy i3status config
-sudo cp -rf $(pwd)/rice/i3status.conf /etc/i3status.conf
+sudo cp -rf $DIR/../rice/i3status.conf /etc/i3status.conf
 
 # copy mpd config
 mkdir -p $HOME/.config/mpd
 mkdir -p $HOME/.config/mpd/playlists
-cp -rf $(pwd)/rice/mpd.conf $HOME/.config/mpd/mpd.conf
+cp -rf $DIR/../rice/mpd.conf $HOME/.config/mpd/mpd.conf
 
 # copy neofetch config
 mkdir -p $HOME/.config/neofetch
-cp -rf $(pwd)/rice/neofetch.conf $HOME/.config/neofetch/config.conf
+cp -rf $DIR/../rice/neofetch.conf $HOME/.config/neofetch/config.conf
 
 # copy compton config
 mkdir -p $HOME/.config/compton
-cp -rf $(pwd)/rice/compton.conf $HOME/.config/compton/config.conf
+cp -rf $DIR/../rice/compton.conf $HOME/.config/compton/config.conf
 
 # copy dunst config
 mkdir -p $HOME/.config/dunst
-cp -rf $(pwd)/rice/dunstrc $HOME/.config/dunst/dunstrc
+cp -rf $DIR/../rice/dunstrc $HOME/.config/dunst/dunstrc
 
 if ! cat $HOME/.config/i3/config | grep -q 'keyboard-disabler'; then
   while true; do

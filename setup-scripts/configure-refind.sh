@@ -1,4 +1,5 @@
 
+DIR="$(cd "$( dirname "$0" )" && pwd)"
 outputs="KNAME,FSTYPE,TYPE,SIZE,UUID,LABEL,MOUNTPOINT"
 outuuid="UUID,KNAME,FSTYPE,TYPE,SIZE,LABEL,MOUNTPOINT"
 entryname=

@@ -1,6 +1,7 @@
 
+DIR="$(cd "$( dirname "$0" )" && pwd)"
 mkdir -p $HOME/.config/display
-cp -raf $(pwd)/scripts/screen-detector.sh   $HOME/.config/display/screen-detector.sh
+cp -raf $DIR/../user-scripts/screen-detector.sh   $HOME/.config/display/screen-detector.sh
 
 while true; do
   read -p "Using a low res mac [yN]?   " yn

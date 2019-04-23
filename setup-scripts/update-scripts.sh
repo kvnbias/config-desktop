@@ -1,31 +1,33 @@
 
+DIR="$(cd "$( dirname "$0" )" && pwd)"
+
 # copy executables
-cp $(pwd)/scripts/volume-manager.sh                   $HOME/.config/audio/volume-manager.sh
-cp $(pwd)/scripts/brightness-manager.sh               $HOME/.config/display/brightness-manager.sh
-cp $(pwd)/scripts/lockscreen.sh                       $HOME/.config/display/lockscreen.sh
-cp $(pwd)/scripts/mirror-display.sh                   $HOME/.config/display/mirror-display.sh
-cp $(pwd)/scripts/screen-detector.sh                  $HOME/.config/display/screen-detector.sh
-cp $(pwd)/scripts/use-single-display.sh               $HOME/.config/display/use-single-display.sh
-cp $(pwd)/scripts/generate-conky-config.sh            $HOME/.config/conky/generate-conky-config.sh
-cp $(pwd)/scripts/generate-conky-helper.sh            $HOME/.config/conky/generate-conky-helper.sh
-cp $(pwd)/scripts/reinitialize-conky.sh               $HOME/.config/conky/reinitialize-conky.sh
-cp $(pwd)/scripts/keyboard-disabler.sh                $HOME/.config/keyboard/keyboard-disabler.sh
-cp $(pwd)/scripts/polybar.sh                          $HOME/.config/i3/polybar.sh
-cp $(pwd)/scripts/polkit-launch.sh                    $HOME/.config/i3/polkit-launch.sh
-cp $(pwd)/scripts/startup.sh                          $HOME/.config/i3/startup.sh
-cp $(pwd)/scripts/kali-rofi.sh                        $HOME/.config/kali/rofi.sh
-cp $(pwd)/scripts/kali-launch.sh                      $HOME/.config/kali/launch.sh
-cp $(pwd)/scripts/spawn-mpd.sh                        $HOME/.config/mpd/spawn-mpd.sh
-cp $(pwd)/scripts/network-connect.sh                  $HOME/.config/network/network-connect.sh
-cp $(pwd)/scripts/update-mirrors.sh                   $HOME/.config/network/update-mirrors.sh
-cp $(pwd)/scripts/toggle-touchpad.sh                  $HOME/.config/touchpad/toggle-touchpad.sh
-cp $(pwd)/scripts/popup-calendar.sh                   $HOME/.config/polybar/popup-calendar.sh
-cp $(pwd)/scripts/update-checker.sh                   $HOME/.config/polybar/update-checker.sh
-cp $(pwd)/scripts/check-space.sh                      $HOME/.config/system/check-space.sh
-cp $(pwd)/scripts/change-theme.sh                     $HOME/.config/themes/change-theme.sh
-cp $(pwd)/scripts/update-polybar-network-interface.sh $HOME/.config/themes/update-polybar-network-interface.sh
-cp $(pwd)/scripts/vifm-run.sh                         $HOME/.config/vifm/scripts/vifm-run.sh
-cp $(pwd)/scripts/vifm-viewer.sh                      $HOME/.config/vifm/scripts/vifm-viewer.sh
+cp $DIR/../user-scripts/volume-manager.sh                   $HOME/.config/audio/volume-manager.sh
+cp $DIR/../user-scripts/brightness-manager.sh               $HOME/.config/display/brightness-manager.sh
+cp $DIR/../user-scripts/lockscreen.sh                       $HOME/.config/display/lockscreen.sh
+cp $DIR/../user-scripts/mirror-display.sh                   $HOME/.config/display/mirror-display.sh
+cp $DIR/../user-scripts/screen-detector.sh                  $HOME/.config/display/screen-detector.sh
+cp $DIR/../user-scripts/use-single-display.sh               $HOME/.config/display/use-single-display.sh
+cp $DIR/../user-scripts/generate-conky-config.sh            $HOME/.config/conky/generate-conky-config.sh
+cp $DIR/../user-scripts/generate-conky-helper.sh            $HOME/.config/conky/generate-conky-helper.sh
+cp $DIR/../user-scripts/reinitialize-conky.sh               $HOME/.config/conky/reinitialize-conky.sh
+cp $DIR/../user-scripts/keyboard-disabler.sh                $HOME/.config/keyboard/keyboard-disabler.sh
+cp $DIR/../user-scripts/polybar.sh                          $HOME/.config/i3/polybar.sh
+cp $DIR/../user-scripts/polkit-launch.sh                    $HOME/.config/i3/polkit-launch.sh
+cp $DIR/../user-scripts/startup.sh                          $HOME/.config/i3/startup.sh
+cp $DIR/../user-scripts/kali-rofi.sh                        $HOME/.config/kali/rofi.sh
+cp $DIR/../user-scripts/kali-launch.sh                      $HOME/.config/kali/launch.sh
+cp $DIR/../user-scripts/spawn-mpd.sh                        $HOME/.config/mpd/spawn-mpd.sh
+cp $DIR/../user-scripts/network-connect.sh                  $HOME/.config/network/network-connect.sh
+cp $DIR/../user-scripts/update-mirrors.sh                   $HOME/.config/network/update-mirrors.sh
+cp $DIR/../user-scripts/toggle-touchpad.sh                  $HOME/.config/touchpad/toggle-touchpad.sh
+cp $DIR/../user-scripts/popup-calendar.sh                   $HOME/.config/polybar/popup-calendar.sh
+cp $DIR/../user-scripts/update-checker.sh                   $HOME/.config/polybar/update-checker.sh
+cp $DIR/../user-scripts/check-space.sh                      $HOME/.config/system/check-space.sh
+cp $DIR/../user-scripts/change-theme.sh                     $HOME/.config/themes/change-theme.sh
+cp $DIR/../user-scripts/update-polybar-network-interface.sh $HOME/.config/themes/update-polybar-network-interface.sh
+cp $DIR/../user-scripts/vifm-run.sh                         $HOME/.config/vifm/scripts/vifm-run.sh
+cp $DIR/../user-scripts/vifm-viewer.sh                      $HOME/.config/vifm/scripts/vifm-viewer.sh
 
 # make executables
 sudo chmod +x $HOME/.config/audio/volume-manager.sh
