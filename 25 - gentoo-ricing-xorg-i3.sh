@@ -111,7 +111,7 @@ media-video/ffmpeg alsa bluray chromium fontconfig libass libcaca mp3 libv4l ope
 net-libs/webkit-gtk libnotify
 net-print/cups usb dbus
 net-print/cups-filters dbus tiff pdf zeroconf
-net-wireless/bluez cups
+net-wireless/bluez cups user-session
 www-client/w3m unicode imlib
 www-plugins/freshplayerplugin v4l vaapi vdpau
 x11-libs/cairo opengl xcb
