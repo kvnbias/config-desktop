@@ -49,7 +49,7 @@ Comment=Manually downloaded firefox
 Exec=firefox
 Terminal=false
 Type=Application
-Icon=" | tee /home/kev/.local/share/applications/firefox.desktop
+Icon=" | tee /home/$(whoami)/.local/share/applications/firefox.desktop
 
   echo "
 [Desktop Entry]
@@ -59,7 +59,7 @@ Exec=/bin/bash -c \"notify-send -i /home/$(whoami)/.config/firefox/noicon -t 500
 Terminal=false
 Type=Application
 Icon=
-" | tee /home/kev/.local/share/applications/firefox-update.desktop
+" | tee /home/$(whoami)/.local/share/applications/firefox-update.desktop
 fi
 
 # extra
