@@ -1,6 +1,7 @@
 
 
 #!/bin/bash
+DIR="$(cd "$( dirname "$0" )" && pwd)"
 
 while true; do
   read -p "Will boot with other linux distros and share a partitions [yN]?   " wdb
@@ -56,7 +57,7 @@ chown -R $(whoami):wheel /home/$(whoami)
 done
 
 # Font DIRS for X.org
-sudo cp -raf "$(pwd)/system-confs/xorg.conf" "/etc/X11/xorg.conf"
+sudo cp -raf "$DIR/../../system-confs/xorg.conf" "/etc/X11/xorg.conf"
 
 os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed -e 's/"//g'))
 
@@ -85,7 +86,7 @@ sudo zypper -n update
 # Sound
 sudo zypper -n install --no-recommends alsa-utils
 
-bash $(pwd)/scripts/change-packman-mirror.sh
+bash $DIR/../../setup-scripts/change-packman-mirror.sh
 
 hasPackman=false
 if zypper ls | grep -q 'packman-essentials'; then
@@ -196,7 +197,7 @@ Enter GPU   " gpui
       sudo zypper -n install --no-recommends libvulkan_intel
       sudo zypper -n install --no-recommends libvulkan_intel-32bit
 
-      sudo cp -raf "$(pwd)/system-confs/20-intel.conf" "/etc/X11/xorg.conf.d/20-intel.conf"
+      sudo cp -raf "$DIR/../../system-confs/20-intel.conf" "/etc/X11/xorg.conf.d/20-intel.conf"
       echo Intel drivers installed;
       break;;
     [Aa]* )
@@ -217,8 +218,8 @@ What driver to use?
             sudo zypper -n install --no-recommends libvulkan_radeon
             sudo zypper -n install --no-recommends libvulkan_radeon-32bit
 
-            sudo cp -raf "$(pwd)/system-confs/20-radeon-ati.conf" "/etc/X11/xorg.conf.d/20-radeon.conf"
-            sudo cp -raf "$(pwd)/system-confs/10-screen.conf"     "/etc/X11/xorg.conf.d/10-screen.conf"
+            sudo cp -raf "$DIR/../../system-confs/20-radeon-ati.conf" "/etc/X11/xorg.conf.d/20-radeon.conf"
+            sudo cp -raf "$DIR/../../system-confs/10-screen.conf"     "/etc/X11/xorg.conf.d/10-screen.conf"
             echo AMDGPU drivers installed;
             break 2;;
           [2]* )
@@ -227,7 +228,7 @@ What driver to use?
             sudo zypper -n install --no-recommends libvulkan_radeon
             sudo zypper -n install --no-recommends libvulkan_radeon-32bit
 
-            sudo cp -raf "$(pwd)/system-confs/20-radeon-ati.conf" "/etc/X11/xorg.conf.d/20-radeon.conf"
+            sudo cp -raf "$DIR/../../system-confs/20-radeon-ati.conf" "/etc/X11/xorg.conf.d/20-radeon.conf"
             echo ATI drivers installed;
             break 2;;
           [Ee]* ) break 2;;
@@ -395,8 +396,8 @@ if [ ! -f "$HOME/.riced" ];then
   sudo sed -i 's/i3-sensible-terminal/urxvt/g' /etc/i3/config
   sudo sed -i 's/dmenu_run/dmenu/g' /etc/i3/config
 
-  cp -raf $(pwd)/rice/xinitrc $HOME/.xinitrc
-  cp -raf "$(pwd)/rice/config-i3-base" "$HOME/.Xresources"
+  cp -raf $DIR/../../rice/xinitrc $HOME/.xinitrc
+  cp -raf "$DIR/../../rice/config-i3-base" "$HOME/.Xresources"
   sudo cp $HOME/.Xresources /root/.Xresources
 fi
 
@@ -631,8 +632,8 @@ XSession=i3
 SystemAccount=false
 " | sudo tee /var/lib/AccountsService/users/$user
 
-      sudo cp $(pwd)/rice/images/avatar/default-user.png /var/lib/AccountsService/icons/$user.png
-      sudo cp $(pwd)/rice/images/avatar/default-user.png /usr/share/pixmaps/default-user.png
+      sudo cp $DIR/../../rice/images/avatar/default-user.png /var/lib/AccountsService/icons/$user.png
+      sudo cp $DIR/../../rice/images/avatar/default-user.png /usr/share/pixmaps/default-user.png
       sudo chown root:root /var/lib/AccountsService/users/$user
       sudo chown root:root /var/lib/AccountsService/icons/$user.png
 
@@ -640,7 +641,7 @@ SystemAccount=false
       sudo chmod 644 /var/lib/AccountsService/icons/$user.png
 
       # For more advance gestures, install: https://github.com/bulletmark/libinput-gestures
-      bash $(pwd)/scripts/update-libinput.sh
+      bash $DIR/../../setup-scripts/update-libinput.sh
 
       echo "
 $(whoami) ALL=(ALL) NOPASSWD: /usr/bin/zypper
@@ -648,8 +649,8 @@ $(whoami) ALL=(ALL) NOPASSWD: /usr/bin/yast
 " | sudo tee -a "/etc/sudoers"
 
       if [ ! -f $HOME/.riced ];then
-        bash $(pwd)/scripts/setup-user-configs.sh
-        bash $(pwd)/scripts/update-scripts.sh
+        bash $DIR/../../setup-scripts/setup-user-configs.sh
+        bash $DIR/../../setup-scripts/update-scripts.sh
         touch $HOME/.riced
       fi
 
@@ -658,7 +659,7 @@ $(whoami) ALL=(ALL) NOPASSWD: /usr/bin/yast
       cd $mainCWD
 
       mkdir -p "$HOME/.config/neofetch"
-      cp -rf $(pwd)/rice/neofetch.conf $HOME/.config/neofetch/$os.conf
+      cp -rf $DIR/../../rice/neofetch.conf $HOME/.config/neofetch/$os.conf
       sed -i "s/ascii_distro=.*/ascii_distro=\"opensuse\"/g" $HOME/.config/neofetch/$os.conf
 
       sudo mkdir -p /usr/share/icons/default
@@ -671,11 +672,11 @@ Inherits=Breeze
       sudo cp -raf $HOME/.vim/* /root/.vim
       sudo cp -raf $HOME/.vimrc /root/.vimrc
 
-      sudo cp -rf $(pwd)/rice/lightdm-gtk-greeter.conf /etc/lightdm/lightdm-gtk-greeter.conf
+      sudo cp -rf $DIR/../../rice/lightdm-gtk-greeter.conf /etc/lightdm/lightdm-gtk-greeter.conf
 
-      bash $(pwd)/scripts/update-scripts.sh
-      bash $(pwd)/scripts/update-screen-detector.sh
-      bash $(pwd)/scripts/update-themes.sh
+      bash $DIR/../../setup-scripts/update-scripts.sh
+      bash $DIR/../../setup-scripts/update-screen-detector.sh
+      bash $DIR/../../setup-scripts/update-themes.sh
 
       echo '
 

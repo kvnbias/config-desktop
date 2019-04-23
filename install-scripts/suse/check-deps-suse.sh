@@ -1,5 +1,6 @@
 
 
+DIR="$(cd "$( dirname "$0" )" && pwd)"
 os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed -e 's/"//g'))
 sudo zypper -n update
 
@@ -242,7 +243,7 @@ while true; do
       check_packages "x11-video-nvidiaG05 nvidia-glG05 nvidia-gfxG05-kmp-default nvidia-computeG05 dummy-package-to-cancel-install"
       sudo zypper rr nvidia
 
-      bash $(pwd)/scripts/change-packman-mirror.sh
+      bash $DIR/../../setup-scripts/change-packman-mirror.sh
       check_packages "
         broadcom-wl
         flash-player-ppapi

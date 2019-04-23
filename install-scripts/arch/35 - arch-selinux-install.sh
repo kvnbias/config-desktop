@@ -242,10 +242,10 @@ Do you want to install custom base module [Yn]?   " yn
     [Nn]* ) break;;
     * )
       echo "usepasswd = False" | sudo tee -a /etc/selinux/semanage.conf
-      cp $(pwd)/selinux/cse-arch.te $(pwd)/cse-arch.te
-      sudo checkmodule -M -m -o cse-arch.mod cse-arch.te
-      sudo semodule_package -o cse-arch.pp -m cse-arch.mod
-      sudo semodule -i cse-arch.pp
+      cp $DIR/../../selinux/cse-arch.te $DIR/../../selinux/cse-arch.te
+      sudo checkmodule -M -m -o $DIR/../../selinux/cse-arch.mod $DIR/../../selinux/cse-arch.te
+      sudo semodule_package -o $DIR/../../selinux/cse-arch.pp -m $DIR/../../selinux/cse-arch.mod
+      sudo semodule -i $DIR/../../selinux/cse-arch.pp
 
       sudo rm cse-arch.te
       sudo rm cse-arch.mod

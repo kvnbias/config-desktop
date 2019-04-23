@@ -24,7 +24,7 @@ menuentry \"$entryname\" {
   fi
 
   echo "} " | sudo tee -a /boot/efi/EFI/refind/refind.conf
-  # echo "} " | sudo tee -a $(pwd)/refind.conf
+  # echo "} " | sudo tee -a $DIR/../../refind.conf
 }
 
 declare_entryname() {
@@ -202,7 +202,7 @@ Do you wish to proceed [yN]?   " prcd
             fi
 
             echo "" | sudo tee /boot/efi/EFI/refind/refind.conf
-            # echo "" | sudo tee $(pwd)/refind.conf
+            # echo "" | sudo tee $DIR/../../refind.conf
 
             while true; do
               read -p "
@@ -330,15 +330,15 @@ Choose action   " blcstmztn
                   done
 
                   echo "scanfor $scanfor" | sudo tee -a /boot/efi/EFI/refind/refind.conf
-                  # echo "scanfor $scanfor" | sudo tee -a $(pwd)/refind.conf
+                  # echo "scanfor $scanfor" | sudo tee -a $DIR/../../refind.conf
 
                   echo "timeout 10" | sudo tee -a /boot/efi/EFI/refind/refind.conf
-                  # echo "timeout 10" | sudo tee -a $(pwd)/refind.conf
+                  # echo "timeout 10" | sudo tee -a $DIR/../../refind.conf
 
                   themeStr='include themes/rEFInd-minimal/theme.conf'
                   if sudo cat /boot/efi/EFI/refind/refind.conf.bup | grep -q "$themeStr"; then
                     echo "$themeStr" | sudo tee -a /boot/efi/EFI/refind/refind.conf
-                    # echo "$themeStr" | sudo tee -a $(pwd)/refind.conf
+                    # echo "$themeStr" | sudo tee -a $DIR/../../refind.conf
                   fi
 
                   echo "Customization done..."
