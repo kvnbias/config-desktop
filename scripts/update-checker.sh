@@ -21,6 +21,14 @@ elif [ -f /usr/bin/dnf ]; then
 
   updates=$(( upgrade + install ))
 
+elif [ -f /usr/bin/zypper ]; then
+  sudo zypper refresh > /dev/null
+  updates=$(sudo zypper list-updates | grep -v "+-" | grep -v "Available Version" | grep -v "\.\.\." | grep -v "No updates found." | wc -l 2> /dev/null);
+
+  if echo "$updates" | grep "No updates found."; then
+    updates=0
+  fi
+
 elif [ -f /usr/bin/apt ]; then
   apt=$(sudo apt update 2> /dev/null)
 
@@ -28,6 +36,7 @@ elif [ -f /usr/bin/apt ]; then
   if echo "$apt" | grep -q "upgraded"; then
     updates=$(echo "$apt" | grep 'upgraded' | awk '{ print $1 }')
   fi
+
 fi
 
 if [ "$updates" -gt 0 ]; then
