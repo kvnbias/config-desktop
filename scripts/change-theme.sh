@@ -71,7 +71,7 @@ set_neofetch_colors() {
     sed -i "s/^colors=.*/colors=$1/g" "$f"
 
     case $f in
-      *"fedora"*|*"ubuntu"*|*"opensuse"* )
+      *"fedora"*|*"ubuntu"*|*"opensuse"*|*"gentoo"* )
         # dual color
         sed -i "s/^ascii_colors=.*/ascii_colors=$2/g" "$f";;
       * )

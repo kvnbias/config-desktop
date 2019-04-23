@@ -115,7 +115,7 @@ declare_volume(){
 }
 
 declare_loader_initrd() {
-  loader=$(echo -n /boot/$(ls "$1" | grep 'vmlinuz' | grep -v -e 'rescue' -e 'fallback' | tail -1))
+  loader=$(echo -n /boot/$(ls "$1" | grep -e "vmlinuz" -e "genkernel" | grep -v -e 'rescue' -e 'fallback' | tail -1))
   initrd=$(echo -n /boot/$(ls "$1" | grep 'init' | grep -v -e 'rescue' -e 'fallback' | tail -1))
 }
 
@@ -149,6 +149,7 @@ add_kernel_params(){
     case $akparams in
       [Yy]* )
         while true; do
+          # echo "For gentoo, you might need these parameters: init=/lib/systemd/systemd rootfstype=ext4"
           read -p "Enter kernel params. Use <space> as delimiter (e.g. 'security=selinux selinux=1 quiet')   " akparamsval
           case $akparamsval in
             * )
