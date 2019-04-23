@@ -98,7 +98,7 @@ install_packages "sys-fs/exfat-utils sys-fs/fuse-exfat sys-fs/ntfs3g"
 install_packages "media-gfx/eog www-client/firefox-bin app-office/libreoffice-bin"
 
 if ! sudo cat /etc/portage/package.use/flags | grep -q 'media-video/vlc'; then
-  echo "media-video/vlc flac mp3 mpeg ogg v4l vaapi vdpau x264" | sudo tee -a /etc/portage/package.use/flags
+  echo "media-video/vlc gstreamer libass matroska faad flac mp3 mpeg ogg v4l vaapi vdpau x264" | sudo tee -a /etc/portage/package.use/flags
 fi
 
 if ! sudo cat /etc/portage/package.use/flags | grep -q 'app-arch/p7zip'; then
@@ -167,9 +167,41 @@ Install virtualbox [yN]?
 https://wiki.archlinux.org/index.php/VirtualBox   " ivb
   case $ivb in
     [Yy]* )
+      if ! sudo cat /etc/portage/package.use/flags | grep -q 'media-libs/libsdl'; then
+        echo "media-libs/libsdl libcaca opengl xinerama" | sudo tee -a /etc/portage/package.use/flags
+      fi
+
+      if ! sudo cat /etc/portage/package.use/flags | grep -q 'media-libs/audiofile'; then
+        echo "media-libs/audiofile flac" | sudo tee -a /etc/portage/package.use/flags
+      fi
+
       install_packages "sys-devel/binutils sys-devel/gcc sys-devel/make dev-lang/perl sys-devel/patch"
       install_packages "sys-kernel/linux-headers"
-      install_packages "virtualbox-bin"
+      install_packages "app-emulation/virtualbox-bin"
+
+      sudo gpasswd -a $(whoami) vboxusers
+      sudo modprobe vboxdrv
+      sudo modprobe vboxnetadp
+      sudo modprobe vboxnetflt
+      sudo modprobe vboxpci
+
+      if [ -f /etc/modules-load.d/networking.conf ]; then
+        echo '
+vboxdrv
+vboxnetadp
+vboxnetflt
+vboxpci
+' | sudo tee /etc/modules-load.d/networking.conf
+      else
+        echo '
+vboxdrv
+vboxnetadp
+vboxnetflt
+vboxpci
+' | sudo tee -a /etc/modules-load.d/networking.conf
+      fi
+
+      sudo systemctl start systemd-modules-load
       break;;
     * ) break;;
   esac
@@ -183,6 +215,7 @@ https://wiki.archlinux.org/index.php/Uncomplicated_Firewall   " ifw
   case $ifw in
     [Yy]* )
       install_packages "net-firewall/ufw"
+       sudo /usr/share/ufw/check-requirements
       sudo systemctl enable ufw
       sudo systemctl start ufw
       sudo ufw enable
@@ -199,7 +232,7 @@ https://wiki.archlinux.org/index.php/bluetooth   " ibt
   case $ibt in
     [Yy]* )
       if ! sudo cat /etc/portage/package.use/flags | grep -q 'net-wireless/bluez'; then
-        echo "net-wireless/bluez cups" | sudo tee -a /etc/portage/package.use/flags
+        echo "net-wireless/bluez cups user-session" | sudo tee -a /etc/portage/package.use/flags
       fi
 
       if ! sudo cat /etc/portage/package.use/flags | grep -q 'net-wireless/blueman'; then
@@ -213,9 +246,16 @@ load-module module-bluetooth-policy
 load-module module-bluetooth-discover
 " | sudo tee -a /etc/pulse/system.pa
 
+      if sudo cat /etc/bluetooth/main.conf | grep -q "^AutoEnable"; then
+        echo 'AutoEnable=true' | sudo tee -a /etc/bluetooth/main.conf
+      else
+        sudo sed -i "s/AutoEnable=.*/AutoEnable=true/g" /etc/bluetooth/main.conf
+      fi
+
       sed -i "s/# exec --no-startup-id blueman-applet/exec --no-startup-id blueman-applet/g" $HOME/.config/i3/config
       sed -i "s/# for_window \[class=\"Blueman-manager\"\]/for_window \[class=\"Blueman-manager\"\]/g" $HOME/.config/i3/config
 
+      sudo gpasswd -a $(whoami) plugdev
       sudo systemctl enable bluetooth
       sudo systemctl start bluetooth
       break;;
