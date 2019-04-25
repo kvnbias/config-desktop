@@ -431,7 +431,7 @@ menu-2-1-exec = menu-open-0
 [module/updates]
 type = custom/script
 exec = bash ~/.config/polybar/update-checker.sh
-interval = 600
+interval = 3600
 
 [settings]
 screenchange-reload = true
