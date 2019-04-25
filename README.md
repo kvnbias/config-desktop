@@ -2,11 +2,16 @@
 
 Current default configs and scripts for my desktop environments.
 
-## Quick start (Arch)
+## Quick start
 
-
+Arch:
 ```sh
-# wget -O arch-install https://git.io/fjfJ9
+# wget -O arch-install https://git.io/fjs8u
+# bash arch-install
+```
+Gentoo:
+```sh
+# wget -O arch-install https://git.io/fjs82
 # bash arch-install
 ```
 
@@ -14,10 +19,10 @@ Current default configs and scripts for my desktop environments.
 
 ```sh
 $ git clone https://github.com/kvnbai/config-desktop
-$ cd config-desktop
-$ bash 10\ -\ arch-post-install.sh
-$ bash 20\ -\ arch-post-install-xorg.sh
-$ bash 25\ -\ arch-ricing-xorg-i3.sh
+$ cd config-desktop/install-scripts/arch
+$ bash 10-arch-post-install.sh
+$ bash 20-arch-post-install-xorg.sh
+$ bash 25-arch-ricing-xorg-i3.sh
 ...
 ```
 
