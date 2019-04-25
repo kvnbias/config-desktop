@@ -674,7 +674,7 @@ SystemAccount=false
       # For more advance gestures, install: https://github.com/bulletmark/libinput-gestures
       bash $DIR/../../setup-scripts/update-libinput.sh
 
-      echo "$(whoami) ALL=(ALL) NOPASSWD: /usr/bin/apt" | sudo tee -a "/etc/sudoers"
+      echo "$(whoami) ALL=(ALL) NOPASSWD: /usr/bin/emerge" | sudo tee -a "/etc/sudoers"
 
       if [ ! -f $HOME/.riced ];then
         bash $DIR/../../setup-scripts/setup-user-configs.sh
