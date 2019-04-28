@@ -622,9 +622,9 @@ location = /usr/local/portage
       #
       # git tag -f "git-$(git rev-parse --short HEAD)"
       # autoreconf -fi && ./configure && make && sudo make install
-      # echo "auth include login" | sudo tee /etc/pam.d/i3lock
       add_ebuild "x11-misc" "i3lock-color" "$DIR/ebuilds/i3lock-color-2.12.ebuild"
       install_packages "x11-misc/i3lock-color"
+      echo "auth include login" | sudo tee /etc/pam.d/i3lock
 
       # terminal-based file viewer
       install_packages "app-misc/ranger app-misc/vifm"

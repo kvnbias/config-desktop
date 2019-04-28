@@ -17,6 +17,7 @@ IUSE=""
 DEPEND="
   dev-libs/libev
   media-libs/libjpeg-turbo
+  virtual/pam
   x11-libs/cairo
   x11-libs/libxcb
   x11-libs/libxkbcommon
@@ -34,5 +35,5 @@ src_configure() {
 }
 
 pkg_postinst() {
-  echo "auth include login" | sudo tee "${D}/etc/pam.d/i3lock"
+  echo "auth include login" | sudo tee "pam/${PN}"
 }
