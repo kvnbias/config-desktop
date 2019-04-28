@@ -174,6 +174,15 @@ Action:   " ipa
   done
 }
 
+add_ebuild() {
+  sudo mkdir -p /usr/local/portage/$1/$2
+  sudo cp $3 /usr/local/portage/$1/$2/
+  sudo chown -R portage:portage /usr/local/portage
+  pushd /usr/local/portage/$1/$2
+  sudo repoman manifest
+  popd
+}
+
 install_packages "sys-kernel/linux-firmware sys-kernel/linux-headers"
 install_packages "gnome-extra/polkit-gnome"
 
@@ -471,10 +480,25 @@ x11-misc/polybar alsa curl i3wm ipc mpd network
 x11-misc/rofi windowmode
 " | sudo tee -a /etc/portage/package.use/flags
 
+      sudo mkdir -p /usr/local/portage/{metadata,profiles}
+      sudo chown -R portage:portage /usr/local/portage
+      echo 'local' | sudo tee /usr/local/portage/profiles/local
+
+      echo "
+masters = gentoo
+auto-sync = false
+" | sudo tee /usr/local/portage/metadata/layout.conf
+
+      echo "
+[local]
+location = /usr/local/portage
+" | sudo tee /etc/portage/repos.conf/local.conf
+
       # will use for manually installed packages, /tmp has limited space
       cd /tmp
 
       install_packages "net-misc/curl net-misc/wget net-misc/httpie sys-process/lsof dev-vcs/git app-misc/tmux app-editors/vim app-editors/gedit"
+      install_packages "app-portage/repoman"
 
       # MANUAL: theme icon
       # git clone --recurse-submodules https://github.com/daniruiz/flat-remix.git
@@ -489,6 +513,7 @@ x11-misc/rofi windowmode
       # sudo ln -sf /usr/share/icons/Flat-Remix-Blue /usr/share/icons/Flat-Remix
       # cd /tmp
       wget -qO- https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/install.sh | sh
+      add_ebuild "x11-themes" "papirus-icon-theme" "$DIR/ebuilds/papirus-icon-theme-20190331.ebuild"
 
       # display
       install_packages "media-libs/imlib2"
