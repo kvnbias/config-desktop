@@ -551,22 +551,15 @@ location = /usr/local/portage
       amixer sset "Mic Boost" 100%
 
       # MANUAL 3b4f8b3: PulseAudio Applet.
-      install_packages "dev-libs/glib x11-libs/libnotify x11-libs/libX11"
-      install_packages "sys-devel/autoconf sys-devel/automake dev-util/pkgconf"
-
-      git clone --recurse-submodules https://github.com/fernandotcl/pa-applet.git
-      cd pa-applet
-
-      git fetch --tags
-      tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-
-      if [ ${#tag} -ge 1 ]; then
-        git checkout $tag
-      fi
-
-      git tag -f "git-$(git rev-parse --short HEAD)"
-      ./autogen.sh && ./configure && make && sudo make install
-      cd /tmp
+      # install_packages "dev-libs/glib x11-libs/libnotify x11-libs/libX11"
+      # install_packages "sys-devel/autoconf sys-devel/automake dev-util/pkgconf"
+      #
+      # git clone --recurse-submodules https://github.com/fernandotcl/pa-applet.git
+      # cd pa-applet && git fetch --tags
+      # tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+      # [ ${#tag} -ge 1 ] && git checkout $tag
+      # git tag -f "git-$(git rev-parse --short HEAD)"
+      # ./autogen.sh && ./configure && make && sudo make install
       add_ebuild "x11-misc" "pa-applet" "$DIR/ebuilds/pa-applet-20181009.ebuild"
       install_packages "x11-themes/papirus-icon-theme"
 
@@ -578,8 +571,6 @@ location = /usr/local/portage
       sudo systemctl enable NetworkManager
 
       # fonts - fc-list
-      # git clone https://github.com/ryanoasis/nerd-fonts.git
-      # ./install
       wget https://github.com/ryanoasis/nerd-fonts/raw/v2.0.0/patched-fonts/UbuntuMono/Regular/complete/Ubuntu%20Mono%20Nerd%20Font%20Complete%20Mono.ttf
       wget https://github.com/ryanoasis/nerd-fonts/raw/v2.0.0/patched-fonts/RobotoMono/Regular/complete/Roboto%20Mono%20Nerd%20Font%20Complete%20Mono.ttf
       wget https://github.com/ryanoasis/nerd-fonts/raw/v2.0.0/patched-fonts/RobotoMono/Bold/complete/Roboto%20Mono%20Bold%20Nerd%20Font%20Complete%20Mono.ttf
@@ -595,7 +586,6 @@ location = /usr/local/portage
       install_packages "app-misc/neofetch"
 
       # MANUAL: mouse cursor theme
-      # install_packages "media-gfx/inkscape x11-apps/xcursorgen"
       git clone https://github.com/KDE/breeze.git /tmp/breeze
       cd /tmp/breeze/cursors/Breeze
 

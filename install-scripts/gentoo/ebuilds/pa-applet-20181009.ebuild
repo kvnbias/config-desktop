@@ -7,7 +7,7 @@ EAPI=7
 inherit autotools git-r3
 DESCRIPTION="A systray-applet that allows you to control some of PulseAudio's features"
 HOMEPAGE="https://github.com/fernandotcl/pa-applet"
-EGIT_REPO_URI="https://github.com/fernandotcl/pa-applet.git"
+EGIT_REPO_URI="https://github.com/fernandotcl/${PN}.git"
 
 LICENSE="BSD-2"
 SLOT="0"

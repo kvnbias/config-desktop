@@ -36,5 +36,6 @@ src_install() {
       "${S}/AUTHORS" \
       "${S}/LICENSE" \
       "${D}${DESTDIR}/$theme" || true
+    echo " ==> '$theme' installed..."
   done
 }
