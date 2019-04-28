@@ -4,7 +4,7 @@
 
 EAPI=7
 
-inherit autotools git-r3
+inherit git-r3
 DESCRIPTION="A systray-applet that allows you to control some of PulseAudio's features"
 HOMEPAGE="https://github.com/KDE/breeze"
 EGIT_REPO_URI="https://github.com/KDE/breeze.git"
@@ -20,7 +20,7 @@ RDEPEND="${DEPEND}"
 S="${WORKDIR}/${P}"
 
 src_configure() {
-  git checkout ${PV}
+  git checkout "v${PV}"
 }
 
 src_compile() {
