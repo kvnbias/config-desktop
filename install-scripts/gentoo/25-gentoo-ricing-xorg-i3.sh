@@ -586,18 +586,16 @@ location = /usr/local/portage
       install_packages "app-misc/neofetch"
 
       # MANUAL: mouse cursor theme
-      git clone https://github.com/KDE/breeze.git /tmp/breeze
-      cd /tmp/breeze/cursors/Breeze
-
-      git fetch --tags
-      tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-
-      if [ ${#tag} -ge 1 ]; then
-        git checkout $tag
-      fi
-
-      git tag -f "git-$(git rev-parse --short HEAD)"
-      sudo cp -raf /tmp/breeze/cursors/Breeze/Breeze /usr/share/icons/Breeze
+      # git clone https://github.com/KDE/breeze.git /tmp/breeze
+      # cd /tmp/breeze/cursors/Breeze
+      #
+      # git fetch --tags
+      # tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+      # [ ${#tag} -ge 1 ] && git checkout $tag
+      # git tag -f "git-$(git rev-parse --short HEAD)"
+      # sudo cp -raf /tmp/breeze/cursors/Breeze/Breeze /usr/share/icons/Breeze
+      add_ebuild "x11-themes" "breeze-xcursors" "$DIR/ebuilds/breeze-xcursors-v5.15.4.1.ebuild"
+      install_packages "x11-themes/breeze-xcursors"
 
       # system monitor, compositor, image on terminal
       install_packages "x11-misc/dunst app-admin/conky x11-misc/compton www-client/w3m"
