@@ -27,21 +27,19 @@ src_compile() {
 }
 
 src_install() {
-  sudo mkdir -p "$DESTDIR"
-
   for theme in "${THEMES[@]}"; do
     test -d "${S}/$theme" || continue
     echo " ==> Installing '$theme' ..."
-    sudo mkdir -p "${S}/$theme"
-    sudo cp -raf "${S}/$theme" "$DESTDIR"
+    sudo mkdir -p "${D}${DESTDIR}/$theme"
+    sudo cp -raf "${S}/$theme/." "${D}${DESTDIR}/$theme/"
     sudo cp -raf \
       "${S}/AUTHORS" \
       "${S}/LICENSE" \
-      "$DESTDIR/$theme" || true
+      "${D}${DESTDIR}/$theme" || true
   done
 
-  # Try to restore the color of folders from a config
-  if which papirus-folders > /dev/null 2>&1; then
-    papirus-folders -R || true
-  fi
+  ## Try to restore the color of folders from a config
+  #if which papirus-folders > /dev/null 2>&1; then
+  #  papirus-folders -R || true
+  #fi
 }
