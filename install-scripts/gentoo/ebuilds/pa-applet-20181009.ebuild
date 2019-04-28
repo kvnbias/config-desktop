@@ -26,13 +26,8 @@ BDEPEND="
   virtual/pkgconfig
 "
 
-
 S="${WORKDIR}/${P}"
 
-src_compile() {
-  echo "Nothing to compile."
-}
-
-src_install() {
-  echo "Nothing to install"
+src_configure() {
+  sh -c "$(pwd)/autogen.sh && $(pwd)/configure"
 }
