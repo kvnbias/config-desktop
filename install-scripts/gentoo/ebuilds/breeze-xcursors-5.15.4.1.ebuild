@@ -29,6 +29,7 @@ src_compile() {
 
 src_install() {
   echo "==> Installing Breeze cursor theme"
+  sudo mkdir -p "${D}/usr/share/icons/Breeze/"
   sudo cp -raf "${S}/cursors/Breeze/Breeze/." "${D}/usr/share/icons/Breeze/"
   echo "==> Breeze cursor theme installed."
 }
