@@ -41,5 +41,5 @@ src_install() {
   einstalldocs
 
   sudo mkdir -p "${D}/etc/pam.d"
-  echo "auth include login" | sudo tee "${D}/etc/pam.d/${PN}"
+  echo "auth include login" | sudo tee "${D}/etc/pam.d/i3lock"
 }
