@@ -4,7 +4,7 @@
 
 EAPI=7
 
-inherit autotools git-r3
+inherit autotools
 DESCRIPTION="Improved improved screen locker - 'the ricing fork of i3lock'"
 HOMEPAGE="https://github.com/PandorasFox/i3lock-color"
 SRC_URI="https://github.com/PandorasFox/i3lock-color/archive/${PV}.c.tar.gz"
@@ -33,13 +33,6 @@ src_configure() {
   sh -c "autoreconf -fi && $(pwd)/configure"
 }
 
-src_compile() {
-  sh -c "make"
-}
-
-src_install() {
-  echo "==> Installing i3lock-color"
-  sh -c "sudo make install"
-  echo "==> i3lock-color theme installed."
+pkg_postinst() {
   echo "auth include login" | sudo tee "${D}/etc/pam.d/i3lock"
 }
