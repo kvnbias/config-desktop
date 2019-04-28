@@ -4,9 +4,10 @@
 
 EAPI=7
 
+inherit autotools git-r3
 DESCRIPTION="A systray-applet that allows you to control some of PulseAudio's features"
 HOMEPAGE="https://github.com/fernandotcl/pa-applet"
-SRC_URI="https://github.com/fernandotcl/pa-applet"
+EGIT_REPO_URI="https://github.com/fernandotcl/pa-applet.git"
 
 LICENSE="BSD-2"
 SLOT="0"
@@ -17,11 +18,14 @@ DEPEND="
   dev-libs/glib
   x11-libs/libnotify
   x11-libs/libX11
-  sys-devel/autoconf
-  sys-devel/automake
-  dev-util/pkgconf
+  media-sound/pulseaudio
+  x11-libs/gtk+:3
 "
 RDEPEND="${DEPEND}"
+BDEPEND="
+  virtual/pkgconfig
+"
+
 
 S="${WORKDIR}/${P}"
 

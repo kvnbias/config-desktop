@@ -501,19 +501,9 @@ location = /usr/local/portage
       install_packages "app-portage/repoman"
 
       # MANUAL: theme icon
-      # git clone --recurse-submodules https://github.com/daniruiz/flat-remix.git
-      # cd flat-remix
-      # git fetch --tags
-      # tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-      # if [ ${#tag} -ge 1 ]; then
-      #   git checkout $tag
-      # fi
-      # git tag -f "git-$(git rev-parse --short HEAD)"
-      # sudo mkdir -p /usr/share/icons && sudo cp -raf Flat-Remix* /usr/share/icons/
-      # sudo ln -sf /usr/share/icons/Flat-Remix-Blue /usr/share/icons/Flat-Remix
-      # cd /tmp
-      wget -qO- https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/install.sh | sh
+      # wget -qO- https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/install.sh | sh
       add_ebuild "x11-themes" "papirus-icon-theme" "$DIR/ebuilds/papirus-icon-theme-20190331.ebuild"
+      install_packages "x11-themes/papirus-icon-theme"
 
       # display
       install_packages "media-libs/imlib2"
@@ -577,6 +567,8 @@ location = /usr/local/portage
       git tag -f "git-$(git rev-parse --short HEAD)"
       ./autogen.sh && ./configure && make && sudo make install
       cd /tmp
+      add_ebuild "x11-misc" "pa-applet" "$DIR/ebuilds/pa-applet-20181009.ebuild"
+      install_packages "x11-themes/papirus-icon-theme"
 
       sudo sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf
       sudo sed -i 's/; autospawn = yes/autospawn = yes/g' /etc/pulse/client.conf
