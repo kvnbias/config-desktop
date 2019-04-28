@@ -30,14 +30,14 @@ src_install() {
   sudo mkdir -p "$DESTDIR"
 
   for theme in "${THEMES[@]}"; do
-    test -d "$temp_dir/$gh_repo-$TAG/$theme" || continue
+    test -d "${S}/$theme" || continue
     echo " ==> Installing '$theme' ..."
-    sudo cp -R "${S}/$theme" "$DESTDIR"
-    sudo cp -f \
-        "${S}/AUTHORS" \
-        "${S}/LICENSE" \
-        "$DESTDIR/$theme" || true
-    sudo gtk-update-icon-cache -q "$DESTDIR/$theme" || true
+    sudo mkdir -p "${S}/$theme"
+    sudo cp -raf "${S}/$theme" "$DESTDIR"
+    sudo cp -raf \
+      "${S}/AUTHORS" \
+      "${S}/LICENSE" \
+      "$DESTDIR/$theme" || true
   done
 
   # Try to restore the color of folders from a config
