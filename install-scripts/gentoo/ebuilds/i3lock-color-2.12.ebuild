@@ -34,6 +34,12 @@ src_configure() {
   sh -c "autoreconf -fi && $(pwd)/configure"
 }
 
-pkg_postinst() {
-  echo "auth include login" | sudo tee "pam/${PN}"
+src_install() {
+  if [[ -f Makefile ]] || [[ -f GNUmakefile ]] || [[ -f makefile ]] ; then
+    emake DESTDIR="${D}" install
+  fi
+  einstalldocs
+
+  sudo mkdir -p "${D}/etc/pam.d"
+  echo "auth include login" | sudo tee "${D}/etc/pam.d/${PN}"
 }
