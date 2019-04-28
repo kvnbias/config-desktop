@@ -37,9 +37,4 @@ src_install() {
       "${S}/LICENSE" \
       "${D}${DESTDIR}/$theme" || true
   done
-
-  ## Try to restore the color of folders from a config
-  #if which papirus-folders > /dev/null 2>&1; then
-  #  papirus-folders -R || true
-  #fi
 }
