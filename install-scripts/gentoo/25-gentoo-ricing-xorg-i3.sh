@@ -476,7 +476,7 @@ x11-misc/rofi windowmode
 
       install_packages "net-misc/curl net-misc/wget net-misc/httpie sys-process/lsof dev-vcs/git app-misc/tmux app-editors/vim app-editors/gedit"
 
-      # theme icon
+      # MANUAL: theme icon
       # git clone --recurse-submodules https://github.com/daniruiz/flat-remix.git
       # cd flat-remix
       # git fetch --tags
@@ -577,7 +577,7 @@ x11-misc/rofi windowmode
       # terminal
       install_packages "app-misc/neofetch"
 
-      # mouse cursor theme
+      # MANUAL: mouse cursor theme
       # install_packages "media-gfx/inkscape x11-apps/xcursorgen"
       git clone https://github.com/KDE/breeze.git /tmp/breeze
       cd /tmp/breeze/cursors/Breeze
