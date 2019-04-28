@@ -5,13 +5,13 @@
 EAPI=7
 
 inherit git-r3
-DESCRIPTION="A systray-applet that allows you to control some of PulseAudio's features"
+DESCRIPTION="Breeze cursor theme (KDE Plasma 5). This package is for usage in non-KDE Plasma desktops."
 HOMEPAGE="https://github.com/KDE/breeze"
 EGIT_REPO_URI="https://github.com/KDE/breeze.git"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="amd64 x86"
 IUSE=""
  
 DEPEND=""
