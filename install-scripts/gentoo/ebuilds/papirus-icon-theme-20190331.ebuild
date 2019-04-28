@@ -19,8 +19,8 @@ BDEPEND=""
 
 S="${WORKDIR}/${P}"
 
-: "${DESTDIR:=/usr/share/icons}"
-: "${THEMES:=Papirus ePapirus Papirus-Dark Papirus-Light}"
+DESTDIR="/usr/share/icons"
+THEMES=("Papirus" "ePapirus" "Papirus-Dark" "Papirus-Light")
 
 src_compile() {
   echo "Nothing to compile."
@@ -29,7 +29,7 @@ src_compile() {
 src_install() {
   sudo mkdir -p "$DESTDIR"
 
-  for theme in "$@"; do
+  for theme in "${THEMES[@]}"; do
     test -d "$temp_dir/$gh_repo-$TAG/$theme" || continue
     echo " ==> Installing '$theme' ..."
     sudo cp -R "${S}/$theme" "$DESTDIR"
