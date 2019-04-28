@@ -494,9 +494,6 @@ auto-sync = false
 location = /usr/local/portage
 " | sudo tee /etc/portage/repos.conf/local.conf
 
-      # will use for manually installed packages, /tmp has limited space
-      cd /tmp
-
       install_packages "net-misc/curl net-misc/wget net-misc/httpie sys-process/lsof dev-vcs/git app-misc/tmux app-editors/vim app-editors/gedit"
       install_packages "app-portage/repoman"
 
@@ -561,7 +558,7 @@ location = /usr/local/portage
       # git tag -f "git-$(git rev-parse --short HEAD)"
       # ./autogen.sh && ./configure && make && sudo make install
       add_ebuild "x11-misc" "pa-applet" "$DIR/ebuilds/pa-applet-20181009.ebuild"
-      install_packages "x11-themes/papirus-icon-theme"
+      install_packages "x11-misc/pa-applet"
 
       sudo sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf
       sudo sed -i 's/; autospawn = yes/autospawn = yes/g' /etc/pulse/client.conf
@@ -594,7 +591,7 @@ location = /usr/local/portage
       # [ ${#tag} -ge 1 ] && git checkout $tag
       # git tag -f "git-$(git rev-parse --short HEAD)"
       # sudo cp -raf /tmp/breeze/cursors/Breeze/Breeze /usr/share/icons/Breeze
-      add_ebuild "x11-themes" "breeze-xcursors" "$DIR/ebuilds/breeze-xcursors-v5.15.4.1.ebuild"
+      add_ebuild "x11-themes" "breeze-xcursors" "$DIR/ebuilds/breeze-xcursors-5.15.4.1.ebuild"
       install_packages "x11-themes/breeze-xcursors"
 
       # system monitor, compositor, image on terminal
@@ -615,24 +612,19 @@ location = /usr/local/portage
       # MANUAL 2.12.c: i3lock-color. Some are already installed
       sudo emerge --ask --verbose --depclean x11-misc/i3lock
 
-      install_packages "media-libs/libjpeg-turbo x11-libs/cairo dev-libs/libev x11-libs/libxkbcommon"
-      install_packages "x11-libs/xcb-util x11-libs/xcb-util-image x11-libs/xcb-util-xrm"
-      install_packages "sys-devel/autoconf sys-devel/automake"
-
-      git clone --recurse-submodules https://github.com/PandorasFox/i3lock-color.git
-      cd i3lock-color
-
-      git fetch --tags
-      tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-
-      if [ ${#tag} -ge 1 ]; then
-        git checkout $tag
-      fi
-
-      git tag -f "git-$(git rev-parse --short HEAD)"
-      autoreconf -fi && ./configure && make && sudo make install
-      echo "auth include login" | sudo tee /etc/pam.d/i3lock
-      cd /tmp
+      # install_packages "media-libs/libjpeg-turbo x11-libs/libxcb x11-libs/cairo dev-libs/libev x11-libs/libxkbcommon"
+      # install_packages "x11-libs/xcb-util x11-libs/xcb-util-image x11-libs/xcb-util-xrm"
+      # install_packages "sys-devel/autoconf sys-devel/automake"
+      # git clone --recurse-submodules https://github.com/PandorasFox/i3lock-color.git
+      # cd i3lock-color && git fetch --tags
+      # tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+      # [ ${#tag} -ge 1 ] && git checkout $tag
+      #
+      # git tag -f "git-$(git rev-parse --short HEAD)"
+      # autoreconf -fi && ./configure && make && sudo make install
+      # echo "auth include login" | sudo tee /etc/pam.d/i3lock
+      add_ebuild "x11-misc" "i3lock-color" "$DIR/ebuilds/i3lock-color-2.12.ebuild"
+      install_packages "x11-misc/i3lock-color"
 
       # terminal-based file viewer
       install_packages "app-misc/ranger app-misc/vifm"
