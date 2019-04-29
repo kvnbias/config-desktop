@@ -4,7 +4,7 @@
 
 EAPI=7
 
-inherit git-r3
+inherit git-r3 xdg-utils
 DESCRIPTION="Breeze cursor theme (KDE Plasma 5). This package is for usage in non-KDE Plasma desktops."
 HOMEPAGE="https://github.com/KDE/breeze"
 EGIT_REPO_URI="https://github.com/KDE/breeze.git"

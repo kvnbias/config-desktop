@@ -31,3 +31,11 @@ S="${WORKDIR}/${P}"
 src_configure() {
   sh -c "$(pwd)/autogen.sh && $(pwd)/configure"
 }
+
+src_install() {
+  if [[ -f Makefile ]] || [[ -f GNUmakefile ]] || [[ -f makefile ]] ; then
+    emake DESTDIR="${D}" install
+  fi
+
+  einstalldocs
+}
