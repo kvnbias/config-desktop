@@ -15,6 +15,7 @@ KEYWORDS="amd64 x86"
 IUSE=""
  
 DEPEND="
+  dev-lan/vala
   dev-libs/libgee
   dev-libs/json-glib
   net-misc/rsync
