@@ -151,6 +151,7 @@ while true; do
 Install Timeshift [yN]?  " its
   case $its in
     [Yy]* )
+      # MANUAL: timeshift 19.01
       # install_packages "dev-libs/libgee dev-libs/json-glib net-misc/rsync x11-libs/vte"
       # wget -O /tmp/timeshift-v19.01-amd64.run https://github.com/teejee2008/timeshift/releases/download/v19.01/timeshift-v19.01-amd64.run
       # sudo sh /tmp/timeshift*amd64.run

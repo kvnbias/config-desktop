@@ -497,7 +497,7 @@ location = /usr/local/portage
       install_packages "net-misc/curl net-misc/wget net-misc/httpie sys-process/lsof dev-vcs/git app-misc/tmux app-editors/vim app-editors/gedit"
       install_packages "app-portage/repoman"
 
-      # MANUAL: theme icon
+      # MANUAL: papirus-icon-theme 20190331
       # wget -qO- https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/install.sh | sh
       add_ebuild "x11-themes" "papirus-icon-theme" "$DIR/ebuilds/papirus-icon-theme-20190331.ebuild"
       install_packages "x11-themes/papirus-icon-theme"
@@ -547,7 +547,7 @@ location = /usr/local/portage
       amixer sset "Mic" 100%
       amixer sset "Mic Boost" 100%
 
-      # MANUAL 3b4f8b3: PulseAudio Applet.
+      # MANUAL pa-applet 20181009
       # install_packages "dev-libs/glib x11-libs/libnotify x11-libs/libX11"
       # install_packages "sys-devel/autoconf sys-devel/automake dev-util/pkgconf"
       #
@@ -582,7 +582,7 @@ location = /usr/local/portage
       # terminal
       install_packages "app-misc/neofetch"
 
-      # MANUAL: mouse cursor theme
+      # MANUAL: breeze-xcursors 5.15.4.1
       # git clone https://github.com/KDE/breeze.git /tmp/breeze
       # cd /tmp/breeze/cursors/Breeze
       #
@@ -609,7 +609,7 @@ location = /usr/local/portage
       install_packages "x11-libs/libXext dev-python/setuptools"
       pip3 install --user ueberzug
 
-      # MANUAL 2.12.c: i3lock-color. Some are already installed
+      # MANUAL i3lock-color 2.12.c
       sudo emerge --ask --verbose --depclean x11-misc/i3lock
 
       # install_packages "media-libs/libjpeg-turbo x11-libs/libxcb x11-libs/cairo dev-libs/libev x11-libs/libxkbcommon"
