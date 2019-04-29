@@ -37,6 +37,16 @@ Action:   " ipa
     esac
   done
 }
+
+add_ebuild() {
+  sudo mkdir -p /usr/local/portage/$1/$2
+  sudo cp $3 /usr/local/portage/$1/$2/
+  sudo chown -R portage:portage /usr/local/portage
+  pushd /usr/local/portage/$1/$2
+  sudo repoman manifest
+  popd
+}
+
 # extra
 sudo install_packages "sys-process/htop"
 

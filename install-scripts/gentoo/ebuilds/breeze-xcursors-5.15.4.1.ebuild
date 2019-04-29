@@ -17,7 +17,7 @@ IUSE=""
 DEPEND=""
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/${P}"
+S="${WORKDIR}/${PN}-v${PV}"
 
 src_configure() {
   git checkout "v${PV}"

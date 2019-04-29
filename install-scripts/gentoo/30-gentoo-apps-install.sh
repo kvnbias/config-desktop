@@ -68,6 +68,15 @@ Action:   " ipa
   done
 }
 
+add_ebuild() {
+  sudo mkdir -p /usr/local/portage/$1/$2
+  sudo cp $3 /usr/local/portage/$1/$2/
+  sudo chown -R portage:portage /usr/local/portage
+  pushd /usr/local/portage/$1/$2
+  sudo repoman manifest
+  popd
+}
+
 sudo touch /etc/portage/package.use/flags
 if ! sudo cat /etc/portage/package.use/flags | grep -q 'sys-auth/polkit gtk'; then
   echo 'sys-auth/polkit gtk' | sudo tee -a /etc/portage/package.use/flags
@@ -213,7 +222,7 @@ https://wiki.archlinux.org/index.php/Uncomplicated_Firewall   " ifw
   case $ifw in
     [Yy]* )
       install_packages "net-firewall/ufw"
-       sudo /usr/share/ufw/check-requirements
+      sudo /usr/share/ufw/check-requirements
       sudo systemctl enable ufw
       sudo systemctl start ufw
       sudo ufw enable
