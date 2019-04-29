@@ -6,7 +6,7 @@ EAPI=7
 
 DESCRIPTION="Papirus is a free and open source SVG icon theme for Linux"
 HOMEPAGE="https://github.com/PapirusDevelopmentTeam/papirus-icon-theme"
-SRC_URI="https://github.com/PapirusDevelopmentTeam/papirus-icon-theme/archive/${PV}.tar.gz -> ${PN}-${PV}"
+SRC_URI="https://github.com/PapirusDevelopmentTeam/papirus-icon-theme/archive/${PV}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -16,8 +16,6 @@ IUSE=""
 DEPEND="x11-libs/gtk+:3"
 RDEPEND="${DEPEND}"
 BDEPEND=""
-
-S="${WORKDIR}/${PN}-${PV}"
 
 DESTDIR="/usr/share/icons"
 THEMES=("Papirus" "ePapirus" "Papirus-Dark" "Papirus-Light")
