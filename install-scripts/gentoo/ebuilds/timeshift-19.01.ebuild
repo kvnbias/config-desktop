@@ -4,7 +4,7 @@
 
 EAPI=7
 
-VALA_MIN_API_VERSION="0.40"
+VALA_MIN_API_VERSION="0.40.14"
 VALA_USE_DEPEND="vapigen"
 
 inherit autotools vala
@@ -23,7 +23,7 @@ DEPEND="
   net-libs/libsoup
   net-misc/rsync
   x11-libs/vte
-  ${vala_depend}
+  $(vala_depend)
 "
 RDEPEND="${DEPEND}"
 
