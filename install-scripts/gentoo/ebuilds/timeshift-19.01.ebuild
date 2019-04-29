@@ -29,6 +29,7 @@ RDEPEND="${DEPEND}"
 
 src_prepare() {
   eapply_user
+  sudo ln -sf /usr/bin/valac-* ${D}/usr/bin/valac
   vala_src_prepare
 }
 
