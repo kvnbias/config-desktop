@@ -5,9 +5,8 @@
 EAPI=7
 
 VALA_MIN_API_VERSION="0.40"
-VALA_USE_DEPEND="vapigen"
 
-inherit vala
+inherit vala xdg-utils
 DESCRIPTION="Improved improved screen locker - 'the ricing fork of i3lock'"
 HOMEPAGE="https://github.com/teejee2008/timeshift"
 SRC_URI="https://github.com/teejee2008/timeshift/releases/download/v19.01/timeshift-v19.01-amd64.run"
@@ -22,14 +21,19 @@ DEPEND="
   dev-libs/json-glib
   net-libs/libsoup
   net-misc/rsync
+  sys-process/cronie
   x11-libs/vte
   $(vala_depend)
 "
 RDEPEND="${DEPEND}"
 
 src_unpack() {
-  echo "Nothing to unpack"
+  echo "Unpacking ${PN}-v${PV}-amd64.run file"
   mkdir -p "${S}"
+  ls "${S}/../../distdir" | grep "${PN}-v${PV}-amd64.run"
+  cp "${S}/../../distdir/${PN}-v${PV}-amd64.run" "$(pwd)"
+  sh "${PN}-v${PV}-amd64.run" --noexec --target "${S}"
+  echo "${PN}-v${PV}-amd64.run unpacked."
 }
 
 src_prepare() {
@@ -46,5 +50,21 @@ src_compile() {
 }
 
 src_install() {
-  sh ../../distdir/timeshift*amd64.run
+  echo "Copying /etc files"
+  sudo mkdir -p "${D}/etc"
+  sudo cp -raf "${S}/files/etc/." "${D}/etc/"
+
+  echo "Copying /usr files"
+  sudo mkdir -p "${D}/usr"
+  sudo cp -raf "${S}/files/usr/." "${D}/usr/"
 }
+
+pkg_postinst() {
+  xdg_desktop_database_update
+}
+
+pkg_postrm() {
+  xdg_desktop_database_update
+}
+
+
