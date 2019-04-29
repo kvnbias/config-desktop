@@ -4,7 +4,7 @@
 
 EAPI=7
 
-inherit autotools
+inherit autotools vala
 DESCRIPTION="Improved improved screen locker - 'the ricing fork of i3lock'"
 HOMEPAGE="https://github.com/teejee2008/timeshift"
 SRC_URI="https://github.com/teejee2008/${PN}/archive/v${PV}.tar.gz"
