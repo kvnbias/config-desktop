@@ -4,7 +4,6 @@
 
 EAPI=7
 
-inherit gnome2-utils
 DESCRIPTION="Papirus is a free and open source SVG icon theme for Linux"
 HOMEPAGE="https://github.com/PapirusDevelopmentTeam/papirus-icon-theme"
 SRC_URI="https://github.com/PapirusDevelopmentTeam/papirus-icon-theme/archive/${PV}.tar.gz"
@@ -14,7 +13,7 @@ SLOT="0"
 KEYWORDS="amd64 x86"
 IUSE=""
  
-DEPEND=""
+DEPEND="x11-libs/gtk+:3"
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
@@ -37,7 +36,7 @@ src_install() {
       "${S}/AUTHORS" \
       "${S}/LICENSE" \
       "${D}${DESTDIR}/$theme" || true
-    gnome2_icon_cache_update
+    sudo gtk-update-icon-cache -q "${D}${DESTDIR}/$theme"
     echo " ==> '$theme' installed..."
   done
 }
