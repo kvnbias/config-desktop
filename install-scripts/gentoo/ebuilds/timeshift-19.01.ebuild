@@ -4,7 +4,7 @@
 
 EAPI=7
 
-VALA_MIN_API_VERSION="0.40.14"
+VALA_MIN_API_VERSION="0.40"
 VALA_USE_DEPEND="vapigen"
 
 inherit autotools vala
