@@ -28,10 +28,10 @@ src_unpack() {
 
 src_prepare() {
   echo "Preparing fonts"
-  cp -raf "${S}/../../distdir/Ubuntu Mono Nerd Font Complete Mono.ttf"       "${S}/Ubuntu Mono Nerd Font Complete Mono.ttf"
-  cp -raf "${S}/../../distdir/Roboto Mono Nerd Font Complete Mono.ttf"       "${S}/Roboto Mono Nerd Font Complete Mono.ttf"
-  cp -raf "${S}/../../distdir/Roboto Mono Bold Nerd Font Complete Mono.ttf"  "${S}/Roboto Mono Bold Nerd Font Complete Mono.ttf"
-  cp -raf "${S}/../../distdir/Sauce Code Pro Nerd Font Complete Mono.ttf"    "${S}/Sauce Code Pro Nerd Font Complete Mono.ttf"
+  cp -raf "${S}/../../distdir/Ubuntu%20Mono%20Nerd%20Font%20Complete%20Mono.ttf"         "${S}/Ubuntu Mono Nerd Font Complete Mono.ttf"
+  cp -raf "${S}/../../distdir/Roboto%20Mono%20Nerd%20Font%20Complete%20Mono.ttf"         "${S}/Roboto Mono Nerd Font Complete Mono.ttf"
+  cp -raf "${S}/../../distdir/Roboto%20Mono%20Bold%20Nerd%20Font%20Complete%20Mono.ttf"  "${S}/Roboto Mono Bold Nerd Font Complete Mono.ttf"
+  cp -raf "${S}/../../distdir/Sauce%20Code%20Pro%20Nerd%20Font%20Complete%20Mono.ttf"    "${S}/Sauce Code Pro Nerd Font Complete Mono.ttf"
   eapply_user
 }
 
