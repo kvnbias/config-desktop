@@ -4,7 +4,10 @@
 
 EAPI=7
 
-inherit autotools
+VALA_MIN_API_VERSION="0.40"
+VALA_USE_DEPEND="vapigen"
+
+inherit autotools vala
 DESCRIPTION="Improved improved screen locker - 'the ricing fork of i3lock'"
 HOMEPAGE="https://github.com/teejee2008/timeshift"
 SRC_URI="https://github.com/teejee2008/${PN}/archive/v${PV}.tar.gz"
@@ -17,13 +20,16 @@ IUSE=""
 DEPEND="
   dev-libs/libgee
   dev-libs/json-glib
+  net-libs/libsoup
   net-misc/rsync
   x11-libs/vte
+  ${vala_depend}
 "
 RDEPEND="${DEPEND}"
 
 src_prepare() {
   eapply_user
+  vala_src_prepare
 }
 
 src_configure() {
