@@ -30,7 +30,6 @@ RDEPEND="${DEPEND}"
 src_unpack() {
   echo "Unpacking timeshift-v${PV}-amd64.run file"
   mkdir -p "${S}"
-  ls "${S}/../../distdir" | grep "timeshift-v${PV}-amd64.run"
   cp "${S}/../../distdir/timeshift-v${PV}-amd64.run" "$(pwd)"
   sh "timeshift-v${PV}-amd64.run" --noexec --target "${S}"
   echo "timeshift-v${PV}-amd64.run unpacked."
