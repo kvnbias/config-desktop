@@ -9,7 +9,7 @@ VALA_MIN_API_VERSION="0.40"
 inherit vala xdg-utils
 DESCRIPTION="System restore tool for Linux. Creates filesystem snapshots using rsync+hardlinks, or BTRFS snapshots."
 HOMEPAGE="https://github.com/teejee2008/timeshift"
-SRC_URI="https://github.com/teejee2008/timeshift/releases/download/v19.01/timeshift-v19.01-amd64.run"
+SRC_URI="https://github.com/teejee2008/timeshift/releases/download/v${PV}/timeshift-v${PV}-amd64.run"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -28,12 +28,12 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 src_unpack() {
-  echo "Unpacking ${PN}-v${PV}-amd64.run file"
+  echo "Unpacking timeshift-v${PV}-amd64.run file"
   mkdir -p "${S}"
-  ls "${S}/../../distdir" | grep "${PN}-v${PV}-amd64.run"
-  cp "${S}/../../distdir/${PN}-v${PV}-amd64.run" "$(pwd)"
-  sh "${PN}-v${PV}-amd64.run" --noexec --target "${S}"
-  echo "${PN}-v${PV}-amd64.run unpacked."
+  ls "${S}/../../distdir" | grep "timeshift-v${PV}-amd64.run"
+  cp "${S}/../../distdir/timeshift-v${PV}-amd64.run" "$(pwd)"
+  sh "timeshift-v${PV}-amd64.run" --noexec --target "${S}"
+  echo "timeshift-v${PV}-amd64.run unpacked."
 }
 
 src_prepare() {
