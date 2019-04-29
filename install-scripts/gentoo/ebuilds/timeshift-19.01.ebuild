@@ -22,5 +22,4 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/${PN}-v${PV}"
 
