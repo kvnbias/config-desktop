@@ -7,7 +7,7 @@ EAPI=7
 VALA_MIN_API_VERSION="0.40"
 
 inherit vala xdg-utils
-DESCRIPTION="Improved improved screen locker - 'the ricing fork of i3lock'"
+DESCRIPTION="System restore tool for Linux. Creates filesystem snapshots using rsync+hardlinks, or BTRFS snapshots."
 HOMEPAGE="https://github.com/teejee2008/timeshift"
 SRC_URI="https://github.com/teejee2008/timeshift/releases/download/v19.01/timeshift-v19.01-amd64.run"
 
