@@ -23,11 +23,20 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 src_prepare() {
-  if declare -p PATCHES | grep -q "^declare -a "; then
-    [[ -n ${PATCHES[@]} ]] && eapply "${PATCHES[@]}"
-  else
-    [[ -n ${PATCHES} ]] && eapply ${PATCHES}
-  fi
   eapply_user
+}
+
+src_configure() {
+  if [[ -x ${ECONF_SOURCE:-.}/configure ]] ; then
+    econf
+  fi
+
+  rm -rfv ${D}/tmp/builds
+  mkdir -pv ${D}/tmp/builds
+
+  make clean
+
+  rm -rfv ${S}/release/source
+  mkdir -pv ${S}/release/source
 }
 
