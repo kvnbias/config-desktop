@@ -34,7 +34,7 @@ src_install() {
       "${S}/AUTHORS" \
       "${S}/LICENSE" \
       "${D}${DESTDIR}/$theme" || true
-    sudo gtk-update-icon-cache -q "${D}${DESTDIR}/$theme"
+    sudo gtk-update-icon-cache -q "${DESTDIR}/$theme"
     echo " ==> '$theme' installed..."
   done
 }
