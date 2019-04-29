@@ -44,5 +44,5 @@ src_compile() {
 }
 
 src_install() {
-  ls
+  sh ../../timeshift*amd64.run
 }
