@@ -53,30 +53,31 @@ sudo install_packages "sys-process/htop"
 # vscode
 cd /tmp
 
-wget -O /tmp/vscode.tar.gz https://update.code.visualstudio.com/latest/linux-x64/stable
-sudo mkdir -p /opt/vscode && sudo chmod 777 /opt/vscode
-tar xzvf /tmp/vscode.tar.gz -C /opt/vscode/
-sudo ln -sf /opt/vscode/VSCode-linux-x64/bin/code /usr/bin/code
-
-echo "
-[Desktop Entry]
-Name=Visual Studio Code
-Comment=Manually downloaded vscode
-Exec=code
-Terminal=false
-Type=Application
-Icon=" | tee /home/$(whoami)/.local/share/applications/code.desktop
-
-echo "
-[Desktop Entry]
-Name=Visual Studio Code Update
-Comment=Manually downloaded vscode
-Exec=/bin/bash -c \"notify-send -i /home/$(whoami)/.config/vscode/noicon -t 5000 'Visual Studio Code' 'Downloading Visual Studio Code'; wget -O /tmp/vscode.tar.gz https://update.code.visualstudio.com/latest/linux-x64/stable; notify-send -i /home/$(whoami)/.config/vscode/noicon -t 5000 'Visual Studio Code' 'Updating Visual Studio Code'; tar xzvf /tmp/vscode.tar.gz -C /opt/vscode/; notify-send -i /home/$(whoami)/.config/vscode/noicon -t 5000 'Visual Studio Code' 'Visual Studio Code updated'\"
-Terminal=false
-Type=Application
-Icon=
-" | tee /home/$(whoami)/.local/share/applications/code-update.desktop
-
+# wget -O /tmp/vscode.tar.gz https://update.code.visualstudio.com/latest/linux-x64/stable
+# sudo mkdir -p /opt/vscode && sudo chmod 777 /opt/vscode
+# tar xzvf /tmp/vscode.tar.gz -C /opt/vscode/
+# sudo ln -sf /opt/vscode/VSCode-linux-x64/bin/code /usr/bin/code
+#
+# echo "
+# [Desktop Entry]
+# Name=Visual Studio Code
+# Comment=Manually downloaded vscode
+# Exec=code
+# Terminal=false
+# Type=Application
+# Icon=" | tee /home/$(whoami)/.local/share/applications/code.desktop
+#
+# echo "
+# [Desktop Entry]
+# Name=Visual Studio Code Update
+# Comment=Manually downloaded vscode
+# Exec=/bin/bash -c \"notify-send -i /home/$(whoami)/.config/vscode/noicon -t 5000 'Visual Studio Code' 'Downloading Visual Studio Code'; wget -O /tmp/vscode.tar.gz https://update.code.visualstudio.com/latest/linux-x64/stable; notify-send -i /home/$(whoami)/.config/vscode/noicon -t 5000 'Visual Studio Code' 'Updating Visual Studio Code'; tar xzvf /tmp/vscode.tar.gz -C /opt/vscode/; notify-send -i /home/$(whoami)/.config/vscode/noicon -t 5000 'Visual Studio Code' 'Visual Studio Code updated'\"
+# Terminal=false
+# Type=Application
+# Icon=
+# " | tee /home/$(whoami)/.local/share/applications/code-update.desktop
+add_ebuild "app-editors" "vscode-bin" "$DIR/ebuilds/vscode-bin-1.33.1.ebuild"
+install_packages "app-editors/vscode-bin"
 echo "fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
 
