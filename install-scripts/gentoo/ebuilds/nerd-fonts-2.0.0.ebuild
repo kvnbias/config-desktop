@@ -23,7 +23,7 @@ RDEPEND="${DEPEND}"
 
 src_unpack() {
   echo "Nothing to unpack"
-  sudo mkdir -p "${S}"
+  mkdir -p "${S}"
 }
 
 src_prepare() {
