@@ -7,14 +7,14 @@ EAPI=7
 VALA_MIN_API_VERSION="0.40"
 VALA_USE_DEPEND="vapigen"
 
-inherit autotools vala
+inherit vala
 DESCRIPTION="Improved improved screen locker - 'the ricing fork of i3lock'"
 HOMEPAGE="https://github.com/teejee2008/timeshift"
-SRC_URI="https://github.com/teejee2008/${PN}/archive/v${PV}.tar.gz"
+SRC_URI="https://github.com/teejee2008/timeshift/releases/download/v19.01/timeshift-v19.01-amd64.run"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="amd64 x86"
+KEYWORDS="amd64"
 IUSE=""
  
 DEPEND="
@@ -27,23 +27,22 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+src_unpack() {
+  echo "Nothing to unpack"
+}
+
 src_prepare() {
-  eapply_user
-  sudo ln -sf /usr/bin/valac-* ${D}/usr/bin/valac
-  vala_src_prepare
+  echo "Nothing to prepare"
 }
 
 src_configure() {
-  if [[ -x ${ECONF_SOURCE:-.}/configure ]] ; then
-    econf
-  fi
-
-  rm -rfv ${D}/tmp/builds
-  mkdir -pv ${D}/tmp/builds
-
-  make clean
-
-  rm -rfv ${S}/release/source
-  mkdir -pv ${S}/release/source
+  echo "Nothing to configure"
 }
 
+src_compile() {
+  echo "Nothing to compile"
+}
+
+src_install() {
+  ls
+}
