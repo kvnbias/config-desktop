@@ -29,10 +29,12 @@ RDEPEND="${DEPEND}"
 
 src_unpack() {
   echo "Nothing to unpack"
+  mkdir -p "${S}"
 }
 
 src_prepare() {
   echo "Nothing to prepare"
+  eapply_user
 }
 
 src_configure() {
@@ -44,6 +46,5 @@ src_compile() {
 }
 
 src_install() {
-  dodir "${S}"
-  sh ../../timeshift*amd64.run
+  sh ../../distdir/timeshift*amd64.run
 }
