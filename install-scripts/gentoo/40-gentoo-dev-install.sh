@@ -140,30 +140,32 @@ while true; do
 Install DBeaver [yN]?   " idbvr
   case $idbvr in
     [Yy]* )
-      cd /tmp
-      wget -O /tmp/dbeaver-ce-latest-linux.gtk.x86_64.tar.gz https://dbeaver.io/files/dbeaver-ce-latest-linux.gtk.x86_64.tar.gz
-      sudo mkdir -p /opt/dbeaver-ce && sudo chmod 777 /opt/dbeaver-ce
-      tar xzvf /tmp/dbeaver-ce-latest-linux.gtk.x86_64.tar.gz -C /opt/dbeaver-ce/
-      sudo ln -sf /opt/dbeaver-ce/dbeaver/dbeaver /usr/bin/dbeaver
-
-      echo "
-[Desktop Entry]
-Name=Dbeaver Community Edition
-Comment=Manually downloaded dbeaver
-Exec=dbeaver
-Terminal=false
-Type=Application
-Icon=" | tee /home/$(whoami)/.local/share/applications/dbeaver.desktop
-
-      echo "
-[Desktop Entry]
-Name=Dbeaver Community Edition Update
-Comment=Manually downloaded dbeaver
-Exec=/bin/bash -c \"notify-send -i /home/$(whoami)/.config/dbeaver/noicon -t 5000 'Dbeaver Community Edition' 'Downloading Dbeaver Community Edition'; wget -O /tmp/dbeaver-ce-latest-linux.gtk.x86_64.tar.gz https://dbeaver.io/files/dbeaver-ce-latest-linux.gtk.x86_64.tar.gz; notify-send -i /home/$(whoami)/.config/dbeaver/noicon -t 5000 'Dbeaver Community Edition' 'Updating Dbeaver Community Edition'; tar xzvf /tmp/dbeaver-ce-latest-linux.gtk.x86_64.tar.gz -C /opt/dbeaver-ce/; notify-send -i /home/$(whoami)/.config/debaver/noicon -t 5000 'Dbeaver Community Edition' 'Dbeaver Community Edition updated'\"
-Terminal=false
-Type=Application
-Icon=
-" | tee /home/$(whoami)/.local/share/applications/dbeaver-update.desktop
+#       cd /tmp
+#       wget -O /tmp/dbeaver-ce-latest-linux.gtk.x86_64.tar.gz https://dbeaver.io/files/dbeaver-ce-latest-linux.gtk.x86_64.tar.gz
+#       sudo mkdir -p /opt/dbeaver-ce && sudo chmod 777 /opt/dbeaver-ce
+#       tar xzvf /tmp/dbeaver-ce-latest-linux.gtk.x86_64.tar.gz -C /opt/dbeaver-ce/
+#       sudo ln -sf /opt/dbeaver-ce/dbeaver/dbeaver /usr/bin/dbeaver
+# 
+#       echo "
+# [Desktop Entry]
+# Name=Dbeaver Community Edition
+# Comment=Manually downloaded dbeaver
+# Exec=dbeaver
+# Terminal=false
+# Type=Application
+# Icon=" | tee /home/$(whoami)/.local/share/applications/dbeaver.desktop
+# 
+#       echo "
+# [Desktop Entry]
+# Name=Dbeaver Community Edition Update
+# Comment=Manually downloaded dbeaver
+# Exec=/bin/bash -c \"notify-send -i /home/$(whoami)/.config/dbeaver/noicon -t 5000 'Dbeaver Community Edition' 'Downloading Dbeaver Community Edition'; wget -O /tmp/dbeaver-ce-latest-linux.gtk.x86_64.tar.gz https://dbeaver.io/files/dbeaver-ce-latest-linux.gtk.x86_64.tar.gz; notify-send -i /home/$(whoami)/.config/dbeaver/noicon -t 5000 'Dbeaver Community Edition' 'Updating Dbeaver Community Edition'; tar xzvf /tmp/dbeaver-ce-latest-linux.gtk.x86_64.tar.gz -C /opt/dbeaver-ce/; notify-send -i /home/$(whoami)/.config/debaver/noicon -t 5000 'Dbeaver Community Edition' 'Dbeaver Community Edition updated'\"
+# Terminal=false
+# Type=Application
+# Icon=
+# " | tee /home/$(whoami)/.local/share/applications/dbeaver-update.desktop
+      add_ebuild "dev-db" "dbeaver-ce-bin" "$DIR/ebuilds/dbeaver-ce-bin-6.0.3.ebuild"
+      install_packages "dev-db/dbeaver-ce-bin"
       break;;
     * ) break;;
   esac
