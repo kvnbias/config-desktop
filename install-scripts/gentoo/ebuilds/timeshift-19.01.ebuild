@@ -22,4 +22,12 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+src_prepare() {
+  if declare -p PATCHES | grep -q "^declare -a "; then
+    [[ -n ${PATCHES[@]} ]] && eapply "${PATCHES[@]}"
+  else
+    [[ -n ${PATCHES} ]] && eapply ${PATCHES}
+  fi
+  eapply_user
+}
 
