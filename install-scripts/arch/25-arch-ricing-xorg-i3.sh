@@ -556,7 +556,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       yes | sudo pacman -S neofetch
 
       # gtk theme change
-      yes | sudo pacman -S gtk-engines gtk-engine-murrine gtk2 gtk3
+      yes | sudo pacman -S gtk2 gtk3
 
       # mouse cursor theme, notification, system monitor, compositor, image on terminal
       yes | yay -S xcursor-breeze
