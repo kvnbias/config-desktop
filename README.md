@@ -6,13 +6,13 @@ Current default configs and scripts for my desktop environments.
 
 Arch:
 ```sh
-# wget -O arch-install https://git.io/fjs8u
+# wget -O arch-install https://git.io/fjGbK
 # bash arch-install
 ```
 Gentoo:
 ```sh
-# wget -O arch-install https://git.io/fjs82
-# bash arch-install
+# wget -O gentoo-install https://git.io/fjGbo
+# bash gentoo-install
 ```
 
 ## Post install (Arch)
