@@ -601,8 +601,8 @@ Enter bootloader [default=GRUB]:   \" bl
                       yes | pacman -S refind-efi efibootmgr
                       refind-install
 
-                      mkdir -p \$ed/EFI/BOOT
-                      cp -a \$ed/EFI/refind/refind_x64.efi \$ed/EFI/BOOT/BOOTX64.EFI
+                      mkdir -p \$ed/EFI/boot
+                      cp -a \$ed/EFI/refind/refind_x64.efi \$ed/EFI/boot/bootx64.efi
                       echo '
 bcf boot add 1 fs0:\EFI\refind\refind_x64.efi \"Fallback Bootloader\"
 exit' | tee \$ed/startup.nsh
@@ -643,8 +643,8 @@ exit' | tee \$ed/startup.nsh
                       grub-install --target=x86_64-efi --efi-directory=\$ed --bootloader-id=GRUB;
                       grub-mkconfig -o /boot/grub/grub.cfg
 
-                      mkdir -p \$ed/EFI/BOOT
-                      cp -a \$ed/EFI/GRUB/grubx64.efi \$ed/EFI/BOOT/BOOTX64.EFI
+                      mkdir -p \$ed/EFI/boot
+                      cp -a \$ed/EFI/GRUB/grubx64.efi \$ed/EFI/boot/bootx64.efi
                       echo '
 bcf boot add 1 fs0:\EFI\GRUB\grubx64.efi \"Fallback Bootloader\"
 exit' | tee \$ed/startup.nsh
