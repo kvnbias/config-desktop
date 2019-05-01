@@ -80,7 +80,7 @@ done
 
 os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed -e 's/"//g'))
 
-if [ -d /sys/firmware/efi/efivars ] && [ ! -f "/boot/efi/startup.nsh" ]; then
+if [ -d /sys/firmware/efi/efivars ] && sudo test ! -f "/boot/efi/startup.nsh"; then
   sudo mkdir -p /boot/efi/EFI/boot
   if [ -d "/boot/efi/EFI/refind" ]; then
     sudo cp -a /boot/efi/EFI/refind/refind_x64.efi /boot/efi/EFI/boot/bootx64.efi

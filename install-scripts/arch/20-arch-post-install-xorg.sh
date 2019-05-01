@@ -393,7 +393,7 @@ yes | sudo pacman -Syyu
 # Font DIRS for X.org
 sudo cp -raf "$DIR/../../system-confs/xorg.conf" "/etc/X11/xorg.conf"
 
-if [ -d /sys/firmware/efi/efivars ] && [ ! -f "/boot/efi/startup.nsh" ]; then
+if [ -d /sys/firmware/efi/efivars ] && sudo test ! -f "/boot/efi/startup.nsh"; then
   sudo mkdir -p /boot/efi/EFI/boot
   if [ -d "/boot/efi/EFI/refind" ]; then
     sudo cp -a /boot/efi/EFI/refind/refind_x64.efi /boot/efi/EFI/boot/bootx64.efi
