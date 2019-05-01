@@ -91,6 +91,7 @@ else
 fi
 
 sudo dnf -y upgrade
+echo 'metadata_expire=86400' | sudo tee -a /etc/dnf/dnf.conf
 
 # xorg
 sudo dnf install -y xorg-x11-server-Xorg --releasever=$fedver
