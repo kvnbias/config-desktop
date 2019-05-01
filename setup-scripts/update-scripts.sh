@@ -51,7 +51,7 @@ sudo chmod +x $HOME/.config/network/update-mirrors.sh
 sudo chmod +x $HOME/.config/touchpad/toggle-touchpad.sh
 sudo chmod +x $HOME/.config/polybar/popup-calendar.sh
 sudo chmod +x $HOME/.config/polybar/update-checker.sh
-sudo chmod +x $HOME/.config/themes/check-space.sh
+sudo chmod +x $HOME/.config/system/check-space.sh
 sudo chmod +x $HOME/.config/themes/change-theme.sh
 sudo chmod +x $HOME/.config/themes/update-polybar-network-interface.sh
 sudo chmod +x $HOME/.config/vifm/scripts/vifm-run.sh

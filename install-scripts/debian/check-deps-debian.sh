@@ -44,19 +44,7 @@ while true; do
         xserver-xorg-input-mouse
         xserver-xorg-video-fbdev
         xserver-xorg-video-vesa
-        dummy-package-to-cancel-install
-      "
 
-      break;;
-  esac
-done
-
-while true; do
-  read -p "Check packages for script 25 [Yn]?   " c10
-  case $c10 in
-    [n]* ) break;;
-    * )
-      check_packages "
         accountsservice
         alsa-tools
         alsa-utils

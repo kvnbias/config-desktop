@@ -64,6 +64,7 @@ while true; do
       else
         sudo dnf install -y https://download1.rpmfusion.org/free/el/rpmfusion-free-release-$fedver.noarch.rpm https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-$fedver.noarch.rpm
       fi
+      sudo dnf install -y http://linuxdownload.adobe.com/adobe-release/adobe-release-x86_64-1.0-1.noarch.rpm
       sudo dnf update
 
       check_packages "
@@ -79,27 +80,7 @@ while true; do
         xorg-x11-server-Xorg
         xorg-x11-utils
         xorg-x11-xinit
-      "
 
-      break;;
-  esac
-done
-
-while true; do
-  read -p "Check packages for script 25 [Yn]?   " c10
-  case $c10 in
-    [n]* ) break;;
-    * )
-
-      if [ "$os" = "fedora" ]; then
-        sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$fedver.noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$fedver.noarch.rpm
-      else
-        sudo dnf install -y https://download1.rpmfusion.org/free/el/rpmfusion-free-release-$fedver.noarch.rpm https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-$fedver.noarch.rpm
-      fi
-      sudo dnf install -y http://linuxdownload.adobe.com/adobe-release/adobe-release-x86_64-1.0-1.noarch.rpm
-      sudo dnf update
-
-      check_packages "
         accountsservice
         akmod-nvidia
         alsa-lib
@@ -255,6 +236,7 @@ while true; do
         transmission-common
         unrar
         unzip
+        util-linux-user
         vifm
         vim-enhanced
         vim-minimal

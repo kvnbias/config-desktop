@@ -318,7 +318,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
         sudo apt install -y --no-install-recommends neofetch
 
         # gtk theme change
-        sudo apt install -y --no-install-recommends gtk2-engines gtk2-engines-murrine libgtk2.0-0 libgtk-3-0
+        sudo apt install -y --no-install-recommends libgtk2.0-0 libgtk-3-0
 
         # mouse cursor theme
         sudo apt install -y --no-install-recommends breeze-cursor-theme

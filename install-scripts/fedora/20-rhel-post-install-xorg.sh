@@ -292,7 +292,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
         sudo dnf install -y neofetch --releasever=$fedver
 
         # gtk theme change
-        sudo dnf install -y gtk2-engines gtk-murrine-engine gtk2 gtk3 --releasever=$fedver
+        sudo dnf install -y gtk2 gtk3 --releasever=$fedver
 
         # mouse cursor theme
         sudo dnf install -y breeze-cursor-theme --releasever=$fedver
@@ -539,7 +539,7 @@ if [ ! -f /usr/bin/dnf ]; then
 fi
 
 # selinux utils
-sudo dnf install -y checkpolicy policycoreutils-python-utils --releasever=$fedver
+sudo dnf install -y checkpolicy policycoreutils-python-utils util-linux-user --releasever=$fedver
 sudo dnf install -y libuser gcc gcc-c++ autoconf automake cmake make dkms pkgconfig bzip2 --releasever=$fedver
 
 while true; do
