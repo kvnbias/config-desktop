@@ -27,7 +27,7 @@ $ bash 25-arch-ricing-xorg-i3.sh
 ```
 
 ## Notes
-* Desktop Environment ready distros (Ubuntu, Fedora Workstation etc) should start with scripts #25.
+* Desktop Environment ready distros (Ubuntu, Fedora Workstation etc) can start with scripts #20.
 * Minimal Installs (CLI only install) should start with scripts #10
 * For multiboot it is recommended to only install a bootloader in your main distro.
 * For debian-based distros using ubiquity installer you can remove the bootloader from the installation by executing `ubiquity -b` on the terminal.
@@ -35,7 +35,7 @@ $ bash 25-arch-ricing-xorg-i3.sh
 * If GRUB is installed, use `os-prober` to detect other OS.
 
 ## Why some packages are compiled from source?
-Some packages in doesn't exists in PPA and COPR, and if the package exist, it might be unmaintaned, failing builds, or not updated. I will only include packages from those repos if it is maintained by the author of the software. While the AUR is not perfect, the quality of software from those repos just doesn't make the cut compared to the AUR.
+Some packages doesn't exist in the main REPO. If the package exist on community maintained repos, there is a chance that the package is unmaintaned, failing builds, or outdated. I will only include packages from community repos if it is maintained by the authors/contributors of the software. As of now, AUR is the only community maintained repo that I trust.
 
 ## As of 04/06/2019
 
