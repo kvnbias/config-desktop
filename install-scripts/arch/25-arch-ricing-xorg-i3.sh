@@ -70,6 +70,8 @@ if [ ! -f /etc/X11/xorg.conf ];then
   sudo touch /etc/X11/xorg.conf;
 fi
 
+yes | sudo pacman -Syyu
+
 # Font DIRS for X.org
 sudo cp -raf "$DIR/../../system-confs/xorg.conf" "/etc/X11/xorg.conf"
 
@@ -563,6 +565,10 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       yes | sudo pacman -S dunst conky compton w3m
       yes | sudo pacman -S ffmpegthumbnailer
 
+      if [ ! -d /usr/share/icons/Breeze ]; then
+        sudo ln -sf /usr/share/icons/xcursor-breeze /usr/share/icons/Breeze
+      fi
+
       # for vifm
       # https://pillow.readthedocs.io/en/stable/installation.html
       yes | sudo pacman -S python-pip
@@ -576,6 +582,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       yes | sudo pacman -S catdoc odt2txt docx2txt
 
       # better desktop locker
+      yes | sudo pacman -Rns i3lock
       yes 1 | yay -S i3lock-color --noconfirm
 
       # terminal-based file viewer
@@ -603,6 +610,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
       sudo systemctl stop mpd
 
       # i3wm customization, dmenu replacement, i3status replacement
+      yes | sudo pacman -Rns i3-wm
       yes | sudo pacman -S i3-gaps rofi
       yes 1 | yay -S polybar --noconfirm
 
