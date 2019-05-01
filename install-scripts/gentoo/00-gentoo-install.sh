@@ -1184,11 +1184,11 @@ if [[ \"\$installBootLoader\" = \"true\" ]]; then
                   grubdir='grub'
                 fi
 
-                mkdir -p \$ed/EFI/BOOT
-                cp -a \$ed/EFI/\$grubdir/grubx64.efi \$ed/EFI/BOOT/bootx64.efi
+                mkdir -p \$ed/EFI/boot
+                cp -a \$ed/EFI/\$grubdir/grubx64.efi \$ed/EFI/boot/bootx64.efi
 
                 echo '
-bcf boot add 1 fs0:\EFI\BOOT\grubx64.efi \"Fallback Bootloader\"
+bcf boot add 1 fs0:\EFI\boot\bootx64.efi \"Fallback Bootloader\"
 exit' | tee \$ed/startup.nsh
 
                 echo Installed GRUB in UEFI mode;
