@@ -78,6 +78,26 @@ done
 
 os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed -e 's/"//g'))
 
+if [ -d /sys/firmware/efi/efivars ]; then
+  sudo mkdir -p /boot/efi/EFI/BOOT
+  if [ ! -f "/boot/efi/startup.nsh" ]; then
+    if [ -d "/boot/efi/EFI/BOOT" ]; then
+      if [ -d "/boot/efi/EFI/refind" ]; then
+        sudo cp -a /boot/efi/EFI/refind/refind_x64.efi /boot/efi/EFI/BOOT/bootx64.efi
+      elif [ -d "/boot/efi/EFI/grub" ]; then
+        sudo cp -a /boot/efi/EFI/grub/grubx64.efi /boot/efi/EFI/BOOT/bootx64.efi
+      elif [ -d "/boot/efi/EFI/GRUB" ]; then
+        sudo cp -a /boot/efi/EFI/GRUB/grubx64.efi /boot/efi/EFI/BOOT/bootx64.efi
+      else
+        sudo cp -a /boot/efi/EFI/$os/grubx64.efi /boot/efi/EFI/BOOT/bootx64.efi
+      fi
+    fi
+
+    echo "bcf boot add 1 fs0:\\EFI\\BOOT\\bootx64.efi \"Fallback Bootloader\"
+exit" | sudo tee /boot/efi/startup.nsh
+  fi
+fi
+
 if [ "$os" != "manjaro" ]; then
   while true; do
     read -p "Install LTS kernel? [y]es | [n]o   " ilts
