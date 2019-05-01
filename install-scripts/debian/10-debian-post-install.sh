@@ -78,6 +78,20 @@ chown -R $(whoami):wheel /home/$(whoami)
   esac
 done
 
+if [ -d /sys/firmware/efi/efivars ]; then
+  mkdir -p /boot/efi/EFI/BOOT
+  if [ "$os" = "debian" ]; then
+    grubdir="debian"
+  else
+    grubdir="ubuntu"
+  fi
+
+  cp -a /boot/efi/EFI/debian/grubx64.efi /boot/efi/EFI/BOOT/bootx64.efi
+  echo "bcf boot add 1 fs0:\\EFI\\$grubdir\\grubx64.efi \"Fallback Bootloader\"
+exit" | tee /boot/efi/startup.nsh
+
+fi
+
 if [ "$os" = "debian" ]; then
   if cat /etc/apt/sources.list | grep -q "main contrib non-free"; then
     echo "Non-free repos already added."
