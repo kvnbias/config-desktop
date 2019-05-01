@@ -504,7 +504,7 @@ Inherits=Breeze
 }
 
 #### PREP DESKTOP ENV
-if [ -d /sys/firmware/efi/efivars ] && sudo test ! -f "/boot/efi/startup.nsh"; then
+if [ -d /sys/firmware/efi/efivars ] && sudo test -d /boot/efi/EFI && sudo test ! -f /boot/efi/startup.nsh; then
   sudo mkdir -p /boot/efi/EFI/boot
   if [ -d "/boot/efi/EFI/refind" ]; then
     sudo cp -a /boot/efi/EFI/refind/refind_x64.efi /boot/efi/EFI/boot/bootx64.efi
