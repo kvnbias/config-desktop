@@ -4,10 +4,10 @@
 
 EAPI=7
 
-inherit git-r3 xdg-utils
+inherit xdg-utils
 DESCRIPTION="Breeze cursor theme (KDE Plasma 5). This package is for usage in non-KDE Plasma desktops."
 HOMEPAGE="https://github.com/KDE/breeze"
-EGIT_REPO_URI="https://github.com/KDE/breeze.git"
+SRC_URI="https://github.com/KDE/breeze/archive/${PV}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -16,14 +16,6 @@ IUSE=""
  
 DEPEND=""
 RDEPEND="${DEPEND}"
-
-src_configure() {
-  git checkout "v${PV}"
-}
-
-src_compile() {
-  echo "Nothing to compile."
-}
 
 src_install() {
   echo "==> Installing Breeze cursor theme"
