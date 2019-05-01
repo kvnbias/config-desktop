@@ -119,8 +119,13 @@ yes | sudo pacman -S xf86-video-vesa
 yes | sudo pacman -S xorg-fonts-75dpi xorg-fonts-100dpi
 yes | sudo pacman -S ttf-dejavu
 
-## DESKTOP ENVIRONMENT LIST
+#### DESKTOP ENVIRONMENT LIST
 install_i3() {
+  if [ -d /etc/gdm ]; then
+    # use lightdm instead
+    sudo systemctl disable gdm
+  fi
+
   # Install display manager
   yes | sudo pacman -S lightdm
   yes | sudo pacman -S noto-fonts
@@ -382,12 +387,7 @@ Inherits=Breeze
   done
 }
 
-## DESKTOP ENVIRONMENT INSTALL
-
-if [ ! -f /etc/X11/xorg.conf ];then
-  sudo touch /etc/X11/xorg.conf;
-fi
-
+#### DESKTOP ENVIRONMENT INSTALL
 yes | sudo pacman -Syyu
 
 # Font DIRS for X.org
@@ -761,5 +761,5 @@ options snd_hda_intel model=$hdam" | sudo tee /etc/modprobe.d/alsa-base.conf
   esac
 done
 
-## CHOOSE DESKTOP ENVIRONMENT
+#### CHOOSE DESKTOP ENVIRONMENT
 install_i3
