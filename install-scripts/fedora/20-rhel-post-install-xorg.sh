@@ -256,9 +256,9 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
         amixer sset "Mic Boost" 100%
 
         # MANUAL 3b4f8b3: PulseAudio Applet. Some are already installed
-        sudo dnf install -y glib2-devel gtk3-devel libnotify-devel --releasever=$fedver
-        sudo dnf install -y pulseaudio-libs-devel libX11-devel --releasever=$fedver
-        sudo dnf install -y autoconf automake pkgconf --releasever=$fedver
+        # sudo dnf install -y glib2-devel gtk3-devel libnotify-devel --releasever=$fedver
+        # sudo dnf install -y pulseaudio-libs-devel libX11-devel --releasever=$fedver
+        # sudo dnf install -y autoconf automake pkgconf --releasever=$fedver
         # sudo dnf mark install gtk3 libnotify pulseaudio-libs pulseaudio-libs-glib2
         # git clone --recurse-submodules https://github.com/fernandotcl/pa-applet.git
         # cd pa-applet && git fetch --tags
@@ -266,7 +266,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
         # [ ${#tag} -ge 1 ] && git checkout $tag
         # git tag -f "git-$(git rev-parse --short HEAD)"
         # ./autogen.sh && ./configure && make && sudo make install
-        rpmbuild -ba specs/pa-applet.spec
+        sudo dnf builddep -y specs/i3lock-color.spec && rpmbuild -ba specs/pa-applet.spec
         sudo dnf install -y specs/rpmbuild/RPMS/x86_64/pa-applet-20181009-1.fc$fedver.x86_64.rpm
 
         sudo sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf
@@ -335,7 +335,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
         # git tag -f "git-$(git rev-parse --short HEAD)"
         # autoreconf -fi && ./configure && make && sudo make install
         # echo "auth include system-auth" | sudo tee /etc/pam.d/i3lock
-        rpmbuild -ba specs/i3lock-color.spec
+        spectool -g -R specs/i3lock-color.spec && sudo dnf builddep -y specs/i3lock-color.spec && rpmbuild -ba specs/i3lock-color.spec
         sudo dnf install -y specs/rpmbuild/RPMS/x86_64/i3lock-color-2.12.c-1.fc$fedver.x86_64.rpm
 
         # terminal-based file viewer
