@@ -6,7 +6,7 @@ readonly ID_PREVIEW="vifm-preview"
 
 if [ -e "$FIFO_UEBERZUG" ]; then
     # can't make it work in gentoo
-    if [ "$os" != "gentoo" ]; then
+    if [ "$os" = "TEMPORARY_DISABLED" ]; then
         if [[ "$1" == "draw" ]]; then
             declare -p -A cmd=([action]=add [identifier]="$ID_PREVIEW"
                                [x]="$2" [y]="$3" [width]="$4" [height]="$5" \
