@@ -189,7 +189,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
         sudo dnf install -y gcc make bash coreutils diffutils
         sudo dnf install -y python rpm-build rpm-devel rpmlint patch rpmdevtools
         rpmdev-setuptree
-        sed -i "s/\$HOME/$DIR/specs" /home/$(whoami)/.rpmmacros
+        sed -i "s~\$HOME~$DIR\/specs~g" /home/$(whoami)/.rpmmacros
         rm -rf /home/$(whoami)/rpmbuild
 
         sudo dnf install -y curl wget vim-minimal vim-enhanced httpie lsof git tmux gedit --releasever=$fedver
@@ -267,7 +267,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
         # git tag -f "git-$(git rev-parse --short HEAD)"
         # ./autogen.sh && ./configure && make && sudo make install
         rpmbuild -ba specs/pa-applet.spec
-        sudo dnf install -y specs/rpmbuild/RPMS/x86_64/pa-applet-1-1.x86_64.rpm
+        sudo dnf install -y specs/rpmbuild/RPMS/x86_64/pa-applet-20181009-1.fc30.x86_64.rpm
         cd /tmp
 
         sudo sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf
