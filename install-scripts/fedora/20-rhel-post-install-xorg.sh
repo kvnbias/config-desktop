@@ -321,28 +321,22 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
 
         # MANUAL 2.12.c: i3lock-color. Some are already installed
         sudo dnf remove -y i3lock
-        sudo dnf install -y cairo-devel libev-devel libjpeg-devel libxkbcommon-x11-devel --releasever=$fedver
-        sudo dnf install -y pam-devel xcb-util-devel xcb-util-image-devel xcb-util-xrm-devel autoconf automake --releasever=$fedver
-
-        sudo dnf install -y cairo libev libjpeg-turbo libxcb libxkbcommon --releasever=$fedver
-        sudo dnf install -y libxkbcommon-x11 xcb-util-image pkgconf --releasever=$fedver
-
-        sudo dnf mark install cairo libev libjpeg-turbo libxcb libxkbcommon libxkbcommon-x11 xcb-util-image
-
-        git clone --recurse-submodules https://github.com/PandorasFox/i3lock-color.git
-        cd i3lock-color
-
-        git fetch --tags
-        tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-
-        if [ ${#tag} -ge 1 ]; then
-          git checkout $tag
-        fi
-
-        git tag -f "git-$(git rev-parse --short HEAD)"
-        autoreconf -fi && ./configure && make && sudo make install
-        echo "auth include system-auth" | sudo tee /etc/pam.d/i3lock
-        cd /tmp
+        # sudo dnf install -y cairo-devel libev-devel libjpeg-devel libxkbcommon-x11-devel --releasever=$fedver
+        # sudo dnf install -y pam-devel xcb-util-devel xcb-util-image-devel xcb-util-xrm-devel autoconf automake --releasever=$fedver
+        #
+        # sudo dnf install -y cairo libev libjpeg-turbo libxcb libxkbcommon --releasever=$fedver
+        # sudo dnf install -y libxkbcommon-x11 xcb-util-image pkgconf --releasever=$fedver
+        # sudo dnf mark install cairo libev libjpeg-turbo libxcb libxkbcommon libxkbcommon-x11 xcb-util-image
+        #
+        # git clone --recurse-submodules https://github.com/PandorasFox/i3lock-color.git
+        # cd i3lock-color && git fetch --tags
+        # tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+        # [ ${#tag} -ge 1 ] && git checkout $tag
+        # git tag -f "git-$(git rev-parse --short HEAD)"
+        # autoreconf -fi && ./configure && make && sudo make install
+        # echo "auth include system-auth" | sudo tee /etc/pam.d/i3lock
+        rpmbuild -ba specs/i3lock-color.spec
+        sudo dnf install -y specs/rpmbuild/RPMS/x86_64/i3lock-color-2.12.c-1.fc$fedver.x86_64.rpm
 
         # terminal-based file viewer
         sudo dnf install -y ranger --releasever=$fedver
