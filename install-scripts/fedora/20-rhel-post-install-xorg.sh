@@ -186,8 +186,8 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
     case $yn in
       [Nn]* ) break;;
       * )
-        sudo dnf install -y gcc make bash coreutils diffutils
-        sudo dnf install -y python rpm-build rpm-devel rpmlint patch rpmdevtools
+        sudo dnf install -y gcc make bash coreutils diffutils --releasever=$fedver
+        sudo dnf install -y python rpm-build rpm-devel rpmlint patch rpmdevtools --releasever=$fedver
         rpmdev-setuptree
         sed -i "s~\$HOME~$DIR\/specs~g" /home/$(whoami)/.rpmmacros
         rm -rf /home/$(whoami)/rpmbuild
@@ -206,7 +206,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
         # sudo mkdir -p /usr/share/icons && sudo cp -raf Flat-Remix* /usr/share/icons/
         # sudo ln -sf /usr/share/icons/Flat-Remix-Blue /usr/share/icons/Flat-Remix
         # cd /tmp
-        sudo dnf install -y papirus-icon-theme
+        sudo dnf install -y papirus-icon-theme --releasever=$fedver
 
         # display
         sudo dnf install -y feh arandr lxappearance xbacklight xorg-x11-server-utils --releasever=$fedver
@@ -312,12 +312,12 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
 
         # https://pillow.readthedocs.io/en/stable/installation.html
         sudo dnf install -y python3-devel libjpeg-turbo-devel zlib-devel libXext-devel --releasever=$fedver
-        sudo pip3 install ueberzug
-        sudo dnf install -y poppler-utils
-        sudo dnf install -y mediainfo
-        sudo dnf install -y transmission-cli transmission-common
-        sudo dnf install -y zip unzip tar xz-libs unrar
-        sudo dnf install -y catdoc odt2txt
+        sudo pip3 install ueberzug --releasever=$fedver
+        sudo dnf install -y poppler-utils --releasever=$fedver
+        sudo dnf install -y mediainfo --releasever=$fedver
+        sudo dnf install -y transmission-cli transmission-common --releasever=$fedver
+        sudo dnf install -y zip unzip tar xz-libs unrar --releasever=$fedver
+        sudo dnf install -y catdoc odt2txt --releasever=$fedver
 
         # MANUAL 2.12.c: i3lock-color. Some are already installed
         sudo dnf remove -y i3lock
