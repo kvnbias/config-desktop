@@ -119,7 +119,7 @@ font-0 = ${bar/kev.font-0}
 
 modules-left = ${bar/kev.modules-left}
 modules-center = ${bar/kev.modules-center}
-modules-right = ${bar/kev.modules-right}
+modules-right = xbacklight filesystem cpu ram battery date
 
 cursor-click = ${bar/kev.cursor-click}
 cursor-scroll = ${bar/kev.cursor-scroll}
