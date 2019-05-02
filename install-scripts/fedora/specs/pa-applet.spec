@@ -14,7 +14,7 @@ URL:		https://github.com/fernandotcl/%{name}
 
 BuildArch:      x86_64
 BuildRequires:	glib2-devel gtk3-devel libnotify-devel pulseaudio-libs-devel libX11-devel autoconf automake pkgconf
-Requires:	gtk3 libnotify pulseaudio-libs
+Requires:	gtk3 libnotify pulseaudio-libs pulseaudio-libs-glib2
 
 %description
 pa-applet is a sys-tray applet that allows you to control some of Pulseaudio's features
