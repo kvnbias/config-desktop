@@ -351,32 +351,26 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
 
         # MANUAL 4.16.1: i3-gaps
         sudo dnf remove -y i3
-        sudo dnf install -y libxcb-devel xcb-util-keysyms-devel xcb-util-devel xcb-util-wm-devel --releasever=$fedver
-        sudo dnf install -y xcb-util-xrm-devel yajl-devel libXrandr-devel startup-notification-devel --releasever=$fedver
-        sudo dnf install -y libev-devel xcb-util-cursor-devel libXinerama-devel libxkbcommon-devel libxkbcommon-x11-devel --releasever=$fedver
-        sudo dnf install -y pcre-devel pango-devel automake git gcc --releasever=$fedver
-
-        sudo dnf install -y libev libxkbcommon-x11 perl pango startup-notification --releasever=$fedver
-        sudo dnf install -y xcb-util-cursor xcb-util-keysyms xcb-util-wm xcb-util-xrm yajl --releasever=$fedver
-
-        sudo dnf mark install libev libxkbcommon-x11 perl pango startup-notification xcb-util-cursor xcb-util-keysyms xcb-util-wm xcb-util-xrm yajl
-
-        git clone --recurse-submodules https://github.com/Airblader/i3.git i3-gaps
-        cd i3-gaps
-
-        git fetch --tags
-        tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-
-        if [ ${#tag} -ge 1 ]; then
-          git checkout $tag
-        fi
-
-        git tag -f "git-$(git rev-parse --short HEAD)"
-        autoreconf -fi && rm -rf build/ && mkdir -p build && cd build/
-        ../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers
-        make && sudo make install
-
-        cd /tmp
+        # sudo dnf install -y libxcb-devel xcb-util-keysyms-devel xcb-util-devel xcb-util-wm-devel --releasever=$fedver
+        # sudo dnf install -y xcb-util-xrm-devel yajl-devel libXrandr-devel startup-notification-devel --releasever=$fedver
+        # sudo dnf install -y libev-devel xcb-util-cursor-devel libXinerama-devel libxkbcommon-devel libxkbcommon-x11-devel --releasever=$fedver
+        # sudo dnf install -y pcre-devel pango-devel automake git gcc --releasever=$fedver
+        #
+        # sudo dnf install -y libev libxkbcommon-x11 perl pango startup-notification --releasever=$fedver
+        # sudo dnf install -y xcb-util-cursor xcb-util-keysyms xcb-util-wm xcb-util-xrm yajl --releasever=$fedver
+        #
+        # sudo dnf mark install libev libxkbcommon-x11 perl pango startup-notification xcb-util-cursor xcb-util-keysyms xcb-util-wm xcb-util-xrm yajl
+        #
+        # git clone --recurse-submodules https://github.com/Airblader/i3.git i3-gaps
+        # cd i3-gaps && git fetch --tags
+        # tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+        # [ ${#tag} -ge 1 ] && git checkout $tag
+        #
+        # git tag -f "git-$(git rev-parse --short HEAD)"
+        # autoreconf -fi && rm -rf build/ && mkdir -p build && cd build/ && ../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers
+        # make && sudo make install
+        spectool -g -R specs/i3-gaps.spec && sudo dnf builddep -y specs/i3-gaps.spec && rpmbuild -ba specs/i3-gaps.spec
+        sudo dnf install -y specs/rpmbuild/RPMS/x86_64/i3-gaps-4.16.1-1.fc$fedver.x86_64.rpm
 
         # MANUAL 3.3.1: polybar
         sudo dnf install -y cairo-devel xcb-proto xcb-util-devel xcb-util-cursor-devel xcb-util-image-devel xcb-util-wm-devel xcb-util-xrm-devel --releasever=$fedver
