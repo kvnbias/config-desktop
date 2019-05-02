@@ -101,6 +101,11 @@ if [ -d /sys/firmware/efi/efivars ] && sudo test -d /boot/efi/EFI && sudo test !
 exit" | sudo tee /boot/efi/startup.nsh
 fi
 
+if cat /etc/default/grub | grep -q "GRUB_CMDLINE_LINUX=\".*rhgb.*\""; then
+  sudo sed -i "s/rhgb//g" /etc/default/grub
+  sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+fi
+
 if [ "$os" = "fedora" ]; then
   sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$fedver.noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$fedver.noarch.rpm
 else

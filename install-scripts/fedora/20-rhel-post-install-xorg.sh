@@ -74,6 +74,11 @@ while true; do
   esac
 done
 
+if cat /etc/default/grub | grep -q "GRUB_CMDLINE_LINUX=\".*rhgb.*\""; then
+  sudo sed -i "s/rhgb//g" /etc/default/grub
+  sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+fi
+
 if [ "$1" = "" ];then
   fedver=$(rpm -E %$os)
 else
@@ -181,8 +186,11 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
     case $yn in
       [Nn]* ) break;;
       * )
-        # will use for manually installed packages, /tmp has limited space
-        cd /tmp
+        sudo dnf install -y gcc make bash coreutils diffutils
+        sudo dnf install -y python rpm-build rpm-devel rpmlint patch rpmdevtools
+        rpmdev-setuptree
+        sed -i "s/\$HOME/$DIR/specs" /home/$(whoami)/.rpmmacros
+        rm -rf /home/$(whoami)/rpmbuild
 
         sudo dnf install -y curl wget vim-minimal vim-enhanced httpie lsof git tmux gedit --releasever=$fedver
 
@@ -251,21 +259,15 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
         sudo dnf install -y glib2-devel gtk3-devel libnotify-devel --releasever=$fedver
         sudo dnf install -y pulseaudio-libs-devel libX11-devel --releasever=$fedver
         sudo dnf install -y autoconf automake pkgconf --releasever=$fedver
-
-        sudo dnf mark install gtk3 libnotify pulseaudio-libs
-
-        git clone --recurse-submodules https://github.com/fernandotcl/pa-applet.git
-        cd pa-applet
-
-        git fetch --tags
-        tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-
-        if [ ${#tag} -ge 1 ]; then
-          git checkout $tag
-        fi
-
-        git tag -f "git-$(git rev-parse --short HEAD)"
-        ./autogen.sh && ./configure && make && sudo make install
+        # sudo dnf mark install gtk3 libnotify pulseaudio-libs pulseaudio-libs-glib2
+        # git clone --recurse-submodules https://github.com/fernandotcl/pa-applet.git
+        # cd pa-applet && git fetch --tags
+        # tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+        # [ ${#tag} -ge 1 ] && git checkout $tag
+        # git tag -f "git-$(git rev-parse --short HEAD)"
+        # ./autogen.sh && ./configure && make && sudo make install
+        rpmbuild -ba specs/pa-applet.spec
+        sudo dnf install -y specs/rpmbuild/RPMS/x86_64/pa-applet-1-1.x86_64.rpm
         cd /tmp
 
         sudo sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf
