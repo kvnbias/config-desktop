@@ -8,10 +8,6 @@ Name:       nerd-fonts
 Version:    2.0.0
 Release:    1%{?dist}
 Summary:    Iconic font aggregator, collection, and patcher.
-Source0:    https://github.com/ryanoasis/nerd-fonts/raw/${PV}/patched-fonts/UbuntuMono/Regular/complete/Ubuntu%20Mono%20Nerd%20Font%20Complete%20Mono.ttf
-Source1:    https://github.com/ryanoasis/nerd-fonts/raw/${PV}/patched-fonts/RobotoMono/Regular/complete/Roboto%20Mono%20Nerd%20Font%20Complete%20Mono.ttf
-Source2:    https://github.com/ryanoasis/nerd-fonts/raw/${PV}/patched-fonts/RobotoMono/Bold/complete/Roboto%20Mono%20Bold%20Nerd%20Font%20Complete%20Mono.ttf
-Source3:    https://github.com/ryanoasis/nerd-fonts/raw/${PV}/patched-fonts/SourceCodePro/Regular/complete/Sauce%20Code%20Pro%20Nerd%20Font%20Complete%20Mono.ttf
 
 License:    MIT
 URL:        https://nerdfonts.com/
@@ -22,27 +18,31 @@ BuildArch:      x86_64
 Iconic font aggregator, collection, and patcher. 40+ patched fonts, over 3,600 glyph/icons, includes popular collections such as Font Awesome & fonts such as Hack
 
 %prep
-[ -d pa-applet ] && rm -rf pa-applet
-git clone https://github.com/fernandotcl/pa-applet
-cd pa-applet && ./autogen.sh
+mkdir -p nerd-fonts && cd nerd-fonts
+wget -O "Ubuntu Mono Nerd Font Complete Mono.ttf" "https://github.com/ryanoasis/nerd-fonts/raw/%{version}/patched-fonts/UbuntuMono/Regular/complete/Ubuntu%20Mono%20Nerd%20Font%20Complete%20Mono.ttf"
+wget -O "Roboto Mono Nerd Font Complete Mono.ttf" "https://github.com/ryanoasis/nerd-fonts/raw/%{version}/patched-fonts/RobotoMono/Regular/complete/Roboto%20Mono%20Nerd%20Font%20Complete%20Mono.ttf"
+wget -O "Roboto Mono Bold Nerd Font Complete Mono.ttf" "https://github.com/ryanoasis/nerd-fonts/raw/%{version}/patched-fonts/RobotoMono/Bold/complete/Roboto%20Mono%20Bold%20Nerd%20Font%20Complete%20Mono.ttf"
+wget -O "Sauce Code Pro Nerd Font Complete Mono.ttf" "https://github.com/ryanoasis/nerd-fonts/raw/%{version}/patched-fonts/SourceCodePro/Regular/complete/Sauce%20Code%20Pro%20Nerd%20Font%20Complete%20Mono.ttf"
 
 
 %build
-cd pa-applet
-%configure
-make %{?_smp_mflags}
-
+# Nothing to configure
 
 %install
-cd pa-applet
-%make_install
+cd nerd-fonts
+mkdir -p "%{buildroot}/usr/share/fonts/nerd-fonts-complete/ttf"
+install -m 755 "Ubuntu Mono Nerd Font Complete Mono.ttf" "%{buildroot}/usr/share/fonts/nerd-fonts-complete/ttf/Ubuntu Mono Nerd Font Complete Mono.ttf" 
+install -m 755 "Roboto Mono Nerd Font Complete Mono.ttf" "%{buildroot}/usr/share/fonts/nerd-fonts-complete/ttf/Roboto Mono Nerd Font Complete Mono.ttf" 
+install -m 755 "Roboto Mono Bold Nerd Font Complete Mono.ttf" "%{buildroot}/usr/share/fonts/nerd-fonts-complete/ttf/Roboto Mono Bold Nerd Font Complete Mono.ttf" 
+install -m 755 "Sauce Code Pro Nerd Font Complete Mono.ttf" "%{buildroot}/usr/share/fonts/nerd-fonts-complete/ttf/Sauce Code Pro Nerd Font Complete Mono.ttf" 
 
 
 %files
 %license
-%{_bindir}/%{name}
-/usr/share/man/man1/%{name}.1.gz
-
+"/usr/share/fonts/nerd-fonts-complete/ttf/Ubuntu Mono Nerd Font Complete Mono.ttf"
+"/usr/share/fonts/nerd-fonts-complete/ttf/Roboto Mono Nerd Font Complete Mono.ttf" 
+"/usr/share/fonts/nerd-fonts-complete/ttf/Roboto Mono Bold Nerd Font Complete Mono.ttf" 
+"/usr/share/fonts/nerd-fonts-complete/ttf/Sauce Code Pro Nerd Font Complete Mono.ttf" 
 
 
 %changelog
