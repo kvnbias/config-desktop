@@ -21,13 +21,14 @@ Requires:       cairo libev libjpeg-turbo libxcb libxkbcommon libxkbcommon-x11 x
 Improved improved screen locker - 'the ricing fork of i3lock'
 
 %prep
-%setup -q
+%setup
 
 
 %build
+autoreconf -fi
 %configure
 make %{?_smp_mflags}
-echo "auth include system-auth" | i3lock
+echo "auth include system-auth" | tee i3lock
 
 
 %install
@@ -40,6 +41,7 @@ install -m 755 i3lock %{buildroot}/etc/pam.d/i3lock
 %license
 %{_bindir}/i3lock
 /etc/pam.d/i3lock
+/usr/share/man/man1/i3lock.1.gz
 
 
 
