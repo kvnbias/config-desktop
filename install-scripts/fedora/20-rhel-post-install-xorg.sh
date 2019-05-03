@@ -266,7 +266,7 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
         # [ ${#tag} -ge 1 ] && git checkout $tag
         # git tag -f "git-$(git rev-parse --short HEAD)"
         # ./autogen.sh && ./configure && make && sudo make install
-        sudo dnf builddep -y specs/i3lock-color.spec && rpmbuild -ba specs/pa-applet.spec
+        sudo dnf builddep -y specs/pa-applet.spec && rpmbuild -ba specs/pa-applet.spec
         sudo dnf install -y specs/rpmbuild/RPMS/x86_64/pa-applet-20181009-1.fc$fedver.x86_64.rpm
 
         sudo sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf
