@@ -11,9 +11,7 @@ Summary:     A fast and easy-to-use status bar
 
 License:    MIT
 URL:        https://polybar.github.io/
-Source0:    https://github.com/jaagr/%{name}/archive/%{version}.tar.gz
-Source1:	https://github.com/jaagr/i3ipcpp/archive/v0.7.1.tar.gz
-Source2:	https://github.com/jaagr/xpp/archive/1.4.0.tar.gz
+Source0:    https://github.com/jaagr/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
 BuildArch:      x86_64
 
@@ -22,6 +20,7 @@ BuildRequires:  cairo-devel
 BuildRequires:  cmake
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
+BuildRequires:  git
 BuildRequires:  jsoncpp-devel
 BuildRequires:  libcurl-devel
 BuildRequires:  libmpdclient-devel
@@ -55,12 +54,19 @@ Requires:       xcb-util-xrm
 The main purpose of Polybar is to help users create awesome status bars. It has built-in functionality to display information about the most commonly used services.
 
 %prep
+rm -rf lib/i3ipcpp lib/xpp
 %setup
+rm -rf lib/i3ipcpp/* lib/xpp/*
+git clone https://github.com/jaagr/i3ipcpp lib/i3ipcpp
+git clone https://github.com/jaagr/xpp lib/xpp
+cd lib/i3ipcpp && git checkout d4e4786 && cd ../../
+cd lib/xpp && git checkout d2ff2aa && cd ../../
+
 
 
 %build
 rm -rf build/ && mkdir -p build && cd build && cmake ..
-make %{?_smp_mflags}
+make 
 
 
 %install
@@ -70,6 +76,16 @@ cd build
 
 %files
 %license LICENSE
+/usr/lib/debug/usr/local/bin/polybar-3.3.1-1.fc30.x86_64.debug
+/usr/lib/debug/usr/local/bin/polybar-msg-3.3.1-1.fc30.x86_64.debug
+/usr/local/bin/polybar
+/usr/local/bin/polybar-msg
+/usr/local/share/bash-completion/completions/polybar
+/usr/local/share/doc/polybar/config
+/usr/local/share/man/man1/polybar.1
+/usr/local/share/zsh/site-functions/_polybar
+/usr/local/share/zsh/site-functions/_polybar_msg
+
 
 
 
