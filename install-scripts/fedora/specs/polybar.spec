@@ -14,36 +14,8 @@ URL:        https://github.com/Airblader/i3
 Source0:    https://github.com/Airblader/i3/archive/%{version}.tar.gz
 
 BuildArch:      x86_64
-
-BuildRequires:  automake
-BuildRequires:  gcc
-BuildRequires:  libev-devel
-BuildRequires:  libxcb-devel
-BuildRequires:  libxkbcommon-devel
-BuildRequires:  libxkbcommon-x11-devel
-BuildRequires:  libXinerama-devel
-BuildRequires:  libXrandr-devel
-BuildRequires:  pcre-devel
-BuildRequires:  pango-devel
-BuildRequires:  startup-notification-devel
-BuildRequires:  xcb-util-cursor-devel
-BuildRequires:  xcb-util-devel
-BuildRequires:  xcb-util-keysyms-devel
-BuildRequires:  xcb-util-wm-devel
-BuildRequires:  xcb-util-xrm-devel
-BuildRequires:  yajl-devel
-
-Requires:       libev
-Requires:       libxkbcommon-x11
-Requires:       pango
-Requires:       perl
-Requires:       startup-notification
-Requires:       xcb-util-cursor
-Requires:       xcb-util-keysyms
-Requires:       xcb-util-wm
-Requires:       xcb-util-xrm
-Requires:       yajl
-
+BuildRequires:  cairo-devel xcb-proto xcb-util-devel xcb-util-cursor-devel xcb-util-image-devel xcb-util-wm-devel xcb-util-xrm-devel alsa-lib-devel libcurl-devel jsoncpp-devel libmpdclient-devel pulseaudio-libs-devel libnl3-devel cmake wireless-tools-devel gcc-c++ gcc python python2 pkgconf
+Requires:       libev libxkbcommon-x11 perl pango startup-notification xcb-util-cursor xcb-util-keysyms xcb-util-wm xcb-util-xrm yajl
 Conflicts:      otherproviders(i3)
 
 %description

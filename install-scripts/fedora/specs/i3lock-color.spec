@@ -14,8 +14,28 @@ URL:        https://github.com/PandorasFox/%{name}
 Source0:    https://github.com/PandorasFox/%{name}/archive/%{version}.tar.gz
 
 BuildArch:      x86_64
-BuildRequires:  cairo-devel libev-devel libjpeg-devel libxkbcommon-x11-devel pam-devel xcb-util-devel xcb-util-image-devel xcb-util-xrm-devel autoconf automake
-Requires:       cairo libev libjpeg-turbo libxcb libxkbcommon libxkbcommon-x11 xcb-util-image pkgconf
+
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  cairo-devel
+BuildRequires:  libev-devel
+BuildRequires:  libjpeg-devel
+BuildRequires:  libxkbcommon-x11-devel
+BuildRequires:  pam-devel
+BuildRequires:  xcb-util-devel
+BuildRequires:  xcb-util-image-devel
+BuildRequires:  xcb-util-xrm-devel
+
+Requires:       cairo
+Requires:       libev
+Requires:       libjpeg-turbo
+Requires:       libxcb
+Requires:       libxkbcommon
+Requires:       libxkbcommon-x11
+Requires:       xcb-util-image
+Requires:       pkgconf
+
+Conflicts:      otherproviders(i3lock)
 
 %description
 Improved improved screen locker - 'the ricing fork of i3lock'
