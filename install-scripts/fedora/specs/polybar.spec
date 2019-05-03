@@ -4,32 +4,62 @@
 # https://docs.fedoraproject.org/en-US/packaging-guidelines/
 
 
-Name:       i3-gaps
-Version:    4.16.1
+Name:       polybar
+Version:    3.3.1
 Release:    1%{?dist}
-Summary:    i3-gaps is a fork of i3wm, a tiling window manager for X11
+Summary:     A fast and easy-to-use status bar
 
-License:    BSD
-URL:        https://github.com/Airblader/i3
-Source0:    https://github.com/Airblader/i3/archive/%{version}.tar.gz
+License:    MIT
+URL:        https://polybar.github.io/
+Source0:    https://github.com/jaagr/%{name}/archive/%{version}.tar.gz
+Source1:	https://github.com/jaagr/i3ipcpp/archive/v0.7.1.tar.gz
+Source2:	https://github.com/jaagr/xpp/archive/1.4.0.tar.gz
 
 BuildArch:      x86_64
-BuildRequires:  cairo-devel xcb-proto xcb-util-devel xcb-util-cursor-devel xcb-util-image-devel xcb-util-wm-devel xcb-util-xrm-devel alsa-lib-devel libcurl-devel jsoncpp-devel libmpdclient-devel pulseaudio-libs-devel libnl3-devel cmake wireless-tools-devel gcc-c++ gcc python python2 pkgconf
-Requires:       libev libxkbcommon-x11 perl pango startup-notification xcb-util-cursor xcb-util-keysyms xcb-util-wm xcb-util-xrm yajl
-Conflicts:      otherproviders(i3)
+
+BuildRequires:  alsa-lib-devel
+BuildRequires:  cairo-devel
+BuildRequires:  cmake
+BuildRequires:  gcc
+BuildRequires:  gcc-c++
+BuildRequires:  jsoncpp-devel
+BuildRequires:  libcurl-devel
+BuildRequires:  libmpdclient-devel
+BuildRequires:  libnl3-devel
+BuildRequires:  pulseaudio-libs-devel
+BuildRequires:  python
+BuildRequires:  python2
+BuildRequires:  pkgconf
+BuildRequires:  xcb-proto
+BuildRequires:  xcb-util-cursor-devel
+BuildRequires:  xcb-util-devel
+BuildRequires:  xcb-util-image-devel
+BuildRequires:  xcb-util-wm-devel
+BuildRequires:  xcb-util-xrm-devel
+BuildRequires:  wireless-tools-devel
+
+Requires:       alsa-lib
+Requires:       cairo
+Requires:       curl
+Requires:       jsoncpp
+Requires:       libmpdclient
+Requires:       libnl3
+Requires:       pulseaudio-libs
+Requires:       wireless-tools
+Requires:       xcb-util-cursor
+Requires:       xcb-util-image
+Requires:       xcb-util-wm
+Requires:       xcb-util-xrm
 
 %description
-i3-gaps is a fork of i3wm, a tiling window manager for X11
-
-%global debug_package %{nil}
+The main purpose of Polybar is to help users create awesome status bars. It has built-in functionality to display information about the most commonly used services.
 
 %prep
-%setup -n i3-%{version}
+%setup
 
 
 %build
-autoreconf -fi && rm -rf build/ && mkdir -p build && cd build
-../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers
+rm -rf build/ && mkdir -p build && cd build && cmake ..
 make %{?_smp_mflags}
 
 
@@ -40,29 +70,6 @@ cd build
 
 %files
 %license LICENSE
-%{_bindir}/i3
-%{_includedir}/i3/
-%dir %{_sysconfdir}/i3/
-%config(noreplace) %{_sysconfdir}/i3/config
-%config(noreplace) %{_sysconfdir}/i3/config.keycodes
-%{_bindir}/i3-config-wizard
-%{_bindir}/i3-dmenu-desktop
-%{_bindir}/i3-dump-log
-%{_bindir}/i3-input
-%{_bindir}/i3-migrate-config-to-v4
-%{_bindir}/i3-msg
-%{_bindir}/i3-nagbar
-%{_bindir}/i3-save-tree
-%{_bindir}/i3-sensible-editor
-%{_bindir}/i3-sensible-pager
-%{_bindir}/i3-sensible-terminal
-%{_bindir}/i3-with-shmlog
-%{_bindir}/i3bar
-/usr/share/applications/i3.desktop
-/usr/share/xsessions/i3-with-shmlog.desktop
-/usr/share/xsessions/i3.desktop
-
-
 
 
 
