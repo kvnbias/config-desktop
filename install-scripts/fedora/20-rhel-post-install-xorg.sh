@@ -372,14 +372,6 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
         spectool -g -R specs/i3-gaps.spec && sudo dnf builddep -y specs/i3-gaps.spec && rpmbuild -ba specs/i3-gaps.spec
         sudo dnf install -y specs/rpmbuild/RPMS/x86_64/i3-gaps-4.16.1-1.fc$fedver.x86_64.rpm
 
-        # MANUAL 3.3.1: polybar
-        sudo dnf install -y cairo-devel xcb-proto xcb-util-devel xcb-util-cursor-devel xcb-util-image-devel xcb-util-wm-devel xcb-util-xrm-devel --releasever=$fedver
-        sudo dnf install -y alsa-lib-devel libcurl-devel jsoncpp-devel libmpdclient-devel pulseaudio-libs-devel libnl3-devel cmake wireless-tools-devel --releasever=$fedver
-        sudo dnf install -y gcc-c++ gcc python python2 git pkgconf --releasever=$fedver
-
-        sudo dnf install -y cairo xcb-util-cursor xcb-util-image xcb-util-wm xcb-util-xrm --releasever=$fedver
-        sudo dnf install -y alsa-lib curl jsoncpp libmpdclient pulseaudio-libs libnl3 wireless-tools --releasever=$fedver
-
         # ncmpcpp playlist
         # 1) go to browse
         # 2) press "v" (it reverse selection, so when you have nothing selected, it selects all)
@@ -390,25 +382,27 @@ Minimal installation done. Would you like to proceed [Yn]?   " yn
         sudo systemctl disable mpd
         sudo systemctl stop mpd
 
-        sudo dnf mark install cairo xcb-util-cursor xcb-util-image xcb-util-wm xcb-util-xrm
-        sudo dnf mark install alsa-lib curl jsoncpp libmpdclient pulseaudio-libs libnl3 wireless-tools
-        sudo dnf mark install mpd mpc ncmpcpp
-
-        git clone --recurse-submodules https://github.com/jaagr/polybar.git
-        cd polybar
-
-        git fetch --tags
-        tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-
-        if [ ${#tag} -ge 1 ]; then
-          git checkout $tag
-        fi
-
-        git tag -f "git-$(git rev-parse --short HEAD)"
-        rm -rf build/ && mkdir -p build && cd build/
-        cmake .. && make -j$(nproc) && sudo make install
-
-        cd /tmp
+        # MANUAL 3.3.1: polybar
+        # sudo dnf install -y cairo-devel xcb-proto xcb-util-devel xcb-util-cursor-devel xcb-util-image-devel xcb-util-wm-devel xcb-util-xrm-devel --releasever=$fedver
+        # sudo dnf install -y alsa-lib-devel libcurl-devel jsoncpp-devel libmpdclient-devel pulseaudio-libs-devel libnl3-devel cmake wireless-tools-devel --releasever=$fedver
+        # sudo dnf install -y gcc-c++ gcc python python2 git pkgconf --releasever=$fedver
+        #
+        # sudo dnf install -y cairo xcb-util-cursor xcb-util-image xcb-util-wm xcb-util-xrm --releasever=$fedver
+        # sudo dnf install -y alsa-lib curl jsoncpp libmpdclient pulseaudio-libs libnl3 wireless-tools --releasever=$fedver
+        #
+        # sudo dnf mark install cairo xcb-util-cursor xcb-util-image xcb-util-wm xcb-util-xrm
+        # sudo dnf mark install alsa-lib curl jsoncpp libmpdclient pulseaudio-libs libnl3 wireless-tools
+        # sudo dnf mark install mpd mpc ncmpcpp
+        #
+        # git clone --recurse-submodules https://github.com/jaagr/polybar.git
+        # cd polybar && git fetch --tags
+        # tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+        # [ ${#tag} -ge 1 ] && git checkout $tag
+        # git tag -f "git-$(git rev-parse --short HEAD)"
+        # rm -rf build/ && mkdir -p build && cd build/
+        # cmake .. && make -j$(nproc) && sudo make install
+        spectool -g -R specs/polybar.spec && sudo dnf builddep -y specs/polybar.spec && rpmbuild -ba specs/polybar.spec
+        sudo dnf install -y specs/rpmbuild/RPMS/x86_64/polybar-3.3.1-1.fc$fedver.x86_64.rpm
 
         # popup calendar
         # sudo dnf install -y xdotool yad --releasever=$fedver
