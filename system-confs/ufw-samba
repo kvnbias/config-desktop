@@ -1,0 +1,5 @@
+
+[Samba]
+title=Samba
+description=Samba Server
+ports=137:138/udp|139/tcp|445/tcp

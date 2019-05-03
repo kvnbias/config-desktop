@@ -1,6 +1,6 @@
 
 #!/bin/bash
-
+DIR="$(cd "$( dirname "$0" )" && pwd)"
 os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed -e 's/"//g'))
 
 if [ "$1" = "" ];then
@@ -15,8 +15,7 @@ fi
 
 sudo dnf -y upgrade
 
-sudo dnf install -y curl vim-enhanced wget httpie git tmux gedit --releasever=$fedver
-sudo dnf install -y lsof bash-completion gamin polkit-gnome --releasever=$fedver
+sudo dnf install -y curl vim-enhanced wget git gedit bash-completion polkit-gnome --releasever=$fedver
 
 while true; do
   read -p "Enable vi mode on bash [yN]?   " ebvi
@@ -33,54 +32,21 @@ while true; do
   esac
 done
 
-# exfat readable
-sudo dnf install -y exfat-utils fuse-exfat ntfs-3g --releasever=$fedver
-
-# media
-sudo dnf install -y eog --releasever=$fedver
-
-# firefox
-sudo dnf install -y firefox --releasever=$fedver
-
-# extra
-sudo dnf install -y libreoffice libreoffice-gtk3 --releasever=$fedver
-sudo dnf install -y vlc transmission-gtk mupdf xarchiver p7zip evince --releasever=$fedver
+sudo dnf install -y exfat-utils fuse-exfat ntfs-3g eog firefox --releasever=$fedver
+sudo dnf install -y libreoffice libreoffice-gtk3 vlc transmission-gtk mupdf xarchiver p7zip evince --releasever=$fedver
 
 while true; do
-  read -p "
-
-Install Screen Recorder [yN]?  " isr
+  read -p "Install Screen Recorder [yN]?  " isr
   case $isr in
-    [Yy]* )
-      sudo dnf install -y simplescreenrecorder --releasever=$fedver
-      break;;
+    [Yy]* ) sudo dnf install -y simplescreenrecorder --releasever=$fedver; break;;
     * ) break;;
   esac
 done
 
-# No choice.
-# while true; do
-#   read -p "
-#
-# Install JDownloader [yN]?  " ijd
-#   case $isr in
-#     [Yy]* )
-#       sudo dnf install -y flatpak --releasever=$fedver
-#       sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-#       flatpak install -y flathub org.jdownloader.JDownloader
-#       break;;
-#     * ) break;;
-#   esac
-# done
-
 while true; do
-  read -p "
-
-Install Timeshift [yN]?  " its
+  read -p "Install Timeshift [yN]?  " its
   case $its in
-    [Yy]* )
-      sudo dnf install -y timeshift --releasever=$fedver
-      break;;
+    [Yy]* ) sudo dnf install -y timeshift --releasever=$fedver; break;;
     * ) break;;
   esac
 done
@@ -94,10 +60,7 @@ done
 # $ sudo mount /dev/sr0 /mnt
 # $ sudo /mnt/VBoxLinuxAdditions.run
 while true; do
-  read -p "
-
-Install virtualbox [yN]?
-https://wiki.archlinux.org/index.php/VirtualBox   " ivb
+  read -p "Install virtualbox [yN]?   " ivb
   case $ivb in
     [Yy]* )
       if [ "$os" = "fedora" ]; then
@@ -122,17 +85,13 @@ https://wiki.archlinux.org/index.php/VirtualBox   " ivb
       sudo dnf install -y virtualbox-guest-additions --releasever=$fedver
 
       sudo /usr/lib/virtualbox/vboxdrv.sh setup
-
       break;;
     * ) break;;
   esac
 done
 
 while true; do
-  read -p "
-
-Install firewall [yN]?
-https://wiki.archlinux.org/index.php/Uncomplicated_Firewall   " ifw
+  read -p "Install firewall [yN]?   " ifw
   case $ifw in
     [Yy]* )
       sudo dnf install -y ufw --releasever=$fedver
@@ -145,22 +104,13 @@ https://wiki.archlinux.org/index.php/Uncomplicated_Firewall   " ifw
 done
 
 while true; do
-  read -p "
-
-Install bluetooth [yN]?
-https://wiki.archlinux.org/index.php/bluetooth   " ibt
+  read -p "Install bluetooth [yN]?   " ibt
   case $ibt in
     [Yy]* )
       sudo dnf install -y bluez blueman pulseaudio-module-bluetooth --releasever=$fedver
-
-      echo "
-load-module module-bluetooth-policy
-load-module module-bluetooth-discover
-" | sudo tee -a /etc/pulse/system.pa
-
+      cat "$DIR/../../system-confs/system.pa" | sudo tee -a /etc/pulse/system.pa
       sed -i "s/# exec --no-startup-id blueman-applet/exec --no-startup-id blueman-applet/g" $HOME/.config/i3/config
       sed -i "s/# for_window \[class=\"Blueman-manager\"\]/for_window \[class=\"Blueman-manager\"\]/g" $HOME/.config/i3/config
-
       sudo systemctl enable bluetooth
       sudo systemctl start bluetooth
       break;;
@@ -170,10 +120,7 @@ done
 
 # For windows, go to appwiz.cpl, turn on the windows feature "SMB CIFS File Sharing Support"
 while true; do
-  read -p "
-
-Install Samba [yN]?
-https://wiki.archlinux.org/index.php/Samba   " ismb
+  read -p "Install Samba [yN]?   " ismb
   case $ismb in
     [Yy]* )
       user=$(whoami)
@@ -181,74 +128,11 @@ https://wiki.archlinux.org/index.php/Samba   " ismb
 
       mkdir -p "/home/$user/Share"
       sudo mv /etc/samba/smb.conf /etc/samba/smb.conf.bup
-      echo "
-
-[global]
-    # workgroup = NT-Domain-Name or Workgroup-Name, eg: MIDEARTH
-    #
-    # Default windows 10 workgroup
-    workgroup = WORKGROUP
-
-    # Server role. Defines in which mode Samba will operate. Possible
-    # values are 'standalone server', 'member server', 'classic primary
-    # domain controller', 'classic backup domain controller', 'active
-    # directory domain controller'.
-    #
-    # Most people will want 'standalone server' or 'member server'.
-    # Running as 'active directory domain controller' will require first
-    # running 'samba-tool domain provision' to wipe databases and create a
-    # new domain.
-    server role = standalone server
-
-    # server string is the equivalent of the NT Description field
-    server string = $user's Samba Server
-
-    # Failed login or anonymous user will be a guest user.
-    map to guest = bad user
-
-    # This option is important for security. It allows you to restrict
-    # connections to machines which are on your local network. The
-    # following example restricts access to two C class networks and
-    # the 'loopback' interface. For more examples of the syntax see
-    # the smb.conf man page
-    hosts allow = 192.168.1. 192.168.2. 127.
-
-[$user]
-    comment = $user's shared folder
-
-    # Directory to share
-    path = /home/$user/Share
-
-    # Makes share folder writeable
-    read only = no
-    writeable = yes
-
-    # Anybody who access is a guest
-    guest ok = yes
-
-    # Force written file will be named after $user
-    force user = $user
-
-    # Force written file will be in group wheel
-    force group = wheel
-
-[printers]
-    comment = All Printers
-    path = /usr/spool/samba
-    browseable = no
-    guest ok = no
-    writable = no
-    printable = yes
-" | sudo tee /etc/samba/smb.conf
+      sudo cp -raf "$DIR/../../system-confs/smb.conf" "/etc/samba/smb.conf"
+      sudo sed -i "s/ACCOUNT_NAME/ACCOUNT_NAME/g" /etc/samba/smb.conf
 
       if [ -d /etc/ufw/applications.d ]; then
-        echo "
-[Samba]
-title=Samba
-description=Samba Server
-ports=137:138/udp|139/tcp|445/tcp
-" | sudo tee /etc/ufw/applications.d/ufw-samba
-
+        sudo cp -raf "$DIR/../../system-confs/ufw-samba" "/etc/ufw/applications.d/ufw-samba"
         sudo ufw allow Samba
       fi
 
@@ -260,10 +144,7 @@ ports=137:138/udp|139/tcp|445/tcp
 done
 
 while true; do
-  read -p "
-
-Install CUPS [yN]?
-https://wiki.archlinux.org/index.php/CUPS   " ic
+  read -p "Install CUPS [yN]?   " ic
   case $ic in
     [Yy]* )
       sudo dnf install -y cups bluez-cups cups-pdf nss-mdns --releasever=$fedver
@@ -278,26 +159,8 @@ https://wiki.archlinux.org/index.php/CUPS   " ic
   esac
 done
 
-# while true; do
-#   read -p "
-#
-# Will mount HFS+ partitions [yN]?   " mfsp
-#   case $mfsp in
-#     [Yy]* )
-#       # To mount HFS+
-#       # 1. Repair: sudo fsck.hfsplus -f /dev/sda2
-#       # 2. Mount: sudo mount -t hfsplus -o force,rw /dev/sda2 /mnt
-#       sudo dnf install -y hfsplusutils hfsutils hfsplus-tools --releasever=$fedver
-#       break;;
-#     * ) break;;
-#   esac
-# done
-
 while true; do
-  read -p "
-
-Will mount APFS partitions [yN]?
-https://github.com/sgan81/apfs-fuse   " mapfs
+  read -p "Will mount APFS partitions [yN]?   " mapfs
   case $mapfs in
     [Yy]* )
       cd /tmp
@@ -318,100 +181,7 @@ https://github.com/sgan81/apfs-fuse   " mapfs
 done
 
 while true; do
-  read -p "
-
-Install OS-Prober [yN]?
-https://wiki.archlinux.org/index.php/GRUB#Detecting_other_operating_systems
-   " iop
-  case $iop in
-    [Yy]* )
-      sudo dnf install -y os-prober --releasever=$fedver
-      break;;
-    * ) break;;
-  esac
-done
-
-while true; do
-  read -p "
-
-Install rEFInd [yN]?
-
-While rEFInd can boot any OS/Distro, the auto-detect feature may have problems
-booting a distro that have multiple kernels installed.
-
-https://wiki.archlinux.org/index.php/REFInd
-   " ir
-  case $ir in
-    [Yy]* )
-      while true; do
-        read -p "
-
-Would you like to rice rEFInd [yN]?   " rr
-        case $rr in
-          [Yy]* )
-            cd /tmp
-            wget -O "refind-bin-0.11.4.zip" "http://sourceforge.net/projects/refind/files/0.11.4/refind-bin-0.11.4.zip/download"
-            unzip refind-bin-0.11.4.zip && unzip refind-bin-0.11.4.zip && sudo bash refind-bin-0.11.4/refind-install
-
-            git clone https://github.com/EvanPurkhiser/rEFInd-minimal.git /tmp/refind-minimal
-            sudo mkdir -p /boot/efi/EFI/refind/themes/rEFInd-minimal
-            sudo cp -raf --no-preserve=mode,ownership /tmp/refind-minimal/* /boot/efi/EFI/refind/themes/rEFInd-minimal
-            echo "include themes/refind-minimal/theme.conf" | sudo tee -a /boot/efi/EFI/refind/refind.conf
-
-            cd /tmp
-
-            echo '
-
-#####################################
-#####################################
-###                               ###
-###    INSTALLATION COMPLETE      ###
-###                               ###
-###    rEFInd has been set as     ###
-###    your primary bootloader    ###
-###                               ###
-###    change bootloader order    ###
-###    priority in `efibootmgr    ###
-###                               ###
-#####################################
-#####################################
-
-'
-            break 2;;
-          * )
-            cd /tmp
-            wget -O "refind-bin-0.11.4.zip" "http://sourceforge.net/projects/refind/files/0.11.4/refind-bin-0.11.4.zip/download"
-            unzip refind-bin-0.11.4.zip && unzip refind-bin-0.11.4.zip && sudo bash refind-bin-0.11.4/refind-install
-            cd /tmp
-
-            echo '
-
-#####################################
-#####################################
-###                               ###
-###    INSTALLATION COMPLETE      ###
-###                               ###
-###    rEFInd has been set as     ###
-###    your primary bootloader    ###
-###                               ###
-###    change bootloader order    ###
-###    priority in `efibootmgr    ###
-###                               ###
-#####################################
-#####################################
-
-'
-        break 2;;
-        esac
-      done;;
-    * ) break;;
-  esac
-done
-
-while true; do
-  read -p "
-
-Install Skype [yN]?   " is
+  read -p "Install Skype [yN]?   " is
   case $is in
     [Yy]* )
       sudo dnf install -y gnome-keyring --releasever=$fedver
@@ -424,60 +194,102 @@ Install Skype [yN]?   " is
 done
 
 while true; do
-  read -p "
-
-Install GIMP [yN]?   " ig
+  read -p "Install GIMP [yN]?   " ig
   case $ig in
-    [Yy]* )
-      sudo dnf install -y gimp --releasever=$fedver
-      break;;
+    [Yy]* ) sudo dnf install -y gimp --releasever=$fedver; break;;
     * ) break;;
   esac
 done
 
 while true; do
-  read -p "
-
-Install Mail Client: Geary [yN]?   " it
+  read -p "Install Mail Client: Geary [yN]?   " it
   case $it in
-    [Yy]* )
-      sudo dnf install -y geary --releasever=$fedver
-      break;;
+    [Yy]* ) sudo dnf install -y geary --releasever=$fedver; break;;
     * ) break;;
   esac
 done
 
 while true; do
-  read -p "
-
-Install Calendar [yN]?   " ic
+  read -p "Install Calendar [yN]?   " ic
   case $ic in
-    [Yy]* )
-      sudo dnf install -y gnome-calendar --releasever=$fedver
-      break;;
+    [Yy]* ) sudo dnf install -y gnome-calendar --releasever=$fedver; break;;
     * ) break;;
   esac
 done
 
 while true; do
-  read -p "
-
-Install Calculator [yN]?   " ic
+  read -p "Install Calculator [yN]?   " ic
   case $ic in
-    [Yy]* )
-      sudo dnf install -y gnome-calculator --releasever=$fedver
-      break;;
+    [Yy]* ) sudo dnf install -y gnome-calculator --releasever=$fedver; break;;
     * ) break;;
   esac
 done
 
 while true; do
-  read -p "
-
-Install GParted [yN]?   " igp
+  read -p "Install GParted [yN]?   " igp
   case $igp in
+    [Yy]* ) sudo dnf install -y gparted --releasever=$fedver; break;;
+    * ) break;;
+  esac
+done
+
+while true; do
+  read -p "Install Dev Tools [yN]?   " idt
+  case $idt in
     [Yy]* )
-      sudo dnf install -y gparted --releasever=$fedver
+      sudo dnf install -y lsof httpie tmux htop --releasever=$fedver
+
+      sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+      sudo dnf update
+      sudo dnf install -y code --releasever=$fedver
+      echo "fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
+      sudo sysctl -p
+ 
+      while true; do
+        read -p "Enable vim mode on VSCode [yN]?   " evm
+        case $evm in
+          [Yy]* ) code --install-extension vscodevim.vim &; break;;
+          *) break;;
+        esac
+      done
+
+      code --install-extension eamodio.gitlens &
+      code --install-extension peterjausovec.vscode-docker &
+      code --install-extension ms-vscode.theme-tomorrowkit &
+
+      sleep 20
+
+      while true; do
+        read -p "Install Google Chrome [yN]?   " igc
+        case $igc in
+          [Yy]* )
+            sudo sh -c 'echo -e "[google-chrome]\nname=google-chrome\nbaseurl=http://dl.google.com/linux/chrome/rpm/stable/x86_64/\nenabled=1\ngpgcheck=1\ngpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub" > /etc/yum.repos.d/google-chrome.repo'
+            sudo dnf update
+            sudo dnf install -y google-chrome-stable --releasever=$fedver
+            break;;
+          * ) break;;
+        esac
+      done
+
+      while true; do
+        read -p "Install Zeal [yN]?   " iz
+        case $iz in
+          [Yy]* ) sudo dnf install -y zeal --releasever=$fedver; break;;
+          * ) break;;
+        esac
+      done
+
+      while true; do
+        read -p "Install DBeaver [yN]?   " idbvr
+        case $idbvr in
+          [Yy]* )
+            cd /tmp
+            wget https://dbeaver.io/files/dbeaver-ce-latest-stable.x86_64.rpm
+            sudo dnf install -y dbeaver-ce-latest-stable.x86_64.rpm --releasever=$fedver
+            break;;
+          * ) break;;
+        esac
+      done
       break;;
     * ) break;;
   esac

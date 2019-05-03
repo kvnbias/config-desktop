@@ -5,58 +5,11 @@ if [ -f /arch-install ]; then
   sudo rm /arch-install
 fi
 
-while true; do
-  read -p "Will boot with other linux distros and share a partitions [yN]?   " wdb
-  case $wdb in
-    [Yy]* )
-      while true; do
-        echo "
+DIR="$(cd "$( dirname "$0" )" && pwd)"
+os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed -e 's/"//g'))
 
-NOTE: Use a UID that will less likely be used as an ID by other distros (e.g. 1106).
-This UID will also be used on the other distro installations
-
-"
-        read -p "Enter UID or [e]xit:   " uid
-        case $uid in
-          [Ee]* ) break;;
-          * )
-            while true; do
-              echo "
-
-NOTE: Use a GUID that will less likely be used as an ID by other distros (e.g. 1106).
-This GUID will also be used on the other distro installations
-
-"
-              read -p "Enter GUID or [e]xit:   " guid
-              case $guid in
-                [Ee]* ) break 2;;
-                * )
-                  while true; do
-                    echo "
-
-Logout this user account and execute the commands below as a root user on tty2 (Ctrl + Alt + F2):
-
-groupadd wheel
-usermod -u $uid $(whoami)
-groupmod -g $guid wheel
-usermod -g wheel $(whoami)
-chown -R $(whoami):wheel /home/$(whoami)
-
-"
-                    read -p "Choose action: [l]ogout | [s]kip   " wultp
-                    case $wultp in
-                      [Ss]* ) break 4;;
-                      [Ll]* ) sudo pkill -KILL -u $(whoami);;
-                      * ) echo "Invalid input";;
-                    esac
-                  done;;
-              esac
-            done;;
-        esac
-      done;;
-    * ) break;;
-  esac
-done
+bash $DIR/../../setup-scripts/multi-boot-prompt.sh
+bash $DIR/../../setup-scripts/boot-startup-prompt.sh "$os"
 
 # https://www.archlinux.org/groups/x86_64/base-devel/
 # Current libs (3/15/2019)
@@ -75,24 +28,6 @@ while true; do
     * ) break;;
   esac
 done
-
-os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed -e 's/"//g'))
-
-if [ -d /sys/firmware/efi/efivars ] && sudo test -d /boot/efi/EFI && sudo test ! -f /boot/efi/startup.nsh; then
-  sudo mkdir -p /boot/efi/EFI/boot
-  if [ -d "/boot/efi/EFI/refind" ]; then
-    sudo cp -a /boot/efi/EFI/refind/refind_x64.efi /boot/efi/EFI/boot/bootx64.efi
-  elif [ -d "/boot/efi/EFI/grub" ]; then
-    sudo cp -a /boot/efi/EFI/grub/grubx64.efi /boot/efi/EFI/boot/bootx64.efi
-  elif [ -d "/boot/efi/EFI/GRUB" ]; then
-    sudo cp -a /boot/efi/EFI/GRUB/grubx64.efi /boot/efi/EFI/boot/bootx64.efi
-  else
-    sudo cp -a /boot/efi/EFI/$os/grubx64.efi /boot/efi/EFI/boot/bootx64.efi
-  fi
-
-  echo "bcf boot add 1 fs0:\\EFI\\boot\\bootx64.efi \"Fallback Bootloader\"
-exit" | sudo tee /boot/efi/startup.nsh
-fi
 
 if [ "$os" != "manjaro" ]; then
   while true; do
@@ -153,48 +88,7 @@ yes | sudo pacman -S numlockx
 yes | sudo pacman -S xdg-user-dirs
 xdg-user-dirs-update
 
-if [ -f /etc/default/grub ]; then
-  sudo sed -i 's/GRUB_DEFAULT=0/GRUB_DEFAULT=saved/g' /etc/default/grub
-
-  if cat /etc/default/grub | grep -q 'GRUB_SAVEDEFAULT'; then
-    sudo sed -i 's/#GRUB_SAVEDEFAULT="true"/GRUB_SAVEDEFAULT="true"/g' /etc/default/grub
-  else
-    echo 'GRUB_SAVEDEFAULT="true"' | sudo tee -a /etc/default/grub
-  fi
-
-  if sudo cat /etc/default/grub | grep -q 'resume='; then
-    echo "Hibernation already enabled..."
-  else
-    while true; do
-      read -p "Do you like to enable hibernation [Yn]?   " yn
-      case $yn in
-        [Nn]* ) break;;
-        * )
-          while true; do
-            sudo fdisk -l;
-            read -p "What device to use (e.g. /dev/sdXn) or [e]xit   ?   " dvc
-            case $dvc in
-              [Ee]* ) break;;
-              * )
-                sudo sed -i "s~GRUB_CMDLINE_LINUX_DEFAULT=\"~GRUB_CMDLINE_LINUX_DEFAULT=\"resume=$dvc ~g" /etc/default/grub
-                break 2;;
-            esac
-          done;;
-      esac
-    done
-
-    while true; do
-      read -p "Update GRUB [Yn]?   " updgr
-      case $updgr in
-        [Nn]* ) break;;
-        * )
-          sudo mkinitcpio -P;
-          sudo grub-mkconfig -o /boot/grub/grub.cfg;
-          break;;
-      esac
-    done;
-  fi
-fi
+bash $DIR/../../setup-scripts/hibernation-prompt.sh "sudo mkinitcpio -P" "grub"
 
 yes | sudo pacman -S acpid
 

@@ -1,0 +1,5 @@
+
+[User]
+Icon=/var/lib/AccountsService/icons/ACCOUNT_NAME.png
+XSession=i3
+SystemAccount=false

@@ -1,98 +1,12 @@
 #!/bin/bash
 # NOTE this script is only tested in my machines
 
+DIR="$(cd "$( dirname "$0" )" && pwd)"
 os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed -e 's/"//g'))
 
-if [ "$os" = "debian" ]; then
-  while true; do
-    echo "
-If sudo is not enabled during installation (Debian). Logout this user, login as root on
-tty2 (Ctrl + Alt + F2) then execute the commands below before proceeding.
-
-apt install -y sudo libuser
-groupadd wheel
-usermod -aG wheel $(whoami)
-usermod -aG sudo $(whoami)
-usermod -g wheel $(whoami)
-echo '%wheel ALL=(ALL) ALL' | tee -a /etc/sudoers
-"
-  read -p "Choose action: [l]ogout | [s]kip   " isu
-  case $isu in
-      [Ss]* ) break;;
-      [Ll]* ) sudo pkill -KILL -u $(whoami);;
-      * ) echo "Invalid input";;
-    esac
-  done
-fi
-
-while true; do
-  read -p "Will boot with other linux distros and share a partitions [yN]?   " wdb
-  case $wdb in
-    [Yy]* )
-      while true; do
-        echo "
-
-NOTE: Use a UID that will less likely be used as an ID by other distros (e.g. 1106).
-This UID will also be used on the other distro installations
-
-"
-        read -p "Enter UID or [e]xit:   " uid
-        case $uid in
-          [Ee]* ) break;;
-          * )
-            while true; do
-              echo "
-
-NOTE: Use a GUID that will less likely be used as an ID by other distros (e.g. 1106).
-This GUID will also be used on the other distro installations
-
-"
-              read -p "Enter GUID or [e]xit:   " guid
-              case $guid in
-                [Ee]* ) break 2;;
-                * )
-                  while true; do
-                    echo "
-
-Logout this user account and execute the commands below as a root user on tty2 (Ctrl + Alt + F2):
-
-groupadd wheel
-usermod -u $uid $(whoami)
-groupmod -g $guid wheel
-usermod -g wheel $(whoami)
-chown -R $(whoami):wheel /home/$(whoami)
-
-"
-                    read -p "Choose action: [l]ogout | [s]kip   " wultp
-                    case $wultp in
-                      [Ss]* ) break 4;;
-                      [Ll]* ) sudo pkill -KILL -u $(whoami);;
-                      * ) echo "Invalid input";;
-                    esac
-                  done;;
-              esac
-            done;;
-        esac
-      done;;
-    * ) break;;
-  esac
-done
-
-if [ -d /sys/firmware/efi/efivars ] && sudo test -d /boot/efi/EFI && sudo test ! -f /boot/efi/startup.nsh; then
-  sudo mkdir -p /boot/efi/EFI/boot
-  if [ -d "/boot/efi/EFI/refind" ]; then
-    sudo cp -a /boot/efi/EFI/refind/refind_x64.efi /boot/efi/EFI/boot/bootx64.efi
-  elif [ -d "/boot/efi/EFI/grub" ]; then
-    sudo cp -a /boot/efi/EFI/grub/grubx64.efi /boot/efi/EFI/boot/bootx64.efi
-  elif [ -d "/boot/efi/EFI/GRUB" ]; then
-    sudo cp -a /boot/efi/EFI/GRUB/grubx64.efi /boot/efi/EFI/boot/bootx64.efi
-  else
-    sudo cp -a /boot/efi/EFI/$os/grubx64.efi /boot/efi/EFI/boot/bootx64.efi
-  fi
-
-  echo "bcf boot add 1 fs0:\\EFI\\boot\\bootx64.efi \"Fallback Bootloader\"
-exit" | sudo tee /boot/efi/startup.nsh
-fi
+bash $DIR/../../setup-scripts/debian-sudo-prompt.sh "$os"
+bash $DIR/../../setup-scripts/multi-boot-prompt.sh
+bash $DIR/../../setup-scripts/boot-startup-prompt.sh "$os"
 
 if [ "$os" = "debian" ]; then
   if cat /etc/apt/sources.list | grep -q "main contrib non-free"; then
@@ -107,25 +21,6 @@ sudo apt -y upgrade
 sudo apt update
 
 sudo apt install -y build-essential linux-headers-$(uname -r)
-
-## Start swap initialization
-while true; do
-  lsblk
-  read -p "Initialize swap partition. If not mounted [yN]   " yn
-  case $yn in
-    [Yy]* )
-      while true; do
-        sudo fdisk -l
-        read -p "Target device (e.g. /dev/sdXn) or [e]xit   " td
-        case $td in
-          [Ee] ) break;;
-          * ) sudo mkswap $td;sudo swapon $td; break;;
-        esac
-      done;;
-    * ) break;;
-  esac
-done
-
 sudo apt install -y --no-install-recommends numlockx
 sudo apt install -y --no-install-recommends xdg-user-dirs
 
@@ -133,46 +28,7 @@ if [ ! -d "/home/$(whoami)/Desktop" ];then
   xdg-user-dirs-update
 fi
 
-# Hibernation
-if [ -f /etc/default/grub ]; then
-  sudo sed -i 's/GRUB_DEFAULT=0/GRUB_DEFAULT=saved/g' /etc/default/grub
-
-  if cat /etc/default/grub | grep -q 'GRUB_SAVEDEFAULT'; then
-    sudo sed -i 's/#GRUB_SAVEDEFAULT="true"/GRUB_SAVEDEFAULT="true"/g' /etc/default/grub
-  else
-    echo 'GRUB_SAVEDEFAULT="true"' | sudo tee -a /etc/default/grub
-  fi
-
-  if sudo cat /etc/default/grub | grep -q 'resume='; then
-    echo "Hibernation already enabled..."
-  else
-    while true; do
-      read -p "Do you like to enable hibernation [Yn]?   " yn
-      case $yn in
-        [Nn]* ) break;;
-        * )
-        while true; do
-            sudo fdisk -l;
-            read -p "What device to use (e.g. /dev/sdXn) or [e]xit   ?   " dvc
-            case $dvc in
-            [Ee]* ) break;;
-            * )
-                sudo sed -i "s~GRUB_CMDLINE_LINUX=\"~GRUB_CMDLINE_LINUX=\"resume=$dvc ~g" /etc/default/grub
-                break 2;;
-            esac
-        done;;
-      esac
-    done
-
-    while true; do
-      read -p "Update GRUB [Yn]?   " updgr
-      case $updgr in
-        [Nn]* ) break;;
-        * ) sudo grub-mkconfig -o /boot/grub/grub.cfg; break;;
-      esac
-    done
-  fi
-fi
+bash $DIR/../../setup-scripts/hibernation-prompt.sh "" "grub"
 
 sudo apt install -y --no-install-recommends acpid
 sudo systemctl enable acpid
