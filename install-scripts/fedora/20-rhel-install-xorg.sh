@@ -332,4 +332,4 @@ sudo systemctl set-default graphical.target
 # File manager
 sudo dnf install -y nautilus --releasever=$fedver
 
-bash "$DIR/desktop-environments/i3.sh"
+bash "$DIR/desktop-environments/i3.sh" "$fedver"

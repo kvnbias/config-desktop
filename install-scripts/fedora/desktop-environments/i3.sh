@@ -3,6 +3,12 @@
 DIR="$(cd "$( dirname "$0" )" && pwd)"
 os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed -e 's/"//g'))
 
+if [ "$1" = "" ];then
+  fedver=$(rpm -E %$os)
+else
+  fedver=$1
+fi
+
 sudo dnf install -y dmenu i3 i3status i3lock rxvt-unicode-256color-ml --releasever=$fedver
 
 if [ ! -f "$HOME/.riced" ];then
