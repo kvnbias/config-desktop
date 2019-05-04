@@ -25,8 +25,13 @@ else
 fi
 
 sudo dnf -y upgrade
-[ ! cat /etc/dnf/fnd.conf | grep -q 'metadata_expire' ] && echo 'metadata_expire=86400' | sudo tee -a /etc/dnf/dnf.conf
-[ ! cat /etc/dnf/dnf.conf | grep -q 'max_parallel_downloads' ] && echo 'max_parallel_downloads=10' | sudo tee -a /etc/dnf/dnf.conf
+if [ ! cat /etc/dnf/dnf.conf | grep -q 'metadata_expire' ]; then
+  echo 'metadata_expire=86400' | sudo tee -a /etc/dnf/dnf.conf
+fi
+
+if [ ! cat /etc/dnf/dnf.conf | grep -q 'max_parallel_downloads' ]; then
+  echo 'max_parallel_downloads=10' | sudo tee -a /etc/dnf/dnf.conf
+fi
 
 sudo dnf install -y kernel-devel kernel-headers --releasever=$fedver
 sudo dnf install -y gcc gcc-c++ autoconf automake cmake make dkms pkgconfig bzip2 --releasever=$fedver
