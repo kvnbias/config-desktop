@@ -21,7 +21,7 @@ while true; do
       sudo dnf install -y python rpm-build rpm-devel rpmlint patch rpmdevtools --releasever=$fedver
       rpmdev-setuptree
 
-      sed -i "s~\$HOME~$DIR\/specs~g" /home/$(whoami)/.rpmmacros
+      sed -i "s~\$HOME~$DIR\/..\/specs~g" /home/$(whoami)/.rpmmacros
       rm -rf $HOME/rpmbuild
 
       sudo dnf install -y curl wget vim-minimal vim-enhanced git gedit --releasever=$fedver
@@ -35,8 +35,8 @@ while true; do
       sudo dnf install -y alsa-utils --releasever=$fedver
       sudo dnf install -y pulseaudio pulseaudio-utils pavucontrol --releasever=$fedver
 
-      sudo dnf builddep -y specs/pa-applet.spec && rpmbuild -ba specs/pa-applet.spec
-      sudo dnf install -y specs/rpmbuild/RPMS/x86_64/pa-applet-20181009-1.fc$fedver.x86_64.rpm
+      sudo dnf builddep -y $DIR/../specs/pa-applet.spec && rpmbuild -ba $DIR/../specs/pa-applet.spec
+      sudo dnf install -y $DIR/../specs/rpmbuild/RPMS/x86_64/pa-applet-20181009-1.fc$fedver.x86_64.rpm
 
       sudo sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf
       sudo sed -i 's/; autospawn = yes/autospawn = yes/g' /etc/pulse/client.conf
@@ -44,8 +44,8 @@ while true; do
       sudo dnf install -y NetworkManager network-manager-applet --releasever=$fedver
       sudo systemctl enable NetworkManager
 
-      rpmbuild -ba specs/nerd-fonts.spec
-      sudo dnf install -y specs/rpmbuild/RPMS/x86_64/nerd-fonts-2.0.0-1.fc$fedver.x86_64.rpm
+      rpmbuild -ba $DIR/../specs/nerd-fonts.spec
+      sudo dnf install -y $DIR/../specs/rpmbuild/RPMS/x86_64/nerd-fonts-2.0.0-1.fc$fedver.x86_64.rpm
 
       sudo dnf install -y neofetch --releasever=$fedver
       sudo dnf install -y gtk2 gtk3 --releasever=$fedver
@@ -68,8 +68,8 @@ while true; do
       sudo dnf install -y zip unzip tar xz-libs unrar catdoc odt2txt --releasever=$fedver
 
       sudo dnf remove -y i3lock
-      spectool -g -R specs/i3lock-color.spec && sudo dnf builddep -y specs/i3lock-color.spec && rpmbuild -ba specs/i3lock-color.spec
-      sudo dnf install -y specs/rpmbuild/RPMS/x86_64/i3lock-color-2.12.c-1.fc$fedver.x86_64.rpm
+      spectool -g -R $DIR/../specs/i3lock-color.spec && sudo dnf builddep -y $DIR/../specs/i3lock-color.spec && rpmbuild -ba $DIR/../specs/i3lock-color.spec
+      sudo dnf install -y $DIR/../specs/rpmbuild/RPMS/x86_64/i3lock-color-2.12.c-1.fc$fedver.x86_64.rpm
 
       sudo dnf install -y ranger vifm --releasever=$fedver
 
@@ -79,8 +79,8 @@ while true; do
       sudo dnf install -y rofi --releasever=$fedver
 
       sudo dnf remove -y i3
-      spectool -g -R specs/i3-gaps.spec && sudo dnf builddep -y specs/i3-gaps.spec && rpmbuild -ba specs/i3-gaps.spec
-      sudo dnf install -y specs/rpmbuild/RPMS/x86_64/i3-gaps-4.16.1-1.fc$fedver.x86_64.rpm
+      spectool -g -R $DIR/../specs/i3-gaps.spec && sudo dnf builddep -y $DIR/../specs/i3-gaps.spec && rpmbuild -ba $DIR/../specs/i3-gaps.spec
+      sudo dnf install -y $DIR/../specs/rpmbuild/RPMS/x86_64/i3-gaps-4.16.1-1.fc$fedver.x86_64.rpm
 
       # ncmpcpp playlist
       # 1) go to browse
@@ -91,8 +91,8 @@ while true; do
       sudo systemctl disable mpd
       sudo systemctl stop mpd
 
-      spectool -g -R specs/polybar.spec && sudo dnf builddep -y specs/polybar.spec && rpmbuild -ba specs/polybar.spec
-      sudo dnf install -y specs/rpmbuild/RPMS/x86_64/polybar-3.3.1-1.fc$fedver.x86_64.rpm
+      spectool -g -R $DIR/../specs/polybar.spec && sudo dnf builddep -y $DIR/../specs/polybar.spec && rpmbuild -ba $DIR/../specs/polybar.spec
+      sudo dnf install -y $DIR/../specs/rpmbuild/RPMS/x86_64/polybar-3.3.1-1.fc$fedver.x86_64.rpm
 
       sudo dnf install -y scrot accountsservice --releasever=$fedver
 

@@ -195,7 +195,7 @@ sudo systemctl start atd
 install_packages "media-sound/alsa-utils"
 
 # Gstreamer
-install_packages "media-libs/gstreamer media-plugins/gst-plugins-libav media-plugins/gst-plugins-vaapi media-plugins/gst-plugins-x"
+install_packages "media-libs/gstreamer media-plugins/gst-plugins-libav media-plugins/gst-plugins-vaapi"
 install_packages "media-libs/gst-plugins-base media-libs/gst-plugins-bad media-libs/gst-plugins-good media-libs/gst-plugins-ugly"
 
 install_packages "dev-java/openjdk-bin"
