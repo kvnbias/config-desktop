@@ -53,7 +53,7 @@ elif [ -f /usr/bin/emerge ]; then
       $(sudo emerge --sync > /dev/null)
     fi
 
-    updates=$(sudo emerge --pretend --verbose --update --deep --newuse @world | grep "\[ebuild.*\]" 2> /dev/null | wc -l)
+    updates=$(sudo emerge --pretend --verbose --update --deep --newuse @world 2> /dev/null | grep "\[ebuild.*\]" | sed -e "s/\[ebuild.*/\[ebuild/g" |  wc -l)
   fi
 
 elif [ -f /usr/bin/apt ]; then
