@@ -56,11 +56,11 @@ while true; do
   esac
 done
 
-if [ ! cat /etc/dnf/dnf.conf | grep -q 'metadata_expire' ]; then
+if ! cat /etc/dnf/dnf.conf | grep -q 'metadata_expire'; then
   echo 'metadata_expire=86400' | sudo tee -a /etc/dnf/dnf.conf
 fi
 
-if [ ! cat /etc/dnf/dnf.conf | grep -q 'max_parallel_downloads' ]; then
+if ! cat /etc/dnf/dnf.conf | grep -q 'max_parallel_downloads'; then
   echo 'max_parallel_downloads=10' | sudo tee -a /etc/dnf/dnf.conf
 fi
 
