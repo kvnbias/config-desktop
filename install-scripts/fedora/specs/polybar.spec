@@ -76,8 +76,8 @@ cd build
 
 %files
 %license LICENSE
-/usr/lib/debug/usr/local/bin/polybar-3.3.1-1.fc30.x86_64.debug
-/usr/lib/debug/usr/local/bin/polybar-msg-3.3.1-1.fc30.x86_64.debug
+/usr/lib/debug/usr/local/bin/polybar-%{version}-1%{?dist}.x86_64.debug
+/usr/lib/debug/usr/local/bin/polybar-msg-%{version}-1%{?dist}.x86_64.debug
 /usr/local/bin/polybar
 /usr/local/bin/polybar-msg
 /usr/local/share/bash-completion/completions/polybar

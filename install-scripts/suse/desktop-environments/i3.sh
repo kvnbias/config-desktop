@@ -70,6 +70,7 @@ while true; do
       sudo zypper -n install --no-recommends poppler-tools mediainfo transmission transmission-common
       sudo zypper -n install --no-recommends zip unzip tar xz unrar odt2txt
 
+      sudo zypper -n remove i3lock-color
       rpmdev-spectool -g -R $DIR/../specs/i3lock-color.spec
       sudo zypper -n install --no-recommends $(cat $DIR/../specs/i3lock-color.spec | grep "BuildRequires" | awk -F 'BuildRequires:  ' '{print $2}')
       rpmbuild -ba $DIR/../specs/i3lock-color.spec
