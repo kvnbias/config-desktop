@@ -26,6 +26,7 @@ while true; do
 
       sed -i "s~\$HOME~$DIR\/..\/specs~g" $HOME/.rpmmacros
       rm -rf $HOME/rpmbuild
+      mkdir -p $DIR/../specs/rpmbuild/RPMS/x86_64
       sudo zypper ar -cfGp 90 $DIR/../specs/rpmbuild/RPMS/x86_64 local
 
       sudo zypper -n install --no-recommends curl wget vim git gedit
