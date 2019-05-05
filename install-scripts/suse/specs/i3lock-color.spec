@@ -19,21 +19,21 @@ BuildRequires:  autoconf
 BuildRequires:  automake
 BuildRequires:  cairo-devel
 BuildRequires:  libev-devel
-BuildRequires:  libjpeg-devel
+BuildRequires:  libjpeg62-devel
 BuildRequires:  libxkbcommon-x11-devel
 BuildRequires:  pam-devel
+BuildRequires:  pkgconf
 BuildRequires:  xcb-util-devel
 BuildRequires:  xcb-util-image-devel
 BuildRequires:  xcb-util-xrm-devel
 
-Requires:       cairo
-Requires:       libev
+Requires:       libcairo2
+Requires:       libev4
 Requires:       libjpeg-turbo
-Requires:       libxcb
-Requires:       libxkbcommon
-Requires:       libxkbcommon-x11
-Requires:       xcb-util-image
-Requires:       pkgconf
+Requires:       libxcb1
+Requires:       libxcb-image0
+Requires:       libxkbcommon0
+Requires:       libxkbcommon-x11-0
 
 Conflicts:      otherproviders(i3lock)
 

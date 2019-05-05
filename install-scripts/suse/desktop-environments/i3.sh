@@ -1,15 +1,16 @@
 
 #!/bin/bash
 
-DIR/..="$(cd "$( dirname "$0" )" && pwd)"
+DIR="$(cd "$( dirname "$0" )" && pwd)"
 os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed 's/"//g'))
 
 # Install window tiling manager
 sudo zypper -n install --no-recommends dmenu i3 i3status i3lock rxvt-unicode
 
 if [ ! -f "$HOME/.riced" ];then
+  mkdir -p "$HOME/.config/i3"
   cp -raf "$DIR/../../../rice/xinitrc"         "$HOME/.xinitrc"
-  cp -raf "$DIR/../../../rice/base-i3-config"  "$HOME/.Xresources"
+  cp -raf "$DIR/../../../rice/base-i3-config"  "$HOME/.config/i3/config"
   cp -raf "$DIR/../../../rice/base-Xresources" "$HOME/.Xresources"
   sudo cp "$HOME/.Xresources"                  "/root/.Xresources"
 fi
@@ -19,12 +20,13 @@ while true; do
   case $yn in
     [Nn]* ) break;;
     * )
-      sudo zypper -n install --no-recommends gcc make bash coreutils diffutils --releasever=$fedver
-      sudo zypper -n install --no-recommends python rpm-build rpm-devel rpmlint patch rpmdevtools --releasever=$fedver
+      sudo zypper -n install --no-recommends gcc make bash coreutils diffutils
+      sudo zypper -n install --no-recommends python rpm-build rpm-devel rpmlint patch rpmdevtools
       rpmdev-setuptree
 
       sed -i "s~\$HOME~$DIR\/..\/specs~g" $HOME/.rpmmacros
       rm -rf $HOME/rpmbuild
+      sudo zypper ar -cfGp 90 $DIR/../specs/rpmbuild/RPMS/x86_64 local
 
       sudo zypper -n install --no-recommends curl wget vim git gedit
       sudo zypper -n install --no-recommends papirus-icon-theme
@@ -37,20 +39,9 @@ while true; do
       sudo zypper -n install --no-recommends alsa-utils libnotify-tools
       sudo zypper -n install --no-recommends pulseaudio pulseaudio-utils pavucontrol
 
-      # MANUAL 3b4f8b3: PulseAudio Applet. Some are already installed
-      sudo zypper -n install --no-recommends gtk3-branding-openSUSE libnotify4 libpulse0
-
-      sudo zypper -n install --no-recommends glib2-devel gtk3-devel libnotify-devel
-      sudo zypper -n install --no-recommends libpulse-devel libX11-devel
-      sudo zypper -n install --no-recommends autoconf automake pkgconf
-
-      git clone --recurse-submodules https://github.com/fernandotcl/pa-applet.git
-      cd pa-applet && git fetch --tags
-      tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-      [ ${#tag} -ge 1 ] && git checkout $tag
-      git tag -f "git-$(git rev-parse --short HEAD)"
-      ./autogen.sh && ./configure && make && sudo make install
-      cd /tmp
+      sudo zypper -n install --no-recommends $(cat $DIR/../specs/pa-applet.spec | grep "BuildRequires" | awk -F 'BuildRequires:  ' '{print $2}')
+      rpmbuild -ba $DIR/../specs/pa-applet.spec
+      sudo zypper inr -r local && sudo zypper -n install --no-recommends -r local pa-applet
 
       sudo sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf
       sudo sed -i 's/; autospawn = yes/autospawn = yes/g' /etc/pulse/client.conf
@@ -58,22 +49,14 @@ while true; do
       sudo zypper -n install --no-recommends NetworkManager-branding-openSUSE NetworkManager-applet
       sudo systemctl enable NetworkManager
 
-      wget https://github.com/ryanoasis/nerd-fonts/raw/v2.0.0/patched-fonts/UbuntuMono/Regular/complete/Ubuntu%20Mono%20Nerd%20Font%20Complete%20Mono.ttf
-      wget https://github.com/ryanoasis/nerd-fonts/raw/v2.0.0/patched-fonts/RobotoMono/Regular/complete/Roboto%20Mono%20Nerd%20Font%20Complete%20Mono.ttf
-      wget https://github.com/ryanoasis/nerd-fonts/raw/v2.0.0/patched-fonts/RobotoMono/Bold/complete/Roboto%20Mono%20Bold%20Nerd%20Font%20Complete%20Mono.ttf
-      wget https://github.com/ryanoasis/nerd-fonts/raw/v2.0.0/patched-fonts/SourceCodePro/Regular/complete/Sauce%20Code%20Pro%20Nerd%20Font%20Complete%20Mono.ttf
-
-      sudo mkdir -p /usr/share/fonts/nerd-fonts-complete/ttf
-      sudo mv "Ubuntu Mono Nerd Font Complete Mono.ttf"       "/usr/share/fonts/nerd-fonts-complete/ttf/Ubuntu Mono Nerd Font Complete Mono.ttf"
-      sudo mv "Roboto Mono Nerd Font Complete Mono.ttf"       "/usr/share/fonts/nerd-fonts-complete/ttf/Roboto Mono Nerd Font Complete Mono.ttf"
-      sudo mv "Roboto Mono Bold Nerd Font Complete Mono.ttf"  "/usr/share/fonts/nerd-fonts-complete/ttf/Roboto Mono Bold Nerd Font Complete Mono.ttf"
-      sudo mv "Sauce Code Pro Nerd Font Complete Mono.ttf"    "/usr/share/fonts/nerd-fonts-complete/ttf/Sauce Code Pro Nerd Font Complete Mono.ttf"
+      rpmbuild -ba $DIR/../specs/nerd-fonts.spec
+      sudo zypper inr -r local && sudo zypper -n install --no-recommends -r local nerd-fonts
 
       sudo zypper -n install --no-recommends neofetch
       sudo zypper -n install --no-recommends gtk2-branding-openSUSE gtk3-branding-openSUSE
 
       sudo zypper -n install --no-recommends breeze5-cursors
-      sudo ln -s /usr/share/icons/breeze_cursors /usr/share/icons/Breeze
+      sudo ln -sf /usr/share/icons/breeze_cursors /usr/share/icons/Breeze
       sudo zypper -n install --no-recommends dbus-1-x11 dunst conky compton w3m
       sudo zypper -n install --no-recommends ffmpegthumbnailer
 
@@ -83,39 +66,19 @@ while true; do
       sudo zypper -n install --no-recommends libjpeg62
       sudo zypper -n install --no-recommends python3-devel libjpeg62-devel zlib-devel libXext-devel
       sudo pip3 install ueberzug
-      sudo zypper -n install --no-recommends poppler-tools
-      sudo zypper -n install --no-recommends mediainfo
-      sudo zypper -n install --no-recommends transmission transmission-common
-      sudo zypper -n install --no-recommends zip unzip tar xz unrar
-      sudo zypper -n install --no-recommends odt2txt
+      sudo zypper -n install --no-recommends poppler-tools mediainfo transmission transmission-common
+      sudo zypper -n install --no-recommends zip unzip tar xz unrar odt2txt
 
-      # MANUAL 2.12.c: i3lock-color. Some are already installed
-      sudo zypper -n remove i3lock
-      sudo zypper -n install --no-recommends libcairo2 libev4 libjpeg-turbo libxcb1 libxkbcommon0
-      sudo zypper -n install --no-recommends libxkbcommon-x11-0 libxcb-image0 pkgconf
+      spectool -g -R $DIR/../specs/i3lock-color.spec
+      sudo zypper -n install --no-recommends $(cat $DIR/../specs/i3lock-color.spec | grep "BuildRequires" | awk -F 'BuildRequires:  ' '{print $2}')
+      rpmbuild -ba $DIR/../specs/i3lock-color.spec
+      sudo zypper inr -r local && sudo zypper -n install --no-recommends -r local i3lock-color
 
-      sudo zypper -n install --no-recommends cairo-devel libev-devel libjpeg62-devel libxkbcommon-x11-devel
-      sudo zypper -n install --no-recommends pam-devel xcb-util-devel xcb-util-image-devel xcb-util-xrm-devel autoconf automake
+      sudo zypper -n install --no-recommends ranger vifm
 
-      git clone --recurse-submodules https://github.com/PandorasFox/i3lock-color.git
-      cd i3lock-color && git fetch --tags
-      tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-      [ ${#tag} -ge 1 ] && git checkout $tag
-
-      git tag -f "git-$(git rev-parse --short HEAD)"
-      autoreconf -fi && ./configure && make && sudo make install
-      echo "auth include system-auth" | sudo tee /etc/pam.d/i3lock
-      cd /tmp
-
-      # terminal-based file viewer
-      sudo zypper -n install --no-recommends ranger
-      sudo zypper -n install --no-recommends vifm
-
-      # requirements for ranger [scope.sh]
       sudo zypper -n install --no-recommends file libcaca0 python3-Pygments atool libarchive13 unrar lynx
       sudo zypper -n install --no-recommends mupdf transmission transmission-common mediainfo odt2txt python3-chardet
 
-      # i3wm customization, dmenu replacement, i3status replacement
       sudo zypper -n install --no-recommends rofi
       sudo zypper -n remove i3
       sudo zypper -n install --no-recommends i3-gaps
@@ -129,26 +92,12 @@ while true; do
       sudo systemctl disable mpd
       sudo systemctl stop mpd
 
-      # MANUAL 3.3.1: polybar
-      sudo zypper -n install --no-recommends libcairo2 libxcb-cursor0 libxcb-image0 libxcb-ewmh2 libxcb-xrm0
-      sudo zypper -n install --no-recommends alsa curl libjsoncpp19 libmpdclient2 libpulse0 libnl3-200 wireless-tools
+      spectool -g -R $DIR/../specs/polybar.spec
+      sudo zypper -n install --no-recommends $(cat $DIR/../specs/i3lock-color.spec | grep "BuildRequires" | awk -F 'BuildRequires:  ' '{print $2}')
+      rpmbuild -ba $DIR/../specs/polybar.spec
+      sudo zypper inr -r local && sudo zypper -n install --no-recommends -r local polybar
 
-      sudo zypper -n install --no-recommends cairo-devel xcb-proto-devel xcb-util-devel xcb-util-cursor-devel xcb-util-image-devel xcb-util-wm-devel xcb-util-xrm-devel
-      sudo zypper -n install --no-recommends alsa-devel libcurl-devel jsoncpp-devel libmpdclient-devel libpulse-devel libnl3-devel cmake libiw-devel
-      sudo zypper -n install --no-recommends i3-gaps-devel python-xml gcc-c++ gcc python git pkgconf
-
-      git clone --recurse-submodules https://github.com/jaagr/polybar.git
-      cd polybar && git fetch --tags
-      tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-      [ ${#tag} -ge 1 ] && git checkout $tag
-      git tag -f "git-$(git rev-parse --short HEAD)"
-      rm -rf build/ && mkdir -p build && cd build/
-      cmake .. && make -j$(nproc) && sudo make install
-      cd /tmp
-
-      sudo zypper -n install --no-recommends scrot
-
-      sudo zypper -n install --no-recommends accountsservice
+      sudo zypper -n install --no-recommends scrot accountsservice
 
       sudo zypper remove alsa-devel cairo-devel cmake i3-gaps-devel jsoncpp-devel libcurl-devel \
         libev-devel libiw-devel libjpeg62-devel libmpdclient-devel libnl3-devel libpulse-devel \

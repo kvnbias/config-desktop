@@ -15,40 +15,41 @@ Source0:    https://github.com/jaagr/%{name}/archive/%{version}.tar.gz#/%{name}-
 
 BuildArch:      x86_64
 
-BuildRequires:  alsa-lib-devel
+BuildRequires:  alsa-devel
 BuildRequires:  cairo-devel
 BuildRequires:  cmake
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
 BuildRequires:  git
+BuildRequires:  i3-gaps-devel
 BuildRequires:  jsoncpp-devel
 BuildRequires:  libcurl-devel
+BuildRequires:  libiw-devel
 BuildRequires:  libmpdclient-devel
 BuildRequires:  libnl3-devel
-BuildRequires:  pulseaudio-libs-devel
-BuildRequires:  python
-BuildRequires:  python2
+BuildRequires:  libpulse-devel
 BuildRequires:  pkgconf
-BuildRequires:  xcb-proto
+BuildRequires:  python
+BuildRequires:  python-xml
+BuildRequires:  xcb-proto-devel
 BuildRequires:  xcb-util-cursor-devel
 BuildRequires:  xcb-util-devel
 BuildRequires:  xcb-util-image-devel
 BuildRequires:  xcb-util-wm-devel
 BuildRequires:  xcb-util-xrm-devel
-BuildRequires:  wireless-tools-devel
 
-Requires:       alsa-lib
-Requires:       cairo
+Requires:       alsa
 Requires:       curl
-Requires:       jsoncpp
-Requires:       libmpdclient
-Requires:       libnl3
-Requires:       pulseaudio-libs
+Requires:       libcairo2
+Requires:       libjsoncpp19
+Requires:       libmpdclient2
+Requires:       libnl3-200
+Requires:       libpulse0
+Requires:       libxcb-cursor0
+Requires:       libxcb-ewmh2
+Requires:       libxcb-image0
+Requires:       libxcb-xrm0
 Requires:       wireless-tools
-Requires:       xcb-util-cursor
-Requires:       xcb-util-image
-Requires:       xcb-util-wm
-Requires:       xcb-util-xrm
 
 %description
 The main purpose of Polybar is to help users create awesome status bars. It has built-in functionality to display information about the most commonly used services.
