@@ -12,8 +12,9 @@ fi
 sudo dnf install -y dmenu i3 i3status i3lock rxvt-unicode-256color-ml --releasever=$fedver
 
 if [ ! -f "$HOME/.riced" ];then
+  mkdir -p "$HOME/.config/i3"
   cp -raf "$DIR/../../../rice/xinitrc"         "$HOME/.xinitrc"
-  cp -raf "$DIR/../../../rice/base-i3-config"  "$HOME/.Xresources"
+  cp -raf "$DIR/../../../rice/base-i3-config"  "$HOME/.config/i3/config"
   cp -raf "$DIR/../../../rice/base-Xresources" "$HOME/.Xresources"
   sudo cp "$HOME/.Xresources"                  "/root/.Xresources"
 fi

@@ -7,8 +7,9 @@ os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | 
 sudo apt install -y --no-install-recommends i3 i3status i3lock rxvt-unicode
 
 if [ ! -f "$HOME/.riced" ];then
+  mkdir -p "$HOME/.config/i3"
   cp -raf "$DIR/../../../rice/xinitrc"         "$HOME/.xinitrc"
-  cp -raf "$DIR/../../../rice/base-i3-config"  "$HOME/.Xresources"
+  cp -raf "$DIR/../../../rice/base-i3-config"  "$HOME/.config/i3/config"
   cp -raf "$DIR/../../../rice/base-Xresources" "$HOME/.Xresources"
   sudo cp "$HOME/.Xresources"                  "/root/.Xresources"
 fi
