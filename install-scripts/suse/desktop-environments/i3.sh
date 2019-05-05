@@ -70,7 +70,7 @@ while true; do
       sudo zypper -n install --no-recommends poppler-tools mediainfo transmission transmission-common
       sudo zypper -n install --no-recommends zip unzip tar xz unrar odt2txt
 
-      spectool -g -R $DIR/../specs/i3lock-color.spec
+      rpmdev-spectool -g -R $DIR/../specs/i3lock-color.spec
       sudo zypper -n install --no-recommends $(cat $DIR/../specs/i3lock-color.spec | grep "BuildRequires" | awk -F 'BuildRequires:  ' '{print $2}')
       rpmbuild -ba $DIR/../specs/i3lock-color.spec
       sudo zypper inr -r local && sudo zypper -n install --no-recommends -r local i3lock-color
@@ -93,7 +93,7 @@ while true; do
       sudo systemctl disable mpd
       sudo systemctl stop mpd
 
-      spectool -g -R $DIR/../specs/polybar.spec
+      rpmdev-spectool -g -R $DIR/../specs/polybar.spec
       sudo zypper -n install --no-recommends $(cat $DIR/../specs/polybar.spec | grep "BuildRequires" | awk -F 'BuildRequires:  ' '{print $2}')
       rpmbuild -ba $DIR/../specs/polybar.spec
       sudo zypper inr -r local && sudo zypper -n install --no-recommends -r local polybar
