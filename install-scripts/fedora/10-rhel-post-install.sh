@@ -42,7 +42,7 @@ sudo dnf install -y numlockx --releasever=$fedver
 # Create user dirs
 sudo dnf install -y xdg-user-dirs --releasever=$fedver
 
-if [ ! -d "/home/$(whoami)/Desktop" ];then
+if [ ! -d "$HOME/Desktop" ];then
   xdg-user-dirs-update
 fi
 

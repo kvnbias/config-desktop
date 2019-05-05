@@ -101,9 +101,9 @@ while true; do
     [Yy]* )
       user=$(whoami)
       yes | sudo pacman -S samba
-      mkdir -p "/home/$user/Share"
+      mkdir -p "$HOME/Share"
       sudo cp -raf "$DIR/../../system-confs/smb.conf" "/etc/samba/smb.conf"
-      sudo sed -i "s/ACCOUNT_NAME/ACCOUNT_NAME/g" /etc/samba/smb.conf
+      sudo sed -i "s/ACCOUNT_NAME/$user/g" /etc/samba/smb.conf
 
       if [ -d /etc/ufw/applications.d ]; then
         sudo cp -raf "$DIR/../../system-confs/ufw-samba" "/etc/ufw/applications.d/ufw-samba"

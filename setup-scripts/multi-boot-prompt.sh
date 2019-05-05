@@ -36,7 +36,7 @@ groupadd wheel
 usermod -u $uid $(whoami)
 groupmod -g $guid wheel
 usermod -g wheel $(whoami)
-chown -R $(whoami):wheel /home/$(whoami)
+chown -R $(whoami):wheel $HOME
 
 "
                     read -p "Choose action: [l]ogout | [s]kip   " wultp

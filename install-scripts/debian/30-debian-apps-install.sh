@@ -40,17 +40,17 @@ Comment=Manually downloaded firefox
 Exec=firefox
 Terminal=false
 Type=Application
-Icon=" | tee /home/$(whoami)/.local/share/applications/firefox.desktop
+Icon=" | tee $HOME/.local/share/applications/firefox.desktop
 
   echo "
 [Desktop Entry]
 Name=Firefox Update
 Comment=Manually downloaded firefox
-Exec=/bin/bash -c \"notify-send -i /home/$(whoami)/.config/firefox/noicon -t 5000 'Firefox' 'Downloading firefox'; wget -O /tmp/FirefoxSetup.tar.bz2 'https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US'; notify-send -i /home/$(whoami)/.config/firefox/noicon -t 5000 'Firefox' 'Updating firefox';tar xjf /tmp/FirefoxSetup.tar.bz2 -C /opt/firefox/; notify-send -i /home/$(whoami)/.config/firefox/noicon -t 5000 'Firefox' 'Firefox updated'\"
+Exec=/bin/bash -c \"notify-send -i $HOME/.config/firefox/noicon -t 5000 'Firefox' 'Downloading firefox'; wget -O /tmp/FirefoxSetup.tar.bz2 'https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US'; notify-send -i $HOME/.config/firefox/noicon -t 5000 'Firefox' 'Updating firefox';tar xjf /tmp/FirefoxSetup.tar.bz2 -C /opt/firefox/; notify-send -i $HOME/.config/firefox/noicon -t 5000 'Firefox' 'Firefox updated'\"
 Terminal=false
 Type=Application
 Icon=
-" | tee /home/$(whoami)/.local/share/applications/firefox-update.desktop
+" | tee $HOME/.local/share/applications/firefox-update.desktop
 fi
 
 while true; do
@@ -133,11 +133,10 @@ while true; do
     [Yy]* )
       user=$(whoami)
       sudo apt install -y --no-install-recommends samba
-
-      mkdir -p "/home/$user/Share"
+      mkdir -p "$HOME/Share"
       sudo mv /etc/samba/smb.conf /etc/samba/smb.conf.bup
       sudo cp -raf "$DIR/../../system-confs/smb.conf" "/etc/samba/smb.conf"
-      sudo sed -i "s/ACCOUNT_NAME/ACCOUNT_NAME/g" /etc/samba/smb.conf
+      sudo sed -i "s/ACCOUNT_NAME/$user/g" /etc/samba/smb.conf
 
       if [ -d /etc/ufw/applications.d ]; then
         sudo cp -raf "$DIR/../../system-confs/ufw-samba" "/etc/ufw/applications.d/ufw-samba"

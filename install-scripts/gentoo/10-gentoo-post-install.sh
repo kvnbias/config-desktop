@@ -38,7 +38,7 @@ groupadd wheel
 usermod -u $uid $(whoami)
 groupmod -g $guid wheel
 usermod -g wheel $(whoami)
-chown -R $(whoami):wheel /home/$(whoami)
+chown -R $(whoami):wheel $HOME
 
 "
                     read -p "Choose action: [l]ogout | [s]kip   " wultp
@@ -111,7 +111,7 @@ while true; do
 done
 
 install_packages "x11-misc/numlockx x11-misc/xdg-user-dirs"
-if [ ! -d "/home/$(whoami)/Desktop" ];then
+if [ ! -d "$HOME/Desktop" ];then
   xdg-user-dirs-update
 fi
 

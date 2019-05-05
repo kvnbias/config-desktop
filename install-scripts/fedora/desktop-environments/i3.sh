@@ -27,7 +27,7 @@ while true; do
       sudo dnf install -y python rpm-build rpm-devel rpmlint patch rpmdevtools --releasever=$fedver
       rpmdev-setuptree
 
-      sed -i "s~\$HOME~$DIR\/..\/specs~g" /home/$(whoami)/.rpmmacros
+      sed -i "s~\$HOME~$DIR\/..\/specs~g" $HOME/.rpmmacros
       rm -rf $HOME/rpmbuild
 
       sudo dnf install -y curl wget vim-minimal vim-enhanced git gedit --releasever=$fedver

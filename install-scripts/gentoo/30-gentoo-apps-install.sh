@@ -288,7 +288,7 @@ https://wiki.archlinux.org/index.php/Samba   " ismb
       user=$(whoami)
       install_packages "net-fs/samba"
 
-      mkdir -p "/home/$user/Share"
+      mkdir -p "$HOME/Share"
       sudo mv /etc/samba/smb.conf /etc/samba/smb.conf.bup
       echo "
 

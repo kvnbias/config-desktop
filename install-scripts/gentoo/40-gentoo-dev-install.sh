@@ -65,17 +65,17 @@ cd /tmp
 # Exec=code
 # Terminal=false
 # Type=Application
-# Icon=" | tee /home/$(whoami)/.local/share/applications/code.desktop
+# Icon=" | tee $HOME/.local/share/applications/code.desktop
 #
 # echo "
 # [Desktop Entry]
 # Name=Visual Studio Code Update
 # Comment=Manually downloaded vscode
-# Exec=/bin/bash -c \"notify-send -i /home/$(whoami)/.config/vscode/noicon -t 5000 'Visual Studio Code' 'Downloading Visual Studio Code'; wget -O /tmp/vscode.tar.gz https://update.code.visualstudio.com/latest/linux-x64/stable; notify-send -i /home/$(whoami)/.config/vscode/noicon -t 5000 'Visual Studio Code' 'Updating Visual Studio Code'; tar xzvf /tmp/vscode.tar.gz -C /opt/vscode/; notify-send -i /home/$(whoami)/.config/vscode/noicon -t 5000 'Visual Studio Code' 'Visual Studio Code updated'\"
+# Exec=/bin/bash -c \"notify-send -i $HOME/.config/vscode/noicon -t 5000 'Visual Studio Code' 'Downloading Visual Studio Code'; wget -O /tmp/vscode.tar.gz https://update.code.visualstudio.com/latest/linux-x64/stable; notify-send -i $HOME/.config/vscode/noicon -t 5000 'Visual Studio Code' 'Updating Visual Studio Code'; tar xzvf /tmp/vscode.tar.gz -C /opt/vscode/; notify-send -i $HOME/.config/vscode/noicon -t 5000 'Visual Studio Code' 'Visual Studio Code updated'\"
 # Terminal=false
 # Type=Application
 # Icon=
-# " | tee /home/$(whoami)/.local/share/applications/code-update.desktop
+# " | tee $HOME/.local/share/applications/code-update.desktop
 add_ebuild "app-editors" "vscode-bin" "$DIR/ebuilds/vscode-bin-1.33.1.ebuild"
 install_packages "app-editors/vscode-bin"
 echo "fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
@@ -153,17 +153,17 @@ Install DBeaver [yN]?   " idbvr
 # Exec=dbeaver
 # Terminal=false
 # Type=Application
-# Icon=" | tee /home/$(whoami)/.local/share/applications/dbeaver.desktop
+# Icon=" | tee $HOME/.local/share/applications/dbeaver.desktop
 # 
 #       echo "
 # [Desktop Entry]
 # Name=Dbeaver Community Edition Update
 # Comment=Manually downloaded dbeaver
-# Exec=/bin/bash -c \"notify-send -i /home/$(whoami)/.config/dbeaver/noicon -t 5000 'Dbeaver Community Edition' 'Downloading Dbeaver Community Edition'; wget -O /tmp/dbeaver-ce-latest-linux.gtk.x86_64.tar.gz https://dbeaver.io/files/dbeaver-ce-latest-linux.gtk.x86_64.tar.gz; notify-send -i /home/$(whoami)/.config/dbeaver/noicon -t 5000 'Dbeaver Community Edition' 'Updating Dbeaver Community Edition'; tar xzvf /tmp/dbeaver-ce-latest-linux.gtk.x86_64.tar.gz -C /opt/dbeaver-ce/; notify-send -i /home/$(whoami)/.config/debaver/noicon -t 5000 'Dbeaver Community Edition' 'Dbeaver Community Edition updated'\"
+# Exec=/bin/bash -c \"notify-send -i $HOME/.config/dbeaver/noicon -t 5000 'Dbeaver Community Edition' 'Downloading Dbeaver Community Edition'; wget -O /tmp/dbeaver-ce-latest-linux.gtk.x86_64.tar.gz https://dbeaver.io/files/dbeaver-ce-latest-linux.gtk.x86_64.tar.gz; notify-send -i $HOME/.config/dbeaver/noicon -t 5000 'Dbeaver Community Edition' 'Updating Dbeaver Community Edition'; tar xzvf /tmp/dbeaver-ce-latest-linux.gtk.x86_64.tar.gz -C /opt/dbeaver-ce/; notify-send -i $HOME/.config/debaver/noicon -t 5000 'Dbeaver Community Edition' 'Dbeaver Community Edition updated'\"
 # Terminal=false
 # Type=Application
 # Icon=
-# " | tee /home/$(whoami)/.local/share/applications/dbeaver-update.desktop
+# " | tee $HOME/.local/share/applications/dbeaver-update.desktop
       add_ebuild "dev-db" "dbeaver-ce-bin" "$DIR/ebuilds/dbeaver-ce-bin-6.0.3.ebuild"
       install_packages "dev-db/dbeaver-ce-bin"
       break;;

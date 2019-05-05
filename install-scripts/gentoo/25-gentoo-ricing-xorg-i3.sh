@@ -39,7 +39,7 @@ groupadd wheel
 usermod -u $uid $(whoami)
 groupmod -g $guid wheel
 usermod -g wheel $(whoami)
-chown -R $(whoami):wheel /home/$(whoami)
+chown -R $(whoami):wheel $HOME
 
 "
                     read -p "Choose action: [l]ogout | [s]kip   " wultp
@@ -447,7 +447,7 @@ fi
 
 echo "
 [User]
-Icon=/home/$(whoami)/.face
+Icon=$HOME/.face
 XSession=i3
 SystemAccount=false
 " | sudo tee /var/lib/AccountsService/users/$(whoami)

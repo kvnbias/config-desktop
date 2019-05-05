@@ -125,11 +125,10 @@ while true; do
     [Yy]* )
       user=$(whoami)
       sudo dnf install -y samba --releasever=$fedver
-
-      mkdir -p "/home/$user/Share"
+      mkdir -p "$HOME/Share"
       sudo mv /etc/samba/smb.conf /etc/samba/smb.conf.bup
       sudo cp -raf "$DIR/../../system-confs/smb.conf" "/etc/samba/smb.conf"
-      sudo sed -i "s/ACCOUNT_NAME/ACCOUNT_NAME/g" /etc/samba/smb.conf
+      sudo sed -i "s/ACCOUNT_NAME/$user/g" /etc/samba/smb.conf
 
       if [ -d /etc/ufw/applications.d ]; then
         sudo cp -raf "$DIR/../../system-confs/ufw-samba" "/etc/ufw/applications.d/ufw-samba"

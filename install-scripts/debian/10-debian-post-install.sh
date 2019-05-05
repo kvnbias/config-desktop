@@ -24,7 +24,7 @@ sudo apt install -y build-essential linux-headers-$(uname -r)
 sudo apt install -y --no-install-recommends numlockx
 sudo apt install -y --no-install-recommends xdg-user-dirs
 
-if [ ! -d "/home/$(whoami)/Desktop" ];then
+if [ ! -d "$HOME/Desktop" ];then
   xdg-user-dirs-update
 fi
 
