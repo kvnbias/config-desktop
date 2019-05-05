@@ -94,7 +94,7 @@ while true; do
       sudo systemctl stop mpd
 
       spectool -g -R $DIR/../specs/polybar.spec
-      sudo zypper -n install --no-recommends $(cat $DIR/../specs/i3lock-color.spec | grep "BuildRequires" | awk -F 'BuildRequires:  ' '{print $2}')
+      sudo zypper -n install --no-recommends $(cat $DIR/../specs/polybar.spec | grep "BuildRequires" | awk -F 'BuildRequires:  ' '{print $2}')
       rpmbuild -ba $DIR/../specs/polybar.spec
       sudo zypper inr -r local && sudo zypper -n install --no-recommends -r local polybar
 
