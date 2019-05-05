@@ -128,7 +128,6 @@ generate_nvidia_gpu_config() {
 }
 
 install_mesa_vulkan_drivers() {
-
   sudo apt install -y --no-install-recommends libd3dadapter9-mesa:amd64
   sudo apt install -y --no-install-recommends libegl-mesa0:amd64
   sudo apt install -y --no-install-recommends libgbm1:amd64
@@ -194,7 +193,8 @@ What driver to use?
   [1] AMDGPU    - GCN 3, GCN 4 and newer
   [2] ATI       - TeraScale 1, TeraScale 2, TeraScale 3, GCN 1, GCN 2
   [e]xit
-  " amdd
+
+Enter driver:   " amdd
         case $amdd in
           [1]* )
             sudo apt install -y --no-install-recommends xserver-xorg-video-amdgpu

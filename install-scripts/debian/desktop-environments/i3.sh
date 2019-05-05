@@ -10,7 +10,7 @@ if [ ! -f "$HOME/.riced" ];then
   cp -raf "$DIR/../../../rice/xinitrc"         "$HOME/.xinitrc"
   cp -raf "$DIR/../../../rice/base-i3-config"  "$HOME/.Xresources"
   cp -raf "$DIR/../../../rice/base-Xresources" "$HOME/.Xresources"
-  sudo cp "$HOME/.Xresources"               "/root/.Xresources"
+  sudo cp "$HOME/.Xresources"                  "/root/.Xresources"
 fi
 
 while true; do

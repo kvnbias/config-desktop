@@ -153,7 +153,6 @@ generate_nvidia_gpu_config() {
 }
 
 install_mesa_vulkan_drivers() {
-
   sudo dnf install -y mesa-dri-drivers.x86_64 --releasever=$fedver
   sudo dnf install -y mesa-filesystem.x86_64 --releasever=$fedver
   sudo dnf install -y mesa-libd3d.x86_64 --releasever=$fedver
@@ -193,7 +192,6 @@ install_mesa_vulkan_drivers() {
 
 while true; do
   read -p "
-
 What GPU are you using?
   [i]ntel
   [a]md
@@ -222,7 +220,8 @@ What driver to use?
   [1] AMDGPU    - GCN 3, GCN 4 and newer
   [2] ATI       - TeraScale 1, TeraScale 2, TeraScale 3, GCN 1, GCN 2
   [e]xit
-  " amdd
+
+Enter driver:   " amdd
         case $amdd in
           [1]* )
             sudo dnf install -y xorg-x11-drv-amdgpu --releasever=$fedver
