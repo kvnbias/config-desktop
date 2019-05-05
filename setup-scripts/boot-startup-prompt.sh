@@ -10,7 +10,8 @@ if [ -d /sys/firmware/efi/efivars ] && sudo test -d /boot/efi/EFI && sudo test !
   elif [ -d "/boot/efi/EFI/GRUB" ]; then
     sudo cp -a /boot/efi/EFI/GRUB/grubx64.efi /boot/efi/EFI/boot/bootx64.efi
   else
-    sudo cp -a /boot/efi/EFI/$1/grubx64.efi /boot/efi/EFI/boot/bootx64.efi
+    os=$(echo $1 | cut -d- -f1 | head -1)
+    sudo cp -a /boot/efi/EFI/$os/grubx64.efi /boot/efi/EFI/boot/bootx64.efi
   fi
 
   echo "bcf boot add 1 fs0:\\EFI\\boot\\bootx64.efi \"Fallback Bootloader\"
