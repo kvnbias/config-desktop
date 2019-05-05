@@ -154,8 +154,7 @@ https://wiki.archlinux.org/index.php/Samba   " ismb
     [Yy]* )
       user=$(whoami)
       sudo zypper -n install --no-recommends samba samba-client samba-libs
-
-      mkdir -p "/home/$user/Share"
+      mkdir -p "$HOME/Share"
       sudo mv /etc/samba/smb.conf /etc/samba/smb.conf.bup
       echo "
 

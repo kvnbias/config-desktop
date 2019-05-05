@@ -19,11 +19,20 @@ while true; do
   case $yn in
     [Nn]* ) break;;
     * )
-      sudo zypper -n install --no-recommends curl wget vim python3-httpie lsof git tmux gedit
+      sudo zypper -n install --no-recommends gcc make bash coreutils diffutils --releasever=$fedver
+      sudo zypper -n install --no-recommends python rpm-build rpm-devel rpmlint patch rpmdevtools --releasever=$fedver
+      rpmdev-setuptree
+
+      sed -i "s~\$HOME~$DIR\/..\/specs~g" $HOME/.rpmmacros
+      rm -rf $HOME/rpmbuild
+
+      sudo zypper -n install --no-recommends curl wget vim git gedit
       sudo zypper -n install --no-recommends papirus-icon-theme
       sudo zypper -n install --no-recommends feh lxappearance xbacklight xrandr xrdb xinput
-      sudo zypper -n install --no-recommends notification-daemon
+
       bash $DIR/../../../setup-scripts/remove-other-notification-service.sh
+
+      sudo zypper -n install --no-recommends notification-daemon
 
       sudo zypper -n install --no-recommends alsa-utils libnotify-tools
       sudo zypper -n install --no-recommends pulseaudio pulseaudio-utils pavucontrol

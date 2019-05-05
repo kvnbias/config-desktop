@@ -14,7 +14,7 @@ sudo zypper -n update
 sudo zypper -n install --no-recommends kernel-devel
 sudo zypper -n install --no-recommends numlockx xdg-user-dirs
 
-if [ ! -d "/home/$(whoami)/Desktop" ];then
+if [ ! -d "$HOME/Desktop" ];then
   xdg-user-dirs-update
 fi
 
