@@ -42,7 +42,7 @@ while true; do
 
       sudo zypper -n install --no-recommends $(cat $DIR/../specs/pa-applet.spec | grep "BuildRequires" | awk -F 'BuildRequires:  ' '{print $2}')
       rpmbuild -ba $DIR/../specs/pa-applet.spec
-      sudo zypper inr -r local && sudo zypper -n install --no-recommends -r local pa-applet
+      sudo zypper inr -r local && sudo zypper -n install --no-recommends pa-applet
 
       sudo sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf
       sudo sed -i 's/; autospawn = yes/autospawn = yes/g' /etc/pulse/client.conf
@@ -51,7 +51,7 @@ while true; do
       sudo systemctl enable NetworkManager
 
       rpmbuild -ba $DIR/../specs/nerd-fonts.spec
-      sudo zypper inr -r local && sudo zypper -n install --no-recommends -r local nerd-fonts
+      sudo zypper inr -r local && sudo zypper -n install --no-recommends nerd-fonts
 
       sudo zypper -n install --no-recommends neofetch
       sudo zypper -n install --no-recommends gtk2-branding-openSUSE gtk3-branding-openSUSE
@@ -70,11 +70,11 @@ while true; do
       sudo zypper -n install --no-recommends poppler-tools mediainfo transmission transmission-common
       sudo zypper -n install --no-recommends zip unzip tar xz unrar odt2txt
 
-      sudo zypper -n remove i3lock-color
+      sudo zypper -n remove i3lock
       rpmdev-spectool -g -R $DIR/../specs/i3lock-color.spec
       sudo zypper -n install --no-recommends $(cat $DIR/../specs/i3lock-color.spec | grep "BuildRequires" | awk -F 'BuildRequires:  ' '{print $2}')
       rpmbuild -ba $DIR/../specs/i3lock-color.spec
-      sudo zypper inr -r local && sudo zypper -n install --no-recommends -r local i3lock-color
+      sudo zypper inr -r local && sudo zypper -n install --no-recommends i3lock-color
 
       sudo zypper -n install --no-recommends ranger vifm
 
@@ -97,7 +97,7 @@ while true; do
       rpmdev-spectool -g -R $DIR/../specs/polybar.spec
       sudo zypper -n install --no-recommends $(cat $DIR/../specs/polybar.spec | grep "BuildRequires" | awk -F 'BuildRequires:  ' '{print $2}')
       rpmbuild -ba $DIR/../specs/polybar.spec
-      sudo zypper inr -r local && sudo zypper -n install --no-recommends -r local polybar
+      sudo zypper inr -r local && sudo zypper -n install --no-recommends polybar
 
       sudo zypper -n install --no-recommends scrot accountsservice
 
