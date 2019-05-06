@@ -24,7 +24,7 @@ while true; do
       sudo zypper -n install --no-recommends python rpm-build rpm-devel rpmlint patch rpmdevtools
       rpmdev-setuptree
 
-      sed -i "s~\$HOME~\/user\/local\/rpmbuild~g" $HOME/.rpmmacros
+      sed -i "s~\$HOME~\/user\/local~g" $HOME/.rpmmacros
       rm -rf $HOME/rpmbuild
       sudo mkdir -p /usr/local/rpmbuild/RPMS/x86_64
       sudo ln -sf /usr/local/rpmbuild/RPMS/x86_64 /usr/local/repository
