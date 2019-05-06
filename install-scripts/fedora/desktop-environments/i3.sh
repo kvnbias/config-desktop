@@ -28,8 +28,12 @@ while true; do
       sudo dnf install -y python rpm-build rpm-devel rpmlint patch rpmdevtools --releasever=$fedver
       rpmdev-setuptree
 
-      sed -i "s~\$HOME~$DIR\/..\/specs~g" $HOME/.rpmmacros
+      sed -i "s~\$HOME~\/usr\/local~g" $HOME/.rpmmacros
       rm -rf $HOME/rpmbuild
+      sudo mkdir -p /usr/local/rpmbuild/RPMS/x86_64
+      sudo chown -R $(whoami):$(id -Gn) /usr/local/rpmbuild
+      sudo ln -sf /usr/local/rpmbuild/RPMS/x86_64 /usr/local/repository
+      sudo cp -raf $DIR/../../../system-confs/local.repo /etc/yum.repos.d/local.repo
 
       sudo dnf install -y curl wget vim-minimal vim-enhanced git gedit --releasever=$fedver
       sudo dnf install -y papirus-icon-theme --releasever=$fedver
