@@ -31,7 +31,7 @@ while true; do
       sed -i "s~\$HOME~\/usr\/local~g" $HOME/.rpmmacros
       rm -rf $HOME/rpmbuild
       sudo mkdir -p /usr/local/rpmbuild/RPMS/x86_64
-      sudo chown -R $(whoami):$(id -Gn) /usr/local/rpmbuild
+      sudo chown -R $(whoami):$(id -gn) /usr/local/rpmbuild
       sudo ln -sf /usr/local/rpmbuild/RPMS/x86_64 /usr/local/repository
       sudo cp -raf $DIR/../../../system-confs/local.repo /etc/yum.repos.d/local.repo
 
