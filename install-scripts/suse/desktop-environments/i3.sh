@@ -22,12 +22,12 @@ while true; do
     * )
       sudo zypper -n install --no-recommends gcc make bash coreutils diffutils
       sudo zypper -n install --no-recommends python rpm-build rpm-devel rpmlint patch rpmdevtools
-      rpmdev-setuptree
 
-      sed -i "s~\$HOME~\/user\/local~g" $HOME/.rpmmacros
+      sed -i "s~\$HOME~\/usr\/local~g" $HOME/.rpmmacros
       rm -rf $HOME/rpmbuild
       sudo mkdir -p /usr/local/rpmbuild/RPMS/x86_64
       sudo ln -sf /usr/local/rpmbuild/RPMS/x86_64 /usr/local/repository
+      sudo rpmdev-setuptree
       sudo cp -raf $DIR/../../../system-confs/local.repo /etc/zypp/repos.d/local.repo
 
       sudo zypper -n install --no-recommends curl wget vim git gedit
