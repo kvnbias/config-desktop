@@ -29,7 +29,7 @@ while true; do
       sudo mkdir -p /usr/local/rpmbuild/RPMS/x86_64
       sudo chown -R $(whoami):$(id -gn) /usr/local/rpmbuild
       sudo ln -sf /usr/local/rpmbuild/RPMS/x86_64 /usr/local/repository
-      sudo cp -raf $DIR/../../../system-confs/local.repo /etc/zypp/repos.d/local.repo
+      sudo zypper ar -cfGp 90 /usr/local/repository local
 
       sudo zypper -n install --no-recommends curl wget vim git gedit
       sudo zypper -n install --no-recommends papirus-icon-theme
