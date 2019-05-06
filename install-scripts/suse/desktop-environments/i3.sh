@@ -22,12 +22,13 @@ while true; do
     * )
       sudo zypper -n install --no-recommends gcc make bash coreutils diffutils
       sudo zypper -n install --no-recommends python rpm-build rpm-devel rpmlint patch rpmdevtools
+      rpmdev-setuptree
 
       sed -i "s~\$HOME~\/usr\/local~g" $HOME/.rpmmacros
       rm -rf $HOME/rpmbuild
       sudo mkdir -p /usr/local/rpmbuild/RPMS/x86_64
+      sudo chown -R $(whoami):$(id -Gn) /usr/local/rpmbuild
       sudo ln -sf /usr/local/rpmbuild/RPMS/x86_64 /usr/local/repository
-      sudo rpmdev-setuptree
       sudo cp -raf $DIR/../../../system-confs/local.repo /etc/zypp/repos.d/local.repo
 
       sudo zypper -n install --no-recommends curl wget vim git gedit
@@ -42,7 +43,7 @@ while true; do
       sudo zypper -n install --no-recommends pulseaudio pulseaudio-utils pavucontrol
 
       sudo zypper -n install --no-recommends $(cat $DIR/../specs/pa-applet.spec | grep "BuildRequires" | awk -F 'BuildRequires:  ' '{print $2}')
-      sudo rpmbuild -ba $DIR/../specs/pa-applet.spec
+      rpmbuild -ba $DIR/../specs/pa-applet.spec
       sudo zypper inr -r local && sudo zypper -n install --no-recommends pa-applet
 
       sudo sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf
@@ -51,7 +52,7 @@ while true; do
       sudo zypper -n install --no-recommends NetworkManager-branding-openSUSE NetworkManager-applet
       sudo systemctl enable NetworkManager
 
-      sudo rpmbuild -ba $DIR/../specs/nerd-fonts.spec
+      rpmbuild -ba $DIR/../specs/nerd-fonts.spec
       sudo zypper inr -r local && sudo zypper -n install --no-recommends nerd-fonts
 
       sudo zypper -n install --no-recommends neofetch
@@ -72,9 +73,9 @@ while true; do
       sudo zypper -n install --no-recommends zip unzip tar xz unrar odt2txt
 
       sudo zypper -n remove i3lock
-      sudo rpmdev-spectool -g -R $DIR/../specs/i3lock-color.spec
+      rpmdev-spectool -g -R $DIR/../specs/i3lock-color.spec
       sudo zypper -n install --no-recommends $(cat $DIR/../specs/i3lock-color.spec | grep "BuildRequires" | awk -F 'BuildRequires:  ' '{print $2}')
-      sudo rpmbuild -ba $DIR/../specs/i3lock-color.spec
+      rpmbuild -ba $DIR/../specs/i3lock-color.spec
       sudo zypper inr -r local && sudo zypper -n install --no-recommends i3lock-color
 
       sudo zypper -n install --no-recommends ranger vifm
@@ -95,9 +96,9 @@ while true; do
       sudo systemctl disable mpd
       sudo systemctl stop mpd
 
-      sudo rpmdev-spectool -g -R $DIR/../specs/polybar.spec
+      rpmdev-spectool -g -R $DIR/../specs/polybar.spec
       sudo zypper -n install --no-recommends $(cat $DIR/../specs/polybar.spec | grep "BuildRequires" | awk -F 'BuildRequires:  ' '{print $2}')
-      sudo rpmbuild -ba $DIR/../specs/polybar.spec
+      rpmbuild -ba $DIR/../specs/polybar.spec
       sudo zypper inr -r local && sudo zypper -n install --no-recommends polybar
 
       sudo zypper -n install --no-recommends scrot accountsservice
