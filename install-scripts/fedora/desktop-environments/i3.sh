@@ -33,7 +33,6 @@ while true; do
       sudo mkdir -p /usr/local/rpmbuild/RPMS/x86_64
       sudo chown -R $(whoami):$(id -gn) /usr/local/rpmbuild
       sudo ln -sf /usr/local/rpmbuild/RPMS/x86_64 /usr/local/repository
-      sudo cp -raf $DIR/../../../system-confs/local.repo /etc/yum.repos.d/local.repo
 
       sudo dnf install -y curl wget vim-minimal vim-enhanced git gedit --releasever=$fedver
       sudo dnf install -y papirus-icon-theme --releasever=$fedver
@@ -47,7 +46,7 @@ while true; do
       sudo dnf install -y pulseaudio pulseaudio-utils pavucontrol --releasever=$fedver
 
       sudo dnf builddep -y $DIR/../specs/pa-applet.spec && rpmbuild -ba $DIR/../specs/pa-applet.spec
-      sudo dnf install -y $DIR/../specs/rpmbuild/RPMS/x86_64/pa-applet-20181009-1.fc$fedver.x86_64.rpm
+      sudo dnf install -y /usr/local/repository/pa-applet-20181009-1.fc$fedver.x86_64.rpm
 
       sudo sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf
       sudo sed -i 's/; autospawn = yes/autospawn = yes/g' /etc/pulse/client.conf
@@ -56,7 +55,7 @@ while true; do
       sudo systemctl enable NetworkManager
 
       rpmbuild -ba $DIR/../specs/nerd-fonts.spec
-      sudo dnf install -y $DIR/../specs/rpmbuild/RPMS/x86_64/nerd-fonts-2.0.0-1.fc$fedver.x86_64.rpm
+      sudo dnf install -y /usr/local/repository/nerd-fonts-2.0.0-1.fc$fedver.x86_64.rpm
 
       sudo dnf install -y neofetch --releasever=$fedver
       sudo dnf install -y gtk2 gtk3 --releasever=$fedver
@@ -80,7 +79,7 @@ while true; do
 
       sudo dnf remove -y i3lock
       spectool -g -R $DIR/../specs/i3lock-color.spec && sudo dnf builddep -y $DIR/../specs/i3lock-color.spec && rpmbuild -ba $DIR/../specs/i3lock-color.spec
-      sudo dnf install -y $DIR/../specs/rpmbuild/RPMS/x86_64/i3lock-color-2.12.c-1.fc$fedver.x86_64.rpm
+      sudo dnf install -y /usr/local/repository/i3lock-color-2.12.c-1.fc$fedver.x86_64.rpm
 
       sudo dnf install -y ranger vifm --releasever=$fedver
 
@@ -91,7 +90,7 @@ while true; do
 
       sudo dnf remove -y i3
       spectool -g -R $DIR/../specs/i3-gaps.spec && sudo dnf builddep -y $DIR/../specs/i3-gaps.spec && rpmbuild -ba $DIR/../specs/i3-gaps.spec
-      sudo dnf install -y $DIR/../specs/rpmbuild/RPMS/x86_64/i3-gaps-4.16.1-1.fc$fedver.x86_64.rpm
+      sudo dnf install -y /usr/local/repository/i3-gaps-4.16.1-1.fc$fedver.x86_64.rpm
 
       # ncmpcpp playlist
       # 1) go to browse
@@ -103,7 +102,7 @@ while true; do
       sudo systemctl stop mpd
 
       spectool -g -R $DIR/../specs/polybar.spec && sudo dnf builddep -y $DIR/../specs/polybar.spec && rpmbuild -ba $DIR/../specs/polybar.spec
-      sudo dnf install -y $DIR/../specs/rpmbuild/RPMS/x86_64/polybar-3.3.1-1.fc$fedver.x86_64.rpm
+      sudo dnf install -y /usr/local/repository/polybar-3.3.1-1.fc$fedver.x86_64.rpm
 
       sudo dnf install -y scrot accountsservice --releasever=$fedver
 
