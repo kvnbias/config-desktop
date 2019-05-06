@@ -35,14 +35,14 @@ while true; do
       sudo apt install -y --no-install-recommends pulseaudio pulseaudio-utils pavucontrol
 
       sudo apt install -y --no-install-recommends $(cat $DIR/../controls/pa-applet-20181009 | grep "Build-Depends:" | awk -F 'Build-Depends: ' '{print $2}' | sed -e "s/,/ /g")
-      mkdir -p $compiled/builds/pa-applet/debian
-      cp -raf $DIR/../controls/pa-applet-20181009 $compiled/builds/pa-applet/debian/control
+      mkdir -p $compiled/builds/pa-applet/DEBIAN
+      cp -raf $DIR/../controls/pa-applet-20181009 $compiled/builds/pa-applet/DEBIAN/control
       git clone --recurse-submodules https://github.com/fernandotcl/pa-applet.git $compiled/sources/pa-applet
       cd $compiled/sources/pa-applet && ./autogen.sh && ./configure && make
       mkdir -p $compiled/builds/pa-applet/usr/local/bin
       cp -raf $compiled/sources/pa-applet/src/pa-applet $compiled/builds/pa-applet/usr/local/bin/pa-applet
-      dpkg-deb -b $compiled/builds/pa-applet $compiled/builds/repository/pa-applet-20101009-1.amd64.deb
-      sudo gdebi -n /usr/local/repository/pa-applet-201081009-1.amd64.deb
+      dpkg-deb -b $compiled/builds/pa-applet $compiled/repository/pa-applet-2018009-1.amd64.deb
+      sudo gdebi -n /usr/local/repository/pa-applet-20181009-1.amd64.deb
 
       sudo sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf
       sudo sed -i 's/; autospawn = yes/autospawn = yes/g' /etc/pulse/client.conf
@@ -51,16 +51,21 @@ while true; do
       sudo sed -i 's/managed=false/managed=true/g' /etc/NetworkManager/NetworkManager.conf
       sudo systemctl enable NetworkManager
 
-      wget https://github.com/ryanoasis/nerd-fonts/raw/v2.0.0/patched-fonts/UbuntuMono/Regular/complete/Ubuntu%20Mono%20Nerd%20Font%20Complete%20Mono.ttf
-      wget https://github.com/ryanoasis/nerd-fonts/raw/v2.0.0/patched-fonts/RobotoMono/Regular/complete/Roboto%20Mono%20Nerd%20Font%20Complete%20Mono.ttf
-      wget https://github.com/ryanoasis/nerd-fonts/raw/v2.0.0/patched-fonts/RobotoMono/Bold/complete/Roboto%20Mono%20Bold%20Nerd%20Font%20Complete%20Mono.ttf
-      wget https://github.com/ryanoasis/nerd-fonts/raw/v2.0.0/patched-fonts/SourceCodePro/Regular/complete/Sauce%20Code%20Pro%20Nerd%20Font%20Complete%20Mono.ttf
+      mkdir -p $compiled/builds/nerd-fonts/DEBIAN
+      cp -raf $DIR/../controls/nerd-fonts-2.0.0 $compiled/builds/nerd-fonts/DEBIAN/control
+      mkdir -p $compiled/sources/nerd-fonts
 
-      sudo mkdir -p /usr/share/fonts/nerd-fonts-complete/ttf
-      sudo mv "Ubuntu Mono Nerd Font Complete Mono.ttf"       "/usr/share/fonts/nerd-fonts-complete/ttf/Ubuntu Mono Nerd Font Complete Mono.ttf"
-      sudo mv "Roboto Mono Nerd Font Complete Mono.ttf"       "/usr/share/fonts/nerd-fonts-complete/ttf/Roboto Mono Nerd Font Complete Mono.ttf"
-      sudo mv "Roboto Mono Bold Nerd Font Complete Mono.ttf"  "/usr/share/fonts/nerd-fonts-complete/ttf/Roboto Mono Bold Nerd Font Complete Mono.ttf"
-      sudo mv "Sauce Code Pro Nerd Font Complete Mono.ttf"    "/usr/share/fonts/nerd-fonts-complete/ttf/Sauce Code Pro Nerd Font Complete Mono.ttf"
+      nfbaseurl="https://github.com/ryanoasis/nerd-fonts/raw/v2.0.0/patched-fonts"
+      wget -O "$compiled/sources/nerd-fonts/Ubuntu Mono Nerd Font Complete Mono.ttf"        "$nfbaseurl/UbuntuMono/Regular/complete/Ubuntu%20Mono%20Nerd%20Font%20Complete%20Mono.ttf"
+      wget -O "$compiled/sources/nerd-fonts/Roboto Mono Nerd Font Complete Mono.ttf"        "$nfbaseurl/RobotoMono/Regular/complete/Roboto%20Mono%20Nerd%20Font%20Complete%20Mono.ttf"
+      wget -O "$compiled/sources/nerd-fonts/Roboto Mono Bold Nerd Font Complete Mono.ttf"   "$nfbaseurl/RobotoMono/Bold/complete/Roboto%20Mono%20Bold%20Nerd%20Font%20Complete%20Mono.ttf"
+      wget -O "$compiled/sources/nerd-fonts/Sauce Code Pro Nerd Font Complete Mono.ttf"     "$nfbaseurl/SourceCodePro/Regular/complete/Sauce%20Code%20Pro%20Nerd%20Font%20Complete%20Mono.ttf"
+
+      mkdir -p "$compiled/builds/nerd-fonts/usr/share/fonts/nerd-fonts-complete/ttf"
+      cp -raf  "$compiled/sources/nerd-fonts/*" "$compiled/builds/nerd-fonts/usr/share/fonts/nerd-fonts-complete/ttf/"
+
+      dpkg-deb -b $compiled/builds/nerd-fonts $compiled/repository/nerd-fonts-2.0.0-1.amd64.deb
+      sudo gdebi -n /usr/local/repository/nerd-fonts-2.0.0-1.amd64.deb
 
       sudo apt install -y --no-install-recommends neofetch
       sudo apt install -y --no-install-recommends libgtk2.0-0 libgtk-3-0

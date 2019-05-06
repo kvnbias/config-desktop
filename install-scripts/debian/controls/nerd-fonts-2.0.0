@@ -1,0 +1,10 @@
+
+Source:         https://github.com/ryanoasis/nerd-fonts.git
+Package:        nerd-fonts
+Version:        2.0.0
+Architecture:   amd64
+Homepage:       https://nerdfonts.com
+Maintainer:     Kevin Baisas <kevin.baisas@gmail.com>
+Description:    Iconic font aggregator, collection, and patcher.
+  Iconic font aggregator, collection, and patcher. 40+ patched fonts,
+  over 3,600 glyph/icons, includes popular collections such as Font Awesome & fonts such as Hack
