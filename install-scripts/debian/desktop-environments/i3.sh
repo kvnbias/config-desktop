@@ -19,7 +19,10 @@ while true; do
   case $yn in
     [Nn]* ) break;;
     * )
-      cd /tmp
+      sudo apt install -y --no-install-recommends gdebi
+      sudo mkdir -p /usr/local/compiled/{repository,sources,builds}
+      sudo chown -R $(whoami):$(id -gn) /usr/local/compiled
+      sudo ln -sf /usr/local/compiled/repository /usr/local/repository
 
       sudo apt install -y --no-install-recommends curl wget vim git gedit
       sudo apt install -y --no-install-recommends papirus-icon-theme
@@ -30,21 +33,14 @@ while true; do
       sudo apt install -y --no-install-recommends alsa-utils
       sudo apt install -y --no-install-recommends pulseaudio pulseaudio-utils pavucontrol
 
-      # MANUAL 3b4f8b3: PulseAudio Applet. Some are already installed
-      sudo apt install -y --no-install-recommends libglib2.0-dev libgtk-3-dev libnotify-dev
-      sudo apt install -y --no-install-recommends libpulse-dev libx11-dev
-      sudo apt install -y --no-install-recommends autoconf automake pkgconf
-
-      sudo apt install -y --no-install-recommends libgtk-3-0 libnotify-bin libpulse0
-
-      git clone --recurse-submodules https://github.com/fernandotcl/pa-applet.git
-      cd pa-applet && git fetch --tags
-      tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-      [ ${#tag} -ge 1 ] && git checkout $tag
-
-      git tag -f "git-$(git rev-parse --short HEAD)"
-      ./autogen.sh && ./configure && make && sudo make install
-      cd /tmp
+      sudo apt install -y --no-install-recommends $(cat $DIR/../controls/pa-applet-20181009 | grep "BuildDepends:" | awk -F 'BuildRequires: ' '{print $2}' | sed -e "s/,/ /g")
+      mkdir -p /usr/local/compiled/builds/pa-applet/debian
+      cp -raf $DIR/../controls/pa-applet-20181009 /usr/local/compiled/builds/pa-applet/debian/control
+      git clone --recurse-submodules https://github.com/fernandotcl/pa-applet.git /usr/local/compiled/sources/pa-applet
+      cd /usr/local/compiled/sources/pa-applet && ./autogen.sh && ./configure && make
+      mkdir -p /usr/local/compiled/builds/pa-applet/usr/local/bin
+      cp -raf /usr/local/compiled/sources/pa-applet/src/pa-applet /usr/local/compiled/builds/pa-applet/usr/local/bin/pa-applet
+      dpkg-deb -b /usr/local/compiled/builds/pa-applet pa-applet-201081009.amd64.deb
 
       sudo sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf
       sudo sed -i 's/; autospawn = yes/autospawn = yes/g' /etc/pulse/client.conf
