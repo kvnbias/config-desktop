@@ -1,0 +1,8 @@
+
+[local]
+enabled=1
+autorefresh=1
+baseurl=dir:/usr/local/repository
+type=NONE
+priority=90
+gpgcheck=0

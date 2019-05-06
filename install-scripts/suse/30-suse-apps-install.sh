@@ -6,8 +6,7 @@ os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | 
 
 sudo zypper -n update
 
-sudo zypper -n install --no-recommends curl vim wget python3-httpie git tmux gedit
-sudo zypper -n install --no-recommends lsof bash-completion polkit-gnome
+sudo zypper -n install --no-recommends curl vim wget gedit bash-completion polkit-gnome
 
 while true; do
   read -p "Enable vi mode on bash [yN]?   " ebvi
@@ -24,51 +23,20 @@ while true; do
   esac
 done
 
-# exfat readable
-sudo zypper -n install --no-recommends exfat-utils fuse-exfat ntfs-3g
-
-# media
-sudo zypper -n install --no-recommends eog
-
-# firefox
-sudo zypper -n install --no-recommends MozillaFirefox MozillaFirefox-branding-openSUSE
-
-# extra
-sudo zypper -n install --no-recommends libreoffice libreoffice-gtk3 libreoffice-base
-sudo zypper -n install --no-recommends libreoffice-writer libreoffice-math libreoffice-draw libreoffice-calc
+sudo zypper -n install --no-recommends exfat-utils fuse-exfat ntfs-3g eog MozillaFirefox MozillaFirefox-branding-openSUSE
+sudo zypper -n install --no-recommends libreoffice libreoffice-gtk3 libreoffice-base libreoffice-writer libreoffice-math libreoffice-draw libreoffice-calc
 sudo zypper -n install --no-recommends vlc transmission-gtk mupdf p7zip evince
 
 while true; do
-  read -p "
-
-Install Screen Recorder [yN]?  " isr
+  read -p "Install Screen Recorder [yN]?  " isr
   case $isr in
-    [Yy]* )
-      sudo zypper -n install --no-recommends simplescreenrecorder
-      break;;
+    [Yy]* ) sudo zypper -n install --no-recommends simplescreenrecorder; break;;
     * ) break;;
   esac
 done
 
-# No choice.
-# while true; do
-#   read -p "
-#
-# Install JDownloader [yN]?  " ijd
-#   case $isr in
-#     [Yy]* )
-#       sudo zypper -n install --no-recommends flatpak
-#       sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-#       flatpak -n install --no-recommends flathub org.jdownloader.JDownloader
-#       break;;
-#     * ) break;;
-#   esac
-# done
-
 while true; do
-  read -p "
-
-Install Timeshift [yN]?  " its
+  read -p "Install Timeshift [yN]?  " its
   case $its in
     [Yy]* )
       wget -O /tmp/timeshift-v19.01-amd64.run https://github.com/teejee2008/timeshift/releases/download/v19.01/timeshift-v19.01-amd64.run
@@ -89,10 +57,7 @@ done
 # $ sudo mount /dev/sr0 /mnt
 # $ sudo /mnt/VBoxLinuxAdditions.run
 while true; do
-  read -p "
-
-Install virtualbox [yN]?
-https://wiki.archlinux.org/index.php/VirtualBox   " ivb
+  read -p "Install virtualbox [yN]?   " ivb
   case $ivb in
     [Yy]* )
       sudo zypper -n install --no-recommends virtualbox virtualbox-qt
@@ -105,10 +70,7 @@ https://wiki.archlinux.org/index.php/VirtualBox   " ivb
 done
 
 while true; do
-  read -p "
-
-Install firewall [yN]?
-https://wiki.archlinux.org/index.php/Uncomplicated_Firewall   " ifw
+  read -p "Install firewall [yN]?   " ifw
   case $ifw in
     [Yy]* )
       sudo zypper -n install --no-recommends ufw
@@ -121,22 +83,13 @@ https://wiki.archlinux.org/index.php/Uncomplicated_Firewall   " ifw
 done
 
 while true; do
-  read -p "
-
-Install bluetooth [yN]?
-https://wiki.archlinux.org/index.php/bluetooth   " ibt
+  read -p "Install bluetooth [yN]?   " ibt
   case $ibt in
     [Yy]* )
       sudo zypper -n install --no-recommends bluez bluez-auto-enable-devices blueman pulseaudio-module-bluetooth
-
-      echo "
-load-module module-bluetooth-policy
-load-module module-bluetooth-discover
-" | sudo tee -a /etc/pulse/system.pa
-
+      cat "$DIR/../../system-confs/system.pa" | sudo tee -a /etc/pulse/system.pa
       sed -i "s/# exec --no-startup-id blueman-applet/exec --no-startup-id blueman-applet/g" $HOME/.config/i3/config
       sed -i "s/# for_window \[class=\"Blueman-manager\"\]/for_window \[class=\"Blueman-manager\"\]/g" $HOME/.config/i3/config
-
       sudo systemctl enable bluetooth
       sudo systemctl start bluetooth
       break;;
@@ -146,84 +99,18 @@ done
 
 # For windows, go to appwiz.cpl, turn on the windows feature "SMB CIFS File Sharing Support"
 while true; do
-  read -p "
-
-Install Samba [yN]?
-https://wiki.archlinux.org/index.php/Samba   " ismb
+  read -p "Install Samba [yN]?   " ismb
   case $ismb in
     [Yy]* )
       user=$(whoami)
       sudo zypper -n install --no-recommends samba samba-client samba-libs
       mkdir -p "$HOME/Share"
       sudo mv /etc/samba/smb.conf /etc/samba/smb.conf.bup
-      echo "
-
-[global]
-    # workgroup = NT-Domain-Name or Workgroup-Name, eg: MIDEARTH
-    #
-    # Default windows 10 workgroup
-    workgroup = WORKGROUP
-
-    # Server role. Defines in which mode Samba will operate. Possible
-    # values are 'standalone server', 'member server', 'classic primary
-    # domain controller', 'classic backup domain controller', 'active
-    # directory domain controller'.
-    #
-    # Most people will want 'standalone server' or 'member server'.
-    # Running as 'active directory domain controller' will require first
-    # running 'samba-tool domain provision' to wipe databases and create a
-    # new domain.
-    server role = standalone server
-
-    # server string is the equivalent of the NT Description field
-    server string = $user's Samba Server
-
-    # Failed login or anonymous user will be a guest user.
-    map to guest = bad user
-
-    # This option is important for security. It allows you to restrict
-    # connections to machines which are on your local network. The
-    # following example restricts access to two C class networks and
-    # the 'loopback' interface. For more examples of the syntax see
-    # the smb.conf man page
-    hosts allow = 192.168.1. 192.168.2. 127.
-
-[$user]
-    comment = $user's shared folder
-
-    # Directory to share
-    path = /home/$user/Share
-
-    # Makes share folder writeable
-    read only = no
-    writeable = yes
-
-    # Anybody who access is a guest
-    guest ok = yes
-
-    # Force written file will be named after $user
-    force user = $user
-
-    # Force written file will be in group wheel
-    force group = wheel
-
-[printers]
-    comment = All Printers
-    path = /usr/spool/samba
-    browseable = no
-    guest ok = no
-    writable = no
-    printable = yes
-" | sudo tee /etc/samba/smb.conf
+      sudo cp -raf "$DIR/../../system-confs/smb.conf" "/etc/samba/smb.conf"
+      sudo sed -i "s/ACCOUNT_NAME/$user/g" /etc/samba/smb.conf
 
       if [ -d /etc/ufw/applications.d ]; then
-        echo "
-[Samba]
-title=Samba
-description=Samba Server
-ports=137:138/udp|139/tcp|445/tcp
-" | sudo tee /etc/ufw/applications.d/ufw-samba
-
+        sudo cp -raf "$DIR/../../system-confs/ufw-samba" "/etc/ufw/applications.d/ufw-samba"
         sudo ufw allow Samba
       fi
 
@@ -235,10 +122,7 @@ ports=137:138/udp|139/tcp|445/tcp
 done
 
 while true; do
-  read -p "
-
-Install CUPS [yN]?
-https://wiki.archlinux.org/index.php/CUPS   " ic
+  read -p "Install CUPS [yN]?   " ic
   case $ic in
     [Yy]* )
       sudo zypper -n install --no-recommends cups cups-client cups-config bluez-cups cups-pdf nss-mdns
@@ -254,10 +138,7 @@ https://wiki.archlinux.org/index.php/CUPS   " ic
 done
 
 while true; do
-  read -p "
-
-Will mount APFS partitions [yN]?
-https://github.com/sgan81/apfs-fuse   " mapfs
+  read -p "Will mount APFS partitions [yN]?   " mapfs
   case $mapfs in
     [Yy]* )
       cd /tmp
@@ -278,100 +159,7 @@ https://github.com/sgan81/apfs-fuse   " mapfs
 done
 
 while true; do
-  read -p "
-
-Install OS-Prober [yN]?
-https://wiki.archlinux.org/index.php/GRUB#Detecting_other_operating_systems
-   " iop
-  case $iop in
-    [Yy]* )
-      sudo zypper -n install --no-recommends os-prober
-      break;;
-    * ) break;;
-  esac
-done
-
-while true; do
-  read -p "
-
-Install rEFInd [yN]?
-
-While rEFInd can boot any OS/Distro, the auto-detect feature may have problems
-booting a distro that have multiple kernels installed.
-
-https://wiki.archlinux.org/index.php/REFInd
-   " ir
-  case $ir in
-    [Yy]* )
-      while true; do
-        read -p "
-
-Would you like to rice rEFInd [yN]?   " rr
-        case $rr in
-          [Yy]* )
-            cd /tmp
-            wget -O "refind-bin-0.11.4.zip" "http://sourceforge.net/projects/refind/files/0.11.4/refind-bin-0.11.4.zip/download"
-            unzip refind-bin-0.11.4.zip && unzip refind-bin-0.11.4.zip && sudo bash refind-bin-0.11.4/refind-install
-
-            git clone https://github.com/EvanPurkhiser/rEFInd-minimal.git /tmp/refind-minimal
-            sudo mkdir -p /boot/efi/EFI/refind/themes/rEFInd-minimal
-            sudo cp -raf --no-preserve=mode,ownership /tmp/refind-minimal/* /boot/efi/EFI/refind/themes/rEFInd-minimal
-            echo "include themes/refind-minimal/theme.conf" | sudo tee -a /boot/efi/EFI/refind/refind.conf
-
-            cd /tmp
-
-            echo '
-
-#####################################
-#####################################
-###                               ###
-###    INSTALLATION COMPLETE      ###
-###                               ###
-###    rEFInd has been set as     ###
-###    your primary bootloader    ###
-###                               ###
-###    change bootloader order    ###
-###    priority in `efibootmgr    ###
-###                               ###
-#####################################
-#####################################
-
-'
-            break 2;;
-          * )
-            cd /tmp
-            wget -O "refind-bin-0.11.4.zip" "http://sourceforge.net/projects/refind/files/0.11.4/refind-bin-0.11.4.zip/download"
-            unzip refind-bin-0.11.4.zip && unzip refind-bin-0.11.4.zip && sudo bash refind-bin-0.11.4/refind-install
-            cd /tmp
-
-            echo '
-
-#####################################
-#####################################
-###                               ###
-###    INSTALLATION COMPLETE      ###
-###                               ###
-###    rEFInd has been set as     ###
-###    your primary bootloader    ###
-###                               ###
-###    change bootloader order    ###
-###    priority in `efibootmgr    ###
-###                               ###
-#####################################
-#####################################
-
-'
-        break 2;;
-        esac
-      done;;
-    * ) break;;
-  esac
-done
-
-while true; do
-  read -p "
-
-Install Skype [yN]?   " is
+  read -p "Install Skype [yN]?   " is
   case $is in
     [Yy]* )
       sudo zypper -n install --no-recommends gnome-keyring
@@ -384,61 +172,102 @@ Install Skype [yN]?   " is
 done
 
 while true; do
-  read -p "
-
-Install GIMP [yN]?   " ig
+  read -p "Install GIMP [yN]?   " ig
   case $ig in
-    [Yy]* )
-      sudo zypper -n install --no-recommends gimp
-      break;;
+    [Yy]* ) sudo zypper -n install --no-recommends gimp; break;;
     * ) break;;
   esac
 done
 
 while true; do
-  read -p "
-
-Install Mail Client: Geary [yN]?   " it
+  read -p "Install Mail Client: Geary [yN]?   " it
   case $it in
-    [Yy]* )
-      sudo zypper -n install --no-recommends geary
-      break;;
+    [Yy]* ) sudo zypper -n install --no-recommends geary; break;;
     * ) break;;
   esac
 done
 
 while true; do
-  read -p "
-
-Install Calendar [yN]?   " ic
+  read -p "Install Calendar [yN]?   " ic
   case $ic in
-    [Yy]* )
-      sudo zypper -n install --no-recommends gnome-calendar
-      break;;
+    [Yy]* ) sudo zypper -n install --no-recommends gnome-calendar; break;;
     * ) break;;
   esac
 done
 
 while true; do
-  read -p "
-
-Install Calculator [yN]?   " ic
+  read -p "Install Calculator [yN]?   " ic
   case $ic in
-    [Yy]* )
-      sudo zypper -n install --no-recommends gnome-calculator
-      break;;
+    [Yy]* ) sudo zypper -n install --no-recommends gnome-calculator; break;;
     * ) break;;
   esac
 done
 
 while true; do
-  read -p "
-
-Install GParted [yN]?   " igp
+  read -p "Install GParted [yN]?   " igp
   case $igp in
+    [Yy]* ) sudo zypper -n install --no-recommends gparted; break;;
+    * ) break;;
+  esac
+done
+
+while true; do
+  read -p "Install Dev Tools [yN]?   " idt
+  case $idt in
     [Yy]* )
-      sudo zypper -n install --no-recommends gparted
-      break;;
+      sudo zypper -n install --no-recommends htop python3-httpie git tmux lsof
+
+      sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+      sudo sh -c 'echo -e "[vscode]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/zypp/repos.d/vscode.repo'
+      sudo zypper refresh
+      sudo zypper install --no-recommends -r vscode code
+      echo "fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
+      sudo sysctl -p
+ 
+      while true; do
+        read -p "Enable vim mode on VSCode [yN]?   " evm
+        case $evm in
+          [Yy]* ) code --install-extension vscodevim.vim &; break;;
+          *) break;;
+        esac
+      done
+
+      code --install-extension eamodio.gitlens &
+      code --install-extension peterjausovec.vscode-docker &
+      code --install-extension ms-vscode.theme-tomorrowkit &
+
+      sleep 20
+
+      while true; do
+        read -p "Install Google Chrome [yN]?   " igc
+        case $igc in
+          [Yy]* )
+            sudo sh -c 'echo -e "[google]\nname=google\nbaseurl=http://dl.google.com/linux/chrome/rpm/stable/x86_64/\nenabled=1\ngpgcheck=1\ngpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub" > /etc/zypp/repos.d/google.repo'
+            sudo zypper refresh
+            sudo zypper -n install --no-recommends -r google google-chrome-stable
+            break;;
+          * ) break;;
+        esac
+      done
+
+      while true; do
+        read -p "Install Zeal [yN]?   " iz
+        case $iz in
+          [Yy]* ) sudo zypper -n install --no-recommends zeal; break;;
+          * ) break;;
+        esac
+      done
+
+      while true; do
+        read -p "Install DBeaver [yN]?   " idbvr
+        case $idbvr in
+          [Yy]* )
+            wget -O /tmp/dbeaver-ce-latest-stable.x86_64.rpm https://dbeaver.io/files/dbeaver-ce-latest-stable.x86_64.rpm
+            sudo zypper install /tmp/dbeaver-ce-latest-stable.x86_64.rpm
+            break;;
+          * ) break;;
+        esac
+      done
     * ) break;;
   esac
 done
