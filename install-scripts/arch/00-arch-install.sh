@@ -631,7 +631,7 @@ exit' | tee \$ed/startup.nsh
                         case \$rrfnd in
                           [Nn] ) break 4;;
                           * )
-                            git clone https://github.com/EvanPurkhiser/rEFInd-minimal.git /tmp/refind-minimal
+                            git clone https://github.com/kvnbias/refind-theme /tmp/refind-minimal
                             sudo mkdir -p \$ed/EFI/refind/themes/rEFInd-minimal
                             sudo cp -raf --no-preserve=mode,ownership /tmp/refind-minimal/* \$ed/EFI/refind/themes/rEFInd-minimal
                             echo 'include themes/rEFInd-minimal/theme.conf' | sudo tee -a \$ed/EFI/refind/refind.conf
