@@ -6,7 +6,7 @@ Current default configs and scripts for my desktop environments.
 
 Arch:
 ```sh
-# wget -O arch-install https://git.io/fjn72
+# wget -O arch-install https://git.io/fjn5k
 # bash arch-install
 ```
 Gentoo:

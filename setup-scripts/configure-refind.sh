@@ -58,12 +58,12 @@ declare_icon() {
     esac
   done
 
-  themeStr='include themes/rEFInd-minimal/theme.conf'
+  themeStr='include themes/refind-theme/theme.conf'
   if sudo cat /boot/efi/EFI/refind/refind.conf.bup | grep -q "$themeStr"; then
-    if [ -f "/boot/efi/EFI/refind/themes/rEFInd-minimal/icons/os_$distro.png" ]; then
-      icon="/EFI/refind/themes/rEFInd-minimal/icons/os_$distro.png"
+    if [ -f "/boot/efi/EFI/refind/themes/refind-theme/icons/os_$distro.png" ]; then
+      icon="/EFI/refind/themes/refind-theme/icons/os_$distro.png"
     else
-      icon="/EFI/refind/themes/rEFInd-minimal/icons/os_linux.png"
+      icon="/EFI/refind/themes/refind-theme/icons/os_linux.png"
     fi
   else
     if [ -f "/boot/efi/EFI/refind/icons/os_$distro.png" ]; then
@@ -336,7 +336,7 @@ Choose action   " blcstmztn
                   echo "timeout 10" | sudo tee -a /boot/efi/EFI/refind/refind.conf
                   # echo "timeout 10" | sudo tee -a $DIR/../../refind.conf
 
-                  themeStr='include themes/rEFInd-minimal/theme.conf'
+                  themeStr='include themes/refind-theme/theme.conf'
                   if sudo cat /boot/efi/EFI/refind/refind.conf.bup | grep -q "$themeStr"; then
                     echo "$themeStr" | sudo tee -a /boot/efi/EFI/refind/refind.conf
                     # echo "$themeStr" | sudo tee -a $DIR/../../refind.conf
