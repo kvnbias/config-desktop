@@ -23,7 +23,8 @@ Target Base Resolution:
 [b] 2560x1440
 [c] 3840x2160
 [d] Custom
-" tr
+
+Target:   " tr
   case $tr in
     [Aa]* )
       sed -i "s/WIDTH/1920/g" $HOME/.config/display/screen-detector.sh
