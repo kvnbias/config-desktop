@@ -161,6 +161,11 @@ while true; do
       wget -O /tmp/polybar.tar.gz $(cat $compiled/builds/polybar/DEBIAN/control | grep "Source:" | awk -F 'Source: ' '{print $2}')
       rm -rf $compiled/sources/polybar && mkdir -p $compiled/sources/polybar
       tar xvzf /tmp/polybar.tar.gz -C $compiled/sources/polybar --strip-components=1
+      rm -rf $compiled/sources/polybar/lib/i3ipcpp  $compiled/sources/polybar/lib/xpp
+      git clone https://github.com/jaagr/i3ipcpp    $compiled/sources/polybar/lib/i3ipcpp
+      git clone https://github.com/jaagr/xpp        $compiled/sources/polybar/lib/xpp
+      cd $compiled/sources/polybar/lib/i3ipcpp && git checkout d4e4786
+      cd $compiled/sources/polybar/lib/xpp && git checkout d2ff2aa
       cd $compiled/sources/polybar && rm -rf build/ && mkdir -p build && cd build/
       cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr/local/compiled/builds/polybar/usr .. && make && make install
       dpkg-deb -b $compiled/builds/polybar $compiled/repository/polybar_3.3.1-1_amd64.deb
