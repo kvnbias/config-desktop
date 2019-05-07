@@ -102,11 +102,9 @@ while true; do
       cp -raf $DIR/../controls/i3lock-color_2.12.c-1_amd64 $compiled/builds/i3lock-color/DEBIAN/control
 
       if [ "$os" != "debian" ]; then
-        sed -i "s/LIBJPEG_DEV/libjpeg62-dev/g"  $compiled/builds/i3lock-color/DEBIAN/control
         sed -i "s/LIBJPEG/libjpeg62/g"          $compiled/builds/i3lock-color/DEBIAN/control
         sed -i "s/LIBTURBO/libturbojpeg/g"      $compiled/builds/i3lock-color/DEBIAN/control
       else
-        sed -i "s/LIBJPEG_DEV/libjpeg62-turbo-dev/g"  $compiled/builds/i3lock-color/DEBIAN/control
         sed -i "s/LIBJPEG/libjpeg62-turbo/g"          $compiled/builds/i3lock-color/DEBIAN/control
         sed -i "s/LIBTURBO/libturbojpeg0/g"           $compiled/builds/i3lock-color/DEBIAN/control
       fi
