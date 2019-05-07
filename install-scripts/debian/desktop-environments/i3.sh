@@ -116,27 +116,15 @@ while true; do
       rm -rf $compiled/sources/i3lock-color && mkdir -p $compiled/sources/i3lock-color
       tar xvzf /tmp/i3lock-color.tar.gz -C $compiled/sources/i3lock-color --strip-components=1
       cd $compiled/sources/i3lock-color && autoreconf -fi && ./configure && make
-      # mkdir -p $compiled/builds/pa-applet/usr/local/bin
-      # cp -raf $compiled/sources/pa-applet/src/pa-applet $compiled/builds/pa-applet/usr/local/bin/pa-applet
-      # dpkg-deb -b $compiled/builds/pa-applet $compiled/repository/pa-applet_20181009-1_amd64.deb
-      # sudo gdebi -n /usr/local/repository/pa-applet_20181009-1_amd64.deb
-      #
-      # sudo apt install -y --no-install-recommends libcairo2-dev libev-dev libturbojpeg0-dev libxcb-composite0-dev libxkbcommon-x11-dev libxcb-randr0-dev
-      # sudo apt install -y --no-install-recommends libpam0g-dev libxcb-util0-dev libxcb-image0-dev libxcb-xrm-dev libxcb-xinerama0-dev
-      # sudo apt install -y --no-install-recommends autoconf automake
-      #
-      # sudo apt install -y --no-install-recommends libcairo2 libev4 libxcb-composite0 libxkbcommon-x11-0 libxcb-randr0
-      # sudo apt install -y --no-install-recommends libxkbcommon0 libxcb1 libxcb-image0 libxcb-xinerama0
-      #
-      # git clone --recurse-submodules https://github.com/PandorasFox/i3lock-color.git
-      # cd i3lock-color && git fetch --tags
-      # tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-      # [ ${#tag} -ge 1 ] && git checkout $tag
-      #
-      # git tag -f "git-$(git rev-parse --short HEAD)"
-      # autoreconf -fi && ./configure && make && sudo make install
-      # echo "auth include login" | sudo tee /etc/pam.d/i3lock
-      # cd /tmp
+
+      mkdir -p $compiled/builds/i3lock-color/usr/local/bin
+      mkdir -p $compiled/builds/i3lock-color/etc/pam.d
+
+      cp -raf $compiled/sources/i3lock-color/x86_64-pc-linux-gnu/i3lock   $compiled/builds/i3lock-color/usr/local/bin/i3lock
+      cp -raf $compiled/sources/i3lock-color/pam/i3lock                   $compiled/builds/i3lock-color/etc/pam.d/i3lock
+
+      dpkg-deb -b $compiled/builds/i3lock-color $compiled/repository/i3lock-color_2.12.c-1_amd64.deb
+      sudo gdebi -n /usr/local/repository/i3lock-color_2.12.c-1_amd64.deb
       ## END
 
       sudo apt install -y --no-install-recommends ranger vifm
