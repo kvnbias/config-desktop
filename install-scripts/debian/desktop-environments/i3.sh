@@ -65,7 +65,7 @@ while true; do
       wget -O "$compiled/sources/nerd-fonts/Sauce Code Pro Nerd Font Complete Mono.ttf"     "$nfbaseurl/SourceCodePro/Regular/complete/Sauce%20Code%20Pro%20Nerd%20Font%20Complete%20Mono.ttf"
 
       mkdir -p "$compiled/builds/nerd-fonts/usr/share/fonts/nerd-fonts-complete/ttf"
-      cp -raf  "$compiled/sources/nerd-fonts/*" "$compiled/builds/nerd-fonts/usr/share/fonts/nerd-fonts-complete/ttf/"
+      cp -raf  "$compiled/sources/nerd-fonts/." "$compiled/builds/nerd-fonts/usr/share/fonts/nerd-fonts-complete/ttf/"
 
       dpkg-deb -b $compiled/builds/nerd-fonts $compiled/repository/nerd-fonts_v2.0.0-1_amd64.deb
       sudo gdebi -n /usr/local/repository/nerd-fonts_v2.0.0-1_amd64.deb
@@ -129,7 +129,7 @@ while true; do
 
       sudo apt install -y --no-install-recommends rofi
 
-      # MANUAL i3-gaps 4.16.1
+      # START: i3-gaps 4.16.1
       sudo apt remove -y i3-wm
       mkdir -p $compiled/builds/i3-gaps/DEBIAN
       cp -raf $DIR/../controls/i3-gaps_4.16.1-1_amd64 $compiled/builds/i3-gaps/DEBIAN/control
@@ -154,24 +154,18 @@ while true; do
       sudo systemctl disable mpd
       sudo systemctl stop mpd
 
-      # MANUAL 3.3.1: polybar
-      sudo apt install -y --no-install-recommends libasound2-dev libcairo2-dev xcb-proto libxcb-util0-dev libxcb-cursor-dev libxcb-image0-dev libxcb-xrm-dev
-      sudo apt install -y --no-install-recommends libcurl4-openssl-dev libjsoncpp-dev libmpdclient-dev libpulse-dev libnl-3-dev libiw-dev
-      sudo apt install -y --no-install-recommends libxcb-composite0-dev libxcb-icccm4-dev libxcb-ewmh-dev libxcb-randr0-dev
-      sudo apt install -y --no-install-recommends g++ gcc python git pkgconf cmake
-
-      sudo apt install -y --no-install-recommends libasound2 libasound2 alsa-tools libcairo2 libxcb-cursor0 libxcb-image0 libxcb-xrm0 libxcb-icccm4 libxcb-ewmh2 libxcb-composite0
-      sudo apt install -y --no-install-recommends curl libjsoncpp1 libmpdclient2 libpulse0 libnl-3-200 wireless-tools python-xcbgen libxcb-randr0
-
-      git clone --recurse-submodules https://github.com/jaagr/polybar.git
-      cd polybar && git fetch --tags
-      tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-      [ ${#tag} -ge 1 ] && git checkout $tag
-
-      git tag -f "git-$(git rev-parse --short HEAD)"
-      rm -rf build/ && mkdir -p build && cd build/
-      cmake .. && make -j$(nproc) && sudo make install
-      cd /tmp
+      ## START: polybar 3.3.1
+      mkdir -p $compiled/builds/polybar/DEBIAN
+      cp -raf $DIR/../controls/polybar_3.3.1-1_amd64 $compiled/builds/polybar/DEBIAN/control
+      sudo apt install -y --no-install-recommends $(cat $compiled/builds/polybar/DEBIAN/control | grep "Build-Depends:" | awk -F 'Build-Depends: ' '{print $2}' | sed -e "s/,/ /g")
+      wget -O /tmp/polybar.tar.gz $(cat $compiled/builds/polybar/DEBIAN/control | grep "Source:" | awk -F 'Source: ' '{print $2}')
+      rm -rf $compiled/sources/polybar && mkdir -p $compiled/sources/polybar
+      tar xvzf /tmp/polybar.tar.gz -C $compiled/sources/polybar --strip-components=1
+      cd $compiled/sources/polybar && rm -rf build/ && mkdir -p build && cd build/
+      cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr/local/compiled/builds/polybar/usr .. && make && make install
+      dpkg-deb -b $compiled/builds/polybar $compiled/repository/polybar_3.3.1-1_amd64.deb
+      sudo gdebi -n /usr/local/repository/polybar_3.3.1-1_amd64.deb
+      ## END
 
       sudo apt install -y --no-install-recommends scrot accountsservice
 
