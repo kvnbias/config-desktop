@@ -5,7 +5,7 @@ Version:        3.3.1-1
 Architecture:   amd64
 Homepage:       https://polybar.github.io
 Maintainer:     Kevin Baisas <kevin.baisas@gmail.com>
-Build-Depends:  cmake, g++, gcc, git, libasound2-dev, libcairo2-dev, libcurl4-openssl-dev, libiw-dev, libjsoncpp-dev, libmpdclient-dev, libnl-3-dev, libpulse-dev, libxcb-composite0-dev, libxcb-cursor-dev, libxcb-ewmh-dev, libxcb-icccm4-dev, libxcb-image0-dev, libxcb-randr0-dev, libxcb-util0-dev, libxcb-xrm-dev, pkgconf, python, xcb-proto
+Build-Depends:  cmake, g++, gcc, git, libasound2-dev, libcairo2-dev, libcurl4-openssl-dev, libiw-dev, libjsoncpp-dev, libmpdclient-dev, libnl-3-dev, libpulse-dev, libxcb1-dev, libxcb-composite0-dev, libxcb-cursor-dev, libxcb-ewmh-dev, libxcb-icccm4-dev, libxcb-image0-dev, libxcb-randr0-dev, libxcb-util0-dev, libxcb-xrm-dev, pkgconf, python, python-xcbgen, xcb-proto
 Depends:        alsa-tools, curl, libasound2, libcairo2, libjsoncpp1, libmpdclient2, libnl-3-200, libpulse0, libxcb-composite0, libxcb-cursor0, libxcb-ewmh2, libxcb-icccm4, libxcb-image0, libxcb-randr0, libxcb-xrm0, python-xcbgen, wireless-tools
 Description:    A fast and easy-to-use status bar
   The main purpose of Polybar is to help users create awesome status bars. It has built-in functionality to display information about the most commonly used services.
