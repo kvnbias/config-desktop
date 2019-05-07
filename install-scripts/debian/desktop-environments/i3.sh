@@ -134,26 +134,26 @@ while true; do
 
       sudo apt install -y --no-install-recommends rofi
 
-      # MANUAL 4.16.1: i3-gaps
+      # MANUAL i3-gaps 4.16.1
       sudo apt remove -y i3
-      sudo apt install -y --no-install-recommends libxcb-util0-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libxcb-icccm4-dev
-      sudo apt install -y --no-install-recommends libxcb-xrm-dev libyajl-dev libxrandr-dev libstartup-notification0-dev
-      sudo apt install -y --no-install-recommends libev-dev libxcb-cursor-dev libxinerama-dev libxkbcommon-dev libxkbcommon-x11-dev
-      sudo apt install -y --no-install-recommends libxcb-randr0-dev libpcre3-dev libpango1.0-dev automake git gcc
+      mkdir -p $compiled/builds/i3-gaps/DEBIAN
+      cp -raf $DIR/../controls/i3-gaps_4.16.1-1_amd64 $compiled/builds/i3-gaps/DEBIAN/control
+      sudo apt install -y --no-install-recommends $(cat $compiled/builds/i3-gaps/DEBIAN/control | grep "Build-Depends:" | awk -F 'Build-Depends: ' '{print $2}' | sed -e "s/,/ /g")
+      wget -O /tmp/i3-gaps.tar.gz $(cat $compiled/builds/i3-gaps/DEBIAN/control | grep "Source:" | awk -F 'Source: ' '{print $2}')
+      rm -rf $compiled/sources/i3-gaps && mkdir -p $compiled/sources/i3-gaps
+      tar xvzf /tmp/i3-gaps.tar.gz -C $compiled/sources/i3-gaps --strip-components=1
+      cd $compiled/sources/i3-gaps && autoreconf -fi && rm -rf build/ && mkdir -p build && cd build/
+      ../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers && make
 
-      sudo apt install -y --no-install-recommends libev4 libxkbcommon-x11-0 perl libpango1.0-0 libstartup-notification0 libxcb-icccm4
-      sudo apt install -y --no-install-recommends libxcb-randr0 libxcb-cursor0 libxcb-keysyms1 libxcb-xrm0 libyajl2 libxcb-xinerama0
-
-      git clone --recurse-submodules https://github.com/Airblader/i3.git i3-gaps
-      cd i3-gaps && git fetch --tags
-      tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-      [ ${#tag} -ge 1 ] && git checkout $tag
-
-      git tag -f "git-$(git rev-parse --short HEAD)"
-      autoreconf -fi && rm -rf build/ && mkdir -p build && cd build/
-      ../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers
-      make && sudo make install
-      cd /tmp
+      # mkdir -p $compiled/builds/i3lock-color/usr/local/bin
+      # mkdir -p $compiled/builds/i3lock-color/etc/pam.d
+      #
+      # cp -raf $compiled/sources/i3lock-color/x86_64-pc-linux-gnu/i3lock   $compiled/builds/i3lock-color/usr/local/bin/i3lock
+      # cp -raf $compiled/sources/i3lock-color/pam/i3lock                   $compiled/builds/i3lock-color/etc/pam.d/i3lock
+      #
+      # dpkg-deb -b $compiled/builds/i3lock-color $compiled/repository/i3lock-color_2.12.c-1_amd64.deb
+      # sudo gdebi -n /usr/local/repository/i3lock-color_2.12.c-1_amd64.deb
+      ## END
 
       # ncmpcpp playlist
       # 1) go to browse
