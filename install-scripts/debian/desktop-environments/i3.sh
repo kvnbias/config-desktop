@@ -4,7 +4,7 @@ DIR="$(cd "$( dirname "$0" )" && pwd)"
 os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed -e 's/"//g'))
 
 # Install window tiling manager
-sudo apt install -y --no-install-recommends i3 i3status i3lock rxvt-unicode
+sudo apt install -y --no-install-recommends i3-wm i3status i3lock rxvt-unicode
 
 if [ ! -f "$HOME/.riced" ];then
   mkdir -p "$HOME/.config/i3"
@@ -130,7 +130,7 @@ while true; do
       sudo apt install -y --no-install-recommends rofi
 
       # MANUAL i3-gaps 4.16.1
-      sudo apt remove -y i3
+      sudo apt remove -y i3-wm
       mkdir -p $compiled/builds/i3-gaps/DEBIAN
       cp -raf $DIR/../controls/i3-gaps_4.16.1-1_amd64 $compiled/builds/i3-gaps/DEBIAN/control
       sudo apt install -y --no-install-recommends $(cat $compiled/builds/i3-gaps/DEBIAN/control | grep "Build-Depends:" | awk -F 'Build-Depends: ' '{print $2}' | sed -e "s/,/ /g")
