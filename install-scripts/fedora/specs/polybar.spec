@@ -25,6 +25,7 @@ BuildRequires:  jsoncpp-devel
 BuildRequires:  libcurl-devel
 BuildRequires:  libmpdclient-devel
 BuildRequires:  libnl3-devel
+BuildRequires:  libxcb-devel
 BuildRequires:  pulseaudio-libs-devel
 BuildRequires:  python
 BuildRequires:  python2

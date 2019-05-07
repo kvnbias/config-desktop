@@ -28,8 +28,10 @@ BuildRequires:  libiw-devel
 BuildRequires:  libmpdclient-devel
 BuildRequires:  libnl3-devel
 BuildRequires:  libpulse-devel
+BuildRequires:  libxcb-devel
 BuildRequires:  pkgconf
 BuildRequires:  python
+BuildRequires:  python-devel
 BuildRequires:  python-xml
 BuildRequires:  xcb-proto-devel
 BuildRequires:  xcb-util-cursor-devel
