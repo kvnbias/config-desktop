@@ -34,15 +34,17 @@ while true; do
       sudo apt install -y --no-install-recommends alsa-utils
       sudo apt install -y --no-install-recommends pulseaudio pulseaudio-utils pavucontrol
 
-      sudo apt install -y --no-install-recommends $(cat $DIR/../controls/pa-applet_20181009-1_amd64 | grep "Build-Depends:" | awk -F 'Build-Depends: ' '{print $2}' | sed -e "s/,/ /g")
-      mkdir -p $compiled/builds/pa-applet/DEBIAN
+      ## START: pa-applet 20181009
+      rm -rf $compiled/builds/pa-applet && mkdir -p $compiled/builds/pa-applet/DEBIAN
       cp -raf $DIR/../controls/pa-applet_20181009-1_amd64 $compiled/builds/pa-applet/DEBIAN/control
-      git clone --recurse-submodules https://github.com/fernandotcl/pa-applet.git $compiled/sources/pa-applet
+      sudo apt install -y --no-install-recommends $(cat $compiled/builds/pa-applet/DEBIAN/control | grep "Build-Depends:" | awk -F 'Build-Depends: ' '{print $2}' | sed -e "s/,/ /g")
+      rm -rf $compiled/sources/pa-applet && git clone --recurse-submodules https://github.com/fernandotcl/pa-applet.git $compiled/sources/pa-applet
       cd $compiled/sources/pa-applet && ./autogen.sh && ./configure && make
       mkdir -p $compiled/builds/pa-applet/usr/local/bin
       cp -raf $compiled/sources/pa-applet/src/pa-applet $compiled/builds/pa-applet/usr/local/bin/pa-applet
       dpkg-deb -b $compiled/builds/pa-applet $compiled/repository/pa-applet_20181009-1_amd64.deb
       sudo gdebi -n /usr/local/repository/pa-applet_20181009-1_amd64.deb
+      ## END
 
       sudo sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf
       sudo sed -i 's/; autospawn = yes/autospawn = yes/g' /etc/pulse/client.conf
@@ -51,9 +53,10 @@ while true; do
       sudo sed -i 's/managed=false/managed=true/g' /etc/NetworkManager/NetworkManager.conf
       sudo systemctl enable NetworkManager
 
-      mkdir -p $compiled/builds/nerd-fonts/DEBIAN
+      ## START: nerd-fonts v2.0.0
+      rm -rf $compiled/builds/nerd-fonts && mkdir -p $compiled/builds/nerd-fonts/DEBIAN
       cp -raf $DIR/../controls/nerd-fonts_v2.0.0-1_amd64 $compiled/builds/nerd-fonts/DEBIAN/control
-      mkdir -p $compiled/sources/nerd-fonts
+      rm -rf $compiled/sources/nerd-fonts && mkdir -p $compiled/sources/nerd-fonts
 
       nfbaseurl="https://github.com/ryanoasis/nerd-fonts/raw/v2.0.0/patched-fonts"
       wget -O "$compiled/sources/nerd-fonts/Ubuntu Mono Nerd Font Complete Mono.ttf"        "$nfbaseurl/UbuntuMono/Regular/complete/Ubuntu%20Mono%20Nerd%20Font%20Complete%20Mono.ttf"
@@ -66,6 +69,7 @@ while true; do
 
       dpkg-deb -b $compiled/builds/nerd-fonts $compiled/repository/nerd-fonts_v2.0.0-1_amd64.deb
       sudo gdebi -n /usr/local/repository/nerd-fonts_v2.0.0-1_amd64.deb
+      ## END
 
       sudo apt install -y --no-install-recommends neofetch
       sudo apt install -y --no-install-recommends libgtk2.0-0 libgtk-3-0
@@ -92,36 +96,48 @@ while true; do
       sudo apt install -y --no-install-recommends python3-dev libturbojpeg0-dev zlib1g-dev libxext-dev python3-setuptools
       sudo pip3 install ueberzug
 
-      # MANUAL 2.12.c: i3lock-color. Some are already installed
+      ## START: i3lock-color 2.12.c
       sudo apt remove -y i3lock
-      if [ "$os" != "debian" ]; then
-        sudo apt install -y --no-install-recommends libjpeg62-dev
-      else
-        sudo apt install -y --no-install-recommends libjpeg62-turbo-dev
-      fi
-
-      sudo apt install -y --no-install-recommends libcairo2-dev libev-dev libturbojpeg0-dev libxcb-composite0-dev libxkbcommon-x11-dev libxcb-randr0-dev
-      sudo apt install -y --no-install-recommends libpam0g-dev libxcb-util0-dev libxcb-image0-dev libxcb-xrm-dev libxcb-xinerama0-dev
-      sudo apt install -y --no-install-recommends autoconf automake
+      mkdir -p $compiled/builds/i3lock-color/DEBIAN
+      cp -raf $DIR/../controls/i3lock-color_2.12.c-1_amd64 $compiled/builds/i3lock-color/DEBIAN/control
 
       if [ "$os" != "debian" ]; then
-        sudo apt install -y --no-install-recommends libturbojpeg libjpeg62
+        sed -i "s/LIBJPEG_DEV/libjpeg62-dev/g"  $compiled/builds/i3lock-color/DEBIAN/control
+        sed -i "s/LIBJPEG/libjpeg62/g"          $compiled/builds/i3lock-color/DEBIAN/control
+        sed -i "s/LIBTURBO/libturbojpeg/g"      $compiled/builds/i3lock-color/DEBIAN/control
       else
-        sudo apt install -y --no-install-recommends libturbojpeg0 libjpeg62-turbo
+        sed -i "s/LIBJPEG_DEV/libjpeg62-turbo-dev/g"  $compiled/builds/i3lock-color/DEBIAN/control
+        sed -i "s/LIBJPEG/libjpeg62-turbo/g"          $compiled/builds/i3lock-color/DEBIAN/control
+        sed -i "s/LIBTURBO/libturbojpeg0/g"           $compiled/builds/i3lock-color/DEBIAN/control
       fi
 
-      sudo apt install -y --no-install-recommends libcairo2 libev4 libxcb-composite0 libxkbcommon-x11-0 libxcb-randr0
-      sudo apt install -y --no-install-recommends libxkbcommon0 libxcb1 libxcb-image0 libxcb-xinerama0
-
-      git clone --recurse-submodules https://github.com/PandorasFox/i3lock-color.git
-      cd i3lock-color && git fetch --tags
-      tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-      [ ${#tag} -ge 1 ] && git checkout $tag
-
-      git tag -f "git-$(git rev-parse --short HEAD)"
-      autoreconf -fi && ./configure && make && sudo make install
-      echo "auth include login" | sudo tee /etc/pam.d/i3lock
-      cd /tmp
+      sudo apt install -y --no-install-recommends $(cat $compiled/builds/i3lock-color/DEBIAN/control | grep "Build-Depends:" | awk -F 'Build-Depends: ' '{print $2}' | sed -e "s/,/ /g")
+      wget -O /tmp/i3lock-color.tar.gz $(cat $compiled/builds/i3lock-color/DEBIAN/control | grep "Source:" | awk -F 'Source: ' '{print $2}')
+      rm -rf $compiled/sources/i3lock-color && mkdir -p $compiled/sources/i3lock-color
+      tar xvzf /tmp/i3lock-color.tar.gz -C $compiled/sources/i3lock-color --strip-components=1
+      cd $compiled/sources/i3lock-color && autoreconf -fi && ./configure && make
+      # mkdir -p $compiled/builds/pa-applet/usr/local/bin
+      # cp -raf $compiled/sources/pa-applet/src/pa-applet $compiled/builds/pa-applet/usr/local/bin/pa-applet
+      # dpkg-deb -b $compiled/builds/pa-applet $compiled/repository/pa-applet_20181009-1_amd64.deb
+      # sudo gdebi -n /usr/local/repository/pa-applet_20181009-1_amd64.deb
+      #
+      # sudo apt install -y --no-install-recommends libcairo2-dev libev-dev libturbojpeg0-dev libxcb-composite0-dev libxkbcommon-x11-dev libxcb-randr0-dev
+      # sudo apt install -y --no-install-recommends libpam0g-dev libxcb-util0-dev libxcb-image0-dev libxcb-xrm-dev libxcb-xinerama0-dev
+      # sudo apt install -y --no-install-recommends autoconf automake
+      #
+      # sudo apt install -y --no-install-recommends libcairo2 libev4 libxcb-composite0 libxkbcommon-x11-0 libxcb-randr0
+      # sudo apt install -y --no-install-recommends libxkbcommon0 libxcb1 libxcb-image0 libxcb-xinerama0
+      #
+      # git clone --recurse-submodules https://github.com/PandorasFox/i3lock-color.git
+      # cd i3lock-color && git fetch --tags
+      # tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+      # [ ${#tag} -ge 1 ] && git checkout $tag
+      #
+      # git tag -f "git-$(git rev-parse --short HEAD)"
+      # autoreconf -fi && ./configure && make && sudo make install
+      # echo "auth include login" | sudo tee /etc/pam.d/i3lock
+      # cd /tmp
+      ## END
 
       sudo apt install -y --no-install-recommends ranger vifm
 
