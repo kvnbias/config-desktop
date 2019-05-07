@@ -40,7 +40,7 @@ Comment=Manually downloaded firefox
 Exec=firefox
 Terminal=false
 Type=Application
-Icon=" | tee $HOME/.local/share/applications/firefox.desktop
+Icon=" | sudo tee /usr/share/applications/firefox.desktop
 
   echo "
 [Desktop Entry]
@@ -50,7 +50,7 @@ Exec=/bin/bash -c \"notify-send -i $HOME/.config/firefox/noicon -t 5000 'Firefox
 Terminal=false
 Type=Application
 Icon=
-" | tee $HOME/.local/share/applications/firefox-update.desktop
+" | sudo tee /usr/share/applications/firefox-update.desktop
 fi
 
 while true; do
