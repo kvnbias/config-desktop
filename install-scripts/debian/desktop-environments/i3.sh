@@ -41,7 +41,7 @@ while true; do
       cd $compiled/sources/pa-applet && ./autogen.sh && ./configure && make
       mkdir -p $compiled/builds/pa-applet/usr/local/bin
       cp -raf $compiled/sources/pa-applet/src/pa-applet $compiled/builds/pa-applet/usr/local/bin/pa-applet
-      dpkg-deb -b $compiled/builds/pa-applet $compiled/repository/pa-applet_2018009-1_amd64.deb
+      dpkg-deb -b $compiled/builds/pa-applet $compiled/repository/pa-applet_20181009-1_amd64.deb
       sudo gdebi -n /usr/local/repository/pa-applet_20181009-1_amd64.deb
 
       sudo sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf
