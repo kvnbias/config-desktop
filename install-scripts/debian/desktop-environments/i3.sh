@@ -39,9 +39,9 @@ while true; do
       cp -raf $DIR/../controls/pa-applet_20181009-1_amd64 $compiled/builds/pa-applet/DEBIAN/control
       sudo apt install -y --no-install-recommends $(cat $compiled/builds/pa-applet/DEBIAN/control | grep "Build-Depends:" | awk -F 'Build-Depends: ' '{print $2}' | sed -e "s/,/ /g")
       rm -rf $compiled/sources/pa-applet && git clone --recurse-submodules https://github.com/fernandotcl/pa-applet.git $compiled/sources/pa-applet
-      cd $compiled/sources/pa-applet && ./autogen.sh && ./configure && make
-      mkdir -p $compiled/builds/pa-applet/usr/local/bin
-      cp -raf $compiled/sources/pa-applet/src/pa-applet $compiled/builds/pa-applet/usr/local/bin/pa-applet
+      cd $compiled/sources/pa-applet && ./autogen.sh
+      ./configure --prefix=/usr/local/compiled/builds/pa-applet/usr --sysconfdir=/usr/local/compiled/builds/pa-applet/etc
+      make && make install
       dpkg-deb -b $compiled/builds/pa-applet $compiled/repository/pa-applet_20181009-1_amd64.deb
       sudo gdebi -n /usr/local/repository/pa-applet_20181009-1_amd64.deb
       ## END
@@ -115,14 +115,9 @@ while true; do
       wget -O /tmp/i3lock-color.tar.gz $(cat $compiled/builds/i3lock-color/DEBIAN/control | grep "Source:" | awk -F 'Source: ' '{print $2}')
       rm -rf $compiled/sources/i3lock-color && mkdir -p $compiled/sources/i3lock-color
       tar xvzf /tmp/i3lock-color.tar.gz -C $compiled/sources/i3lock-color --strip-components=1
-      cd $compiled/sources/i3lock-color && autoreconf -fi && ./configure && make
-
-      mkdir -p $compiled/builds/i3lock-color/usr/local/bin
-      mkdir -p $compiled/builds/i3lock-color/etc/pam.d
-
-      cp -raf $compiled/sources/i3lock-color/x86_64-pc-linux-gnu/i3lock   $compiled/builds/i3lock-color/usr/local/bin/i3lock
-      cp -raf $compiled/sources/i3lock-color/pam/i3lock                   $compiled/builds/i3lock-color/etc/pam.d/i3lock
-
+      cd $compiled/sources/i3lock-color && autoreconf -fi
+      ./configure --prefix=/usr/local/compiled/builds/i3lock-color/usr --sysconfdir=/usr/local/compiled/builds/i3lock-color/etc
+      make && make install
       dpkg-deb -b $compiled/builds/i3lock-color $compiled/repository/i3lock-color_2.12.c-1_amd64.deb
       sudo gdebi -n /usr/local/repository/i3lock-color_2.12.c-1_amd64.deb
       ## END
@@ -143,16 +138,10 @@ while true; do
       rm -rf $compiled/sources/i3-gaps && mkdir -p $compiled/sources/i3-gaps
       tar xvzf /tmp/i3-gaps.tar.gz -C $compiled/sources/i3-gaps --strip-components=1
       cd $compiled/sources/i3-gaps && autoreconf -fi && rm -rf build/ && mkdir -p build && cd build/
-      ../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers && make
-
-      # mkdir -p $compiled/builds/i3lock-color/usr/local/bin
-      # mkdir -p $compiled/builds/i3lock-color/etc/pam.d
-      #
-      # cp -raf $compiled/sources/i3lock-color/x86_64-pc-linux-gnu/i3lock   $compiled/builds/i3lock-color/usr/local/bin/i3lock
-      # cp -raf $compiled/sources/i3lock-color/pam/i3lock                   $compiled/builds/i3lock-color/etc/pam.d/i3lock
-      #
-      # dpkg-deb -b $compiled/builds/i3lock-color $compiled/repository/i3lock-color_2.12.c-1_amd64.deb
-      # sudo gdebi -n /usr/local/repository/i3lock-color_2.12.c-1_amd64.deb
+      ../configure --prefix=/usr/local/compiled/builds/i3-gaps/usr --sysconfdir=/usr/local/compiled/builds/i3-gaps/etc --disable-sanitizers
+      make && make install
+      dpkg-deb -b $compiled/builds/i3-gaps $compiled/repository/i3-gaps_4.16.1-1_amd64.deb
+      sudo gdebi -n /usr/local/repository/i3-gaps_4.16.1-1_amd64.deb
       ## END
 
       # ncmpcpp playlist
