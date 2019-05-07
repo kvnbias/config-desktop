@@ -34,15 +34,15 @@ while true; do
       sudo apt install -y --no-install-recommends alsa-utils
       sudo apt install -y --no-install-recommends pulseaudio pulseaudio-utils pavucontrol
 
-      sudo apt install -y --no-install-recommends $(cat $DIR/../controls/pa-applet-20181009 | grep "Build-Depends:" | awk -F 'Build-Depends: ' '{print $2}' | sed -e "s/,/ /g")
+      sudo apt install -y --no-install-recommends $(cat $DIR/../controls/pa-applet_20181009-1_amd64 | grep "Build-Depends:" | awk -F 'Build-Depends: ' '{print $2}' | sed -e "s/,/ /g")
       mkdir -p $compiled/builds/pa-applet/DEBIAN
-      cp -raf $DIR/../controls/pa-applet-20181009 $compiled/builds/pa-applet/DEBIAN/control
+      cp -raf $DIR/../controls/pa-applet_20181009-1_amd64 $compiled/builds/pa-applet/DEBIAN/control
       git clone --recurse-submodules https://github.com/fernandotcl/pa-applet.git $compiled/sources/pa-applet
       cd $compiled/sources/pa-applet && ./autogen.sh && ./configure && make
       mkdir -p $compiled/builds/pa-applet/usr/local/bin
       cp -raf $compiled/sources/pa-applet/src/pa-applet $compiled/builds/pa-applet/usr/local/bin/pa-applet
-      dpkg-deb -b $compiled/builds/pa-applet $compiled/repository/pa-applet-2018009-1.amd64.deb
-      sudo gdebi -n /usr/local/repository/pa-applet-20181009-1.amd64.deb
+      dpkg-deb -b $compiled/builds/pa-applet $compiled/repository/pa-applet_2018009-1_amd64.deb
+      sudo gdebi -n /usr/local/repository/pa-applet_20181009-1_amd64.deb
 
       sudo sed -i 's/autospawn = no/autospawn = yes/g' /etc/pulse/client.conf
       sudo sed -i 's/; autospawn = yes/autospawn = yes/g' /etc/pulse/client.conf
@@ -52,7 +52,7 @@ while true; do
       sudo systemctl enable NetworkManager
 
       mkdir -p $compiled/builds/nerd-fonts/DEBIAN
-      cp -raf $DIR/../controls/nerd-fonts-2.0.0 $compiled/builds/nerd-fonts/DEBIAN/control
+      cp -raf $DIR/../controls/nerd-fonts_v2.0.0-1_amd64 $compiled/builds/nerd-fonts/DEBIAN/control
       mkdir -p $compiled/sources/nerd-fonts
 
       nfbaseurl="https://github.com/ryanoasis/nerd-fonts/raw/v2.0.0/patched-fonts"
@@ -64,8 +64,8 @@ while true; do
       mkdir -p "$compiled/builds/nerd-fonts/usr/share/fonts/nerd-fonts-complete/ttf"
       cp -raf  "$compiled/sources/nerd-fonts/*" "$compiled/builds/nerd-fonts/usr/share/fonts/nerd-fonts-complete/ttf/"
 
-      dpkg-deb -b $compiled/builds/nerd-fonts $compiled/repository/nerd-fonts-2.0.0-1.amd64.deb
-      sudo gdebi -n /usr/local/repository/nerd-fonts-2.0.0-1.amd64.deb
+      dpkg-deb -b $compiled/builds/nerd-fonts $compiled/repository/nerd-fonts_v2.0.0-1_amd64.deb
+      sudo gdebi -n /usr/local/repository/nerd-fonts_v2.0.0-1_amd64.deb
 
       sudo apt install -y --no-install-recommends neofetch
       sudo apt install -y --no-install-recommends libgtk2.0-0 libgtk-3-0
