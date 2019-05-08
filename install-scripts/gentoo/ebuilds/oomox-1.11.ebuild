@@ -5,7 +5,7 @@ EAPI=7
 
 DESCRIPTION="Graphical application for generating different color variations"
 HOMEPAGE="https://github.com/themix-project/${PN}"
-SRC_URI="https://github.com/themix-project/${PN}/archive/${PN}.tar.gz"
+SRC_URI="https://github.com/themix-project/${PN}/archive/${PV}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
