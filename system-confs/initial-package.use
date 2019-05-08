@@ -1,0 +1,32 @@
+
+# initial use flags
+app-text/ghostscript-gpl unicode tiff
+app-text/poppler cairo
+dev-lang/python sqlite
+dev-libs/glib dbus
+dev-libs/libxml2 python
+gnome-base/gvfs fuse policykit
+media-libs/flac ogg
+media-libs/gst-plugins-base opengl pango
+media-libs/gst-plugins-bad opengl
+media-libs/harfbuzz icu
+media-libs/jasper opengl
+media-libs/imlib2 mp3
+media-libs/libcaca imlib opengl truetype
+media-libs/libpng apng
+media-libs/libwebp gif opengl
+media-plugins/alsa-plugins ffmpeg oss
+media-sound/pulseaudio bluetooth dbus sox equalizer native-headset
+media-video/ffmpeg alsa bluray chromium fontconfig libass libcaca mp3 libv4l opengl svg v4l vaapi vdpau wavpack webp x264 x265
+net-libs/webkit-gtk libnotify
+net-print/cups usb dbus
+net-print/cups-filters dbus tiff pdf zeroconf
+net-wireless/bluez cups user-session
+www-client/w3m unicode imlib
+www-plugins/freshplayerplugin v4l vaapi vdpau
+x11-libs/cairo opengl xcb
+x11-libs/gdk-pixbuf tiff
+x11-libs/gtk+ xinerama colord
+x11-libs/libxcb xkb
+x11-misc/lightdm-gtk-greeter branding
+x11-terms/rxvt-unicode 256-color pixbuf xft unicode3 fading-colors

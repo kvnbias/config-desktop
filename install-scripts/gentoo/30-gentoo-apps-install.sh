@@ -1,6 +1,6 @@
 
 #!/bin/bash
-
+DIR="$(cd "$( dirname "$0" )" && pwd)"
 os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed -e 's/"//g'))
 
 if cat /etc/portage/make.conf | grep -q 'USE='; then
@@ -82,7 +82,7 @@ if ! sudo cat /etc/portage/package.use/flags | grep -q 'sys-auth/polkit gtk'; th
   echo 'sys-auth/polkit gtk' | sudo tee -a /etc/portage/package.use/flags
 fi
 
-install_packages "net-misc/curl net-misc/wget net-misc/httpie sys-process/lsof dev-vcs/git app-misc/tmux app-editors/vim app-editors/gedit"
+install_packages "net-misc/curl net-misc/wget app-editors/vim app-editors/gedit"
 install_packages "app-shells/bash-completion app-admin/gamin gnome-extra/polkit-gnome"
 
 while true; do
@@ -100,7 +100,6 @@ while true; do
   esac
 done
 
-# external drives readable
 install_packages "sys-fs/exfat-utils sys-fs/fuse-exfat sys-fs/ntfs3g"
 install_packages "media-gfx/eog www-client/firefox-bin app-office/libreoffice-bin"
 
@@ -115,9 +114,7 @@ fi
 install_packages "media-video/vlc net-p2p/transmission app-text/mupdf app-arch/xarchiver app-arch/p7zip app-text/evince"
 
 while true; do
-  read -p "
-
-Install Screen Recorder [yN]?  " isr
+  read -p "Install Screen Recorder [yN]?  " isr
   case $isr in
     [Yy]* )
       if ! sudo cat /etc/portage/package.use/flags | grep -q 'media-video/simplescreenrecorder'; then
@@ -130,31 +127,10 @@ Install Screen Recorder [yN]?  " isr
   esac
 done
 
-# No choice.
-# while true; do
-#   read -p "
-#
-# Install JDownloader [yN]?  " ijd
-#   case $isr in
-#     [Yy]* )
-#       install_packages "flatpak"
-#       sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-#       flatpak install -yflathub org.jdownloader.JDownloader
-#       break;;
-#     * ) break;;
-#   esac
-# done
-
 while true; do
-  read -p "
-
-Install Timeshift [yN]?  " its
+  read -p "Install Timeshift [yN]?  " its
   case $its in
     [Yy]* )
-      # MANUAL: timeshift 19.01
-      # install_packages "dev-libs/libgee dev-libs/json-glib net-misc/rsync x11-libs/vte"
-      # wget -O /tmp/timeshift-v19.01-amd64.run https://github.com/teejee2008/timeshift/releases/download/v19.01/timeshift-v19.01-amd64.run
-      # sudo sh /tmp/timeshift*amd64.run
       add_ebuild "app-backup" "timeshift-bin" "$DIR/ebuilds/timeshift-bin-19.01.ebuild"
       install_packages "app-backup/timeshift-bin"
       break;;
@@ -171,10 +147,7 @@ done
 # $ sudo mount /dev/sr0 /mnt
 # $ sudo /mnt/VBoxLinuxAdditions.run
 while true; do
-  read -p "
-
-Install virtualbox [yN]?
-https://wiki.archlinux.org/index.php/VirtualBox   " ivb
+  read -p "Install virtualbox [yN]?   " ivb
   case $ivb in
     [Yy]* )
       if ! sudo cat /etc/portage/package.use/flags | grep -q 'media-libs/libsdl'; then
@@ -196,19 +169,9 @@ https://wiki.archlinux.org/index.php/VirtualBox   " ivb
       sudo modprobe vboxpci
 
       if [ -f /etc/modules-load.d/networking.conf ]; then
-        echo '
-vboxdrv
-vboxnetadp
-vboxnetflt
-vboxpci
-' | sudo tee /etc/modules-load.d/networking.conf
+        sudo cp -raf $DIR/../../system-confs/networking.conf  /etc/modules-load.d/networking.conf
       else
-        echo '
-vboxdrv
-vboxnetadp
-vboxnetflt
-vboxpci
-' | sudo tee -a /etc/modules-load.d/networking.conf
+        cat $DIR/../../system-confs/networking.conf | sudo tee -a /etc/modules-load.d/networking.conf
       fi
 
       sudo systemctl start systemd-modules-load
@@ -218,10 +181,7 @@ vboxpci
 done
 
 while true; do
-  read -p "
-
-Install firewall [yN]?
-https://wiki.archlinux.org/index.php/Uncomplicated_Firewall   " ifw
+  read -p "Install firewall [yN]?   " ifw
   case $ifw in
     [Yy]* )
       install_packages "net-firewall/ufw"
@@ -235,10 +195,7 @@ https://wiki.archlinux.org/index.php/Uncomplicated_Firewall   " ifw
 done
 
 while true; do
-  read -p "
-
-Install bluetooth [yN]?
-https://wiki.archlinux.org/index.php/bluetooth   " ibt
+  read -p "Install bluetooth [yN]?   " ibt
   case $ibt in
     [Yy]* )
       if ! sudo cat /etc/portage/package.use/flags | grep -q 'net-wireless/bluez'; then
@@ -250,11 +207,7 @@ https://wiki.archlinux.org/index.php/bluetooth   " ibt
       fi
 
       install_packages "net-wireless/bluez net-wireless/blueman"
-
-      echo "
-load-module module-bluetooth-policy
-load-module module-bluetooth-discover
-" | sudo tee -a /etc/pulse/system.pa
+      cat "$DIR/../../system-confs/system.pa" | sudo tee -a /etc/pulse/system.pa
 
       if sudo cat /etc/bluetooth/main.conf | grep -q "^AutoEnable"; then
         echo 'AutoEnable=true' | sudo tee -a /etc/bluetooth/main.conf
@@ -273,12 +226,8 @@ load-module module-bluetooth-discover
   esac
 done
 
-# For windows, go to appwiz.cpl, turn on the windows feature "SMB CIFS File Sharing Support"
 while true; do
-  read -p "
-
-Install Samba [yN]?
-https://wiki.archlinux.org/index.php/Samba   " ismb
+  read -p "Install Samba [yN]?   " ismb
   case $ismb in
     [Yy]* )
       if ! sudo cat /etc/portage/package.use/flags | grep -q 'net-fs/samba'; then
@@ -290,74 +239,11 @@ https://wiki.archlinux.org/index.php/Samba   " ismb
 
       mkdir -p "$HOME/Share"
       sudo mv /etc/samba/smb.conf /etc/samba/smb.conf.bup
-      echo "
-
-[global]
-    # workgroup = NT-Domain-Name or Workgroup-Name, eg: MIDEARTH
-    #
-    # Default windows 10 workgroup
-    workgroup = WORKGROUP
-
-    # Server role. Defines in which mode Samba will operate. Possible
-    # values are 'standalone server', 'member server', 'classic primary
-    # domain controller', 'classic backup domain controller', 'active
-    # directory domain controller'.
-    #
-    # Most people will want 'standalone server' or 'member server'.
-    # Running as 'active directory domain controller' will require first
-    # running 'samba-tool domain provision' to wipe databases and create a
-    # new domain.
-    server role = standalone server
-
-    # server string is the equivalent of the NT Description field
-    server string = $user's Samba Server
-
-    # Failed login or anonymous user will be a guest user.
-    map to guest = bad user
-
-    # This option is important for security. It allows you to restrict
-    # connections to machines which are on your local network. The
-    # following example restricts access to two C class networks and
-    # the 'loopback' interface. For more examples of the syntax see
-    # the smb.conf man page
-    hosts allow = 192.168.1. 192.168.2. 127.
-
-[$user]
-    comment = $user's shared folder
-
-    # Directory to share
-    path = /home/$user/Share
-
-    # Makes share folder writeable
-    read only = no
-    writeable = yes
-
-    # Anybody who access is a guest
-    guest ok = yes
-
-    # Force written file will be named after $user
-    force user = $user
-
-    # Force written file will be in group wheel
-    force group = wheel
-
-[printers]
-    comment = All Printers
-    path = /usr/spool/samba
-    browseable = no
-    guest ok = no
-    writable = no
-    printable = yes
-" | sudo tee /etc/samba/smb.conf
+      sudo cp -raf "$DIR/../../system-confs/smb.conf" "/etc/samba/smb.conf"
+      sudo sed -i "s/ACCOUNT_NAME/$user/g" /etc/samba/smb.conf
 
       if [ -d /etc/ufw/applications.d ]; then
-        echo "
-[Samba]
-title=Samba
-description=Samba Server
-ports=137:138/udp|139/tcp|445/tcp
-" | sudo tee /etc/ufw/applications.d/ufw-samba
-
+        sudo cp -raf "$DIR/../../system-confs/ufw-samba" "/etc/ufw/applications.d/ufw-samba"
         sudo ufw allow Samba
       fi
 
@@ -369,10 +255,7 @@ ports=137:138/udp|139/tcp|445/tcp
 done
 
 while true; do
-  read -p "
-
-Install CUPS [yN]?
-https://wiki.archlinux.org/index.php/CUPS   " ic
+  read -p "Install CUPS [yN]?   " ic
   case $ic in
     [Yy]* )
       if ! sudo cat /etc/portage/package.use/flags | grep -q 'net-wireless/bluez'; then
@@ -380,10 +263,8 @@ https://wiki.archlinux.org/index.php/CUPS   " ic
       fi
 
       if ! sudo cat /etc/portage/package.use/flags | grep -q 'net-print/cups'; then
-        echo "
-net-print/cups usb dbus
-net-print/cups-filters dbus tiff pdf zeroconf
-" | sudo tee -a /etc/portage/package.use/flags
+        echo "net-print/cups usb dbus" | sudo tee -a /etc/portage/package.use/flags
+        echo "net-print/cups-filters dbus tiff pdf zeroconf" | sudo tee -a /etc/portage/package.use/flags
       fi
 
       install_packages "net-print/cups net-print/cups-pdf"
@@ -398,26 +279,8 @@ net-print/cups-filters dbus tiff pdf zeroconf
   esac
 done
 
-# while true; do
-#   read -p "
-#
-# Will mount HFS+ partitions [yN]?   " mfsp
-#   case $mfsp in
-#     [Yy]* )
-#       # To mount HFS+
-#       # 1. Repair: sudo fsck.hfsplus -f /dev/sda2
-#       # 2. Mount: sudo mount -t hfsplus -o force,rw /dev/sda2 /mnt
-#       install_packages "hfsutils hfsplusutils"
-#       break;;
-#     * ) break;;
-#   esac
-# done
-
 while true; do
-  read -p "
-
-Will mount APFS partitions [yN]?
-https://github.com/sgan81/apfs-fuse   " mapfs
+  read -p "Will mount APFS partitions [yN]?   " mapfs
   case $mapfs in
     [Yy]* )
       cd /tmp
@@ -435,108 +298,7 @@ https://github.com/sgan81/apfs-fuse   " mapfs
 done
 
 while true; do
-  read -p "
-
-Install OS-Prober [yN]?
-https://wiki.archlinux.org/index.php/GRUB#Detecting_other_operating_systems
-   " iop
-  case $iop in
-    [Yy]* )
-      install_packages "sys-boot/os-prober"
-      break;;
-    * ) break;;
-  esac
-done
-
-while true; do
-  read -p "
-
-Install rEFInd [yN]?
-
-While rEFInd can boot any OS/Distro, the auto-detect feature may have problems
-booting a distro that have multiple kernels installed.
-
-https://wiki.archlinux.org/index.php/REFInd
-   " ir
-  case $ir in
-    [Yy]* )
-      while true; do
-        read -p "
-
-Would you like to rice rEFInd [yN]?   " rr
-        case $rr in
-          [Yy]* )
-            cd /tmp
-            if ! sudo cat /etc/portage/package.use/flags | grep -q 'sys-boot/refind'; then
-              echo "sys-booot/refind ext4 btrfs hfs ntfs" | sudo tee -a /etc/portage/package.use/flags
-            fi
-
-            install_packages "sys-boot/refind"
-            sudo refind-install
-
-            git clone https://github.com/EvanPurkhiser/rEFInd-minimal.git /tmp/refind-minimal
-            sudo mkdir -p /boot/efi/EFI/refind/themes/rEFInd-minimal
-            sudo cp -raf --no-preserve=mode,ownership /tmp/refind-minimal/* /boot/efi/EFI/refind/themes/rEFInd-minimal
-            echo "include themes/refind-minimal/theme.conf" | sudo tee -a /boot/efi/EFI/refind/refind.conf
-
-            cd /tmp
-
-            echo '
-
-#####################################
-#####################################
-###                               ###
-###    INSTALLATION COMPLETE      ###
-###                               ###
-###    rEFInd has been set as     ###
-###    your primary bootloader    ###
-###                               ###
-###    change bootloader order    ###
-###    priority in `efibootmgr    ###
-###                               ###
-#####################################
-#####################################
-
-'
-            break 2;;
-          * )
-            cd /tmp
-            if ! sudo cat /etc/portage/package.use/flags | grep -q 'sys-boot/refind'; then
-              echo "sys-booot/refind ext4 btrfs hfs ntfs" | sudo tee -a /etc/portage/package.use/flags
-            fi
-
-            install_packages "sys-boot/refind"
-            sudo refind-install
-            cd /tmp
-
-            echo '
-
-#####################################
-#####################################
-###                               ###
-###    INSTALLATION COMPLETE      ###
-###                               ###
-###    rEFInd has been set as     ###
-###    your primary bootloader    ###
-###                               ###
-###    change bootloader order    ###
-###    priority in `efibootmgr    ###
-###                               ###
-#####################################
-#####################################
-
-'
-        break 2;;
-        esac
-      done;;
-    * ) break;;
-  esac
-done
-
-while true; do
-  read -p "
-
-Install Skype [yN]?   " is
+  read -p "Install Skype [yN]?   " is
   case $is in
     [Yy]* )
       install_packages "gnome-base/gnome-keyring"
@@ -547,33 +309,23 @@ Install Skype [yN]?   " is
 done
 
 while true; do
-  read -p "
-
-Install GIMP [yN]?   " ig
+  read -p "Install GIMP [yN]?   " ig
   case $ig in
-    [Yy]* )
-      install_packages "media-gfx/gimp"
-      break;;
+    [Yy]* ) install_packages "media-gfx/gimp"; break;;
     * ) break;;
   esac
 done
 
 while true; do
-  read -p "
-
-Install Mail Client: Geary [yN]?   " it
+  read -p "Install Mail Client: Geary [yN]?   " it
   case $it in
-    [Yy]* )
-      install_packages "mail-client/geary"
-      break;;
+    [Yy]* ) install_packages "mail-client/geary"; break;;
     * ) break;;
   esac
 done
 
 while true; do
-  read -p "
-
-Install Calendar [yN]?   " ic
+  read -p "Install Calendar [yN]?   " ic
   case $ic in
     [Yy]* )
       if ! sudo cat /etc/portage/package.use/flags | grep -q 'gnome-extra/evolution-data-server'; then
@@ -587,21 +339,15 @@ Install Calendar [yN]?   " ic
 done
 
 while true; do
-  read -p "
-
-Install Calculator [yN]?   " ic
+  read -p "Install Calculator [yN]?   " ic
   case $ic in
-    [Yy]* )
-      install_packages "gnome-extra/gnome-calculator"
-      break;;
+    [Yy]* ) install_packages "gnome-extra/gnome-calculator"; break;;
     * ) break;;
   esac
 done
 
 while true; do
-  read -p "
-
-Install GParted [yN]?   " igp
+  read -p "Install GParted [yN]?   " igp
   case $igp in
     [Yy]* )
       if ! sudo cat /etc/portage/package.use/flags | grep -q 'sys-block/gparted'; then
@@ -614,3 +360,69 @@ Install GParted [yN]?   " igp
   esac
 done
 
+while true; do
+  read -p "Install Dev Tools [yN]?   " idt
+  case $idt in
+    [Yy]* )
+      sudo install_packages "net-misc/httpie sys-process/lsof dev-vcs/git app-misc/tmux sys-process/htop"
+ 
+      add_ebuild "app-editors" "vscode-bin" "$DIR/ebuilds/vscode-bin-1.33.1.ebuild"
+      install_packages "app-editors/vscode-bin"
+      echo "fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
+      sudo sysctl -p
+
+      while true; do
+        read -p "Enable vim mode on VSCode [yN]?   " evm
+        case $evm in
+          [Yy]* ) code --install-extension vscodevim.vim &; break;;
+          *) break;;
+        esac
+      done
+
+      code --install-extension eamodio.gitlens &
+      code --install-extension peterjausovec.vscode-docker &
+      code --install-extension ms-vscode.theme-tomorrowkit &
+
+      sleep 20
+
+      while true; do
+        read -p "Install Google Chrome [yN]?   " igc
+        case $igc in
+          [Yy]* ) sudo install_packages "www-client/google-chrome"; break;;
+          * ) break;;
+        esac
+      done
+
+      while true; do
+        read -p "Install Zeal [yN]?   " iz
+        case $iz in
+          [Yy]* )
+            if ! sudo cat /etc/portage/package.use/flags | grep -q 'dev-qt/qtprintsupport'; then
+              echo "dev-qt/qtprintsupport cups" | sudo tee -a /etc/portage/package.use/flags
+            fi
+
+            if ! sudo cat /etc/portage/package.use/flags | grep -q ' dev-qt/qtnetwork'; then
+              echo "dev-qt/qtnetwork networkmanager" | sudo tee -a /etc/portage/package.use/flags
+            fi
+
+            sudo install_packages "app-doc/zeal"
+            break;;
+          * ) break;;
+        esac
+      done
+
+      while true; do
+        read -p "Install DBeaver [yN]?   " idbvr
+        case $idbvr in
+          [Yy]* )
+            add_ebuild "dev-db" "dbeaver-ce-bin" "$DIR/ebuilds/dbeaver-ce-bin-6.0.3.ebuild"
+            install_packages "dev-db/dbeaver-ce-bin"
+            break;;
+          * ) break;;
+        esac
+      done
+    * ) break;;
+  esac
+done
+
+sudo emerge --ask --depclean
