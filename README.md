@@ -18,11 +18,10 @@ Gentoo:
 ## Post install (Arch)
 
 ```sh
-$ git clone https://github.com/kvnbai/config-desktop
+$ git clone --recurse-submodules https://github.com/kvnbai/config-desktop
 $ cd config-desktop/install-scripts/arch
 $ bash 10-arch-post-install.sh
 $ bash 20-arch-post-install-xorg.sh
-$ bash 25-arch-ricing-xorg-i3.sh
 ...
 ```
 
@@ -37,17 +36,17 @@ $ bash 25-arch-ricing-xorg-i3.sh
 ## Why some packages are compiled from source?
 Some packages doesn't exist in the main REPO. If the package exist on community maintained repos, there is a chance that the package is unmaintaned, failing builds, or outdated. I will only include packages from community repos if it is maintained by the authors/contributors of the software. As of now, AUR is the only community maintained repo that I trust.
 
-## As of 04/06/2019
-
-##### Arch scripts are tested on:
+## As of 05/08/2019
+##### Tested in the following distros:
 * Arch
-* Manjaro 18
-##### RHEL scripts are tested on
-* Fedora 29
-##### Debian scripts are tested on
-* Debian 10
+* Manjaro
+* Fedora 29 & 30
+* Debian (Buster)
 * Elementary 5
-* Ubuntu (18.04 LTS, 18.10)
+* Ubuntu 18.04, 18.10, 19.10
+* Pop!_OS 19.04
+* openSUSE Tumbleweed
+* Gentoo
 
 ### Wallpapers
 **I do not own any image in this repository. Since some images have been edited and several artists prefer to not repost their work, the images is moved to a private repository and replaced with a `404` wallpaper. You can check their works instead:**
