@@ -7,10 +7,10 @@ EAPI=7
 DESCRIPTION="Iconic font aggregator, collection, and patcher. 40+ patched fonts, over 3,600 glyph/icons, includes popular collections such as Font Awesome & fonts such as Hack"
 HOMEPAGE="https://nerdfonts.com"
 SRC_URI="
-https://github.com/ryanoasis/nerd-fonts/raw/${PV}/patched-fonts/UbuntuMono/Regular/complete/Ubuntu%20Mono%20Nerd%20Font%20Complete%20Mono.ttf
-https://github.com/ryanoasis/nerd-fonts/raw/${PV}/patched-fonts/RobotoMono/Regular/complete/Roboto%20Mono%20Nerd%20Font%20Complete%20Mono.ttf
-https://github.com/ryanoasis/nerd-fonts/raw/${PV}/patched-fonts/RobotoMono/Bold/complete/Roboto%20Mono%20Bold%20Nerd%20Font%20Complete%20Mono.ttf
-https://github.com/ryanoasis/nerd-fonts/raw/${PV}/patched-fonts/SourceCodePro/Regular/complete/Sauce%20Code%20Pro%20Nerd%20Font%20Complete%20Mono.ttf
+https://github.com/ryanoasis/${PN}/raw/${PV}/patched-fonts/UbuntuMono/Regular/complete/Ubuntu%20Mono%20Nerd%20Font%20Complete%20Mono.ttf
+https://github.com/ryanoasis/${PN}/raw/${PV}/patched-fonts/RobotoMono/Regular/complete/Roboto%20Mono%20Nerd%20Font%20Complete%20Mono.ttf
+https://github.com/ryanoasis/${PN}/raw/${PV}/patched-fonts/RobotoMono/Bold/complete/Roboto%20Mono%20Bold%20Nerd%20Font%20Complete%20Mono.ttf
+https://github.com/ryanoasis/${PN}/raw/${PV}/patched-fonts/SourceCodePro/Regular/complete/Sauce%20Code%20Pro%20Nerd%20Font%20Complete%20Mono.ttf
 "
 
 LICENSE="MIT"
@@ -45,7 +45,7 @@ src_compile() {
 
 src_install() {
   echo "Copying fonts"
-  sudo mkdir -p "${D}/usr/share/fonts/nerd-fonts-complete/ttf"
-  sudo cp -raf "${S}/." "${D}/usr/share/fonts/nerd-fonts-complete/ttf/"
+  sudo mkdir -p "${D}/usr/share/fonts/${PN}-complete/ttf"
+  sudo cp -raf "${S}/." "${D}/usr/share/fonts/${PN}-complete/ttf/"
 }
 

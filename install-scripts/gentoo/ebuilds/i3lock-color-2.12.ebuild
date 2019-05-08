@@ -6,8 +6,8 @@ EAPI=7
 
 inherit autotools
 DESCRIPTION="Improved improved screen locker - 'the ricing fork of i3lock'"
-HOMEPAGE="https://github.com/PandorasFox/i3lock-color"
-SRC_URI="https://github.com/PandorasFox/i3lock-color/archive/${PV}.c.tar.gz"
+HOMEPAGE="https://github.com/PandorasFox/${PN}"
+SRC_URI="https://github.com/PandorasFox/${PN}/archive/${PV}.c.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"

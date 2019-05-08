@@ -6,8 +6,8 @@ EAPI=7
 
 inherit xdg-utils
 DESCRIPTION="Papirus is a free and open source SVG icon theme for Linux"
-HOMEPAGE="https://github.com/PapirusDevelopmentTeam/papirus-icon-theme"
-SRC_URI="https://github.com/PapirusDevelopmentTeam/papirus-icon-theme/archive/${PV}.tar.gz"
+HOMEPAGE="https://github.com/PapirusDevelopmentTeam/${PN}"
+SRC_URI="https://github.com/PapirusDevelopmentTeam/${PN}/archive/${PV}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
