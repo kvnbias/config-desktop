@@ -41,10 +41,7 @@ elif [ -f /usr/bin/zypper ]; then
 
 elif [ -f /usr/bin/emerge ]; then
   manexec=$(ps aux | grep "emerge --pretend" 2> /dev/null | wc -l)
-  echo "here"
-  echo "$manexec"
   if [ "$manexec" -lt 2 ]; then
-    echo "$maxexec"
     lastdate=$(date -f  /usr/portage/metadata/timestamp.chk +%j)
     currdate=$(date +%j)
     diffdate=$(( currdate - lastdate ))
