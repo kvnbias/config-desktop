@@ -210,7 +210,7 @@ done
 generate_nvidia_gpu_config() {
   if [ -f /etc/default/grub ]; then
     sudo sed -i 's/GRUB_CMDLINE_LINUX="/GRUB_CMDLINE_LINUX="nvidia-drm.modeset=1 /g' /etc/default/grub;
-    sudo grub-mkconfig -o /boot/grub/grub.cfg; break;;
+    sudo grub-mkconfig -o /boot/grub/grub.cfg;
   fi
 }
 
