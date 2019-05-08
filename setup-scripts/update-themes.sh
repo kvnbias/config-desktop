@@ -95,6 +95,14 @@ for t in $themes; do
   fi
 done
 
+while true; do
+  read -p "Enable terminal blur (May slowdown terminal launch) [yN]?   " etb
+  case $etb in
+    [Yy]* ) find $HOME/.theme-settings -type f | xargs sed -i 's/!URxvt\*\.blurRadius/URxvt*.blurRadius/g'; break;;
+    * ) break;;
+  esac
+done
+
 sudo mkdir -p /usr/share/themes/Greeter
 sudo cp -raf $DIR/../themes/Greeter/theme/$tsetting/*  /usr/share/themes/Greeter
 
