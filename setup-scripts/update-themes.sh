@@ -3,9 +3,9 @@
 
 DIR="$(cd "$( dirname "$0" )" && pwd)"
 
-rm -rf $HOME/.theme-settings
-rm -rf $HOME/.themes
-rm -rf $HOME/.icons
+rm --verbose -rf $HOME/.theme-settings
+rm --verbose -rf $HOME/.themes
+rm --verbose -rf $HOME/.icons
 
 # install themes
 mkdir -p $HOME/.theme-settings
@@ -76,19 +76,19 @@ isetting=papirus
 # done
 
 mkdir -p $HOME/Pictures/wallpapers
-rm -rf $HOME/Pictures/wallpapers/*
+rm --verbose -rf $HOME/Pictures/wallpapers/*
 cp --verbose -rf $DIR/../rice/images/wallpapers/compressed/* $HOME/Pictures/wallpapers
 
 sudo mkdir -p /usr/share/backgrounds/wallpapers
 sudo mkdir -p /usr/share/backgrounds/grayscaled
-sudo rm -rf /usr/share/backgrounds/wallpapers/*
-sudo rm -rf  /usr/share/backgrounds/grayscaled/*
+sudo rm --verbose -rf /usr/share/backgrounds/wallpapers/*
+sudo rm --verbose -rf  /usr/share/backgrounds/grayscaled/*
 
 sudo cp --verbose -rf $DIR/../rice/images/wallpapers/compressed/* /usr/share/backgrounds/wallpapers
 sudo cp --verbose -rf $DIR/../rice/images/wallpapers/grayscaled/* /usr/share/backgrounds/grayscaled
 
 if [ -d $DIR/../rice/images/wallpapers/private ]; then
-  cp -rf $DIR/../rice/images/wallpapers/private/compressed/*      $HOME/Pictures/wallpapers
+  cp --verbose -rf $DIR/../rice/images/wallpapers/private/compressed/*      $HOME/Pictures/wallpapers
   sudo cp --verbose -rf $DIR/../rice/images/wallpapers/private/compressed/* /usr/share/backgrounds/wallpapers
   sudo cp --verbose -rf $DIR/../rice/images/wallpapers/private/grayscaled/* /usr/share/backgrounds/grayscaled
 fi
@@ -115,8 +115,8 @@ for t in $themes; do
     cp --verbose -raf "$HOME/.theme-settings/$t/theme/$tsetting/."  "$HOME/.themes/$t"
     cp --verbose -raf "$HOME/.theme-settings/$t/icons/$isetting/."  "$HOME/.icons/$t"
 
-    rm -rf "$HOME/.theme-settings/$t/theme"
-    rm -rf "$HOME/.theme-settings/$t/icons"
+    rm --verbose -rf "$HOME/.theme-settings/$t/theme"
+    rm --verbose -rf "$HOME/.theme-settings/$t/icons"
   fi
 done
 
