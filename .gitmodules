@@ -7,3 +7,6 @@
 [submodule "rice/images"]
 	path = rice/images
 	url = https://github.com/kvnbias/desktop-images.git
+[submodule "icon-themes"]
+	path = icon-themes
+	url = https://github.com/kvnbias/desktop-icons
