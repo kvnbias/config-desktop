@@ -72,6 +72,7 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 src_unpack() {
+  mkdir -p ${S}
   tar xvzf ../distdir/${PN}-${PV}.tar.gz -C ${S} --strip-components=1
   tar xvzf ../distdir/oomox-gtk-theme-${_OOMOX_GTK_THEME_VER}.tar.gz -C ${S}/plugins/theme_oomox/gtk-theme --strip-components=1
   tar xvzf ../distdir/materia-theme-${_MATERIA_THEME_VER}.tar.gz -C ${S}/plugins/theme_materia/materia-theme --strip-components=1
@@ -84,6 +85,6 @@ src_unpack() {
   tar xvzf ../distdir/numix-folders-${_NUMIX_FOLDERS_ICONS_CMT}.tar.gz -C ${S}/plugins/icons_numix/numix-folders --strip-components=1
   tar xvzf ../distdir/papirus-icon-theme-${_PAPIRUS_ICONS_VER}.tar.gz -C ${S}/plugins/icons_papirus/papirus-icon-theme --strip-components=1
   tar xvzf ../distdir/suru-plus-${_SURU_PLUS_ICONS_VER}.tar.gz -C ${S}/plugins/icons_suruplus/suru-plus --strip-components=1
-  tar xvzf ../distdir/suru-plus-aspromauros-${_SURU_PLUS_ASPROMAUROS_ICONS_VER}.tar.gz -C ${S}/plugins/icons/icons_suruplus_aspromauros/suru-plus-aspromauros --strip-components=1
+  tar xvzf ../distdir/suru-plus-aspromauros-${_SURU_PLUS_ASPROMAUROS_ICONS_VER}.tar.gz -C ${S}/plugins/icons_suruplus_aspromauros/suru-plus-aspromauros --strip-components=1
 }
 
