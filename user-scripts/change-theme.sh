@@ -223,7 +223,7 @@ case $themeID in
     set_git_branch_colors "green bold" "yellow bold" "blue bold"
     set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
     set_git_status_colors "green bold" "yellow bold" "red bold"
-    set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
+    set_neofetch_colors "(15 7 15 15 7)" "(15 7 15 15 15 15)" "(15 15 15 15 15 15)"
 
     reload_i3;;
   2 )
@@ -253,7 +253,7 @@ case $themeID in
     set_git_branch_colors "green bold" "yellow bold" "blue bold"
     set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
     set_git_status_colors "green bold" "yellow bold" "red bold"
-    set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
+    set_neofetch_colors "(12 12 7 12 12 7)" "(12 7 12 12 12 12)" "(12 12 12 12 12 12)"
 
     reload_i3;;
   5 )
@@ -293,7 +293,7 @@ case $themeID in
     set_git_branch_colors "green bold" "yellow bold" "blue bold"
     set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
     set_git_status_colors "green bold" "yellow bold" "red bold"
-    set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
+    set_neofetch_colors "(15 15 7 15 15 7)" "(15 7 15 15 15 15)" "(15 15 15 15 15 15)"
 
     reload_i3;;
   9 )

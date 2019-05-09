@@ -5,10 +5,12 @@ DIR="$(cd "$( dirname "$0" )" && pwd)"
 
 rm -rf $HOME/.theme-settings
 rm -rf $HOME/.themes
+rm -rf $HOME/.icons
 
 # install themes
 mkdir -p $HOME/.theme-settings
 mkdir -p $HOME/.themes
+mkdir -p $HOME/.icons
 
 usingDPI=false
 dpiValue=96
@@ -36,6 +38,8 @@ Use HiDPI [yN]?   " uhdpi
   esac
 done
 
+echo "Copying themes please wait..."
+
 tsetting=materia
 # temprarily disabled since i dont use qt apps that much making
 # numix useless
@@ -47,7 +51,8 @@ tsetting=materia
 # What theme setting to use [default: 1] ?
 # [1] Materia
 # [2] Numix
-# " ts
+#
+# Theme:   " ts
 #   case $ts in
 #     [1] ) tsetting=materia; break;;
 #     [2] ) tsetting=numix;   break;;
@@ -55,28 +60,43 @@ tsetting=materia
 #   esac
 # done
 
+isetting=papirus
+# temprarily disabled
+# while true; do
+# read -p "
+#
+# What icon theme to use [default: 1] ?
+# [1] Papirus
+# 
+# Icon theme:   " its
+#   case $its in
+#     [1] ) isetting=papirus; break;;
+#     * ) isetting=papirus; break;;
+#   esac
+# done
+
 mkdir -p $HOME/Pictures/wallpapers
 rm -rf $HOME/Pictures/wallpapers/*
-cp -rf $DIR/../rice/images/wallpapers/compressed/* $HOME/Pictures/wallpapers
+cp --verbose -rf $DIR/../rice/images/wallpapers/compressed/* $HOME/Pictures/wallpapers
 
 sudo mkdir -p /usr/share/backgrounds/wallpapers
 sudo mkdir -p /usr/share/backgrounds/grayscaled
 sudo rm -rf /usr/share/backgrounds/wallpapers/*
 sudo rm -rf  /usr/share/backgrounds/grayscaled/*
 
-sudo cp -rf $DIR/../rice/images/wallpapers/compressed/* /usr/share/backgrounds/wallpapers
-sudo cp -rf $DIR/../rice/images/wallpapers/grayscaled/* /usr/share/backgrounds/grayscaled
+sudo cp --verbose -rf $DIR/../rice/images/wallpapers/compressed/* /usr/share/backgrounds/wallpapers
+sudo cp --verbose -rf $DIR/../rice/images/wallpapers/grayscaled/* /usr/share/backgrounds/grayscaled
 
 if [ -d $DIR/../rice/images/wallpapers/private ]; then
   cp -rf $DIR/../rice/images/wallpapers/private/compressed/*      $HOME/Pictures/wallpapers
-  sudo cp -rf $DIR/../rice/images/wallpapers/private/compressed/* /usr/share/backgrounds/wallpapers
-  sudo cp -rf $DIR/../rice/images/wallpapers/private/grayscaled/* /usr/share/backgrounds/grayscaled
+  sudo cp --verbose -rf $DIR/../rice/images/wallpapers/private/compressed/* /usr/share/backgrounds/wallpapers
+  sudo cp --verbose -rf $DIR/../rice/images/wallpapers/private/grayscaled/* /usr/share/backgrounds/grayscaled
 fi
 
 mkdir -p $HOME/.config/vifm/colors
-cp -raf $DIR/../rice/default.vifm   $HOME/.config/vifm/colors/Default.vifm
+cp --verbose -raf $DIR/../rice/default.vifm   $HOME/.config/vifm/colors/Default.vifm
 
-cp -raf $DIR/../user-scripts/change-theme.sh   $HOME/.config/themes/change-theme.sh
+cp --verbose -raf $DIR/../user-scripts/change-theme.sh   $HOME/.config/themes/change-theme.sh
 
 if [ "$usingDPI" = true ];then
   sed -i "s/isHiDPI=false/isHiDPI=true/g" $HOME/.config/themes/change-theme.sh
@@ -89,9 +109,14 @@ for t in $themes; do
   if [ -d "$DIR/../themes/$t" ] && [ "$t" != "Greeter" ]; then
     mkdir -p "$HOME/.theme-settings/$t/theme"
     mkdir -p "$HOME/.themes/$t"
-    cp -raf "$DIR/../themes/$t/."                          "$HOME/.theme-settings/$t"
-    cp -raf "$HOME/.theme-settings/$t/theme/$tsetting/."  "$HOME/.themes/$t"
+    mkdir -p "$HOME/.icons/$t"
+
+    cp --verbose -raf "$DIR/../themes/$t/."                         "$HOME/.theme-settings/$t"
+    cp --verbose -raf "$HOME/.theme-settings/$t/theme/$tsetting/."  "$HOME/.themes/$t"
+    cp --verbose -raf "$HOME/.theme-settings/$t/icons/$isetting/."  "$HOME/.icons/$t"
+
     rm -rf "$HOME/.theme-settings/$t/theme"
+    rm -rf "$HOME/.theme-settings/$t/icons"
   fi
 done
 
@@ -104,7 +129,7 @@ while true; do
 done
 
 sudo mkdir -p /usr/share/themes/Greeter
-sudo cp -raf $DIR/../themes/Greeter/theme/$tsetting/*  /usr/share/themes/Greeter
+sudo cp --verbose -raf $DIR/../themes/Greeter/theme/$tsetting/*  /usr/share/themes/Greeter
 
 if [ -f /usr/sbin/restorecon ]; then
   sudo restorecon -prF /usr/share/themes
