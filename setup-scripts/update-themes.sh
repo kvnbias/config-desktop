@@ -3,6 +3,17 @@
 
 DIR="$(cd "$( dirname "$0" )" && pwd)"
 
+uitheme=false
+while true; do
+  read -p "
+NOTE: The custom icon themes takes some space and may take time to copy.
+Use custom icon themes [yN]?   " uhdpi
+  case $uhdpi in
+    [Yy]* ) uitheme=true; break;;
+    * ) uitheme=false; break;;
+  esac
+done
+
 rm --verbose -rf $HOME/.theme-settings
 rm --verbose -rf $HOME/.themes
 rm --verbose -rf $HOME/.icons
@@ -109,14 +120,19 @@ for t in $themes; do
   if [ -d "$DIR/../themes/$t" ] && [ "$t" != "Greeter" ]; then
     mkdir -p "$HOME/.theme-settings/$t/theme"
     mkdir -p "$HOME/.themes/$t"
-    mkdir -p "$HOME/.icons/$t"
 
     cp --verbose -raf "$DIR/../themes/$t/."                         "$HOME/.theme-settings/$t"
     cp --verbose -raf "$HOME/.theme-settings/$t/theme/$tsetting/."  "$HOME/.themes/$t"
-    cp --verbose -raf "$HOME/.theme-settings/$t/icons/$isetting/."  "$HOME/.icons/$t"
+
+    if [ "$uitheme" = true ]; then
+      mkdir -p "$HOME/.icons/$t"
+      cp --verbose -raf "$DIR/../icon-themes/$t/$isetting/."  "$HOME/.icons/$t"
+    else
+      find $HOME/.theme-settings -type f | xargs sed -i "s/gtk-icon-theme-name=\".*/gtk-icon-theme-name=\"Papirus\"/g";
+      find $HOME/.theme-settings -type f | xargs sed -i "s/gtk-icon-theme-name=[A-Za-z].*/gtk-icon-theme-name=Papirus/g";
+    fi
 
     rm --verbose -rf "$HOME/.theme-settings/$t/theme"
-    rm --verbose -rf "$HOME/.theme-settings/$t/icons"
   fi
 done
 
