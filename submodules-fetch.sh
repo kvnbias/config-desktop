@@ -33,7 +33,7 @@ while true; do
 done
 
 while true; do
-  read -p "Fetch 'icon-themes' submodule in this project [yN]?   " ftsp
+  read -p "Fetch 'icon-themes' submodule in this project (Takes a lot of space & will slow down editors) [yN]?   " ftsp
   case $ftsp in
     [Yy]* ) git submodule update --init icon-themes; break;;
     * ) break;;
