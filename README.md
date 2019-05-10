@@ -17,8 +17,10 @@ Gentoo:
 
 ## Post install (Arch)
 
+Execute `submodules-fetch.sh` to choose submodules or just use `git clone --recurse-submodules https://github.com/kvnbai/config-desktop`.
+
+Execute:
 ```sh
-$ git clone --recurse-submodules https://github.com/kvnbai/config-desktop
 $ cd config-desktop/install-scripts/arch
 $ bash 10-arch-post-install.sh
 $ bash 20-arch-post-install-xorg.sh
@@ -32,9 +34,6 @@ $ bash 20-arch-post-install-xorg.sh
 * For debian-based distros using ubiquity installer you can remove the bootloader from the installation by executing `ubiquity -b` on the terminal.
 * For RHEL-based distros using anaconda installer you can remove bootloader on full disk summary.
 * If GRUB is installed, use `os-prober` to detect other OS.
-
-## Why some packages are compiled from source?
-Some packages doesn't exist in the main REPO. If the package exist on community maintained repos, there is a chance that the package is unmaintaned, failing builds, or outdated. I will only include packages from community repos if it is maintained by the authors/contributors of the software. As of now, AUR is the only community maintained repo that I trust.
 
 ## As of 05/08/2019
 ##### Tested in the following distros:
