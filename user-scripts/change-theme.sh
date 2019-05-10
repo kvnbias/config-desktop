@@ -217,139 +217,234 @@ done
 
 case $themeID in
   1 )
-    gen_conky_conf "#ffffff" "#ffffff"
-    cp_settings "BB-Purple" "bloodborne-cleric-beast-by-gelsgels.jpg" "#362130"
+    if [ -d "$dir/BB-Purple" ]; then
+      gen_conky_conf "#ffffff" "#ffffff"
+      cp_settings "BB-Purple" "bloodborne-cleric-beast-by-gelsgels.jpg" "#362130"
 
-    set_git_branch_colors "green bold" "yellow bold" "blue bold"
-    set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
-    set_git_status_colors "green bold" "yellow bold" "red bold"
-    set_neofetch_colors "(15 7 15 15 7)" "(15 7 15 15 15 15)" "(15 15 15 15 15 15)"
+      set_git_branch_colors "green bold" "yellow bold" "blue bold"
+      set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+      set_git_status_colors "green bold" "yellow bold" "red bold"
+      set_neofetch_colors "(15 7 15 15 7)" "(15 7 15 15 15 15)" "(15 15 15 15 15 15)"
 
-    reload_i3;;
+      reload_i3
+    else
+      echo "Theme not found."
+    fi
+    ;;
   2 )
-    gen_conky_conf "#661a24" "#ffffff"
-    cp_settings "HZD-Red" "horizon-zero-dawn-aloy-by-hage_2013.jpg" "#5f242a"
+    if [ -d "$dir/HZD-Red" ]; then
+      gen_conky_conf "#661a24" "#ffffff"
+      cp_settings "HZD-Red" "horizon-zero-dawn-aloy-by-hage_2013.jpg" "#5f242a"
 
-    set_git_branch_colors "green bold" "yellow bold" "blue bold"
-    set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
-    set_git_status_colors "green bold" "yellow bold" "red bold"
-    set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
+      set_git_branch_colors "green bold" "yellow bold" "blue bold"
+      set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+      set_git_status_colors "green bold" "yellow bold" "red bold"
+      set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
 
-    reload_i3;;
+      reload_i3
+    else
+      echo "Theme not found."
+    fi
+    ;;
   3 )
-    gen_conky_conf "#ad6334" "#ad6334"
-    cp_settings "TR-Purple-Orange" "lara-croft.jpg" "#281d2e"
+    if [ -d "$dir/TR-Purple-Orange" ]; then
+      gen_conky_conf "#ad6334" "#ad6334"
+      cp_settings "TR-Purple-Orange" "lara-croft.jpg" "#281d2e"
 
-    set_git_branch_colors "green bold" "yellow bold" "blue bold"
-    set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
-    set_git_status_colors "green bold" "yellow bold" "red bold"
-    set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
+      set_git_branch_colors "green bold" "yellow bold" "blue bold"
+      set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+      set_git_status_colors "green bold" "yellow bold" "red bold"
+      set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
 
-    reload_i3;;
+      reload_i3
+    else
+      echo "Theme not found."
+    fi
+    ;;
   4 )
-    gen_conky_conf "#ffffff" "#ffffff"
-    cp_settings "N-Dark-Blue" "nier-sword.jpg" "#1e1e21"
+    if [ -d "$dir/N-Dark-Blue" ]; then
+      gen_conky_conf "#ffffff" "#ffffff"
+      cp_settings "N-Dark-Blue" "nier-sword.jpg" "#1e1e21"
 
-    set_git_branch_colors "green bold" "yellow bold" "blue bold"
-    set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
-    set_git_status_colors "green bold" "yellow bold" "red bold"
-    set_neofetch_colors "(12 12 7 12 12 7)" "(12 7 12 12 12 12)" "(12 12 12 12 12 12)"
+      set_git_branch_colors "green bold" "yellow bold" "blue bold"
+      set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+      set_git_status_colors "green bold" "yellow bold" "red bold"
+      set_neofetch_colors "(12 12 7 12 12 7)" "(12 7 12 12 12 12)" "(12 12 12 12 12 12)"
 
-    reload_i3;;
+      reload_i3
+    else
+      echo "Theme not found."
+    fi
+    ;;
   5 )
-    gen_conky_conf "#e44742" "#e44742"
-    cp_settings "N-Black-Orange" "nier-2b-by-23i2ko.jpg" "#1e1e21"
+    if [ -d "$dir/N-Black-Orange" ]; then
+      gen_conky_conf "#e44742" "#e44742"
+      cp_settings "N-Black-Orange" "nier-2b-by-23i2ko.jpg" "#1e1e21"
 
-    set_git_branch_colors "green bold" "yellow bold" "blue bold"
-    set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
-    set_git_status_colors "green bold" "yellow bold" "red bold"
-    set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
+      set_git_branch_colors "green bold" "yellow bold" "blue bold"
+      set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+      set_git_status_colors "green bold" "yellow bold" "red bold"
+      set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
 
-    reload_i3;;
+      reload_i3
+    else
+      echo "Theme not found."
+    fi
+    ;;
   6 )
-    gen_conky_conf "#070705" "#070705"
-    cp_settings "N-Beige-Black" "nier-a2-by-hage_2013.jpg" "#070705"
+    if [ -d "$dir/N-Beige-Black" ]; then
+      gen_conky_conf "#070705" "#070705"
+      cp_settings "N-Beige-Black" "nier-a2-by-hage_2013.jpg" "#070705"
 
-    set_git_branch_colors "green bold" "yellow bold" "blue bold"
-    set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
-    set_git_status_colors "green bold" "yellow bold" "red bold"
-    set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
+      set_git_branch_colors "green bold" "yellow bold" "blue bold"
+      set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+      set_git_status_colors "green bold" "yellow bold" "red bold"
+      set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
 
-    reload_i3;;
+      reload_i3
+    else
+      echo "Theme not found."
+    fi
+    ;;
   7 )
-    gen_conky_conf "#060d29" "#ffffff"
-    cp_settings "P-Beige-Blue" "paint-splatter.jpg" "#9c7a3"
+    if [ -d "$dir/P-Beige-Blue" ]; then
+      gen_conky_conf "#060d29" "#ffffff"
+      cp_settings "P-Beige-Blue" "paint-splatter.jpg" "#9c7a3"
 
-    set_git_branch_colors "green bold" "yellow bold" "blue bold"
-    set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
-    set_git_status_colors "green bold" "yellow bold" "red bold"
-    set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
+      set_git_branch_colors "green bold" "yellow bold" "blue bold"
+      set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+      set_git_status_colors "green bold" "yellow bold" "red bold"
+      set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
 
-    reload_i3;;
+      reload_i3
+    else
+      echo "Theme not found."
+    fi
+    ;;
   8 )
-    gen_conky_conf "#acbed4" "#acbed4"
-    cp_settings "TLOU-Pale-Blue" "the-last-of-us-pale-blue-by-BrandonMeier.jpg" "#374d5b"
+    if [ -d "$dir/TLOU-Pale-Blue" ]; then
+      gen_conky_conf "#acbed4" "#acbed4"
+      cp_settings "TLOU-Pale-Blue" "the-last-of-us-pale-blue-by-BrandonMeier.jpg" "#374d5b"
 
-    set_git_branch_colors "green bold" "yellow bold" "blue bold"
-    set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
-    set_git_status_colors "green bold" "yellow bold" "red bold"
-    set_neofetch_colors "(15 15 7 15 15 7)" "(15 7 15 15 15 15)" "(15 15 15 15 15 15)"
+      set_git_branch_colors "green bold" "yellow bold" "blue bold"
+      set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+      set_git_status_colors "green bold" "yellow bold" "red bold"
+      set_neofetch_colors "(15 15 7 15 15 7)" "(15 7 15 15 15 15)" "(15 15 15 15 15 15)"
 
-    reload_i3;;
+      reload_i3
+    else
+      echo "Theme not found."
+    fi
+    ;;
   9 )
-    gen_conky_conf "#2b343b" "#2b343b"
-    cp_settings "D-Red-Black" "dark-deer.jpg" "#2b343b"
+    if [ -d "$dir/D-Red-Black" ]; then
+      gen_conky_conf "#2b343b" "#2b343b"
+      cp_settings "D-Red-Black" "dark-deer.jpg" "#2b343b"
 
-    set_git_branch_colors "green bold" "yellow bold" "blue bold"
-    set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
-    set_git_status_colors "green bold" "yellow bold" "red bold"
-    set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
+      set_git_branch_colors "green bold" "yellow bold" "blue bold"
+      set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+      set_git_status_colors "green bold" "yellow bold" "red bold"
+      set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
 
-    reload_i3;;
+      reload_i3
+    else
+      echo "Theme not found."
+    fi
+    ;;
   10 )
-    use_solarized "linux-solarized-wallpaper-root.jpg";;
+    if [ -d "$dir/Solarized" ]; then
+      use_solarized "linux-solarized-wallpaper-root.jpg"
+    else
+      echo "Theme not found."
+    fi
+    ;;
   11 )
-    use_solarized "linux-solarized-wallpaper-arch.jpg";;
+    if [ -d "$dir/Solarized" ]; then
+      use_solarized "linux-solarized-wallpaper-arch.jpg"
+    else
+      echo "Theme not found."
+    fi
+    ;;
   12 )
-    use_solarized "linux-solarized-wallpaper-fedora.jpg";;
+    if [ -d "$dir/Solarized" ]; then
+      use_solarized "linux-solarized-wallpaper-fedora.jpg"
+    else
+      echo "Theme not found."
+    fi
+    ;;
   13 )
-    use_solarized "linux-solarized-wallpaper-kali.jpg";;
+    if [ -d "$dir/Solarized" ]; then
+      use_solarized "linux-solarized-wallpaper-kali.jpg"
+    else
+      echo "Theme not found."
+    fi
+    ;;
   14 )
-    use_solarized "linux-solarized-wallpaper-debian.jpg";;
+    if [ -d "$dir/Solarized" ]; then
+      use_solarized "linux-solarized-wallpaper-debian.jpg"
+    else
+      echo "Theme not found."
+    fi
+    ;;
   15 )
-    use_solarized "linux-solarized-wallpaper-manjaro.jpg";;
+    if [ -d "$dir/Solarized" ]; then
+      use_solarized "linux-solarized-wallpaper-manjaro.jpg"
+    else
+      echo "Theme not found."
+    fi
+    ;;
   16 )
-    use_solarized "linux-solarized-wallpaper-ubuntu.jpg";;
+    if [ -d "$dir/Solarized" ]; then
+      use_solarized "linux-solarized-wallpaper-ubuntu.jpg"
+    else
+      echo "Theme not found."
+    fi
+    ;;
   17 )
-    gen_conky_conf "#4a0e0e" "#4a0e0e"
-    cp_settings "DS-Red-Grey" "dark-souls-abyss-watcher-low-poly-by-nahamut.jpg" "#ae9996"
+    if [ -d "$dir/DS-Red-Grey" ]; then
+      gen_conky_conf "#4a0e0e" "#4a0e0e"
+      cp_settings "DS-Red-Grey" "dark-souls-abyss-watcher-low-poly-by-nahamut.jpg" "#ae9996"
 
-    set_git_branch_colors "green bold" "yellow bold" "blue bold"
-    set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
-    set_git_status_colors "green bold" "yellow bold" "red bold"
-    set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
+      set_git_branch_colors "green bold" "yellow bold" "blue bold"
+      set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+      set_git_status_colors "green bold" "yellow bold" "red bold"
+      set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
 
-    reload_i3;;
+      reload_i3
+    else
+      echo "Theme not found."
+    fi
+    ;;
   18 )
-    gen_conky_conf "#284d81" "#284d81"
-    cp_settings "DS-Blue-Grey" "dark-souls-astorias-low-poly-by-nahamut.jpg" "#284d81"
+    if [ -d "$dir/DS-Blue-Grey" ]; then
+      gen_conky_conf "#284d81" "#284d81"
+      cp_settings "DS-Blue-Grey" "dark-souls-astorias-low-poly-by-nahamut.jpg" "#284d81"
 
-    set_git_branch_colors "green bold" "yellow bold" "blue bold"
-    set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
-    set_git_status_colors "green bold" "yellow bold" "red bold"
-    set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
+      set_git_branch_colors "green bold" "yellow bold" "blue bold"
+      set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+      set_git_status_colors "green bold" "yellow bold" "red bold"
+      set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
 
-    reload_i3;;
+      reload_i3
+    else
+      echo "Theme not found."
+    fi
+    ;;
   19 )
-    gen_conky_conf "#A39065" "#A39065"
-    cp_settings "BB-Black-Gold" "bloodborne-eileen-minimal-by-dastardlyapparel.jpg" "#191919"
+    if [ -d "$dir/BB-Black-Gold" ]; then
+      gen_conky_conf "#A39065" "#A39065"
+      cp_settings "BB-Black-Gold" "bloodborne-eileen-minimal-by-dastardlyapparel.jpg" "#191919"
 
-    set_git_branch_colors "green bold" "yellow bold" "blue bold"
-    set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
-    set_git_status_colors "green bold" "yellow bold" "red bold"
-    set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
+      set_git_branch_colors "green bold" "yellow bold" "blue bold"
+      set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+      set_git_status_colors "green bold" "yellow bold" "red bold"
+      set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
 
-    reload_i3;;
+      reload_i3
+    else
+      echo "Theme not found."
+    fi
+    ;;
 esac
 
 
