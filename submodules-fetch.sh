@@ -1,6 +1,5 @@
 
 #!/bin/bash
-PWD="$(pwd)"
 DIR="$(cd "$( dirname "$0" )" && pwd)"
 
 while true; do
@@ -20,7 +19,7 @@ while true; do
         case $ftsp in
           [Yy]* )
             git submodule update --init rice/images; cd "$DIR/rice/images";
-            git submodule update --init wallpapers/private; cd "$PWD";
+            git submodule update --init wallpapers/private; cd "$DIR";
             break 2;;
           * )
             git submodule update --init rice/images;
