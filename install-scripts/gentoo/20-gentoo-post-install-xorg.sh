@@ -309,6 +309,7 @@ fi
 
 install_packages "x11-libs/libva-vdpau-driver x11-libs/libvdpau x11-misc/vdpauinfo"
 
+# http://linuxwireless.sipsolutions.net/en/users/Drivers/b43/
 while true; do
   lspci -nnk | grep 0280 -A3
   read -p "
