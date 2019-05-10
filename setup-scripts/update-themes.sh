@@ -3,6 +3,10 @@
 
 DIR="$(cd "$( dirname "$0" )" && pwd)"
 
+wallpapersDIR="$DIR/../rice/images/wallpapers"
+themesDIR="$DIR/../themes"
+iconsDIR="$DIR/../icon-themes"
+
 uitheme=false
 while true; do
   read -p "
@@ -86,22 +90,50 @@ isetting=papirus
 #   esac
 # done
 
+if [ ! -d "$wallpapersDIR/compressed" ] && [ ! -d "$wallpapersDIR/grayscaled" ]; then
+  while true; do
+    read -p "
+The wallpaper DIR is empty.
+
+[1] Enter custom wallpaper directory (contains 'compressed' & 'grayscaled' dir)
+[2] Skip
+
+Action:   " wdira
+    case $wdira in
+      1 )
+        while true; do
+          read -p "Enter wallpaper directory:   " wdir
+          case $wdir in
+            * )
+              if [ ! -d "$wdir/compressed" ] && [ ! -d "$wdir/grayscaled" ]; then
+                echo "Directory is invalid."; break;
+              else
+                wallpapersDIR="$wdir"; break 2;
+              fi
+          esac
+        done;;
+      2 ) break;;
+      * ) echo "Invalid action.";;
+    esac
+  done
+fi
+
 mkdir -p $HOME/Pictures/wallpapers
 rm --verbose -rf $HOME/Pictures/wallpapers/*
-cp --verbose -rf $DIR/../rice/images/wallpapers/compressed/* $HOME/Pictures/wallpapers
+cp --verbose -rf $wallpapersDIR/compressed/* $HOME/Pictures/wallpapers
 
 sudo mkdir -p /usr/share/backgrounds/wallpapers
 sudo mkdir -p /usr/share/backgrounds/grayscaled
 sudo rm --verbose -rf /usr/share/backgrounds/wallpapers/*
 sudo rm --verbose -rf  /usr/share/backgrounds/grayscaled/*
 
-sudo cp --verbose -rf $DIR/../rice/images/wallpapers/compressed/* /usr/share/backgrounds/wallpapers
-sudo cp --verbose -rf $DIR/../rice/images/wallpapers/grayscaled/* /usr/share/backgrounds/grayscaled
+sudo cp --verbose -rf $wallpapersDIR/compressed/* /usr/share/backgrounds/wallpapers
+sudo cp --verbose -rf $wallpapersDIR/grayscaled/* /usr/share/backgrounds/grayscaled
 
-if [ -d $DIR/../rice/images/wallpapers/private ]; then
-  cp --verbose -rf $DIR/../rice/images/wallpapers/private/compressed/*      $HOME/Pictures/wallpapers
-  sudo cp --verbose -rf $DIR/../rice/images/wallpapers/private/compressed/* /usr/share/backgrounds/wallpapers
-  sudo cp --verbose -rf $DIR/../rice/images/wallpapers/private/grayscaled/* /usr/share/backgrounds/grayscaled
+if [ -d $wallpapersDIR/private ]; then
+  cp --verbose -rf $wallpapersDIR/private/compressed/*      $HOME/Pictures/wallpapers
+  sudo cp --verbose -rf $wallpapersDIR/private/compressed/* /usr/share/backgrounds/wallpapers
+  sudo cp --verbose -rf $wallpapersDIR/private/grayscaled/* /usr/share/backgrounds/grayscaled
 fi
 
 mkdir -p $HOME/.config/vifm/colors
@@ -115,18 +147,74 @@ if [ "$usingDPI" = true ];then
   tsetting+='-hidpi'
 fi
 
-themes=$(ls $DIR/../themes)
+if [ "$(ls -la $themesDIR | wc -l)" -lt 4 ]; then
+  while true; do
+    read -p "
+The theme DIR is empty.
+
+[1] Enter custom themes directory
+[2] Skip
+
+Action:   " ctdira
+    case $ctdira in
+      1 )
+        while true; do
+          read -p "Enter themes directory:   " tdir
+          case $tdir in
+            * )
+              if [ "$(ls -la $tdir | wc -l)" -lt 4 ]; then
+                echo "Directory is invalid."; break;
+              else
+                themesDIR="$tdir"; break 2;
+              fi
+          esac
+        done;;
+      2 ) break;;
+      * ) echo "Invalid action.";;
+    esac
+  done
+fi
+
+themes=$(ls $themesDIR)
 for t in $themes; do
-  if [ -d "$DIR/../themes/$t" ] && [ "$t" != "Greeter" ]; then
+  if [ -d "$themesDIR/$t" ] && [ "$t" != "Greeter" ]; then
     mkdir -p "$HOME/.theme-settings/$t/theme"
     mkdir -p "$HOME/.themes/$t"
 
-    cp --verbose -raf "$DIR/../themes/$t/."                         "$HOME/.theme-settings/$t"
+    cp --verbose -raf "$themesDIR/$t/."                             "$HOME/.theme-settings/$t"
     cp --verbose -raf "$HOME/.theme-settings/$t/theme/$tsetting/."  "$HOME/.themes/$t"
 
     if [ "$uitheme" = true ]; then
+      if [ "$(ls -la $iconsDIR | wc -l)" -lt 4 ]; then
+        while true; do
+          read -p "
+The icons DIR is empty.
+
+[1] Enter custom icons directory
+[2] Skip
+
+Action:   " cidira
+          case $cidira in
+            1 )
+              while true; do
+                read -p "Enter icons directory:   " idir
+                case $idir in
+                  * )
+                    if [ "$(ls -la $idir | wc -l)" -lt 4 ]; then
+                      echo "Directory is invalid."; break;
+                    else
+                      iconsDIR="$idir"; break 2;
+                    fi
+                esac
+              done;;
+            2 ) break;;
+            * ) echo "Invalid action.";;
+          esac
+        done
+      fi
+
       mkdir -p "$HOME/.icons/$t"
-      cp --verbose -raf "$DIR/../icon-themes/$t/$isetting/."  "$HOME/.icons/$t"
+      cp --verbose -raf "$iconsDIR/$t/$isetting/."  "$HOME/.icons/$t"
     else
       find $HOME/.theme-settings -type f | xargs sed -i "s/gtk-icon-theme-name=\".*/gtk-icon-theme-name=\"Papirus\"/g";
       find $HOME/.theme-settings -type f | xargs sed -i "s/gtk-icon-theme-name=[A-Za-z].*/gtk-icon-theme-name=Papirus/g";
@@ -145,7 +233,7 @@ while true; do
 done
 
 sudo mkdir -p /usr/share/themes/Greeter
-sudo cp --verbose -raf $DIR/../themes/Greeter/theme/$tsetting/*  /usr/share/themes/Greeter
+sudo cp --verbose -raf $themesDIR/Greeter/theme/$tsetting/*  /usr/share/themes/Greeter
 
 if [ -f /usr/sbin/restorecon ]; then
   sudo restorecon -prF /usr/share/themes
