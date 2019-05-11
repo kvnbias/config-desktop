@@ -61,7 +61,7 @@ while true; do
     [Yy]* )
       git submodule update --init icon-themes;
       if [ "$comb" = true ]; then
-        cd "$DIR/icon-themes" && git checkout master
+        cd "$DIR/icon-themes" && git checkout master && cd "$DIR"
       fi
       break;;
     * ) break;;
@@ -74,7 +74,7 @@ while true; do
     [Yy]* )
       git submodule update --init dev;
       if [ "$comb" = true ]; then
-        cd "$DIR/dev" && git checkout master
+        cd "$DIR/dev" && git checkout master && cd "$DIR"
       fi
       break;;
     * ) break;;
