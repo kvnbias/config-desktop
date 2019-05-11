@@ -17,7 +17,7 @@ while true; do
     [Yy]* )
       git submodule update --init themes;
       if [ "$comb" = true ]; then
-        cd "$DIR/themes" && git checkout master
+        cd "$DIR/themes" && git checkout master; cd "$DIR"
       fi
       break;;
     * ) break;;
