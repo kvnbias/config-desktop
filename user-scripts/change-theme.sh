@@ -224,7 +224,7 @@ case $themeID in
       set_git_branch_colors "green bold" "yellow bold" "blue bold"
       set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
       set_git_status_colors "green bold" "yellow bold" "red bold"
-      set_neofetch_colors "(15 7 15 15 7)" "(15 7 15 15 15 15)" "(15 15 15 15 15 15)"
+      set_neofetch_colors "(15 15 15 15 8 7)" "(15 7 15 15 15 15)" "(15 15 15 15 15 15)"
 
       reload_i3
     else
