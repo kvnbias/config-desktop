@@ -118,7 +118,7 @@ while true; do
 [b]  Horizon Zero Dawn [g]  Deer
 [c]  Tomb Raider       [h]  Linux Distro
 [d]  Nier              [i]  Dark Souls
-[e]  Paint
+[e]  Paint             [j]  Hollow Knight
 
 Enter theme:   " category
   case $category in
@@ -135,17 +135,7 @@ Enter theme:   " subcategory
           * ) echo "Invalid input";;
         esac
       done;;
-    b )
-      while true; do
-        read -p "What theme to use?
-[a]  Aloy (Red)
-
-Enter theme:   " subcategory
-        case $subcategory in
-          a ) themeID=2; break 2;;
-          * ) echo "Invalid input";;
-        esac
-      done;;
+    b ) themeID=2; break;;
     c ) themeID=3; break;;
     d )
       while true; do
@@ -208,6 +198,19 @@ Enter theme:   " subcategory
         case $subcategory in
           a ) themeID=17; break 2;;
           b ) themeID=18; break 2;;
+          * ) echo "Invalid input";;
+        esac
+      done;;
+    j )
+      while true; do
+        read -p "What theme to use?
+[a]  Grubfly (Dark Green)
+[b]  Grimm (Pale Maroon)
+
+Enter theme:   " subcategory
+        case $subcategory in
+          a ) themeID=20; break 2;;
+          b ) themeID=21; break 2;;
           * ) echo "Invalid input";;
         esac
       done;;
@@ -439,6 +442,36 @@ case $themeID in
       set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
       set_git_status_colors "green bold" "yellow bold" "red bold"
       set_neofetch_colors "(8 8 7 8 8 7)" "(8 7 8 8 8 8)" "(8 8 8 8 8 8)"
+
+      reload_i3
+    else
+      echo "Theme not found."
+    fi
+    ;;
+  20 )
+    if [ -d "$dir/HK-Dark-Green" ]; then
+      gen_conky_conf "#dbead3" "#dbead3"
+      cp_settings "HK-Dark-Green" "hollow-knight-grubfly-by-drglovegood.jpg" "#495b4d"
+
+      set_git_branch_colors "green bold" "yellow bold" "blue bold"
+      set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+      set_git_status_colors "green bold" "yellow bold" "red bold"
+      set_neofetch_colors "(14 14 7 14 14 7)" "(14 7 14 14 14 14)" "(14 14 14 14 14 14)"
+
+      reload_i3
+    else
+      echo "Theme not found."
+    fi
+    ;;
+  21 )
+    if [ -d "$dir/HK-Pale-Maroon" ]; then
+      gen_conky_conf "#181818" "#181818"
+      cp_settings "HK-Pale-Maroon" "hollow-knight-grimm-by-drglovegood.jpg" "#624e57"
+
+      set_git_branch_colors "green bold" "yellow bold" "blue bold"
+      set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+      set_git_status_colors "green bold" "yellow bold" "red bold"
+      set_neofetch_colors "(15 15 7 15 15 7)" "(15 7 15 15 15 15)" "(15 15 15 15 15 15)"
 
       reload_i3
     else
