@@ -104,7 +104,7 @@ install_packages "sys-fs/exfat-utils sys-fs/fuse-exfat sys-fs/ntfs3g"
 install_packages "media-gfx/eog www-client/firefox-bin app-office/libreoffice-bin"
 
 if ! sudo cat /etc/portage/package.use/flags | grep -q 'media-video/vlc'; then
-  echo "media-video/vlc gstreamer libass matroska faad flac mp3 mpeg ogg v4l vaapi vdpau x264" | sudo tee -a /etc/portage/package.use/flags
+  echo "media-video/vlc gstreamer libass matroska faad flac mp3 mpeg ogg v4l vaapi vdpau x264 fontconfig srt" | sudo tee -a /etc/portage/package.use/flags
 fi
 
 if ! sudo cat /etc/portage/package.use/flags | grep -q 'app-arch/p7zip'; then
