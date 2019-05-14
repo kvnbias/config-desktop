@@ -156,11 +156,13 @@ Enter theme:   " subcategory
     f )
       while true; do
         read -p "What theme to use?
-[a]  Ellie (Pale Blue)
+[a]  Pale Blue
+[b]  Dark Green
 
 Enter theme:   " subcategory
         case $subcategory in
           a ) themeID=8; break 2;;
+          b ) themeID=22; break 2;;
           * ) echo "Invalid input";;
         esac
       done;;
@@ -206,11 +208,13 @@ Enter theme:   " subcategory
         read -p "What theme to use?
 [a]  Grubfly (Dark Green)
 [b]  Grimm (Pale Maroon)
+[c]  Grimm 3 (Pale Purple)
 
 Enter theme:   " subcategory
         case $subcategory in
           a ) themeID=20; break 2;;
           b ) themeID=21; break 2;;
+          c ) themeID=23; break 2;;
           * ) echo "Invalid input";;
         esac
       done;;
@@ -467,6 +471,36 @@ case $themeID in
     if [ -d "$dir/HK-Pale-Maroon" ]; then
       gen_conky_conf "#181818" "#181818"
       cp_settings "HK-Pale-Maroon" "hollow-knight-grimm-by-drglovegood.jpg" "#624e57"
+
+      set_git_branch_colors "green bold" "yellow bold" "blue bold"
+      set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+      set_git_status_colors "green bold" "yellow bold" "red bold"
+      set_neofetch_colors "(15 15 7 15 15 7)" "(15 7 15 15 15 15)" "(15 15 15 15 15 15)"
+
+      reload_i3
+    else
+      echo "Theme not found."
+    fi
+    ;;
+  22 )
+    if [ -d "$dir/TLOU-Dark-Green" ]; then
+      gen_conky_conf "#9f864d" "#9f864d"
+      cp_settings "TLOU-Dark-Green" "the-last-of-us-dark-green-by-BrandonMeier.jpg" "#203731"
+
+      set_git_branch_colors "green bold" "yellow bold" "blue bold"
+      set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
+      set_git_status_colors "green bold" "yellow bold" "red bold"
+      set_neofetch_colors "(15 15 7 15 15 7)" "(15 7 15 15 15 15)" "(15 15 15 15 15 15)"
+
+      reload_i3
+    else
+      echo "Theme not found."
+    fi
+    ;;
+  23 )
+    if [ -d "$dir/HK-Pale-Purple" ]; then
+      gen_conky_conf "#ebdbdc" "#ebdbdc"
+      cp_settings "HK-Pale-Purple" "hollow-knight-grimmchild-3-by-drglovegood.jpg" "#2b282f"
 
       set_git_branch_colors "green bold" "yellow bold" "blue bold"
       set_git_diff_colors "blue bold" "blue bold" "red bold" "green bold"
