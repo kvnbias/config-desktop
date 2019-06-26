@@ -264,7 +264,9 @@ while true; do
       while true; do
         read -p "Enable vim mode on VSCode [yN]?   " evm
         case $evm in
-          [Yy]* ) code --install-extension vscodevim.vim &; break;;
+          [Yy]* )
+            code --install-extension vscodevim.vim &
+            break;;
           *) break;;
         esac
       done
