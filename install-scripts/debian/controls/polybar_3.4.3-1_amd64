@@ -1,7 +1,7 @@
 
-Source:         https://github.com/jaagr/polybar/archive/3.3.1.tar.gz
+Source:         https://github.com/polybar/polybar/archive/3.3.1.tar.gz
 Package:        polybar
-Version:        3.3.1-1
+Version:        3.4.3-1
 Architecture:   amd64
 Homepage:       https://polybar.github.io
 Maintainer:     Kevin Baisas <kevin.baisas@gmail.com>

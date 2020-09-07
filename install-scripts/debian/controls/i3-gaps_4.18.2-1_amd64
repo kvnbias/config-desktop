@@ -1,7 +1,7 @@
 
-Source:         https://github.com/Airblader/i3/archive/4.16.1.tar.gz
+Source:         https://github.com/Airblader/i3/archive/4.18.2.tar.gz
 Package:        i3-gaps
-Version:        4.16.1-1
+Version:        4.18.2-1
 Architecture:   amd64
 Homepage:       https://github.com/Airblader/i3.git
 Maintainer:     Kevin Baisas <kevin.baisas@gmail.com>

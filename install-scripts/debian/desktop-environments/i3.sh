@@ -55,10 +55,10 @@ while true; do
 
       ## START: nerd-fonts v2.0.0
       rm -rf $compiled/builds/nerd-fonts && mkdir -p $compiled/builds/nerd-fonts/DEBIAN
-      cp -raf $DIR/../controls/nerd-fonts_v2.0.0-1_amd64 $compiled/builds/nerd-fonts/DEBIAN/control
+      cp -raf $DIR/../controls/nerd-fonts_v2.1.0-1_amd64 $compiled/builds/nerd-fonts/DEBIAN/control
       rm -rf $compiled/sources/nerd-fonts && mkdir -p $compiled/sources/nerd-fonts
 
-      nfbaseurl="https://github.com/ryanoasis/nerd-fonts/raw/v2.0.0/patched-fonts"
+      nfbaseurl="https://github.com/ryanoasis/nerd-fonts/raw/v2.1.0/patched-fonts"
       wget -O "$compiled/sources/nerd-fonts/Ubuntu Mono Nerd Font Complete Mono.ttf"        "$nfbaseurl/UbuntuMono/Regular/complete/Ubuntu%20Mono%20Nerd%20Font%20Complete%20Mono.ttf"
       wget -O "$compiled/sources/nerd-fonts/Roboto Mono Nerd Font Complete Mono.ttf"        "$nfbaseurl/RobotoMono/Regular/complete/Roboto%20Mono%20Nerd%20Font%20Complete%20Mono.ttf"
       wget -O "$compiled/sources/nerd-fonts/Roboto Mono Bold Nerd Font Complete Mono.ttf"   "$nfbaseurl/RobotoMono/Bold/complete/Roboto%20Mono%20Bold%20Nerd%20Font%20Complete%20Mono.ttf"
@@ -67,8 +67,8 @@ while true; do
       mkdir -p "$compiled/builds/nerd-fonts/usr/share/fonts/nerd-fonts-complete/ttf"
       cp -raf  "$compiled/sources/nerd-fonts/." "$compiled/builds/nerd-fonts/usr/share/fonts/nerd-fonts-complete/ttf/"
 
-      dpkg-deb -b $compiled/builds/nerd-fonts $compiled/repository/nerd-fonts_v2.0.0-1_amd64.deb
-      sudo gdebi -n /usr/local/repository/nerd-fonts_v2.0.0-1_amd64.deb
+      dpkg-deb -b $compiled/builds/nerd-fonts $compiled/repository/nerd-fonts_v2.1.0-1_amd64.deb
+      sudo gdebi -n /usr/local/repository/nerd-fonts_v2.1.0-1_amd64.deb
       ## END
 
       sudo apt install -y --no-install-recommends neofetch
@@ -99,7 +99,7 @@ while true; do
       ## START: i3lock-color 2.12.c
       sudo apt remove -y i3lock
       mkdir -p $compiled/builds/i3lock-color/DEBIAN
-      cp -raf $DIR/../controls/i3lock-color_2.12.c-1_amd64 $compiled/builds/i3lock-color/DEBIAN/control
+      cp -raf $DIR/../controls/i3lock-color_2.12.c-5_amd64 $compiled/builds/i3lock-color/DEBIAN/control
 
       if [ "$os" != "debian" ]; then
         sed -i "s/LIBJPEG/libjpeg62/g"          $compiled/builds/i3lock-color/DEBIAN/control
@@ -116,8 +116,8 @@ while true; do
       cd $compiled/sources/i3lock-color && autoreconf -fi
       ./configure --prefix=/usr/local/compiled/builds/i3lock-color/usr --sysconfdir=/usr/local/compiled/builds/i3lock-color/etc
       make && make install
-      dpkg-deb -b $compiled/builds/i3lock-color $compiled/repository/i3lock-color_2.12.c-1_amd64.deb
-      sudo gdebi -n /usr/local/repository/i3lock-color_2.12.c-1_amd64.deb
+      dpkg-deb -b $compiled/builds/i3lock-color $compiled/repository/i3lock-color_2.12.c-5_amd64.deb
+      sudo gdebi -n /usr/local/repository/i3lock-color_2.12.c-5_amd64.deb
       ## END
 
       sudo apt install -y --no-install-recommends ranger vifm
@@ -130,7 +130,7 @@ while true; do
       # START: i3-gaps 4.16.1
       sudo apt remove -y i3-wm
       mkdir -p $compiled/builds/i3-gaps/DEBIAN
-      cp -raf $DIR/../controls/i3-gaps_4.16.1-1_amd64 $compiled/builds/i3-gaps/DEBIAN/control
+      cp -raf $DIR/../controls/i3-gaps_4.18.2-1_amd64 $compiled/builds/i3-gaps/DEBIAN/control
       sudo apt install -y --no-install-recommends $(cat $compiled/builds/i3-gaps/DEBIAN/control | grep "Build-Depends:" | awk -F 'Build-Depends: ' '{print $2}' | sed -e "s/,/ /g")
       wget -O /tmp/i3-gaps.tar.gz $(cat $compiled/builds/i3-gaps/DEBIAN/control | grep "Source:" | awk -F 'Source: ' '{print $2}')
       rm -rf $compiled/sources/i3-gaps && mkdir -p $compiled/sources/i3-gaps
@@ -138,8 +138,8 @@ while true; do
       cd $compiled/sources/i3-gaps && autoreconf -fi && rm -rf build/ && mkdir -p build && cd build/
       ../configure --prefix=/usr/local/compiled/builds/i3-gaps/usr --sysconfdir=/usr/local/compiled/builds/i3-gaps/etc --disable-sanitizers
       make && make install
-      dpkg-deb -b $compiled/builds/i3-gaps $compiled/repository/i3-gaps_4.16.1-1_amd64.deb
-      sudo gdebi -n /usr/local/repository/i3-gaps_4.16.1-1_amd64.deb
+      dpkg-deb -b $compiled/builds/i3-gaps $compiled/repository/i3-gaps_4.18.2-1_amd64.deb
+      sudo gdebi -n /usr/local/repository/i3-gaps_4.18.2-1_amd64.deb
       ## END
 
       # ncmpcpp playlist
@@ -154,20 +154,20 @@ while true; do
 
       ## START: polybar 3.3.1
       mkdir -p $compiled/builds/polybar/DEBIAN
-      cp -raf $DIR/../controls/polybar_3.3.1-1_amd64 $compiled/builds/polybar/DEBIAN/control
+      cp -raf $DIR/../controls/polybar_3.4.3-1_amd64 $compiled/builds/polybar/DEBIAN/control
       sudo apt install -y --no-install-recommends $(cat $compiled/builds/polybar/DEBIAN/control | grep "Build-Depends:" | awk -F 'Build-Depends: ' '{print $2}' | sed -e "s/,/ /g")
       wget -O /tmp/polybar.tar.gz $(cat $compiled/builds/polybar/DEBIAN/control | grep "Source:" | awk -F 'Source: ' '{print $2}')
       rm -rf $compiled/sources/polybar && mkdir -p $compiled/sources/polybar
       tar xvzf /tmp/polybar.tar.gz -C $compiled/sources/polybar --strip-components=1
       rm -rf $compiled/sources/polybar/lib/i3ipcpp  $compiled/sources/polybar/lib/xpp
-      git clone https://github.com/jaagr/i3ipcpp    $compiled/sources/polybar/lib/i3ipcpp
-      git clone https://github.com/jaagr/xpp        $compiled/sources/polybar/lib/xpp
-      cd $compiled/sources/polybar/lib/i3ipcpp && git checkout d4e4786
-      cd $compiled/sources/polybar/lib/xpp && git checkout d2ff2aa
+      git clone https://github.com/polybar/i3ipcpp    $compiled/sources/polybar/lib/i3ipcpp
+      git clone https://github.com/polybar/xpp        $compiled/sources/polybar/lib/xpp
+      cd $compiled/sources/polybar/lib/i3ipcpp && git checkout cb008b3
+      cd $compiled/sources/polybar/lib/xpp && git checkout c1a0f59
       cd $compiled/sources/polybar && rm -rf build/ && mkdir -p build && cd build/
       cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr/local/compiled/builds/polybar/usr .. && make && make install
-      dpkg-deb -b $compiled/builds/polybar $compiled/repository/polybar_3.3.1-1_amd64.deb
-      sudo gdebi -n /usr/local/repository/polybar_3.3.1-1_amd64.deb
+      dpkg-deb -b $compiled/builds/polybar $compiled/repository/polybar_3.4.3-1_amd64.deb
+      sudo gdebi -n /usr/local/repository/polybar_3.4.3-1_amd64.deb
       ## END
 
       sudo apt install -y --no-install-recommends scrot accountsservice
