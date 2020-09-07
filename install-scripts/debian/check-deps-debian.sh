@@ -123,7 +123,7 @@ while true; do
         libnotify-dev
         libosmesa6
         libpam0g-dev
-        libpango1.0-0
+        libpango-1.0-0
         libpango1.0-dev
         libpcre3-dev
         libpulse0
@@ -206,7 +206,7 @@ while true; do
         python3-pip
         python3-pygments
         python3-setuptools
-        python-xcbgen
+        python3-xcbgen
         ranger
         rofi
         rxvt-unicode

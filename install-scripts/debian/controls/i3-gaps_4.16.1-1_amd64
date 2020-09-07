@@ -6,7 +6,7 @@ Architecture:   amd64
 Homepage:       https://github.com/Airblader/i3.git
 Maintainer:     Kevin Baisas <kevin.baisas@gmail.com>
 Build-Depends:  automake, gcc, libev-dev, libpcre3-dev, libpango1.0-dev, libstartup-notification0-dev, libxcb-cursor-dev, libxcb-icccm4-dev, libxcb-keysyms1-dev, libxcb-randr0-dev, libxcb-util0-dev, libxcb-xinerama0-dev, libxcb-xrm-dev, libxinerama-dev, libxkbcommon-dev, libxkbcommon-x11-dev, libxrandr-dev, libyajl-dev
-Depends:        libev4, libpango1.0-0, libstartup-notification0, libxcb-icccm4, libxcb-cursor0, libxcb-keysyms1, libxcb-randr0, libxcb-xinerama0, libxcb-xrm0, libxkbcommon-x11-0, libyajl2, perl
+Depends:        libev4, libpango-1.0-0, libstartup-notification0, libxcb-icccm4, libxcb-cursor0, libxcb-keysyms1, libxcb-randr0, libxcb-xinerama0, libxcb-xrm0, libxkbcommon-x11-0, libyajl2, perl
 Conflicts:      i3-wm
 Description:    i3-gaps – i3 with more features
   i3-gaps is a fork of i3wm, a tiling window manager for X11. It is kept up to date with upstream, adding a few additional features such as gaps between windows
