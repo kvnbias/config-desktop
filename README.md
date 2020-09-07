@@ -35,6 +35,10 @@ $ bash 20-arch-post-install-xorg.sh
 * For RHEL-based distros using anaconda installer you can remove bootloader on full disk summary.
 * If GRUB is installed, use `os-prober` to detect other OS.
 
+## As of 09/07/2020
+##### Tested in the following distros:
+* Pop!_OS 19.04
+
 ## As of 05/08/2019
 ##### Tested in the following distros:
 * Arch
