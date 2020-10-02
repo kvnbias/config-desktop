@@ -3,6 +3,10 @@
 DIR="$(cd "$( dirname "$0" )" && pwd)"
 os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//" | sed -e 's/"//g'))
 
+if [ "$os" == "pop" ]; then
+  os='pop-os'
+fi
+
 # Install window tiling manager
 sudo apt install -y --no-install-recommends i3-wm i3status i3lock rxvt-unicode
 

@@ -73,7 +73,7 @@ tray-offset-y = 0
 tray-position = right
 tray-detached = false
 tray-maxsize = 16
-tray-background = ${xrdb:polybar.backgroundAlt}
+tray-background = ${xrdb:polybar.trayBackground}
 tray-padding = 3
 tray-scale = 1.0
 

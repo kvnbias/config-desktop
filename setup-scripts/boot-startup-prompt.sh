@@ -11,7 +11,12 @@ if [ -d /sys/firmware/efi/efivars ] && sudo test -d /boot/efi/EFI && sudo test !
     sudo cp -a /boot/efi/EFI/GRUB/grubx64.efi /boot/efi/EFI/boot/bootx64.efi
   else
     os=$(echo $1 | cut -d- -f1 | head -1)
-    sudo cp -a /boot/efi/EFI/$os/grubx64.efi /boot/efi/EFI/boot/bootx64.efi
+    if [ "$os" == "pop" ]; then
+      popDir=$(sudo ls /boot/efi/EFI | grep Pop)
+      sudo cp -a /boot/efi/EFI/$popDir/vmlinuz.efi /boot/efi/EFI/boot/bootx64.efi
+    else
+      sudo cp -a /boot/efi/EFI/$os/grubx64.efi /boot/efi/EFI/boot/bootx64.efi
+    fi
   fi
 
   echo "bcf boot add 1 fs0:\\EFI\\boot\\bootx64.efi \"Fallback Bootloader\"

@@ -7,8 +7,8 @@ owner=$(whoami)
 dir="$HOME/.theme-settings"
 os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//"))
 
-if [ "$os" = "pop" ]; then
-  $os = "pop-os"
+if [ "$os" == "pop" ]; then
+  os="pop-os"
 fi
 
 
@@ -78,8 +78,9 @@ set_neofetch_colors() {
     case $f in
       *"fedora"*|*"ubuntu"*|*"opensuse"*|*"gentoo"*|*"pop-os"* )
         # dual color
-        sed -i "s/^ascii_colors=.*/ascii_colors=$2/g" "$f";;
+        sed -i "s/^ascii_colors=.*/ascii_colors=$2/g" "$f"
         cp -rf "$HOME/.config/neofetch/$os.conf" "$HOME/.config/neofetch/config.conf"
+        ;;
       * )
         # single color
         sed -i "s/^ascii_colors=.*/ascii_colors=$3/g" "$f";;

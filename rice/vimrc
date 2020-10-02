@@ -30,7 +30,7 @@ Plugin 'tpope/vim-fugitive'            " git commands on vim commands
 Plugin 'Xuyuanp/nerdtree-git-plugin'   " git on nerdtree
 
 " sidebar
-Plugin 'scrooloose/nerdtree'           "side bar
+Plugin 'preservim/nerdtree'           "side bar
 
 " fuzzy finder
 Plugin 'ctrlpvim/ctrlp.vim' 
@@ -128,7 +128,7 @@ map <C-e> :NERDTreeToggle<CR>
 
 let NERDTreeShowHidden=1
 
-let g:NERDTreeIndicatorMapCustom = {
+let g:NERDTreeGitStatusIndicatorMapCustom = {
     \ "Modified"  : "M",
     \ "Staged"    : "S",
     \ "Untracked" : "U",
