@@ -7,6 +7,11 @@ owner=$(whoami)
 dir="$HOME/.theme-settings"
 os=$(echo -n $(cat /etc/*-release 2> /dev/null | grep ^ID= | sed -e "s/ID=//"))
 
+if [ "$os" = "pop" ]; then
+  $os = "pop-os"
+fi
+
+
 gen_conky_conf() {
   bash $HOME/.config/conky/generate-conky-config.sh $1
   bash $HOME/.config/conky/generate-conky-helper.sh $2
@@ -71,9 +76,10 @@ set_neofetch_colors() {
     sed -i "s/^colors=.*/colors=$1/g" "$f"
 
     case $f in
-      *"fedora"*|*"ubuntu"*|*"opensuse"*|*"gentoo"* )
+      *"fedora"*|*"ubuntu"*|*"opensuse"*|*"gentoo"*|*"pop-os"* )
         # dual color
         sed -i "s/^ascii_colors=.*/ascii_colors=$2/g" "$f";;
+        cp -rf "$HOME/.config/neofetch/$os.conf" "$HOME/.config/neofetch/config.conf"
       * )
         # single color
         sed -i "s/^ascii_colors=.*/ascii_colors=$3/g" "$f";;
