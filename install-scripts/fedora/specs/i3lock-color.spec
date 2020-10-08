@@ -5,13 +5,13 @@
 
 
 Name:       i3lock-color
-Version:    2.12.c
-Release:    5%{?dist}
+Version:    2.12.c.5
+Release:    %{?dist}
 Summary:    Improved improved screen locker - 'the ricing fork of i3lock'
 
 License:    BSD
 URL:       https://github.com/Raymo111/%{name}
-Source0:   https://github.com/Raymo111/%{name}/archive/%{version}.5.tar.gz
+Source0:   https://github.com/Raymo111/%{name}/archive/%{version}.tar.gz
 
 BuildArch:      x86_64
 
@@ -41,6 +41,8 @@ Conflicts:      otherproviders(i3lock)
 Improved improved screen locker - 'the ricing fork of i3lock'
 
 %prep
+
+
 %setup
 
 
