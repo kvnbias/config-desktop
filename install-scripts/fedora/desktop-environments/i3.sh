@@ -9,7 +9,7 @@ else
   fedver=$1
 fi
 
-sudo dnf install -y dmenu i3 i3status i3lock rxvt-unicode-256color-ml --releasever=$fedver
+sudo dnf install -y dmenu i3 i3status i3lock rxvt-unicode --releasever=$fedver
 
 if [ ! -f "$HOME/.riced" ];then
   mkdir -p "$HOME/.config/i3"
@@ -55,7 +55,7 @@ while true; do
       sudo systemctl enable NetworkManager
 
       rpmbuild -ba $DIR/../specs/nerd-fonts.spec
-      sudo dnf install -y /usr/local/repository/nerd-fonts-2.0.0-1.fc$fedver.x86_64.rpm
+      sudo dnf install -y /usr/local/repository/nerd-fonts-2.1.0-1.fc$fedver.x86_64.rpm
 
       sudo dnf install -y neofetch --releasever=$fedver
       sudo dnf install -y gtk2 gtk3 --releasever=$fedver
@@ -79,7 +79,7 @@ while true; do
 
       sudo dnf remove -y i3lock
       spectool -g -R $DIR/../specs/i3lock-color.spec && sudo dnf builddep -y $DIR/../specs/i3lock-color.spec && rpmbuild -ba $DIR/../specs/i3lock-color.spec
-      sudo dnf install -y /usr/local/repository/i3lock-color-2.12.c-1.fc$fedver.x86_64.rpm
+      sudo dnf install -y /usr/local/repository/i3lock-color-2.12.c-5.fc$fedver.x86_64.rpm
 
       sudo dnf install -y ranger vifm --releasever=$fedver
 
@@ -90,7 +90,7 @@ while true; do
 
       sudo dnf remove -y i3
       spectool -g -R $DIR/../specs/i3-gaps.spec && sudo dnf builddep -y $DIR/../specs/i3-gaps.spec && rpmbuild -ba $DIR/../specs/i3-gaps.spec
-      sudo dnf install -y /usr/local/repository/i3-gaps-4.16.1-1.fc$fedver.x86_64.rpm
+      sudo dnf install -y /usr/local/repository/i3-gaps-4.18.2-1.fc$fedver.x86_64.rpm
 
       # ncmpcpp playlist
       # 1) go to browse
@@ -101,8 +101,9 @@ while true; do
       sudo systemctl disable mpd
       sudo systemctl stop mpd
 
-      spectool -g -R $DIR/../specs/polybar.spec && sudo dnf builddep -y $DIR/../specs/polybar.spec && rpmbuild -ba $DIR/../specs/polybar.spec
-      sudo dnf install -y /usr/local/repository/polybar-3.3.1-1.fc$fedver.x86_64.rpm
+      # spectool -g -R $DIR/../specs/polybar.spec && sudo dnf builddep -y $DIR/../specs/polybar.spec && rpmbuild -ba $DIR/../specs/polybar.spec
+      # sudo dnf install -y /usr/local/repository/polybar-3.4.3-1.fc$fedver.x86_64.rpm
+      sudo dnf install -y polybar
 
       sudo dnf install -y scrot accountsservice --releasever=$fedver
 

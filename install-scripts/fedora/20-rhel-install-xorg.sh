@@ -130,7 +130,7 @@ amixer sset "Mic Boost" 100%
 # Gstreamer
 sudo dnf install -y gstreamer1 gstreamer1-libav gstreamer1-vaapi --releasever=$fedver
 sudo dnf install -y gstreamer1-plugins-bad-free gstreamer1-plugins-base gstreamer1-plugins-good-gtk gstreamer1-plugins-good --releasever=$fedver
-sudo dnf install -y gstreamer1-plugins-bad-nonfree gstreamer1-plugins-good-extras gstreamer1-plugins-bad-free-extras --releasever=$fedver
+sudo dnf install -y gstreamer1-plugins-good-extras gstreamer1-plugins-bad-free-extras --releasever=$fedver
 sudo dnf install -y gstreamer1-plugins-ugly-free gstreamer1-plugins-bad-freeworld gstreamer1-plugins-base-tools --releasever=$fedver
 
 # Flash Repo

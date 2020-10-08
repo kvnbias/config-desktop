@@ -5,7 +5,7 @@
 
 
 Name:       i3-gaps
-Version:    4.16.1
+Version:    4.18.2
 Release:    1%{?dist}
 Summary:    i3-gaps is a fork of i3wm, a tiling window manager for X11
 

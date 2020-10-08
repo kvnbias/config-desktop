@@ -350,7 +350,7 @@ while true; do
         transmission-gtk
         ufw
         vim-enhanced
-        VirtualBox-6.0
+        VirtualBox-6.1
         virtualbox-guest-additions
         vlc
         wget

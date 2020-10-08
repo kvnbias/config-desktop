@@ -5,13 +5,13 @@
 
 
 Name:       polybar
-Version:    3.3.1
+Version:    3.4.3
 Release:    1%{?dist}
 Summary:     A fast and easy-to-use status bar
 
 License:    MIT
 URL:        https://polybar.github.io/
-Source0:    https://github.com/jaagr/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0:    https://github.com/polybar/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
 BuildArch:      x86_64
 
@@ -58,10 +58,10 @@ The main purpose of Polybar is to help users create awesome status bars. It has 
 rm -rf lib/i3ipcpp lib/xpp
 %setup
 rm -rf lib/i3ipcpp/* lib/xpp/*
-git clone https://github.com/jaagr/i3ipcpp lib/i3ipcpp
-git clone https://github.com/jaagr/xpp lib/xpp
-cd lib/i3ipcpp && git checkout d4e4786 && cd ../../
-cd lib/xpp && git checkout d2ff2aa && cd ../../
+git clone https://github.com/polybar/i3ipcpp lib/i3ipcpp
+git clone https://github.com/polybar/xpp lib/xpp
+cd lib/i3ipcpp && git checkout cb008b3 && cd ../../
+cd lib/xpp && git checkout c1a0f59 && cd ../../
 
 
 

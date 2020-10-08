@@ -6,12 +6,12 @@
 
 Name:       i3lock-color
 Version:    2.12.c
-Release:    1%{?dist}
+Release:    5%{?dist}
 Summary:    Improved improved screen locker - 'the ricing fork of i3lock'
 
 License:    BSD
-URL:        https://github.com/PandorasFox/%{name}
-Source0:    https://github.com/PandorasFox/%{name}/archive/%{version}.tar.gz
+URL:       https://github.com/Raymo111/%{name}
+Source0:   https://github.com/Raymo111/%{name}/archive/%{version}.5.tar.gz
 
 BuildArch:      x86_64
 

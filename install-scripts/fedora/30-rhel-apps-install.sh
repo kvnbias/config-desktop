@@ -81,7 +81,7 @@ while true; do
       sudo dnf remove -y kmod-VirtualBox --releasever=$fedver
       sudo dnf remove -y virtualbox-guest-additions --releasever=$fedver
 
-      sudo dnf install -y VirtualBox-6.0 --releasever=$fedver
+      sudo dnf install -y VirtualBox-6.1 --releasever=$fedver
       sudo dnf install -y virtualbox-guest-additions --releasever=$fedver
 
       sudo /usr/lib/virtualbox/vboxdrv.sh setup
