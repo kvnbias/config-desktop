@@ -79,7 +79,7 @@ while true; do
 
       sudo dnf remove -y i3lock
       spectool -g -R $DIR/../specs/i3lock-color.spec && sudo dnf builddep -y $DIR/../specs/i3lock-color.spec && rpmbuild -ba $DIR/../specs/i3lock-color.spec
-      sudo dnf install -y /usr/local/repository/i3lock-color-2.12.c.5.fc$fedver.x86_64.rpm
+      sudo dnf install -y /usr/local/repository/i3lock-color-2.12.c.5-1.fc$fedver.x86_64.rpm
 
       sudo dnf install -y ranger vifm --releasever=$fedver
 

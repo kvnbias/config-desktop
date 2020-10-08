@@ -6,7 +6,7 @@
 
 Name:       i3lock-color
 Version:    2.12.c.5
-Release:    %{?dist}
+Release:    1%{?dist}
 Summary:    Improved improved screen locker - 'the ricing fork of i3lock'
 
 License:    BSD
