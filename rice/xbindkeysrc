@@ -1,4 +1,24 @@
 
+# Keys can be identified by executing: xbindkeys --multikey
+#
+# xvkbd Keys:
+#
+# xvkbd.NormalKeys:
+#   F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12 BackSpace
+#   Escape 1 2 3 4 5 6 7 8 9 0 - = \134 `
+#   Tab q w e r t y u i o p [ ] Delete
+#   Control_L a s d f g h j k l ; ' Return
+#   Shift_L z x c v b n m , . / Multi_key Shift_R
+#   MainMenu Caps_Lock Alt_L Meta_L space Meta_R Alt_R Left Right Up Down Focus
+#
+# xvkbd.ShiftKeys: 
+#   F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12 Delete
+#   Escape ! @ # $ % ^ & * ( ) _ + | ~
+#   ISO_Left_Tab Q W E R T Y U I O P { } BackSpace
+#   Control_L A S D F G H J K L : \" Return
+#   Shift_L Z X C V B N M < > ? Multi_key Shift_R
+#   MainMenu Caps_Lock Alt_L Meta_L space Meta_R Alt_R Left Right Up Down Focus
+
 "xvkbd -xsendevent -text '\[asciitilde]'"
     m:0x18 + c:9
     Alt+Mod2 + Escape
@@ -39,6 +59,14 @@
     m:0x19 + c:46
     Shift+Alt+Mod2 + l
 
+"xvkbd -xsendevent -text '\[F2]'"
+    m:0x18 + c:27
+    Alt+Mod2 + r
+
+"xvkbd -xsendevent -text '\[Delete]'"
+    m:0x19 + c:40
+    Shift+Alt+Mod2 + d
+
 "xdotool mousemove_relative -- 10 0"
     m:0x18 + c:40
     Alt+Mod2 + d
@@ -62,3 +90,4 @@
 "xdotool click 3"
     m:0x18 + c:26
     Alt+Mod2 + e
+
