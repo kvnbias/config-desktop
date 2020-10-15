@@ -4,7 +4,7 @@
 # set startup volume
 pactl set-sink-volume 0 25%
 
-killall xbindkeys && xbindkeys -f ~/.xbindkeysrc
+xbindkeys -f ~/.xbindkeysrc
 
 # set startup brightness
 xrandr | grep connected | grep -v disconnected | while read -r line ; do
