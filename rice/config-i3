@@ -227,7 +227,7 @@ mode "$mode_scrot" {
 }
 
 bindsym $mod+0 mode "$mode_system"
-set $mode_system [l]ock | [e]xit | [u]ser switch | [s]uspend | [h]ibernate | [r]eboot | [S]hutdown
+set $mode_system [l]ock | [e]xit | [u]ser switch | [s]uspend | [h]ibernate | [r]eboot | [S]hutdown | ue[f]i
 mode "$mode_system" {
     bindsym l exec --no-startup-id bash ~/.config/display/lockscreen.sh, mode "default"
     bindsym e exec --no-startup-id i3-msg exit, mode "default"
@@ -235,6 +235,7 @@ mode "$mode_system" {
     bindsym s exec --no-startup-id bash ~/.config/display/lockscreen.sh & systemctl suspend, mode "default"
     bindsym h exec --no-startup-id bash ~/.config/display/lockscreen.sh & systemctl hibernate, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym f exec --no-startup-id systemctl reboot --firmware-setup
     bindsym Shift+s exec --no-startup-id systemctl poweroff, mode "default"
 
     # exit system mode: "Enter" or "Escape"
