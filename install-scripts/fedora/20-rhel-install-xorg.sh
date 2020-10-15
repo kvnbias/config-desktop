@@ -17,8 +17,9 @@ while true; do
 
 127.0.0.1   localhost
 ::1         localhost
-127.0.0.1   fedora.localdomain fedora
+127.0.1.1   fedora.localdomain fedora
 " | sudo tee /etc/hosts
+      echo "fedora" | sudo tee /etc/hostname
       break;;
     * ) break;;
   esac
@@ -227,8 +228,8 @@ Enter driver:   " amdd
             sudo dnf install -y xorg-x11-drv-amdgpu --releasever=$fedver
             install_mesa_vulkan_drivers
 
-            sudo cp -raf "$DIR/../../system-confs/20-radeon-ati.conf" "/etc/X11/xorg.conf.d/20-radeon.conf"
-            sudo cp -raf "$DIR/../../system-confs/10-screen.conf"     "/etc/X11/xorg.conf.d/10-screen.conf"
+            # sudo cp -raf "$DIR/../../system-confs/20-radeon-ati.conf" "/etc/X11/xorg.conf.d/20-radeon.conf"
+            # sudo cp -raf "$DIR/../../system-confs/10-screen.conf"     "/etc/X11/xorg.conf.d/10-screen.conf"
             echo AMDGPU drivers installed;
             break 2;;
           [2]* )

@@ -200,8 +200,8 @@ Enter driver:   " amdd
             sudo apt install -y --no-install-recommends xserver-xorg-video-amdgpu
             install_mesa_vulkan_drivers
 
-            sudo cp -raf "$DIR/../../system-confs/20-radeon-ati.conf" "/etc/X11/xorg.conf.d/20-radeon.conf"
-            sudo cp -raf "$DIR/../../system-confs/10-screen.conf"     "/etc/X11/xorg.conf.d/10-screen.conf"
+            # sudo cp -raf "$DIR/../../system-confs/20-radeon-ati.conf" "/etc/X11/xorg.conf.d/20-radeon.conf"
+            # sudo cp -raf "$DIR/../../system-confs/10-screen.conf"     "/etc/X11/xorg.conf.d/10-screen.conf"
             echo AMDGPU drivers installed;
             break 2;;
           [2]* )
