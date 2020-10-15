@@ -63,9 +63,21 @@
     m:0x18 + c:27
     Alt+Mod2 + r
 
+"xvkbd -xsendevent -text '\[F12]'"
+    m:0x19 + c:31
+    Shift+Alt+Mod2 + i
+
 "xvkbd -xsendevent -text '\[Delete]'"
     m:0x19 + c:40
     Shift+Alt+Mod2 + d
+
+"xvkbd -xsendevent -text '\[/]'"
+    m:0x19 + c:39
+    Shift+Alt+Mod2 + s
+
+"xvkbd -xsendevent -text '\[?]'"
+    m:0x19 + c:24
+    Shift+Alt+Mod2 + q
 
 "xdotool mousemove_relative -- 10 0"
     m:0x18 + c:40
