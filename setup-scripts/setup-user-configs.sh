@@ -148,6 +148,9 @@ mkdir -p $HOME/.config/polybar
 cp -rf $DIR/../rice/config-polybar $HOME/.config/polybar/config
 bash $DIR/../user-scripts/update-polybar-network-interface.sh
 
+# copy xbindkeysrc
+cp -rf $DIR/../rice/xbindkeysrc $HOME/.xbindkeysrc
+
 # copy i3status config
 sudo cp -rf $DIR/../rice/i3status.conf /etc/i3status.conf
 

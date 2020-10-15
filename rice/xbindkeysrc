@@ -1,0 +1,64 @@
+
+"xvkbd -xsendevent -text '\[asciitilde]'"
+    m:0x18 + c:9
+    Alt+Mod2 + Escape
+
+"xvkbd -xsendevent -text '\[graveaccent]'"
+    m:0x19 + c:9
+    Shift+Alt+Mod2 + Escape
+
+"xvkbd -xsendevent -text '\[Left]'"
+    m:0x18 + c:43
+    Alt+Mod2 + h
+
+"xvkbd -xsendevent -text '\[Down]'"
+    m:0x18 + c:44
+    Alt+Mod2 + j
+
+"xvkbd -xsendevent -text '\[Up]'"
+    m:0x18 + c:45
+    Alt+Mod2 + k
+
+"xvkbd -xsendevent -text '\[Right]'"
+    m:0x18 + c:46
+    Alt+Mod2 + l
+
+"xvkbd -xsendevent -text '\[Home]'"
+    m:0x19 + c:43
+    Shift+Alt+Mod2 + h
+
+"xvkbd -xsendevent -text '\[Next]'"
+    m:0x19 + c:44
+    Shift+Alt+Mod2 + j
+
+"xvkbd -xsendevent -text '\[Prior]'"
+    m:0x19 + c:45
+    Shift+Alt+Mod2 + k
+
+"xvkbd -xsendevent -text '\[End]'"
+    m:0x19 + c:46
+    Shift+Alt+Mod2 + l
+
+"xdotool mousemove_relative -- 10 0"
+    m:0x18 + c:40
+    Alt+Mod2 + d
+
+"xdotool mousemove_relative -- -10 0"
+    m:0x18 + c:38
+    Alt+Mod2 + a
+
+"xdotool mousemove_relative -- 0 10"
+    m:0x18 + c:39
+    Alt+Mod2 + s
+
+"xdotool mousemove_relative -- 0 -10"
+    m:0x18 + c:25
+    Alt+Mod2 + w
+
+"xdotool click 1"
+    m:0x18 + c:24
+    Alt+Mod2 + q
+
+"xdotool click 3"
+    m:0x18 + c:26
+    Alt+Mod2 + e

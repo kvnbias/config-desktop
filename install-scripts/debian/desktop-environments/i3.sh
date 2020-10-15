@@ -9,6 +9,7 @@ fi
 
 # Install window tiling manager
 sudo apt install -y --no-install-recommends i3-wm i3status i3lock rxvt-unicode
+sudo apt install -y --no-install-recommends xdotool xvkbd xbindkeys
 
 if [ ! -f "$HOME/.riced" ];then
   mkdir -p "$HOME/.config/i3"
