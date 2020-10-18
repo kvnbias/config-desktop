@@ -79,19 +79,19 @@
     m:0x19 + c:24
     Shift+Alt+Mod2 + q
 
-"xdotool mousemove_relative -- 10 0"
+"xdotool mousemove_relative -- 20 0"
     m:0x18 + c:40
     Alt+Mod2 + d
 
-"xdotool mousemove_relative -- -10 0"
+"xdotool mousemove_relative -- -20 0"
     m:0x18 + c:38
     Alt+Mod2 + a
 
-"xdotool mousemove_relative -- 0 10"
+"xdotool mousemove_relative -- 0 20"
     m:0x18 + c:39
     Alt+Mod2 + s
 
-"xdotool mousemove_relative -- 0 -10"
+"xdotool mousemove_relative -- 0 -20"
     m:0x18 + c:25
     Alt+Mod2 + w
 
