@@ -1,4 +1,6 @@
 
+# Keycode and keysyms can be seen by executing the `xev` command.
+#
 # Keys can be identified by executing: xbindkeys --multikey
 #
 # xvkbd Keys:
@@ -19,11 +21,11 @@
 #   Shift_L Z X C V B N M < > ? Multi_key Shift_R
 #   MainMenu Caps_Lock Alt_L Meta_L space Meta_R Alt_R Left Right Up Down Focus
 
-"xvkbd -xsendevent -text '\[asciitilde]'"
+"xvkbd -xsendevent -text '\[grave]'"
     m:0x18 + c:9
     Alt+Mod2 + Escape
 
-"xvkbd -xsendevent -text '\[graveaccent]'"
+"xvkbd -xsendevent -text '\[asciitilde]'"
     m:0x19 + c:9
     Shift+Alt+Mod2 + Escape
 
