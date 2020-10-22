@@ -139,7 +139,7 @@ while true; do
       sudo sed -i "s/ACCOUNT_NAME/$user/g" /etc/samba/smb.conf
 
       if [ -d /etc/ufw/applications.d ]; then
-        sudo cp -raf "$DIR/../../system-confs/ufw-samba" "/etc/ufw/applications.d/ufw-samba"
+        # sudo cp -raf "$DIR/../../system-confs/ufw-samba" "/etc/ufw/applications.d/ufw-samba"
         sudo ufw allow Samba
       fi
 
@@ -161,26 +161,6 @@ while true; do
 
       sudo systemctl enable cups
       sudo systemctl start cups
-      break;;
-    * ) break;;
-  esac
-done
-
-while true; do
-  read -p "Will mount APFS partitions [yN]?   " mapfs
-  case $mapfs in
-    [Yy]* )
-      cd /tmp
-      sudo apt install -y --no-install-recommends fuse zlib1g bzip2 libattr1
-      sudo apt install -y --no-install-recommends libfuse-dev libbz2-dev zlib1g-dev libattr1-dev
-      sudo apt install -y --no-install-recommends cmake g++ git
-
-      git clone https://github.com/sgan81/apfs-fuse.git
-      cd apfs-fuse && git submodule init && git submodule update
-      rm -rf build && mkdir build && cd build && cmake .. && make
-      sudo cp -raf  ./apfs-* /usr/local/bin/
-
-      sudo apt remove -y libfuse-dev libbz2-dev zlib1g-dev libattr1-dev
       break;;
     * ) break;;
   esac
@@ -249,6 +229,32 @@ while true; do
     [Yy]* )
       sudo apt install -y --no-install-recommends htop
 
+      sudo apt install -y --no-install-recommends apt-transport-https gnupg2 curl
+      sudo apt install -y docker docker-compose
+
+      if grep -q docker /etc/group; then
+        echo 'group already exists'
+      else
+        sudo groupadd docker
+      fi
+
+      sudo usermod -aG docker $USER
+      newgrp docker &
+      #sudo chown "$USER":"$USER" /home/"$USER"/.docker -R
+      #sudo chmod g+rwx "$HOME/.docker" -R
+
+      curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+      sudo apt update
+      echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+      sudo apt update
+      sudo apt install -y --no-install-recommends kubectl
+
+      cd /tmp
+      curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+      sudo dpkg -i minikube_latest_amd64.deb
+
+      sudo apt install -y --no-install-recommends vagrant
+
       cd /tmp
       curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
       sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
@@ -272,7 +278,10 @@ while true; do
       done
  
       code --install-extension eamodio.gitlens &
-      code --install-extension peterjausovec.vscode-docker &
+      code --install-extension ms-azuretools.vscode-docker &
+      code --install-extension ms-vscode-remote.remote-containers &
+      code --install-extension ms-kubernetes-tools.vscode-kubernetes-tools &
+      code --install-extension ms-kubernetes-tools.vscode-aks-tools &
       code --install-extension ms-vscode.theme-tomorrowkit &
 
       sleep 20
@@ -299,9 +308,11 @@ while true; do
       done
 
       while true; do
-        read -p "Install DBeaver [yN]?   " idbvr
+        read -p "Install MySQL [yN]?   " idbvr
         case $idbvr in
           [Yy]* )
+            sudo apt install --no-install-recommends mysql-server
+
             cd /tmp
             wget -O - https://dbeaver.io/debs/dbeaver.gpg.key | sudo apt-key add -
             echo "deb https://dbeaver.io/debs/dbeaver-ce /" | sudo tee /etc/apt/sources.list.d/dbeaver.list
@@ -311,6 +322,21 @@ while true; do
           * ) break;;
         esac
       done
+
+      while true; do
+        read -p "Install MongoDB [yN]?   " imdb
+        case $imdb in
+          [Yy]* )
+            sudo apt install --no-install-recommends mongodb
+            cd /tmp
+            fileName="mongodb-compass_1.22.1_amd64.deb"
+            wget "https://downloads.mongodb.com/compass/$fileName"
+            sudo dpkg -i /tmp/$fileName
+            break;;
+          * ) break;;
+        esac
+      done
+
       break;;
     * ) break;;
   esac
