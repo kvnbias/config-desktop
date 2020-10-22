@@ -227,7 +227,7 @@ while true; do
   read -p "Install Dev Tools [yN]?   " idt
   case $idt in
     [Yy]* )
-      sudo apt install -y --no-install-recommends htop
+      sudo apt install -y --no-install-recommends htop tmux
 
       sudo apt install -y --no-install-recommends apt-transport-https gnupg2 curl
       sudo apt install -y docker docker-compose
