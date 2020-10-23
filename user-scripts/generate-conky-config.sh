@@ -69,8 +69,6 @@ echo -n "$cpuinfo"
 
 echo '${font sans-serif:normal:size=8}RAM $alignc $mem / $memmax $alignr $memperc%
 $membar
-SWAP $alignc ${swap} / ${swapmax} $alignr ${swapperc}%
-${swapbar}
 ${font sans-serif:normal:size=8}ROOT / $alignc ${fs_used /} / ${fs_size /} $alignr ${fs_used_perc /}%
 ${fs_bar /}
 ${font sans-serif:normal:size=8}HOME /home $alignc ${fs_used /home} / ${fs_size /home} $alignr ${fs_used_perc /home}%
