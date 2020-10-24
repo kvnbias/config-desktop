@@ -21,13 +21,22 @@
 #   Shift_L Z X C V B N M < > ? Multi_key Shift_R
 #   MainMenu Caps_Lock Alt_L Meta_L space Meta_R Alt_R Left Right Up Down Focus
 
-"xvkbd -xsendevent -text '\[grave]'"
-    m:0x18 + c:9
-    Alt+Mod2 + Escape
+### Arrow-Vim key Mapping
+"xvkbd -xsendevent -text '\[Home]'"
+    m:0x19 + c:43
+    Shift+Alt+Mod2 + h
 
-"xvkbd -xsendevent -text '\[asciitilde]'"
-    m:0x19 + c:9
-    Shift+Alt+Mod2 + Escape
+"xvkbd -xsendevent -text '\[Next]'"
+    m:0x19 + c:44
+    Shift+Alt+Mod2 + j
+
+"xvkbd -xsendevent -text '\[Prior]'"
+    m:0x19 + c:45
+    Shift+Alt+Mod2 + k
+
+"xvkbd -xsendevent -text '\[End]'"
+   m:0x19 + c:46
+   Shift+Alt+Mod2 + l
 
 "xvkbd -xsendevent -text '\[Left]'"
     m:0x18 + c:43
@@ -45,21 +54,14 @@
     m:0x18 + c:46
     Alt+Mod2 + l
 
-"xvkbd -xsendevent -text '\[Home]'"
-    m:0x19 + c:43
-    Shift+Alt+Mod2 + h
+### Other Mapping
+"xvkbd -xsendevent -text '\[grave]'"
+    m:0x18 + c:9
+    Alt+Mod2 + Escape
 
-"xvkbd -xsendevent -text '\[Next]'"
-    m:0x19 + c:44
-    Shift+Alt+Mod2 + j
-
-"xvkbd -xsendevent -text '\[Prior]'"
-    m:0x19 + c:45
-    Shift+Alt+Mod2 + k
-
-"xvkbd -xsendevent -text '\[End]'"
-    m:0x19 + c:46
-    Shift+Alt+Mod2 + l
+"xvkbd -xsendevent -text '\[asciitilde]'"
+    m:0x19 + c:9
+    Shift+Alt+Mod2 + Escape
 
 "xvkbd -xsendevent -text '\[F2]'"
     m:0x19 + c:27
@@ -69,39 +71,41 @@
     m:0x19 + c:31
     Shift+Alt+Mod2 + i
 
-"xvkbd -xsendevent -text '\[Delete]'"
-    m:0x19 + c:40
-    Shift+Alt+Mod2 + d
-
-"xvkbd -xsendevent -text '\[/]'"
-    m:0x19 + c:39
-    Shift+Alt+Mod2 + s
-
-"xvkbd -xsendevent -text '\[?]'"
-    m:0x19 + c:24
-    Shift+Alt+Mod2 + q
-
-"xdotool mousemove_relative -- 25 0"
-    m:0x18 + c:40
-    Alt+Mod2 + d
-
-"xdotool mousemove_relative -- -25 0"
-    m:0x18 + c:38
-    Alt+Mod2 + a
-
-"xdotool mousemove_relative -- 0 25"
-    m:0x18 + c:39
-    Alt+Mod2 + s
-
-"xdotool mousemove_relative -- 0 -25"
+### Mouse Mapping
+#"xdotool mousemove_relative -- 0 -20"
+"xvkbd -xsendevent -text '\y-20'"
     m:0x18 + c:25
     Alt+Mod2 + w
 
-"xdotool click 1"
+#"xdotool mousemove_relative -- -20 0"
+"xvkbd -xsendevent -text '\x-20'"
+    m:0x18 + c:38
+    Alt+Mod2 + a
+
+#"xdotool mousemove_relative -- 0 20"
+"xvkbd -xsendevent -text '\y+20'"
+    m:0x18 + c:39
+    Alt+Mod2 + s
+
+#"xdotool mousemove_relative -- 20 0"
+"xvkbd -xsendevent -text '\x+20'"
+    m:0x18 + c:40
+    Alt+Mod2 + d
+
+#"xdotool click 1"
+"xvkbd -xsendevent -text '\m1'"
     m:0x18 + c:24
     Alt+Mod2 + q
 
-"xdotool click 3"
+#"xdotool click 3"
+"xvkbd -xsendevent -text '\m3'"
     m:0x18 + c:26
     Alt+Mod2 + e
 
+"xvkbd -xsendevent -text '\[Shift_L]\[Left]'"
+    m:0x19 + c:38
+    Shift+Alt+Mod2 + a
+
+"xvkbd -xsendevent -text '\[Shift_L]\[Right]'"
+    m:0x19 + c:40
+    Shift+Alt+Mod2 + d
